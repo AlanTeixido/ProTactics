@@ -4,10 +4,10 @@
 **Alumnos:** Alex, Alan y Adri
 
 ### **Tareas:**  
-- **Inicio de mockup**  Alex
-- **Creación de historias de usuario**  Alan
-- **Configuración de Proofhub**  Adri, Alex y Alan
-- **Wireframe inicial** Adri
+- **Inicio de mockup:** Alex  
+- **Creación de historias de usuario:** Alan  
+- **Configuración de Proofhub:** Adri, Alex y Alan  
+- **Wireframe inicial:** Adri
 
 ---
 
@@ -15,5 +15,5 @@
 **Alumnos:** Alex y Alan
 
 ### **Tareas:**  
-- **Alan:** Creación del proyecto en Vue  
-- **Alex:** Mockup
+- **Creación del proyecto en Vue:** Alan  
+- **Mockup:** Alex
