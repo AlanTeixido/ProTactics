@@ -7,6 +7,7 @@ Alex y Alan
 
 ### Tareas: 
 Creación proyecto de vue - Alan 
+#
 Mockup - Alex
 
 
