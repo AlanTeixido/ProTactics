@@ -1,13 +1,8 @@
 # Daily Scrum
 
-### 15/01/2025 
+**Fecha:** 15/01/2025  
+**Alumnos:** Alex y Alan
 
-### Alumnos: 
-Alex y Alan
-
-### Tareas: 
-Creación proyecto de vue - Alan 
-#
-Mockup - Alex
-
-
+## Tareas  
+- **Alan:** Creación del proyecto en Vue  
+- **Alex:** Mockup
