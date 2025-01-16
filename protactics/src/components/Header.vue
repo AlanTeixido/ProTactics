@@ -3,7 +3,7 @@
         <nav class="nav">
           <a href="#">INICIO</a>
           <a href="#">DASHBOARD</a>
-          <img src="../src/logo.png" alt="Icon" class="nav-icon" />
+          <img src="../assets/img/logo.png" alt="Icon" class="nav-icon" />
           <a href="#">PERFIL</a>
           <a href="#">CONTACTO</a>
         </nav>

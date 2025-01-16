@@ -1,9 +1,10 @@
 <template>
     <section class="logos-section">
-      <img src="../src/logo1.png" alt="Logo 1" />
-      <img src="../src/logo2.png" alt="Logo 2" />
-      <img src="../src/logo3.png" alt="Logo 3" />
-      <img src="../src/logo4.png" alt="Logo 4" />
+      <img src="../assets/img/oxygen.png" />
+      <img src="../assets/img/cornella.png" />
+      <img src="../assets/img/rcdespanyol.png" />
+      <img src="../assets/img/triatloprat.png" />
+      <img src="../assets/img/uae.png" />
     </section>
   </template>
   

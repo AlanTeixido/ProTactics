@@ -1,23 +1,23 @@
 <template>
     <footer class="footer">
           <div class="contact-info">
-            <h4>TALK TO US</h4>
+            <h4>CONTACTANOS</h4>
             <p>(04) 298 3985 2092</p>
-            <p>+76 289 1092 4095</p>
-            <p>info@molysrestaurant.com</p>
+            <p>+34 935 751 489</p>
+            <p>info@protactics.com</p>
           </div>
           <div class="payment-methods">
-            <img src="../src/paypal.png" alt="PayPal" />
-            <img src="../src/bizum.png" alt="Bizum" />
-            <img src="../src/mastercard.png" alt="MasterCard" />
-            <img src="../src/applepay.png" alt="Apple Pay" />
-            <img src="../src/googlepay.png" alt="Google Pay" />
+            <img src="../assets/img/paypal.png" alt="PayPal" />
+            <img src="../assets/img/bizum.png" alt="Bizum" />
+            <img src="../assets/img/mastercard.png" alt="MasterCard" />
+            <img src="../assets/img/applepay.png" alt="Apple Pay" />
+            <img src="../assets/img/googlepay.png" alt="Google Pay" />
           </div>
           <div class="social-icons">
-            <img src="../src/instagram.png" alt="Instagram" />
-            <img src="../src/twitter.png" alt="Twitter" />
-            <img src="../src/x.png" alt="X" />
-            <img src="../src/linkedin.png" alt="LinkedIn" />
+            <img src="../assets/img/instagram.png" alt="Instagram" />
+            <img src="../assets/img/twitter.png" alt="Twitter" />
+            <img src="../assets/img/x.png" alt="X" />
+            <img src="../assets/img/linkedin.png" alt="LinkedIn" />
           </div>
       </footer>
       
