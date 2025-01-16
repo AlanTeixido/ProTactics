@@ -3,39 +3,57 @@
   padding: 2rem;
 }
 
+*{
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
 /* Capçalera amb menú de navegació centrat */
 .header {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1.5rem 0;
-  /*background-color: var(--color-background-soft);*/
-  border-bottom: 1px solid var(--color-border);
- 
+  position: relative;
+  height: 800px; /* Ajusta la altura del header según lo necesites */
 }
 
-.header img{
+.banner {
   width: 100%;
-  
+  height: 100%; /* Asegura que la imagen ocupe el tamaño del header */
+  object-fit: cover; /* Hace que la imagen se ajuste correctamente dentro del header */
+  position: absolute; /* Coloca la imagen detrás del contenido */
+  top: 0;
+  left: 0;
+  z-index: -1; /* Coloca la imagen por debajo del contenido */
+  filter: brightness(90%);
 }
 
 .nav {
+  position: fixed; /* Fija el nav en la parte superior */
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
+  justify-content: center; /* Centra los elementos de la barra de navegación */
   gap: 3rem;
   align-items: center;
+  background-color: transparent; /* Sin fondo */
+  padding: 1.5rem 0;
+  z-index: 10; /* Asegura que el nav se muestre sobre otros elementos */
 }
 
 .nav a {
   font-size: 1.1rem;
   text-decoration: none;
-  color: hsla(180, 100%, 35%, 1);
+  color: #525255;
   font-weight: bold;
   transition: color 0.3s;
 }
 
 .nav a:hover {
-  color: hsla(180, 100%, 45%, 1);
+  color: hsla(180, 100%, 35%, 1);
 }
 
 .nav-icon {
@@ -105,7 +123,7 @@
 
 /* Peu de pàgina */
 .footer {
-  background-color: var(--color-background-soft);
+  background-color: #d6d6d6;
   padding: 3rem 0;
   border-top: 1px solid var(--color-border);
   color: var(--color-text);
