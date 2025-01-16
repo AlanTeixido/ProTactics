@@ -97,36 +97,39 @@
   padding: 3rem 0;
   border-top: 1px solid var(--color-border);
   color: var(--color-text);
+  display: flex;
+  justify-content: space-between; 
+  align-items: center; 
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
+/* Contingut al mig */
 .footer-content {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 5rem;
-  gap: 2rem;
-  margin-left: 50px;
+  display: flex;
+  justify-content: center;
 }
 
+/* Informació de contacte (a la esquerra) */
 .contact-info {
   text-align: left;
-  margin-right: 26rem;;
+  justify-content: left;
 }
 
+/* Metodes de Pagament (centre) */
 .payment-methods {
   display: flex;
   gap: 1rem;
   justify-content: center;
-  margin-right: 20rem;
-
+  align-items: center;
 }
 
+/* Logos Reds Socials a la dreta */
 .social-icons {
   display: flex;
   gap: 1rem;
   justify-content: flex-end;
+  text-align: right;
 }
 
 .payment-methods img,

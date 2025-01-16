@@ -1,6 +1,5 @@
 <template>
     <footer class="footer">
-        <div class="footer-content">
           <div class="contact-info">
             <h4>TALK TO US</h4>
             <p>(04) 298 3985 2092</p>
@@ -20,7 +19,6 @@
             <img src="../src/x.png" alt="X" />
             <img src="../src/linkedin.png" alt="LinkedIn" />
           </div>
-        </div>
       </footer>
       
   </template>
