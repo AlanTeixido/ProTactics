@@ -17,3 +17,14 @@
 ### **Tareas:**  
 - **Creación del proyecto en Vue:** Alan  
 - **Mockup:** Alex
+
+---
+
+## **Fecha:** 16/01/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **Creación del proyecto en Vue:** Alan, Alex  
+- **Mockup:** Adri
+- **Hoja de Estilos:** Alex, Adri
+- **Proofhub:** Alex, Alan y Adri
