@@ -7,6 +7,7 @@
           <a href="#">PERFIL</a>
           <a href="#">CONTACTO</a>
         </nav>
+        <img src="../assets/img/bannerHeader.png" alt="">
       </header>
       
   </template>
