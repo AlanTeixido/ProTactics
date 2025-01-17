@@ -1,125 +1,125 @@
-// Taula d'Usuaris
-Table users {
+// Tabla de Usuarios
+Table usuarios {
   id integer [primary key]
-  username varchar [unique, not null]
-  email varchar [unique, not null]
-  password_hash varchar [not null]
-  role varchar [default: 'user']
-  created_at timestamp [default: `now()`]
-  updated_at timestamp [default: `now()`]
+  nombre_usuario varchar [unique, not null]
+  correo varchar [unique, not null]
+  contrasena_hash varchar [not null]
+  rol varchar [default: 'usuario'] // Rol del usuario (administrador o usuario normal)
+  creado_en timestamp [default: `now()`]
+  actualizado_en timestamp [default: `now()`]
 }
 
-// Taula d'Entrenaments
-Table workouts {
+// Tabla de Entrenamientos
+Table entrenamientos {
   id integer [primary key]
-  user_id integer [not null, ref: > users.id]
-  title varchar [not null]
-  sport_type varchar [not null]
-  description text
-  duration interval [not null]
-  distance float
-  elevation_gain float
-  calories_burned float
-  start_time timestamp [not null]
-  end_time timestamp
-  visibility varchar [default: 'public'] // 'public', 'private', 'friends'
-  created_at timestamp [default: `now()`]
-  updated_at timestamp [default: `now()`]
+  usuario_id integer [not null, ref: > usuarios.id]
+  titulo varchar [not null]
+  tipo_deporte varchar [not null]
+  descripcion text
+  duracion interval [not null]
+  distancia float
+  desnivel_acumulado float
+  calorias_quemadas float
+  inicio timestamp [not null]
+  fin timestamp
+  visibilidad varchar [default: 'publico'] // 'publico', 'privado', 'amigos'
+  creado_en timestamp [default: `now()`]
+  actualizado_en timestamp [default: `now()`]
 }
 
-// Taula de Tags per Entrenaments
-Table tags {
+// Tabla de Etiquetas para Entrenamientos
+Table etiquetas {
   id integer [primary key]
-  name varchar [not null, unique]
+  nombre varchar [not null, unique]
 }
 
-// Relació entre entrenaments i etiquetes
-Table workout_tags {
-  workout_id integer [not null, ref: > workouts.id]
-  tag_id integer [not null, ref: > tags.id]
+// Relación entre Entrenamientos y Etiquetas
+Table entrenamiento_etiquetas {
+  entrenamiento_id integer [not null, ref: > entrenamientos.id]
+  etiqueta_id integer [not null, ref: > etiquetas.id]
   indexes {
-    (workout_id, tag_id) [unique]
+    (entrenamiento_id, etiqueta_id) [unique]
   }
 }
 
-// Taula de Plantilles per Entrenaments
-Table workout_templates {
+// Tabla de Plantillas para Entrenamientos
+Table plantillas_entrenamientos {
   id integer [primary key]
-  sport_type varchar [not null]
-  template_name varchar [not null]
-  fields jsonb [note: 'Definició dels camps específics de cada plantilla']
-  created_at timestamp [default: `now()`]
+  tipo_deporte varchar [not null]
+  nombre_plantilla varchar [not null]
+  campos jsonb [note: 'Definición de los campos específicos de cada plantilla']
+  creado_en timestamp [default: `now()`]
 }
 
-// Assignació d'Entrenaments a Plantilles
-Table workout_template_assignments {
-  workout_id integer [not null, ref: > workouts.id]
-  template_id integer [not null, ref: > workout_templates.id]
+// Asignación de Entrenamientos a Plantillas
+Table asignacion_plantillas {
+  entrenamiento_id integer [not null, ref: > entrenamientos.id]
+  plantilla_id integer [not null, ref: > plantillas_entrenamientos.id]
   indexes {
-    (workout_id, template_id) [unique]
+    (entrenamiento_id, plantilla_id) [unique]
   }
 }
 
-// Taula de Logs de Progrés
-Table progress_logs {
+// Tabla de Registros de Progreso
+Table registros_progreso {
   id integer [primary key]
-  user_id integer [not null, ref: > users.id]
-  workout_id integer [not null, ref: > workouts.id]
-  metric_name varchar [not null]
-  metric_value float [not null]
-  logged_at timestamp [default: `now()`]
+  usuario_id integer [not null, ref: > usuarios.id]
+  entrenamiento_id integer [not null, ref: > entrenamientos.id]
+  nombre_metrica varchar [not null]
+  valor_metrica float [not null]
+  registrado_en timestamp [default: `now()`]
 }
 
-// Taula de Dades Específiques d'Entrenament
-Table workout_details {
+// Tabla de Detalles de Entrenamientos
+Table detalles_entrenamientos {
   id integer [primary key]
-  workout_id integer [not null, ref: > workouts.id]
-  lap_number integer [not null]
-  lap_time interval [not null]
-  average_speed float
-  max_speed float
-  average_heart_rate integer
-  max_heart_rate integer
-  power_output float
-  cadence integer
+  entrenamiento_id integer [not null, ref: > entrenamientos.id]
+  numero_vuelta integer [not null]
+  tiempo_vuelta interval [not null]
+  velocidad_media float
+  velocidad_maxima float
+  frecuencia_cardiaca_media integer
+  frecuencia_cardiaca_maxima integer
+  potencia float
+  cadencia integer
 }
 
-// Taula de Comentaris
-Table comments {
+// Tabla de Comentarios
+Table comentarios {
   id integer [primary key]
-  workout_id integer [not null, ref: > workouts.id]
-  user_id integer [not null, ref: > users.id]
-  content text [not null]
-  created_at timestamp [default: `now()`]
+  entrenamiento_id integer [not null, ref: > entrenamientos.id]
+  usuario_id integer [not null, ref: > usuarios.id]
+  contenido text [not null]
+  creado_en timestamp [default: `now()`]
 }
 
-// Taula d'Activitats Recents
-Table activity_logs {
+// Tabla de Actividades Recientes
+Table actividades_recientes {
   id integer [primary key]
-  user_id integer [not null, ref: > users.id]
-  description text [not null]
-  created_at timestamp [default: `now()`]
+  usuario_id integer [not null, ref: > usuarios.id]
+  descripcion text [not null]
+  creado_en timestamp [default: `now()`]
 }
 
-// Taula d'Estadístiques Globals
-Table user_statistics {
+// Tabla de Estadísticas Globales
+Table estadisticas_globales {
   id integer [primary key]
-  user_id integer [not null, ref: > users.id]
-  total_distance float
-  total_time interval
-  total_workouts integer
-  total_elevation float
-  total_calories float
-  monthly_workouts integer [default: 0]
-  monthly_distance float [default: 0]
+  usuario_id integer [not null, ref: > usuarios.id]
+  distancia_total float
+  tiempo_total interval
+  entrenamientos_totales integer
+  desnivel_total float
+  calorias_totales float
+  entrenamientos_mensuales integer [default: 0]
+  distancia_mensual float [default: 0]
 }
 
-// Taula de Seguiments (opcional, només si és necessari)
-Table follows {
-  follower_id integer [not null, ref: > users.id]
-  following_id integer [not null, ref: > users.id]
-  created_at timestamp [default: `now()`]
+// Tabla de Seguimientos (opcional, solo si es necesario)
+Table seguimientos {
+  seguidor_id integer [not null, ref: > usuarios.id]
+  seguido_id integer [not null, ref: > usuarios.id]
+  creado_en timestamp [default: `now()`]
   indexes {
-    (follower_id, following_id) [unique]
+    (seguidor_id, seguido_id) [unique]
   }
 }
