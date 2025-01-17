@@ -123,3 +123,6 @@ Table seguimientos {
     (seguidor_id, seguido_id) [unique]
   }
 }
+
+
+https://dbdiagram.io/d
