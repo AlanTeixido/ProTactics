@@ -5,7 +5,7 @@
 
 ### Flujo principal:
 1. El usuario no logeado accede a la página de registro.
-2. El sistema muestra un formulario con campos obligatorios: nombre, correo electrónico, contraseña y confirmación de contraseña.
+2. El sistema muestra un formulario con campos obligatorios: nombre, correo electrónico, contraseña.
 3. El usuario introduce sus datos y hace clic en el botón "Registrarse".
 4. El sistema valida los datos:
    - Si todos los campos son correctos, el sistema crea una nueva cuenta de usuario en la base de datos.
@@ -42,12 +42,13 @@
 
 ### Flujo principal:
 1. El usuario logeado accede a su perfil desde el menú de usuario.
-2. El sistema muestra la información del perfil: nombre, correo, foto de perfil y preferencias de usuario.
+2. El sistema muestra la información del perfil: foto de perfil, nombre app, nombre,  y informacion sobre la cuenta.
 3. El usuario puede editar los siguientes campos:
+   - Foto de Perfil
+   - Nombre Usuario
    - Nombre
-   - Foto de perfil
-   - Información personal
-   - Preferencias de entrenos
+   - Entrenamientos Compartidos
+   - Otros Ajustes
 4. El usuario realiza las modificaciones deseadas y hace clic en "Guardar cambios".
 5. El sistema valida la información y guarda los cambios en la base de datos.
 6. El usuario recibe un mensaje de confirmación que indica que los cambios se han guardado correctamente.
@@ -62,10 +63,11 @@
 **Actor principal:** Usuario logeado
 
 ### Flujo principal:
-1. El usuario logeado accede a la sección de creación de entrenos desde su perfil.
+1. El usuario logeado accede a la sección de creación de entrenos desde la barra de navegación.
 2. El sistema muestra un formulario para crear un entreno:
    - Nombre del entreno
-   - Tipo de entreno (fuerza, resistencia, flexibilidad, etc.)
+   - Imagen
+   - Tipo de entreno (natación, fitness, gym, futbol, etc.)
    - Descripción del entreno
    - Duración estimada
    - Nivel (principiante, intermedio, avanzado)
@@ -87,12 +89,12 @@
 ### Flujo principal:
 1. El usuario logeado accede a su perfil y selecciona un entreno previamente creado.
 2. El sistema muestra los detalles del entreno seleccionado.
-3. El usuario hace clic en el botón "Compartir en dashboard".
-4. El sistema publica el entreno en el dashboard de la aplicación, donde otros usuarios pueden verlo y reaccionar.
+3. El usuario hace clic en el botón "Compartir".
+4. El sistema publica el entreno en el dashboard de la aplicación, donde otros usuarios pueden verlo y reaccionar o guardarlo.
 5. El sistema envía una notificación al usuario indicando que el entreno ha sido compartido correctamente.
 
 ### Extensiones:
-- Si el entreno no tiene una descripción completa o algún otro dato obligatorio, el sistema muestra un error indicando qué debe corregir antes de compartirlo.
+- Si el entreno no tiene una descripción completa o algún otro dato obligatorio, no dejara crearlo.
 
 ---
 
@@ -105,6 +107,7 @@
 3. El usuario selecciona un entreno y puede reaccionar de las siguientes maneras:
    - Dar un like al entreno.
    - Dejar un comentario sobre el entreno.
+   - Guardarse el entreno. 
 4. El sistema registra la reacción del usuario y la muestra en el dashboard para que otros usuarios la vean.
 5. El usuario recibe una confirmación de que su reacción fue registrada correctamente.
 
