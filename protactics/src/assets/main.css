@@ -16,7 +16,30 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 800px; /* Ajusta la altura del header según lo necesites */
+  height: 1000px; /* Ajusta la altura del header según lo necesites */
+}
+
+.header h1{
+  color: white;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1000%;
+  margin-right: 30%;
+}
+.header h2{
+  width: 30%;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 300%;
+  font-weight: lighter;
+  text-align: right;
+  text-transform: uppercase;
+  margin-bottom: 5%;
+  margin-left: 2%;
+}
+
+
+h2 span{
+  font-weight: 300;
 }
 
 .banner {
@@ -27,7 +50,7 @@
   top: 0;
   left: 0;
   z-index: -1; /* Coloca la imagen por debajo del contenido */
-  filter: brightness(90%);
+  filter: brightness(70%);
 }
 
 .nav {
@@ -47,8 +70,7 @@
 .nav a {
   font-size: 1.1rem;
   text-decoration: none;
-  color: #525255;
-  font-weight: bold;
+  color: white;
   transition: color 0.3s;
 }
 
