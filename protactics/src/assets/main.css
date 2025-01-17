@@ -16,7 +16,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 1000px; /* Ajusta la altura del header según lo necesites */
+  height: 600px; /* Ajusta la altura del header según lo necesites */
 }
 
 .header h1{
