@@ -1,0 +1,125 @@
+// Taula d'Usuaris
+Table users {
+  id integer [primary key]
+  username varchar [unique, not null]
+  email varchar [unique, not null]
+  password_hash varchar [not null]
+  role varchar [default: 'user']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+// Taula d'Entrenaments
+Table workouts {
+  id integer [primary key]
+  user_id integer [not null, ref: > users.id]
+  title varchar [not null]
+  sport_type varchar [not null]
+  description text
+  duration interval [not null]
+  distance float
+  elevation_gain float
+  calories_burned float
+  start_time timestamp [not null]
+  end_time timestamp
+  visibility varchar [default: 'public'] // 'public', 'private', 'friends'
+  created_at timestamp [default: `now()`]
+  updated_at timestamp [default: `now()`]
+}
+
+// Taula de Tags per Entrenaments
+Table tags {
+  id integer [primary key]
+  name varchar [not null, unique]
+}
+
+// Relació entre entrenaments i etiquetes
+Table workout_tags {
+  workout_id integer [not null, ref: > workouts.id]
+  tag_id integer [not null, ref: > tags.id]
+  indexes {
+    (workout_id, tag_id) [unique]
+  }
+}
+
+// Taula de Plantilles per Entrenaments
+Table workout_templates {
+  id integer [primary key]
+  sport_type varchar [not null]
+  template_name varchar [not null]
+  fields jsonb [note: 'Definició dels camps específics de cada plantilla']
+  created_at timestamp [default: `now()`]
+}
+
+// Assignació d'Entrenaments a Plantilles
+Table workout_template_assignments {
+  workout_id integer [not null, ref: > workouts.id]
+  template_id integer [not null, ref: > workout_templates.id]
+  indexes {
+    (workout_id, template_id) [unique]
+  }
+}
+
+// Taula de Logs de Progrés
+Table progress_logs {
+  id integer [primary key]
+  user_id integer [not null, ref: > users.id]
+  workout_id integer [not null, ref: > workouts.id]
+  metric_name varchar [not null]
+  metric_value float [not null]
+  logged_at timestamp [default: `now()`]
+}
+
+// Taula de Dades Específiques d'Entrenament
+Table workout_details {
+  id integer [primary key]
+  workout_id integer [not null, ref: > workouts.id]
+  lap_number integer [not null]
+  lap_time interval [not null]
+  average_speed float
+  max_speed float
+  average_heart_rate integer
+  max_heart_rate integer
+  power_output float
+  cadence integer
+}
+
+// Taula de Comentaris
+Table comments {
+  id integer [primary key]
+  workout_id integer [not null, ref: > workouts.id]
+  user_id integer [not null, ref: > users.id]
+  content text [not null]
+  created_at timestamp [default: `now()`]
+}
+
+// Taula d'Activitats Recents
+Table activity_logs {
+  id integer [primary key]
+  user_id integer [not null, ref: > users.id]
+  description text [not null]
+  created_at timestamp [default: `now()`]
+}
+
+// Taula d'Estadístiques Globals
+Table user_statistics {
+  id integer [primary key]
+  user_id integer [not null, ref: > users.id]
+  total_distance float
+  total_time interval
+  total_workouts integer
+  total_elevation float
+  total_calories float
+  monthly_workouts integer [default: 0]
+  monthly_distance float [default: 0]
+}
+
+// Taula de Seguiments (opcional, només si és necessari)
+Table follows {
+  follower_id integer [not null, ref: > users.id]
+  following_id integer [not null, ref: > users.id]
+  created_at timestamp [default: `now()`]
+  indexes {
+    (follower_id, following_id) [unique]
+  }
+}
