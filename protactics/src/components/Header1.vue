@@ -19,7 +19,8 @@ import { RouterLink, RouterView } from 'vue-router';
 /* Estilos específicos para el header general */
 
 .general-header {
-  background-color: black; /* Fondo negro */
+  margin-bottom:15px ;
+
 }
 
 .nav {
@@ -28,7 +29,7 @@ import { RouterLink, RouterView } from 'vue-router';
   justify-content: center; /* Centra los elementos de la barra de navegación */
   gap: 3rem;
   align-items: center;
-  background-color:antiquewhite; 
+  background-color:rgb(0, 0, 0); 
   padding: 1.5rem 0;
 }
 
