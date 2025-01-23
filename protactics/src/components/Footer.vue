@@ -15,8 +15,8 @@
           </div>
           <div class="social-icons">
             <img src="../assets/img/instagram.png" alt="Instagram" />
-            <img src="../assets/img/twitter.png" alt="Twitter" />
             <img src="../assets/img/x.png" alt="X" />
+            <img src="../assets/img/gmail.png" alt="Gmail" />
             <img src="../assets/img/linkedin.png" alt="LinkedIn" />
           </div>
       </footer>

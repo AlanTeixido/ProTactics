@@ -10,7 +10,7 @@
     </nav>
     <h1>PROTACTICS</h1>
     <h2><span>Crea<br> personaliza y comparte</span> tus entrenamientos</h2>
-    <img class="banner" src="../assets/img/fondo.jpg" alt="">
+    <video class="banner" src="../assets/img/videoHeader.mp4"></video>
   </header>
 </template>
 
