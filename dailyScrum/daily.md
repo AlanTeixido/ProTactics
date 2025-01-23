@@ -28,3 +28,23 @@
 - **Mockup:** Adri
 - **Hoja de Estilos:** Alex, Adri
 - **Proofhub:** Alex, Alan y Adri
+
+---
+
+## **Fecha:** 22/01/2025 (NO Clase)
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- 
+
+---
+
+## **Fecha:** 23/01/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **Modificacion CSS:** Alan, Alex, Adri 
+- **Implementacion NAV + Paginas:** Alan, Alex, Adri 
+- **Mockup:** Adri
+- **Historias de Usuario:** Alan
+- **Proofhub:** Alex
