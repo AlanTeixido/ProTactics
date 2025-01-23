@@ -9,7 +9,7 @@
       <RouterView />
     </nav>
     <h1>PROTACTICS</h1>
-    <video class="banner" src="../assets/img/videoHeader.mp4"></video>
+    <video autoplay muted loop class="banner" src="../assets/img/videoHeader.mp4"></video>
   </header>
 </template>
 
