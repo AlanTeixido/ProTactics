@@ -48,3 +48,15 @@
 - **Mockup:** Adri
 - **Historias de Usuario:** Alan
 - **Proofhub:** Alex
+
+---
+
+## **Fecha:** 24/01/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **Modificacion CSS:** Adri 
+- **Router Link:** Alex
+- **Servidor API + Base Dades:** Alan
+- **Mockup:** Adri
+- **Proofhub:** Alex 
