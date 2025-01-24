@@ -14,3 +14,4 @@ User: protacticsbd_user
 - **
 Password: 8X4QGKDB5lwMjxLBQYWfDOmu5ShCfH1b
 
+![actividades_recientes](https://github.com/user-attachments/assets/d61ca97d-da72-4968-933e-961280337d5e)
