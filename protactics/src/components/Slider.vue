@@ -1,6 +1,6 @@
 <template>
     <section>
-        <h2 class="title"><span>Crea personaliza</span> i <span>comparte</span> tus entrenamientos</h2>
+        <p class="title"><span>Crea personaliza</span> i <span>comparte</span> tus entrenamientos</p>
         <div class="slider">
             <img src="../assets/img/vestuario.jpg">
             <img src="../assets/img/atletismo.jpg">
@@ -11,3 +11,7 @@
 
 <script setup>
 </script>
+
+<style scoped>
+
+</style>

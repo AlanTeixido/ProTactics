@@ -10,7 +10,6 @@
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula
           mauris non lectus egestas, at facilisis nisi suscipit.
         </p>
-        <button class="cta-button">Empezar</button>
       </div>
     </div>
 

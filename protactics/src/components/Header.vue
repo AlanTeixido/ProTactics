@@ -8,8 +8,12 @@
       <RouterLink to="/contact">CONTACT</RouterLink>
       <RouterView />
     </nav>
-    <h1>PROTACTICS</h1>
-    <video autoplay muted loop class="banner" src="../assets/img/videoHeader.mp4"></video>
+    <div class="intro">
+      <h1>PROTACTICS</h1>
+      <p>¡Conecta, crea gana!</p>
+      <button class="cta-button">Empezar</button>
+    </div>
+    
   </header>
 </template>
 
@@ -18,14 +22,13 @@ import { RouterLink, RouterView } from 'vue-router';
 </script>
 
 <style scoped>
-/* Capçalera amb menú de navegació centrat */
 .header {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 600px; /* Ajusta la altura del header según lo necesites */
+  height: 600px; 
 }
 
 .header h1{
@@ -43,27 +46,24 @@ span{
 
 .banner {
   width: 100%;
-  height: 600px; /* Asegura que la imagen ocupe el tamaño del header */
-  object-fit: cover; /* Hace que la imagen se ajuste correctamente dentro del header */
-  position: absolute; /* Coloca la imagen detrás del contenido */
-  top: 0;
-  left: 0;
-  z-index: -1; /* Coloca la imagen por debajo del contenido */
+  top: 5%;
+  position: absolute; 
+  z-index: -1; 
   filter: brightness(70%);
 }
 
 .nav {
-  position: fixed; /* Fija el nav en la parte superior */
+  position: fixed; 
   top: 0;
   left: 0;
   width: 100%;
   display: flex;
-  justify-content: center; /* Centra los elementos de la barra de navegación */
+  justify-content: center; 
   gap: 3rem;
   align-items: center;
-  background-color: transparent; /* Sin fondo */
+  background-color: transparent; 
   padding: 1.5rem 0;
-  z-index: 10; /* Asegura que el nav se muestre sobre otros elementos */
+  z-index: 10; 
 }
 
 .nav a {
@@ -86,6 +86,36 @@ span{
 
 .nav-icon:hover {
   transform: scale(1.1) rotateX(30deg) rotateY(15deg);
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  margin-top: 5%;
+}
+
+.intro p{
+  margin-top: -5%;
+}
+
+.cta-button {
+  padding: 0.8rem 1.5rem;
+  background-color: transparent;
+  color: white;
+  border: 2px white solid;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s ease;
+  margin-top: 1rem;
+}
+
+.cta-button:hover {
+  transform: scale(1.1);
 }
 
 </style>

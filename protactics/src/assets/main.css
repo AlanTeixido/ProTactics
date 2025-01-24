@@ -32,7 +32,7 @@ body{
   text-align: center;
   border-radius: 10px;
   margin-bottom: 3rem;
-  margin-top: 2%;
+  margin-top: 10%;
 }
 
 .main-section h1 {
@@ -48,11 +48,11 @@ body{
 }
 
 .cta-button {
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 1.5rem;
   background-color: transparent;
-  color: black;
-  border: 2px black solid;
-  border-radius: 5px;
+  color: white;
+  border: 2px white solid;
+  border-radius: 25px;
   cursor: pointer;
   font-size: 1rem;
   transition: 1s;
@@ -112,25 +112,31 @@ body{
   z-index: 1;
 }
 
+.title p{
+  font-weight: 100;
+}
+.title span{
+  font-weight: 600;
+}
+
 .slider {
   width: 100%;
-  height: 100vh; /* Ajusta la altura del slider */
-  overflow: hidden; /* Oculta las imágenes que no están en vista */
+  height: 100vh; 
+  overflow: hidden; 
   position: relative;
   margin-top: 6%;
 }
 
-/* Estilo de las imágenes dentro del slider */
 .slider img {
   width: 100%;
   height: 550px;
-  object-fit: cover; /* Asegura que las imágenes se ajusten correctamente */
+  object-fit: cover; 
   position: absolute;
   top: 0;
   left: 0;
-  opacity: 0; /* Comienza con las imágenes ocultas */
-  filter: brightness(70%);
-  animation: slide 12s infinite; /* La animación se repetirá infinitamente */
+  opacity: 0; 
+  filter: brightness(60%);
+  animation: slide 12s infinite; 
 }
 
 /* Animación del slider */
