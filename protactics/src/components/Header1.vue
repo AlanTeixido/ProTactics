@@ -5,7 +5,7 @@
       <RouterLink to="/dashboard">DASHBOARD</RouterLink>
       <img src="../assets/img/logo.png" alt="Icon" class="nav-icon" />
       <RouterLink to="/perfil">PERFIL</RouterLink>
-      <RouterLink to="/contact">CONTACT</RouterLink>
+      <RouterLink to="/contact">CONTACTE</RouterLink>
       <RouterView />
     </nav>
   </header>
@@ -29,12 +29,12 @@ import { RouterLink, RouterView } from 'vue-router';
   justify-content: center; /* Centra los elementos de la barra de navegación */
   gap: 3rem;
   align-items: center;
-  background-color:rgb(0, 0, 0); 
+  background-color:#d6d6d6; 
   padding: 1.5rem 0;
 }
 
 .nav a {
-  color: white; /* Color de texto blanco */
+  color: rgb(245, 245, 245); /* Color de texto blanco */
   font-family: 'Montserrat', sans-serif;
   text-decoration: none;
 }

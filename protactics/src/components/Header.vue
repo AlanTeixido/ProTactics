@@ -5,7 +5,7 @@
       <RouterLink to="/dashboard">DASHBOARD</RouterLink>
       <img src="../assets/img/logo.png" alt="Icon" class="nav-icon" />
       <RouterLink to="/perfil">PERFIL</RouterLink>
-      <RouterLink to="/contact">CONTACT</RouterLink>
+      <RouterLink to="/contact">CONTACTE</RouterLink>
       <RouterView />
     </nav>
     <div class="intro">
