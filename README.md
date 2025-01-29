@@ -1,5 +1,3 @@
-# 📌 Guía para Ejecutar la API de ProTactics
-
 ## 🌍 Proyecto Frontend
 🔗 **URL del frontend en Vercel:**  
 [ProTactics en Vercel](https://pro-tactics-7av74lywc-alanteixidos-projects.vercel.app/)
