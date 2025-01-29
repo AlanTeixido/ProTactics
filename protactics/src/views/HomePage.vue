@@ -1,6 +1,7 @@
 <template>
     <div id="app">
       <Header />
+      
       <main>
         <MainSection />
         <LogosSection />
