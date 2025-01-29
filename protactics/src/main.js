@@ -1,11 +1,17 @@
 import './assets/main.css'
 
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+import { createApp } from 'vue';
+import App from './App.vue';
+import axios from 'axios';
 
-const app = createApp(App)
+// Configurar la URL base de la API
+axios.defaults.baseURL = 'http://localhost:3000';
 
-app.use(router)
+// Prueba de conexión a la API
+axios.get('/usuarios')
+  .then(response => console.log("✅ API Conectada:", response.data))
+  .catch(error => console.error("❌ Error al conectar la API:", error));
 
-app.mount('#app')
+const app = createApp(App);
+app.config.globalProperties.$axios = axios;
+app.mount('#app');
