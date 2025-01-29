@@ -47,7 +47,7 @@
 - **Implementacion NAV + Paginas:** Alan, Alex, Adri 
 - **Mockup:** Adri
 - **Historias de Usuario:** Alan
-- **Proofhub:** Alex
+- **Proofhub:** Alex y Alan
 
 ---
 
@@ -60,3 +60,13 @@
 - **Servidor API + Base Dades:** Alan
 - **Mockup:** Adri
 - **Proofhub:** Alex 
+
+---
+
+## **Fecha:** 29/01/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **Modificacion CSS HTML:** Adri, Alex
+- **Servidor API + Base Dades:** Alan
+- **Proofhub:** Alex y Alan
