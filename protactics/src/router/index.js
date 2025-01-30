@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Login from '@/components/Login.vue';  // Importar el componente de Login
+import Register from '@/components/Register.vue';  // Importar el componente de Register
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +30,16 @@ const router = createRouter({
       name: 'entrenamiento',
       component: () => import('../views/EntrenamientoView.vue'),
     },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,  
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: Register,  
+    }
   ],
 })
 
