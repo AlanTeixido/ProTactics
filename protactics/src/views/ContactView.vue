@@ -1,6 +1,6 @@
 <script setup>
-import Footer from '@/components/Footer.vue';
-import Header from '@/components/Header.vue';
+import FooterSection from '@/components/FooterSection.vue';
+import HeaderSection from '@/components/HeaderSection.vue';
 import { ref } from 'vue';
 
 const name = ref('');
@@ -63,7 +63,7 @@ const enviarDades = () => {
 </script>
 
 <template>
-  <Header />
+  <HeaderSection />
   <div class="contact-container">
     <h1>Contacto</h1>
     <form @submit.prevent="enviarDades">
@@ -105,7 +105,7 @@ const enviarDades = () => {
       <button type="submit">Enviar</button>
     </form>
   </div>
-  <Footer />
+  <FooterSection />
 </template>
 
 <style scoped>

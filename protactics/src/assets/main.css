@@ -10,7 +10,8 @@
 }
 
 body{
-  background-color: #f1f1f1;
+  background-color: #1b1b1b;
+  color: white;
 }
 
 /* HEADER */
@@ -24,7 +25,7 @@ body{
 
 .nav {
   position: fixed; 
-  top: 0;
+  top: 1%;
   left: 0;
   width: 100%;
   display: flex;
@@ -34,20 +35,23 @@ body{
   background-color: transparent; 
   padding: 1.5rem 0;
   z-index: 10;
-
 }
 
 .nav a {
   font-size: 1.1rem;
   text-decoration: none;
-  color: rgb(0, 145, 189);
-  transition: color 0.3s;
-  transition: 1s;
+  color: rgb(0, 195, 255);
+  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194)); /* Degradado de azul a verde */
+  background-clip: text; /* Aplica el degradado solo al texto */
+  transition: 0.3s;
 }
 
 .nav a:hover {
   color: hsla(180, 100%, 35%, 1);
   transform: scale(1.1);
+  color: transparent;
+  filter: brightness(1.2); 
+  text-shadow: none;
 }
 
 .nav-icon {
@@ -85,13 +89,11 @@ body{
 
 .main-section h1 {
   font-size: 2.5rem;
-  color: var(--color-heading);
   margin-bottom: 1rem;
 }
 
 .main-section p {
   font-size: 1.2rem;
-  color: var(--color-text);
   margin-bottom: 2rem;
 }
 
@@ -251,10 +253,8 @@ body{
 
 /* Peu de pàgina */
 .footer {
-  background-color: #d6d6d6;
+  background-color: black;
   padding: 3rem 0;
-  border-top: 1px solid var(--color-border);
-  color: var(--color-text);
   display: flex;
   justify-content: space-between; 
   align-items: center; 

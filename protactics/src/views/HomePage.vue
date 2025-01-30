@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header />
+    <HeaderSection />
     <main>
       <div class="intro">
         <h1>PROTACTICS</h1>
@@ -13,15 +13,15 @@
       <Slider />
       <ThreeText />
     </main>
-    <Footer />
+    <FooterSection />
   </div>
 </template>
 
 <script setup>
-import Header from '../components/Header.vue'
+import Header from '../components/HeaderSection.vue'
 import MainSection from '../components/MainSection.vue'
 import LogosSection from '../components/LogosSection.vue'
-import Footer from '../components/Footer.vue'
+import Footer from '../components/FooterSection.vue'
 import Slider from '../components/Slider.vue'
 import ThreeText from '@/components/ThreeText.vue'
 </script>
@@ -33,8 +33,8 @@ import ThreeText from '@/components/ThreeText.vue'
   justify-content: center;
   align-items: center;
   text-align: center;
-  color: rgb(48, 48, 48);
-  margin-top: 20%;
+  color: rgb(255, 255, 255);
+  margin-top: 18%;
   margin-bottom: 20%;
   position: relative;
 }
@@ -42,21 +42,34 @@ import ThreeText from '@/components/ThreeText.vue'
 .intro h1 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1000%;
-  color: rgb(48, 48, 48);
-  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194)); /* Degradado de azul a verde */
+  background-clip: text; /* Aplica el degradado solo al texto */
+  transition: color 1s, text-shadow 1s, filter 1s;
+}
+
+.intro h1:hover {
+  color: transparent;
+  filter: brightness(1.2); 
+  text-shadow: none;
+}
+
+.intro p {
+  margin-top: -1.5rem;
 }
 
 img {
   width: 80%;
   position: absolute;
   z-index: -1;
-  opacity: 50%;
+  right: 6%;
+
 }
 
 .cta-button {
   background-color: transparent;
-  color: rgb(48, 48, 48);
-  border: 2px rgb(48, 48, 48) solid;
+  color: rgb(255, 255, 255);
+  border: 2px rgb(255, 254, 254) solid;
   border-radius: 25px;
   cursor: pointer;
   font-size: 1rem;

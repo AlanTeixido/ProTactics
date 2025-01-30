@@ -1,6 +1,6 @@
 <script setup>
-import Footer from '@/components/Footer.vue';
-import Header from '@/components/Header.vue';
+import FooterSection from '@/components/FooterSection.vue';
+import FooterSection from '@/components/FooterSection.vue';
 import Introduction from '@/components/Introduction.vue';
 import { ref } from 'vue';
 
@@ -40,7 +40,7 @@ const posts = ref([
 </script>
 
 <template>
-    <Header/>
+    <HeaderSection/>
     <Introduction/>
   <div class="dashboard-container">
     <div v-if="posts.length" class="posts-list">
@@ -59,7 +59,7 @@ const posts = ref([
       <p>No hay posts para mostrar.</p>
     </div>
   </div>
-  <Footer/>
+  <FooterSection/>
 </template>
 
 <style scoped>

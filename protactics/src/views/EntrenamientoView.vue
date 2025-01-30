@@ -1,13 +1,13 @@
 <script setup>
-import Footer from '../components/Footer.vue';
 import Entrenamiento from '../components/Entrenamiento.vue';
-import Header from '../components/Header.vue';
+import HeaderSection from '../components/HeaderSection.vue';
+import FooterSection from '../components/FooterSection.vue';
 </script>
 
 <template>
-  <Header/>
+  <HeaderSection/>
   <Entrenamiento/>
-  <Footer />
+  <FooterSection />
 </template>
 
 <style scoped>

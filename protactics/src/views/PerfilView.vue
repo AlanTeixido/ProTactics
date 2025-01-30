@@ -1,6 +1,6 @@
 <script setup>
-import Footer from '@/components/Footer.vue';
-import Header from '@/components/Header.vue';
+import FooterSection from '@/components/FooterSection.vue';
+import HeaderSection from '@/components/HeaderSection.vue';
 import { ref } from 'vue';
 
 // Datos del usuario
@@ -18,7 +18,7 @@ const user = ref({
 </script>
 
 <template>
-  <Header/>
+  <HeaderSection/>
   <div class="profile-container">
     <div class="profile-card">
       <div class="profile-header">
@@ -47,7 +47,7 @@ const user = ref({
       </div>
     </div>
   </div>
-  <Footer />
+  <FooterSection />
 </template>
 
 <style scoped>

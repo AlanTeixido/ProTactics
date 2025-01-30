@@ -3,7 +3,7 @@
     <nav class="nav">
       <RouterLink to="/">HOME</RouterLink>
       <RouterLink to="/dashboard">DASHBOARD</RouterLink>
-      <img src="../assets/img/logo.png" alt="Icon" class="nav-icon" />
+      <!-- <img src="../assets/img/logo.png" alt="Icon" class="nav-icon" /> -->
       <RouterLink to="/perfil">PERFIL</RouterLink>
       <RouterLink to="/contact">CONTACTE</RouterLink>
       <RouterLink to="/entrenamiento">ENTRENAMIENTO</RouterLink>
