@@ -1,7 +1,6 @@
 <script setup>
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
-import Header1 from '@/components/Header1.vue';
 import { ref } from 'vue';
 
 // Datos de ejemplo para los posts
@@ -28,7 +27,7 @@ const posts = ref([
 </script>
 
 <template>
-    <Header1/>
+    <Header/>
   <div class="dashboard-container">
     <h1>Dashboard de Posts</h1>
 

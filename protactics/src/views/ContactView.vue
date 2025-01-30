@@ -1,6 +1,6 @@
 <script setup>
 import Footer from '@/components/Footer.vue';
-import Header1 from '@/components/Header1.vue';
+import Header from '@/components/Header.vue';
 import { ref } from 'vue';
 
 const name = ref('');
@@ -63,7 +63,7 @@ const enviarDades = () => {
 </script>
 
 <template>
-  <Header1 />
+  <Header />
   <div class="contact-container">
     <h1>Contacto</h1>
     <form @submit.prevent="enviarDades">
