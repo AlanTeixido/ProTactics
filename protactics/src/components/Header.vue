@@ -6,15 +6,8 @@
       <img src="../assets/img/logo.png" alt="Icon" class="nav-icon" />
       <RouterLink to="/perfil">PERFIL</RouterLink>
       <RouterLink to="/contact">CONTACTE</RouterLink>
-      <RouterLink to="/entrenamiento">ENTRENAMIENTO</RouterLink>
       <RouterView />
-    </nav>
-    <div class="intro">
-      <h1>PROTACTICS</h1>
-      <p>¡Conecta, crea gana!</p>
-      <button class="cta-button">Empezar</button>
-    </div>
-    
+    </nav>   
   </header>
 </template>
 
@@ -29,28 +22,6 @@ import { RouterLink, RouterView } from 'vue-router';
   justify-content: center;
   align-items: center;
   position: relative;
-  height: 600px; 
-}
-
-.header h1{
-  color: white;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1000%;
-
-}
-
-span{
-  font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
-
-}
-
-.banner {
-  width: 100%;
-  top: 5%;
-  position: absolute; 
-  z-index: -1; 
-  filter: brightness(70%);
 }
 
 .nav {
@@ -70,7 +41,7 @@ span{
 .nav a {
   font-size: 1.1rem;
   text-decoration: none;
-  color: white;
+  color: rgb(48, 48, 48);
   transition: color 0.3s;
 }
 
@@ -87,36 +58,6 @@ span{
 
 .nav-icon:hover {
   transform: scale(1.1) rotateX(30deg) rotateY(15deg);
-}
-
-.intro {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  color: white;
-  margin-top: 5%;
-}
-
-.intro p{
-  margin-top: -5%;
-}
-
-.cta-button {
-  padding: 0.8rem 1.5rem;
-  background-color: transparent;
-  color: white;
-  border: 2px white solid;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: 0.3s ease;
-  margin-top: 1rem;
-}
-
-.cta-button:hover {
-  transform: scale(1.1);
 }
 
 </style>
