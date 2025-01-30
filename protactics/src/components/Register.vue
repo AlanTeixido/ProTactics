@@ -19,7 +19,7 @@
       <p class="login-link">
         ¿Ya tienes cuenta? <RouterLink to="/login" class="link">Inicia sesión</RouterLink>
       </p>
-      <RouterLink to="/" class="back-home-btn">Volver al inicio</RouterLink>  <!-- Mover al final y centrado -->
+      <RouterLink to="/" class="back-home-btn">Volver al inicio</RouterLink>  <!-- Botón de volver al inicio -->
     </div>
   </template>
   
@@ -34,6 +34,13 @@
   
   // Función para registrar al usuario
   const register = async () => {
+    // Verificar si todos los campos están completos
+    if (!username.value || !email.value || !password.value || !confirmPassword.value) {
+      alert('Por favor, completa todos los campos');
+      return;
+    }
+  
+    // Verifica que las contraseñas coincidan
     if (password.value !== confirmPassword.value) {
       alert('Las contraseñas no coinciden');
       return;
@@ -41,9 +48,9 @@
   
     try {
       const response = await axios.post('https://protactics-api.onrender.com/auth/register', {
-        nombre_usuario: username.value,
-        correo: email.value,
-        password: password.value,
+        nombre_usuario: username.value,  // De acuerdo con la API, debe ser 'nombre_usuario'
+        correo: email.value,             // 'correo' es el nombre correcto
+        password: password.value,       // 'password' debería ser la contraseña sin cifrar
       });
   
       if (response.data.token) {

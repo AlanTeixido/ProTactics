@@ -39,7 +39,13 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: Register,  
+    },
+    {
+      path: '/perfil',
+      name: 'perfil',
+      component: () => import('../views/PerfilView.vue')  // Asegúrate de tener esta vista
     }
+    
   ],
 })
 
