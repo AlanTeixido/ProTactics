@@ -1,8 +1,7 @@
 import './assets/main.css'
-
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from './router'; // Importa el router
+import router from './router'; 
 import axios from 'axios';
 
 // Configurar la URL base de la API
