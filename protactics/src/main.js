@@ -4,8 +4,8 @@ import App from './App.vue';
 import router from './router'; 
 import axios from 'axios';
 
-// Configurar la URL base de la API
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'https://protactics-api.onrender.com';
+
 
 // Prueba de conexión a la API
 axios.get('/usuarios')
@@ -15,5 +15,5 @@ axios.get('/usuarios')
 const app = createApp(App);
 app.config.globalProperties.$axios = axios;
 
-app.use(router); // 👉 Agregar Vue Router a la aplicación
+app.use(router);
 app.mount('#app');
