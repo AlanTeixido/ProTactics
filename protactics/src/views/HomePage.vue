@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HeaderSection />
+    <HeaderSection></HeaderSection>
     <main>
       <div class="intro">
         <h1>PROTACTICS</h1>
@@ -18,12 +18,12 @@
 </template>
 
 <script setup>
-import Header from '../components/HeaderSection.vue'
+import HeaderSection from '@/components/HeaderSection.vue';
+import FooterSection from '@/components/FooterSection.vue';
 import MainSection from '../components/MainSection.vue'
 import LogosSection from '../components/LogosSection.vue'
-import Footer from '../components/FooterSection.vue'
 import Slider from '../components/Slider.vue'
-import ThreeText from '@/components/ThreeText.vue'
+import ThreeText from '../components/ThreeText.vue'
 </script>
 
 <style scoped>

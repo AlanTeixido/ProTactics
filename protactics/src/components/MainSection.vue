@@ -1,9 +1,7 @@
 <template>
   <section class="main-section">
     <div class="section">
-      <img class="mac" src="../assets/img/mac.png" alt="">
-      <img class="estadistica" src="../assets/img/estadistica.png" alt="">
-
+      <img class="estadistica" src="../assets/img/dispositivos.png" alt="">
       <div class="text">
         <h1>Crea y personaliza tus entrenamientos</h1>
         <p>
