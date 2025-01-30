@@ -19,7 +19,19 @@ const posts = ref([
   },
   {
     id: 3,
-    username: '@danielr_99',
+    username: '@gallardo4',
+    image: 'https://via.placeholder.com/150',
+    description: 'Revisando las últimas tendencias en desarrollo web para 2025.'
+  },
+  {
+    id: 4,
+    username: '@alanteixi_05',
+    image: 'https://via.placeholder.com/150',
+    description: 'Revisando las últimas tendencias en desarrollo web para 2025.'
+  },
+  {
+    id: 5,
+    username: '@adrirodriguez1',
     image: 'https://via.placeholder.com/150',
     description: 'Revisando las últimas tendencias en desarrollo web para 2025.'
   }
@@ -54,10 +66,11 @@ const posts = ref([
 .dashboard-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 100px 20px 20px; 
   background-color: #f4f4f9;
   border-radius: 8px;
 }
+
 
 h1 {
   text-align: center;

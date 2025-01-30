@@ -1,6 +1,6 @@
 <script setup>
 import Footer from '@/components/Footer.vue';
-import Header1 from '@/components/Header1.vue';
+import Header from '@/components/Header.vue';
 import { ref } from 'vue';
 
 // Datos del usuario
@@ -18,7 +18,7 @@ const user = ref({
 </script>
 
 <template>
-  <Header1 />
+  <Header/>
   <div class="profile-container">
     <div class="profile-card">
       <div class="profile-header">
@@ -54,7 +54,7 @@ const user = ref({
 .profile-container {
   display: flex;
   justify-content: center;
-  padding: 40px;
+  padding: 100px 20px 20px; 
 }
 
 .profile-card {

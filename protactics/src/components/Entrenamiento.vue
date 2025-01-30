@@ -41,8 +41,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 100px 20px 20px; 
 }
+
 
 /* Grid de imágenes */
 .grid {

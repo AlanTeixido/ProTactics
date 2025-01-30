@@ -111,7 +111,7 @@ const enviarDades = () => {
 <style scoped>
 .contact-container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 100px auto;
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
