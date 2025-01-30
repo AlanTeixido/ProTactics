@@ -6,6 +6,7 @@
         <h1>PROTACTICS</h1>
         <p>¡Conecta, crea gana!</p>
         <button class="cta-button">Empezar</button>
+        <img src="../assets/img/FondoHome2.png" alt="">
       </div>
       <MainSection />
       <LogosSection />
@@ -35,12 +36,21 @@ import ThreeText from '@/components/ThreeText.vue'
   color: rgb(48, 48, 48);
   margin-top: 20%;
   margin-bottom: 20%;
+  position: relative;
 }
 
 .intro h1 {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1000%;
   color: rgb(48, 48, 48);
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+img {
+  width: 80%;
+  position: absolute;
+  z-index: -1;
+  opacity: 50%;
 }
 
 .cta-button {
