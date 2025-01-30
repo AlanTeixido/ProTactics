@@ -3,7 +3,7 @@
       <h2 class="register-title">Regístrate</h2>
       <form @submit.prevent="register" class="register-form">
         <div class="input-group">
-          <input v-model="username" type="text" placeholder="Usuario" required class="input-field" />
+          <input v-model="username" type="text" placeholder="Nombre de usuario" required class="input-field" />
         </div>
         <div class="input-group">
           <input v-model="email" type="email" placeholder="Correo Electrónico" required class="input-field" />
@@ -19,53 +19,57 @@
       <p class="login-link">
         ¿Ya tienes cuenta? <RouterLink to="/login" class="link">Inicia sesión</RouterLink>
       </p>
-      <RouterLink to="/" class="back-home-btn">Volver al inicio</RouterLink>  <!-- Botón de volver al inicio -->
+      <RouterLink to="/" class="back-home-btn">Volver al inicio</RouterLink>
     </div>
   </template>
   
   <script setup>
   import { ref } from 'vue';
   import axios from 'axios';
+  import { useRouter } from 'vue-router';
   
   const username = ref('');
   const email = ref('');
   const password = ref('');
   const confirmPassword = ref('');
+  const router = useRouter();  // Usar para redirigir después de registrar
   
   // Función para registrar al usuario
   const register = async () => {
-    // Verificar si todos los campos están completos
-    if (!username.value || !email.value || !password.value || !confirmPassword.value) {
-      alert('Por favor, completa todos los campos');
-      return;
-    }
-  
-    // Verifica que las contraseñas coincidan
-    if (password.value !== confirmPassword.value) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-  
-    try {
-      const response = await axios.post('https://protactics-api.onrender.com/auth/register', {
-        nombre_usuario: username.value,  // De acuerdo con la API, debe ser 'nombre_usuario'
-        correo: email.value,             // 'correo' es el nombre correcto
-        password: password.value,       // 'password' debería ser la contraseña sin cifrar
-      });
-  
-      if (response.data.token) {
-        localStorage.setItem('authToken', response.data.token);
-        alert('Registro exitoso');
-      }
-    } catch (error) {
-      console.error('Error al registrarse', error);
-      alert('Error en el registro');
-    }
-  };
+  // Verifica si las contraseñas coinciden
+  if (password.value !== confirmPassword.value) {
+    alert('Las contraseñas no coinciden');
+    return;
+  }
+
+  try {
+    // Envía la solicitud de registro
+    const response = await axios.post('https://protactics-api.onrender.com/usuarios', {
+      nombre_usuario: username.value,
+      correo: email.value,
+      contrasena_hash: password.value,  // Enviar la contraseña sin encriptar, ya que lo hará el backend
+      rol: 'usuario',  // Por defecto, el rol es 'usuario'
+    });
+
+    // Si el registro es exitoso
+    alert('Registro exitoso');
+
+    // Guardar datos de usuario en localStorage
+    localStorage.setItem('authToken', response.data.token);
+    localStorage.setItem('username', response.data.nombre_usuario);
+    localStorage.setItem('userEmail', response.data.correo);
+
+    // Redirigir al perfil
+    router.push('/perfil');
+  } catch (error) {
+    console.error('Error en el registro', error);
+    alert('Error al registrarse');
+  }
+};
+
   </script>
   
   <style scoped>
-  /* Estilos generales del formulario de registro */
   .register-container {
     max-width: 400px;
     margin: 50px auto;
@@ -138,8 +142,8 @@
   
   .login-link .link:hover {
     text-decoration: underline;
-}
-  /* Botón "Volver al inicio" */
+  }
+  
   .back-home-btn {
     display: block;
     margin-top: 20px;
