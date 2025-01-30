@@ -79,13 +79,4 @@
 .grid-item:hover img {
   transform: scale(1.1);
 }
-
-/* Footer */
-.footer {
-  margin-top: 30px;
-  text-align: center;
-  padding: 10px;
-  background: #f5f5f5;
-  width: 100%;
-}
 </style>
