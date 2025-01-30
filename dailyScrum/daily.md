@@ -70,3 +70,14 @@
 - **Modificacion CSS HTML:** Adri, Alex
 - **Servidor API + Base Dades:** Alan
 - **Proofhub:** Alex y Alan
+
+---
+
+## **Fecha:** 30/01/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **Modificacion CSS :** Adri
+- **Implementacions Vistas :** Alex
+- **Funcionamiento Login:** Alan
+- **Proofhub:** Alex y Alan
