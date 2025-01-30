@@ -121,7 +121,7 @@ body{
 
 .slider {
   width: 100%;
-  height: 100vh; 
+  height: 550px;
   overflow: hidden; 
   position: relative;
   margin-top: 6%;
@@ -178,15 +178,22 @@ body{
   animation-delay: 8s;
 }
 
-
-.three-text{
+.three-text {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2%;
-  width: 100%;
-  margin: 2%;
+  gap: 30px; 
+  padding: 5% 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
+.three-text h2 {
+  margin-bottom: 10px;
+}
+
+.three-text p {
+  text-align: justify;
+}
 
 /* Peu de pàgina */
 .footer {

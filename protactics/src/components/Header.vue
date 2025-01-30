@@ -44,10 +44,12 @@ import { RouterLink, RouterView } from 'vue-router';
   text-decoration: none;
   color: rgb(48, 48, 48);
   transition: color 0.3s;
+  transition: 1s;
 }
 
 .nav a:hover {
   color: hsla(180, 100%, 35%, 1);
+  transform: scale(1.1);
 }
 
 .nav-icon {
