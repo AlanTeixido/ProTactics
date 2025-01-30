@@ -1,6 +1,7 @@
 <script setup>
 import Footer from '@/components/Footer.vue';
 import Header from '@/components/Header.vue';
+import Introduction from '@/components/Introduction.vue';
 import { ref } from 'vue';
 
 // Datos de ejemplo para los posts
@@ -40,9 +41,8 @@ const posts = ref([
 
 <template>
     <Header/>
+    <Introduction/>
   <div class="dashboard-container">
-    <h1>Dashboard de Posts</h1>
-
     <div v-if="posts.length" class="posts-list">
       <div v-for="post in posts" :key="post.id" class="post-card">
         <div class="post-header">
@@ -66,9 +66,11 @@ const posts = ref([
 .dashboard-container {
   max-width: 800px;
   margin: 0 auto;
-  padding: 100px 20px 20px; 
+  padding: 20px; 
   background-color: #f4f4f9;
   border-radius: 8px;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 
