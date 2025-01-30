@@ -63,21 +63,49 @@ img {
   position: absolute;
   z-index: -1;
   right: 6%;
-
 }
 
 .cta-button {
-  background-color: transparent;
-  color: rgb(255, 255, 255);
-  border: 2px rgb(255, 254, 254) solid;
-  border-radius: 25px;
+  margin-top: 10px;
+  position: relative;
+  display: inline-block;
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid transparent;
+  border-radius: 50px;
+  background-image: linear-gradient(to right, #0098e5, #00a86b);
+  color: white;
+  text-align: center;
   cursor: pointer;
-  font-size: 1rem;
-  transition: 0.3s ease;
-  margin-top: 1rem;
+  transition: 0.4s;
+  outline: none;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50px;
+  transition: all 0.3s ease-in-out;
 }
 
 .cta-button:hover {
   transform: scale(1.1);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button:hover::before {
+  transform: scale(1.3);
+}
+
+.cta-button:focus {
+  outline: none;
 }
 </style>
