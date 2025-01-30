@@ -2,6 +2,7 @@ import './assets/main.css'
 
 import { createApp } from 'vue';
 import App from './App.vue';
+import router from './router'; // Importa el router
 import axios from 'axios';
 
 // Configurar la URL base de la API
@@ -14,4 +15,6 @@ axios.get('/usuarios')
 
 const app = createApp(App);
 app.config.globalProperties.$axios = axios;
+
+app.use(router); // 👉 Agregar Vue Router a la aplicación
 app.mount('#app');
