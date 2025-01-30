@@ -1,6 +1,6 @@
 ## 🌍 Proyecto Frontend
 🔗 **URL del frontend en Vercel:**  
-[ProTactics en Vercel](https://pro-tactics-7av74lywc-alanteixidos-projects.vercel.app/)
+[ProTactics en Vercel](https://pro-tactics-28f8-nxtdhr96c-alanteixidos-projects.vercel.app/)
 
 ---
 
