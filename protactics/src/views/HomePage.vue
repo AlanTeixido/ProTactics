@@ -66,7 +66,7 @@ img {
 }
 
 .cta-button {
-  margin-top: 10px;
+  margin-top: 5px;
   position: relative;
   display: inline-block;
   padding: 20px 40px;
