@@ -16,21 +16,21 @@
       <div class="footer-section">
         <p class="text-footer">Métodos de Pago</p>
         <ul class="payment-methods">
-          <li><img src="../assets/img/bizum.png" alt="Bizum" /></li>
-          <li><img src="../assets/img/mastercard.png" alt="Mastercard" /></li>
-          <li><img src="../assets/img/paypal.png" alt="PayPal" /></li>
-          <li><img src="../assets/img/googlePay.png" alt="Google Pay" /></li>
-          <li><img src="../assets/img/applePay.png" alt="Apple Pay" /></li>
+          <li><img src="../assets/img/bizum.png"  /></li>
+          <li><img src="../assets/img/mastercard.png"  /></li>
+          <li><img src="../assets/img/paypal.png" /></li>
+          <li><img src="../assets/img/googlepay.png"  /></li>
+          <li><img src="../assets/img/applePay.png"  /></li>
         </ul>
       </div>
 
       <!-- Redes sociales -->
       <div class="footer-section">
         <ul class="social-links">
-          <li><a href="#"><img src="../assets/img/gmail.png" alt="WhatsApp" /></a></li>
-          <li><a href="#"><img src="../assets/img/instagram.png" alt="Instagram" /></a></li>
+          <li><a href="#"><img src="../assets/img/gmail.png" /></a></li>
+          <li><a href="#"><img src="../assets/img/instagram.png" /></a></li>
           <li><a href="#"><img src="../assets/img/linkedin.png" /></a></li>
-          <li><a href="#"><img src="../assets/img/x.png" alt="X" /></a></li>
+          <li><a href="#"><img src="../assets/img/x.png" /></a></li>
         </ul>
       </div>
 
