@@ -20,7 +20,7 @@
           <li><img src="../assets/img/mastercard.png"  /></li>
           <li><img src="../assets/img/paypal.png" /></li>
           <li><img src="../assets/img/googlepay.png"  /></li>
-          <li><img src="../assets/img/applePay.png"  /></li>
+          <li><img src="../assets/img/applepay.png"  /></li>
         </ul>
       </div>
 
