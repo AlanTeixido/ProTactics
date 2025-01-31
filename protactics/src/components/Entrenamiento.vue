@@ -1,34 +1,40 @@
 <template>
-    <div class="container">
-      <!-- Grid de imágenes -->
-      <div class="grid">
-        <div 
-          v-for="(imagen, index) in imagenes" 
-          :key="index" 
-          class="grid-item">
-          <img :src="imagen.src" :alt="imagen.alt" />
-        </div>
+  <div class="container">
+    <!-- Container de imágenes -->
+    <div class="grid">
+      <div class="grid-item">
+        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 1">
+      </div>
+      <div class="grid-item">
+        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 2">
+      </div>
+      <div class="grid-item">
+        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 3">
+      </div>
+      <div class="grid-item">
+        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 4">
+      </div>
+      <div class="grid-item">
+        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 5">
+      </div>
+      <div class="grid-item">
+        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 6">
+      </div>
+      <div class="grid-item">
+        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 7">
+      </div> 
+      <div class="grid-item">
+        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 8">
       </div>
     </div>
-  </template>
+  </div>
+</template>
   
   <script setup>
-  import { ref } from "vue";
   import { useRouter } from "vue-router";
-  
+
   const router = useRouter();
-  
-  // Lista de imágenes con ID para navegación
-  const imagenes = ref([
-  { id: 1, src: "/img/deporte1.jpg", alt: "Deporte 1" },
-  { id: 2, src: "/img/deporte2.jpg", alt: "Deporte 2" },
-  { id: 3, src: "/img/deporte3.jpg", alt: "Deporte 3" },
-  { id: 4, src: "/img/deporte4.jpg", alt: "Deporte 4" },
-  { id: 5, src: "/img/deporte5.jpg", alt: "Deporte 5" },
-  { id: 6, src: "/img/deporte6.jpg", alt: "Deporte 6" },
-  { id: 7, src: "/img/deporte7.jpg", alt: "Deporte 7" },
-  { id: 8, src: "/img/deporte8.jpg", alt: "Deporte 8" },
-]);
+
 
   
   // Navegación al detalle de la imagen
@@ -48,7 +54,7 @@
 /* Grid de imágenes */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   width: 80%;
   max-width: 1200px;
