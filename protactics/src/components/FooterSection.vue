@@ -1,33 +1,54 @@
-<template>
-    <footer class="footer">
-          <div class="contact-info">
-            <h4>CONTACTANOS</h4>
-            <p>(04) 298 3985 2092</p>
-            <p>+34 935 751 489</p>
-            <p>info@protactics.com</p>
-          </div>
-          <div class="payment-methods">
-            <img src="../assets/img/paypal.png" alt="PayPal" />
-            <img src="../assets/img/bizum.png" alt="Bizum" />
-            <img src="../assets/img/mastercard.png" alt="MasterCard" />
-            <img src="../assets/img/applepay.png" alt="Apple Pay" />
-            <img src="../assets/img/googlepay.png" alt="Google Pay" />
-          </div>
-          <div class="social-icons">
-            <img src="../assets/img/instagram.png" alt="Instagram" />
-            <img src="../assets/img/x.png" alt="X" />
-            <img src="../assets/img/gmail.png" alt="Gmail" />
-            <img src="../assets/img/linkedin.png" alt="LinkedIn" />
-          </div>
-      </footer>
-      
-  </template>
-  
-  <script setup>
-  // No hay lógica específica para esta sección por ahora.
-  </script>
-  
-  <style scoped>
+<script setup>
+</script>
 
-  </style>
-  
+<template>
+  <footer>
+    <div class="footer-container">
+
+      <!-- Información de contacto -->
+      <div class="footer-section">
+        <h2>Contactanos</h2>
+        <p>Calle Falsa 123, Ciudad, País</p>
+        <p>+34 123 456 789</p>
+      </div>
+
+      <!-- Métodos de pago -->
+      <div class="footer-section">
+        <p class="text-footer">Métodos de Pago</p>
+        <ul class="payment-methods">
+          <li><img src="../assets/img/bizum.png" alt="Bizum" /></li>
+          <li><img src="../assets/img/mastercard.png" alt="Mastercard" /></li>
+          <li><img src="../assets/img/paypal.png" alt="PayPal" /></li>
+          <li><img src="../assets/img/googlePay.png" alt="Google Pay" /></li>
+          <li><img src="../assets/img/applePay.png" alt="Apple Pay" /></li>
+        </ul>
+      </div>
+
+      <!-- Redes sociales -->
+      <div class="footer-section">
+        <ul class="social-links">
+          <li><a href="#"><img src="../assets/img/gmail.png" alt="WhatsApp" /></a></li>
+          <li><a href="#"><img src="../assets/img/instagram.png" alt="Instagram" /></a></li>
+          <li><a href="#"><img src="../assets/img/linkedin.png" /></a></li>
+          <li><a href="#"><img src="../assets/img/x.png" alt="X" /></a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Sección legal -->
+    <div class="legals">
+      <p>&copy; ProTactics</p>
+      <p>|</p>
+
+      <p>Contacto</p>
+
+      <p>Aviso legal</p>
+      <p>Política de privacidad</p>
+    </div>
+  </footer>
+</template>
+
+<style scoped>
+
+</style>

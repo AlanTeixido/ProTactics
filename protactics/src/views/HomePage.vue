@@ -5,7 +5,7 @@
       <div class="intro">
         <h1>PROTACTICS</h1>
         <p>¡Conecta, crea gana!</p>
-        <button class="cta-button">Empezar</button>
+        <RouterLink :to="`/login`"><button class="cta-button">Empezar</button></RouterLink>
         <img src="../assets/img/FondoHome2.png" alt="">
       </div>
       <MainSection />
@@ -55,7 +55,8 @@ import ThreeText from '../components/ThreeText.vue'
 }
 
 .intro p {
-  margin-top: -1.5rem;
+  margin-top: -2.5rem;
+  margin-bottom: 1rem;
 }
 
 img {
@@ -69,7 +70,7 @@ img {
   margin-top: 5px;
   position: relative;
   display: inline-block;
-  padding: 20px 40px;
+  padding: 20px 30px;
   font-size: 1.2rem;
   font-weight: 700;
   text-transform: uppercase;

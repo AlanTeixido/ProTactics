@@ -22,8 +22,11 @@ body{
   justify-content: center;
   align-items: center;
   position: relative;
+
 }
 .nav {
+  font-size: 100%;
+  background-color: #1b1b1b;
   position: fixed; 
   top: 0;
   left: 50%;
@@ -32,28 +35,23 @@ body{
   justify-content: center; 
   align-items: center;
   gap: 5%;
-  background: transparent;
-  padding: 1.5rem 0;
+  padding: 1.5rem;
   z-index: 1000;
   text-transform: none;
   transform: translateX(-50%); /* Centra el nav horizontalmente */
   margin-top: 2%;
-  border-radius: 40px 40px;
+  border-radius: 50px;
 }
-.nav.scrolled {
-  background: rgba(61, 61, 61, 0.397); /* Fondo oscuro con opacidad */
-  border-radius: 40px 40px; /* Bordes redondeados */
-}
-.nav a {
-  font-size: 90%;
+.nav2 a {
   padding: 10px 15px; /* Añadir padding a los enlaces */
   text-decoration: none;
   color: hsla(180, 100%, 35%, 1);
   background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194)); /* Degradado de azul a verde */
   background-clip: text; /* Aplica el degradado solo al texto */
   transition: 0.3s;
+  font-weight: 500;
 }
-.nav a:hover {
+.nav2 a:hover {
   transform: scale(1.1);
   color: transparent;
   filter: brightness(1.2); 
@@ -67,6 +65,73 @@ body{
 }
 .nav-icon:hover {
   transform: scale(1.1) rotateX(30deg) rotateY(15deg);
+}
+.nav-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.nav-wrapper {
+  flex: 1;
+  /* Ocupa todo el espacio disponible */
+  display: flex;
+  justify-content: center;
+  /* Centra el menú */
+}
+
+
+.log-regist {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.welcome-message {
+  color: #0098e5;
+  font-size: 1.1rem;
+}
+
+.profile-pic {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logout-btn {
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+.login-register {
+  display: flex;
+  gap: 10px;
+}
+
+.login-register-btn {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194)); /* Degradado de azul a verde */
+  padding: 10px 15px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados */
+  transition: 0.3s; /* Suaviza los cambios */
 }
 
 
@@ -115,8 +180,7 @@ body{
 .logos-section {
   display: block;
   justify-content: center;
-  gap: 2rem;
-  padding: 2rem 0;
+  padding: 5rem 0;
   border-radius: 10px;
   margin-bottom: 3rem;
 }

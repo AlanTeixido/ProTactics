@@ -32,6 +32,7 @@
   
   <script setup>
   import { useRouter } from "vue-router";
+import FooterSection from "./FooterSection.vue";
 
   const router = useRouter();
 
