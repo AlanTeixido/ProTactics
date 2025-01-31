@@ -14,6 +14,7 @@ body{
   color: white;
 }
 
+
 /* HEADER */
 .header {
   width: 100%;
@@ -22,63 +23,68 @@ body{
   align-items: center;
   position: relative;
 }
-
 .nav {
   position: fixed; 
-  top: 1%;
-  left: 0;
-  width: 100%;
+  top: 0;
+  left: 50%;
+  width: 50%;
   display: flex;
   justify-content: center; 
-  gap: 3rem;
   align-items: center;
-  background-color: transparent; 
+  gap: 5%;
+  background: transparent;
   padding: 1.5rem 0;
-  z-index: 10;
+  z-index: 1000;
+  text-transform: none;
+  transform: translateX(-50%); /* Centra el nav horizontalmente */
+  margin-top: 2%;
+  border-radius: 40px 40px;
 }
-
+.nav.scrolled {
+  background: rgba(61, 61, 61, 0.397); /* Fondo oscuro con opacidad */
+  border-radius: 40px 40px; /* Bordes redondeados */
+}
 .nav a {
-  font-size: 1.1rem;
+  font-size: 90%;
+  padding: 10px 15px; /* Añadir padding a los enlaces */
   text-decoration: none;
-  color: rgb(0, 195, 255);
+  color: hsla(180, 100%, 35%, 1);
   background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194)); /* Degradado de azul a verde */
   background-clip: text; /* Aplica el degradado solo al texto */
   transition: 0.3s;
 }
-
 .nav a:hover {
-  color: hsla(180, 100%, 35%, 1);
   transform: scale(1.1);
   color: transparent;
   filter: brightness(1.2); 
   text-shadow: none;
 }
-
 .nav-icon {
   width: 50px;
   height: 50px;
   display: inline-block;
   transition: transform 0.3s;
 }
-
 .nav-icon:hover {
   transform: scale(1.1) rotateX(30deg) rotateY(15deg);
 }
 
-/* Secció principal */
+
+/* MAIN SECTION */
 .section {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   margin-right: 5%;
 }
-
 .text{
   width: 100%;
   justify-content: center;
-  align-items: right;
-  margin-top: 36%;
+  margin-top: 30%;
 }
-
+.text p{
+  width: 70%;
+  margin-left: 15%;
+}
 .main-section {
   padding: 4rem 2rem;
   text-align: center;
@@ -86,38 +92,20 @@ body{
   margin-bottom: 3rem;
   margin-top: 10%;
 }
-
 .main-section h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
 }
-
 .main-section p {
   font-size: 1.2rem;
   margin-bottom: 2rem;
 }
 
-.cta-button {
-  padding: 0.8rem 1.5rem;
-  background-color: transparent;
-  color: white;
-  border: 2px white solid;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: 1s;
-}
-
-.cta-button:hover {
-  transform: scale(1.1);
-}
-
 .estadistica{
-  width: 80%;
-  margin: 2%; 
+  width: 75%;
+  margin-left: 8%; 
   transition: 1s;
 }
-
 .estadistica:hover{
   transform: scale(1.1);
 }
@@ -125,21 +113,30 @@ body{
 
 /* Logos */
 .logos-section {
-  display: flex;
+  display: block;
   justify-content: center;
   gap: 2rem;
   padding: 2rem 0;
-  background-color: var(--color-background-soft);
   border-radius: 10px;
   margin-bottom: 3rem;
 }
-
+.logos-section h3{
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 2%;
+}
 .logos-section img {
   height: 90px;
   object-fit: contain;
 }
+.logos{
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+}
 
-/* Contenedor del slider */
+
+/* Slider */
 .title{
   font-size: 500%;
   text-transform: uppercase;
@@ -220,7 +217,7 @@ body{
 .three-text {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px; 
+  gap: 8%; 
   padding: 5% 10%;
   margin-top: 5%;
   margin-bottom: 5%;
@@ -232,72 +229,146 @@ body{
 
 .three-text p {
   text-align: justify;
+  line-height: 160%;
+  margin: 2%;
 }
+
 
 /* DASHBOARD */
 .intro{
   margin-top: 10%;
   text-align: center;
 }
-
-/* Peu de pàgina */
-.footer {
-  background-color: black;
-  padding: 3rem 0;
+.intro h1{
+  font-size: 200%;
+  font-weight: 400;
+}
+.dashboard-container {
+  width: 40%;
+  margin: 0 auto;
+  padding: 20px; 
+  border-radius: 8px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+.posts-list {
   display: flex;
-  justify-content: space-between; 
-  align-items: center; 
-  padding-left: 30px;
-  padding-right: 30px;
+  flex-direction: column;
+  gap: 30px;
 }
 
-.footer h4{
+.post-card {
+  background-color: #52525254;
+  padding: 30px;
+  border-radius: 8px;
+
+}
+
+.post-header {
   font-weight: bold;
+  margin-bottom: 10px;
+  color: #ffffff;
 }
 
-/* Contingut al mig */
-.footer-content {
+.username {
+  font-size: 16px;
+  color: #007bff;
+}
+
+.post-body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
 }
 
-/* Informació de contacte (a la esquerra) */
-.contact-info {
-  text-align: left;
-  justify-content: left;
-  margin-left: 5%;
-  font-weight: 200;
+.post-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  border-radius: 8px;
 }
 
-/* Metodes de Pagament (centre) */
+.description {
+  font-size: 14px;
+  color: #ffffff;
+}
+
+
+/* FOOTER */
+footer {
+  background-color: rgb(8, 8, 8);
+  padding: 20px 10%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+  flex-wrap: wrap;
+  /* Asegura que todo se ajuste en pantallas pequeñas */
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  /* Alinea verticalmente */
+  margin-top: 8%;
+}
+
+.footer-section {
+  margin: 5%;
+  text-align: center;
+}
+
+.logo-container {
+  text-align: center;
+}
+
+.logo {
+  width: 80px;
+  /* Ajusta el tamaño del logo */
+}
+
+.social-links,
 .payment-methods {
   display: flex;
-  gap: 10px;
   justify-content: center;
   align-items: center;
+  gap: 10px;
+  /* Espacio entre los íconos */
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-/* Logos Reds Socials a la dreta */
-.social-icons {
+.text-footer {
+  font-size: 0.5em;
+  margin-bottom: 10px;
+  /* Espacio entre el texto y las imágenes */
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.social-links img {
+  width: 25px;
+  /* Tamaño de las imágenes de redes sociales */
+}
+
+.payment-methods img {
+  width: 50px;
+  /* Tamaño de las imágenes de los métodos de pago */
+}
+
+.legals {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 80%;
   display: flex;
-  gap: 1rem;
-  justify-content: flex-end;
-  text-align: right;
-  margin-right: 5%;
+  justify-content: center;
+  gap: 2rem;
+  /* Espacio entre los enlaces legales */
 }
 
-.payment-methods img{
-  width: 4%;
-  transition: 0.5s;
-}
 
-.social-icons img {
-  width: 35px;
-  object-fit: contain;
-  transition: transform 0.3s;
-}
-
-.payment-methods img:hover{
-  transform: scale(1.1);
-}
 
