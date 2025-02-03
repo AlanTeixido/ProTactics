@@ -1,5 +1,15 @@
 <template>
-    <div class="register-container">
+  <div class="register-container">
+    <div class="intro-register">
+      <RouterLink to="/" class="back-home-btn">
+        <img src="../assets/img/logo.png" alt="Logo">
+      </RouterLink>
+      <h1>&copy; ProTactics</h1>
+    </div>
+
+    <div class="separator"></div>
+
+    <div class="form-register">
       <h2 class="register-title">Regístrate</h2>
       <form @submit.prevent="register" class="register-form">
         <div class="input-group">
@@ -19,148 +29,154 @@
       <p class="login-link">
         ¿Ya tienes cuenta? <RouterLink to="/login" class="link">Inicia sesión</RouterLink>
       </p>
-      <RouterLink to="/" class="back-home-btn">Volver al inicio</RouterLink>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref } from 'vue';
-  import axios from 'axios';
-  import { useRouter } from 'vue-router';
-  
-  const username = ref('');
-  const email = ref('');
-  const password = ref('');
-  const confirmPassword = ref('');
-  const router = useRouter();  // Usar para redirigir después de registrar
-  
-  // Función para registrar al usuario
-  const register = async () => {
-  // Verifica si las contraseñas coinciden
+    <img src="../assets/img/dispositivos.png" alt="" class="fondo-register">
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
+
+const username = ref('');
+const email = ref('');
+const password = ref('');
+const confirmPassword = ref('');
+const router = useRouter();  // Usar para redirigir después de registrar
+
+// Función para registrar al usuario
+const register = async () => {
   if (password.value !== confirmPassword.value) {
     alert('Las contraseñas no coinciden');
     return;
   }
 
   try {
-    // Envía la solicitud de registro
     const response = await axios.post('https://protactics-api.onrender.com/usuarios', {
       nombre_usuario: username.value,
       correo: email.value,
-      contrasena_hash: password.value,  // Enviar la contraseña sin encriptar, ya que lo hará el backend
+      contrasena: password.value,  // Corregido el campo
       rol: 'usuario',  // Por defecto, el rol es 'usuario'
     });
 
-    // Si el registro es exitoso
-    alert('Registro exitoso');
-
-    // Guardar datos de usuario en localStorage
-    localStorage.setItem('authToken', response.data.token);
-    localStorage.setItem('username', response.data.nombre_usuario);
-    localStorage.setItem('userEmail', response.data.correo);
-
-    // Redirigir al perfil
-    router.push('/perfil');
+    if (response.data.token) {
+      localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('username', response.data.nombre_usuario);
+      localStorage.setItem('userEmail', response.data.correo);
+      alert('Registro exitoso');
+      router.push('/perfil');
+    }
   } catch (error) {
     console.error('Error en el registro', error);
     alert('Error al registrarse');
   }
 };
+</script>
 
-  </script>
-  
-  <style scoped>
-  .register-container {
-    max-width: 400px;
-    margin: 50px auto;
-    padding: 30px;
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    text-align: center;
-    color: white;
-  }
-  
-  .register-title {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #0098e5;
-  }
-  
-  .register-form {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .input-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .input-field {
-    padding: 12px;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    background-color: #2a2a2a;
-    color: white;
-    transition: 0.3s;
-  }
-  
-  .input-field:focus {
-    outline: none;
-    border-color: #0098e5;
-  }
-  
-  .submit-btn {
-    background-color: #0098e5;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  
-  .submit-btn:hover {
-    background-color: #0084c2;
-  }
-  
-  .login-link {
-    margin-top: 15px;
-    color: #ccc;
-  }
-  
-  .login-link .link {
-    color: #0098e5;
-    text-decoration: none;
-  }
-  
-  .login-link .link:hover {
-    text-decoration: underline;
-  }
-  
-  .back-home-btn {
-    display: block;
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: #333;
-    color: white;
-    border-radius: 25px;
-    text-decoration: none;
-    font-size: 1rem;
-    cursor: pointer;
-    text-align: center;
-    transition: 0.3s;
-  }
-  
-  .back-home-btn:hover {
-    background-color: #0084c2;
-    transform: translateY(-2px);
-  }
-  </style>
-  
+<style scoped>
+.fondo-register {
+  position: absolute;
+  filter: opacity(10%);
+  z-index: -1;
+  bottom: 2%;
+}
+
+.separator {
+  width: 2px;
+  height: 70%;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+}
+
+.register-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 5%;
+  color: white;
+}
+
+.intro-register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.intro-register h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+  font-size: 4rem;
+}
+
+.intro-register img {
+  width: 20%;
+  margin-right: -75%;
+}
+
+.form-register {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.input-group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+}
+
+.input-field {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: #2a2a2a;
+  color: white;
+  transition: 0.3s;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #0098e5;
+}
+
+.submit-btn {
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  color: white;
+  padding: 15px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: bold;
+  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  transform: scale(1.1);
+}
+
+.login-link {
+  margin-top: 15px;
+  color: #ccc;
+}
+
+.login-link .link {
+  color: #0098e5;
+  text-decoration: none;
+}
+
+.login-link .link:hover {
+  color: #ccc;
+}
+</style>
