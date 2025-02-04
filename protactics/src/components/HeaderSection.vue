@@ -3,6 +3,7 @@
     <nav class="nav-container">
       <div class="nav">
         <RouterLink :to="`/`"><img src="../assets/img/logo.png" alt="Icon" class="nav-icon" /></RouterLink>
+        
         <div class="nav2">
           <RouterLink to="/" class="nav-link">INICIO</RouterLink>
           <RouterLink to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
@@ -30,19 +31,61 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watchEffect, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
+const router = useRouter();
+
+// Variables de usuario
 const isLoggedIn = ref(localStorage.getItem('authToken') !== null);
 const username = ref(localStorage.getItem('username') || 'Usuario');
-const userPic = ref(localStorage.getItem('userPic') || 'defaultProfilePic.jpg'); // Foto de perfil por defecto
+const userPic = ref('https://via.placeholder.com/100'); // Imagen por defecto
+
+// Función para obtener la foto de perfil desde la API
+const fetchProfilePic = async () => {
+  const userId = localStorage.getItem('userId');
+  if (!userId) return;
+
+  try {
+    const response = await axios.get(`https://protactics-api.onrender.com/usuarios/${userId}`);
+    
+    if (response.data.foto_url) {
+      userPic.value = response.data.foto_url;
+      localStorage.setItem('fotoUrl', response.data.foto_url);
+    }
+  } catch (error) {
+    console.error("Error al obtener la foto de perfil:", error);
+  }
+};
+
+// Observar cambios en el localStorage y actualizar dinámicamente
+watchEffect(() => {
+  isLoggedIn.value = localStorage.getItem('authToken') !== null;
+  username.value = localStorage.getItem('username') || 'Usuario';
+
+  // Obtener la foto desde el localStorage primero
+  const storedPic = localStorage.getItem('fotoUrl');
+  if (storedPic) {
+    userPic.value = storedPic;
+  } else {
+    fetchProfilePic(); // Si no está en el localStorage, hacer GET a la API
+  }
+});
 
 // Función de logout
 const logout = () => {
-  localStorage.removeItem('authToken');
-  localStorage.removeItem('username');
-  localStorage.removeItem('userPic');
+  localStorage.clear();  // Borra toda la sesión
   isLoggedIn.value = false;
+  userPic.value = 'https://via.placeholder.com/100'; // Reset de la foto de perfil
+  router.push('/'); // Redirige a la página de inicio
 };
+
+// Obtener la foto de perfil al cargar el componente
+onMounted(() => {
+  if (isLoggedIn.value) {
+    fetchProfilePic();
+  }
+});
 </script>
 
-<style scoped></style>
