@@ -38,25 +38,33 @@ const router = useRouter();  // Hacemos uso de useRouter para la navegación pro
 // Función para iniciar sesión
 const login = async () => {
   try {
-    console.log('Datos de inicio de sesión:', { email: email.value, password: password.value });
+    console.log('Iniciant sessió amb:', { email: email.value, password: password.value });
+
     const response = await axios.post('https://protactics-api.onrender.com/auth/login', {
-      correo: email.value,  // Cambié a 'correo' según el backend
-      contrasena: password.value,  // Cambié a 'contrasena' según el backend
+      correo: email.value,
+      contrasena: password.value
     });
+
+    console.log('Resposta del servidor:', response.data);  // 📌 Mira què retorna l'API
 
     if (response.data.token) {
       localStorage.setItem('authToken', response.data.token);
+
+      // ✅ Ara ho agafem de `response.data`
       localStorage.setItem('username', response.data.nombre_usuario);
       localStorage.setItem('userEmail', response.data.correo);
-      alert('Inicio de sesión exitoso');
-      // Redirigir a la página de perfil del usuario después de iniciar sesión
-      router.push('/perfil');  // O la ruta que desees redirigir, como '/dashboard' o '/usuario'
+      localStorage.setItem('userId', response.data.id);
+
+      alert('Sessió iniciada correctament');
+      router.push('/perfil');
     }
   } catch (error) {
-    console.error('Error al iniciar sesión', error);
-    alert('Credenciales incorrectas');
+    console.error('Error en el login:', error);
+    alert('Credencials incorrectes o error en el servidor.');
   }
 };
+
+
 </script>
 
 <style scoped>

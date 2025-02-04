@@ -43,7 +43,7 @@ const username = ref('');
 const email = ref('');
 const password = ref('');
 const confirmPassword = ref('');
-const router = useRouter();  // Usar para redirigir después de registrar
+const router = useRouter();
 
 // Función para registrar al usuario
 const register = async () => {
@@ -53,26 +53,26 @@ const register = async () => {
   }
 
   try {
-    const response = await axios.post('https://protactics-api.onrender.com/usuarios', {
+    // ✅ Usamos el endpoint correcto según auth.js
+    const response = await axios.post('https://protactics-api.onrender.com/auth/register', {
       nombre_usuario: username.value,
       correo: email.value,
-      contrasena: password.value,  // Corregido el campo
-      rol: 'usuario',  // Por defecto, el rol es 'usuario'
+      contrasena: password.value  // YA NO USAMOS contrasena_hash
     });
 
-    if (response.data.token) {
-      localStorage.setItem('authToken', response.data.token);
-      localStorage.setItem('username', response.data.nombre_usuario);
-      localStorage.setItem('userEmail', response.data.correo);
-      alert('Registro exitoso');
-      router.push('/perfil');
-    }
+    alert('Registro exitoso');
+
+    // No se recibe token en el registro, solo confirmación
+    // Puedes hacer que el usuario inicie sesión automáticamente
+    router.push('/login');
+
   } catch (error) {
     console.error('Error en el registro', error);
-    alert('Error al registrarse');
+    alert(error.response?.data?.error || 'Error al registrarse');
   }
 };
 </script>
+
 
 <style scoped>
 .fondo-register {
