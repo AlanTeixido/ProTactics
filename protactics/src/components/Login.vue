@@ -56,7 +56,7 @@ const login = async () => {
       localStorage.setItem('userId', response.data.id);
 
       alert('Sessió iniciada correctament');
-      router.push('/perfil');
+      router.push('/dashboard');
     }
   } catch (error) {
     console.error('Error en el login:', error);
