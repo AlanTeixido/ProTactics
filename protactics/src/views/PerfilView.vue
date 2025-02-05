@@ -22,10 +22,13 @@ const selectedFile = ref(null);
 const loadUserData = async () => {
   try {
     const response = await axios.get(`https://protactics-api.onrender.com/usuarios/${user.value.id}`);
+    
     user.value.trainings = response.data.trainings || 0;
     user.value.shared = response.data.shared || 0;
     user.value.likes = response.data.likes || 0;
     user.value.followers = response.data.followers || 0;
+
+    // Aquí assegurem que la imatge es carrega correctament des de la BD
     if (response.data.foto_url) {
       user.value.profilePicture = response.data.foto_url;
       localStorage.setItem('fotoUrl', response.data.foto_url);
@@ -53,7 +56,7 @@ const uploadPhoto = async () => {
   }
 
   const formData = new FormData();
-  formData.append('foto', selectedFile.value);
+  formData.append('foto', selectedFile.value); // Aquí s'ha de dir 'foto'
   formData.append('id', user.value.id);
 
   try {
@@ -61,16 +64,17 @@ const uploadPhoto = async () => {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
 
-    // Actualizar la imagen con la URL completa
-    user.value.profilePicture = `https://protactics-api.onrender.com${response.data.foto_url}`;
-    localStorage.setItem('fotoUrl', user.value.profilePicture);
+    user.value.profilePicture = response.data.foto_url;
+    localStorage.setItem('fotoUrl', response.data.foto_url);
 
-    alert("Foto de perfil actualizada");
+    alert("Foto de perfil actualizada!");
   } catch (error) {
     console.error("Error al subir la foto:", error);
     alert("Error al subir la imagen.");
   }
 };
+
+
 
 </script>
 
