@@ -81,3 +81,15 @@
 - **Implementacions Vistas :** Alex
 - **Funcionamiento Login:** Alan
 - **Proofhub:** Alex y Alan
+
+---
+
+## **Fecha:** 5/02/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **API :**  Alan
+- **CSS :**  Adri
+- **Implementacions Vistas :** Alex y Adri
+- **Implementacion Funcionalidades :** Alex, Alan y Adri
+- **Proofhub:** Alex y Alan
