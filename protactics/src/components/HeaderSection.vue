@@ -17,7 +17,7 @@
           <div v-if="isLoggedIn" class="user-info">
             <span class="welcome-message">Bienvenido, {{ username }}</span>
             <img class="profile-pic" :src="userPic" alt="Foto de perfil" />
-            <button @click="logout" class="logout-btn">Logout</button>
+            <button @click="logout" class="logout-btn">Cerrar Sesión</button>
           </div>
 
           <!-- Si no está loggeado -->

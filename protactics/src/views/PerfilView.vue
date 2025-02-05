@@ -77,7 +77,7 @@ const uploadPhoto = async () => {
 <template>
   <HeaderSection />
   <div class="profile-container">
-    <div class="profile-card">
+    <div class="profile-card1">
       <div class="profile-header">
         <img :src="user.profilePicture" alt="Foto de perfil" class="profile-picture" />
         <h2 class="username">{{ user.username }}</h2>
@@ -91,12 +91,14 @@ const uploadPhoto = async () => {
         </label>
         <button @click="uploadPhoto" class="upload-btn">Cambiar Foto</button>
       </div>
+    </div>
 
+    <div class="profile-card2">
       <div class="profile-stats">
+        <div class="stat-box"><strong>Seguidores</strong><span>{{ user.followers }}</span></div>
         <div class="stat-box"><strong>Entrenamientos</strong><span>{{ user.trainings }}</span></div>
         <div class="stat-box"><strong>Compartidos</strong><span>{{ user.shared }}</span></div>
         <div class="stat-box"><strong>Likes</strong><span>{{ user.likes }}</span></div>
-        <div class="stat-box"><strong>Seguidores</strong><span>{{ user.followers }}</span></div>
       </div>
 
       <div class="profile-bottom">
@@ -115,21 +117,22 @@ const uploadPhoto = async () => {
 .profile-container {
   display: flex;
   justify-content: center;
-  padding: 120px 20px 50px;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  padding: 2%;
+  background-color: #222;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin: 8%;
+  border-radius: 10px;
+  margin-top: 15%;
+
 }
 
 /* Tarjeta de perfil */
-.profile-card {
-  background-color: #222;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  max-width: 450px;
-  width: 100%;
+.profile-card1, .profile-card2 {
+  width: 45%;
   text-align: center;
   color: white;
+  margin: 2%;
+
 }
 
 /* Foto de perfil */
@@ -147,7 +150,7 @@ const uploadPhoto = async () => {
   color: #aaa;
 }
 
-.username{
+.username {
   text-transform: uppercase;
   color: white;
   font-size: 24px;
@@ -179,8 +182,8 @@ const uploadPhoto = async () => {
 
 /* Botón de subida de imagen */
 .upload-btn {
-  border: 1px #00c3ff solid;
-  border: none;
+  border: 2px white solid;
+  background-color: transparent;
   padding: 10px;
   color: white;
   font-weight: bold;
@@ -196,17 +199,18 @@ const uploadPhoto = async () => {
 /* Estadísticas del perfil */
 .profile-stats {
   display: flex;
-  justify-content: space-around;
+  grid-template-rows: repeat(1, 1fr);
   margin-top: 15px;
   flex-wrap: wrap;
 }
 
 .stat-box {
+  display: grid;
   background: rgba(255, 255, 255, 0.1);
   padding: 10px;
   border-radius: 5px;
-  width: 45%;
-  margin: 5px 0;
+  width: 20%;
+  margin: 5px;
   text-align: center;
 }
 
@@ -229,9 +233,9 @@ const uploadPhoto = async () => {
 .profile-btn {
   width: 90%;
   padding: 10px;
-  border: 2px #00c3ff solid;
+  border: 2px white solid;
   color: white;
-  border-radius: 5px;
+  border-radius: 40px;
   cursor: pointer;
   font-size: 14px;
   margin: 5px 0;
