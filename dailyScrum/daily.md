@@ -88,8 +88,9 @@
 **Alumnos:** Alex, Alan y Adri
 
 ### **Tareas:**  
-- **API :**  Alan
-- **CSS :**  Adri
+- **API :** Alan
+- **CSS :** Adri
 - **Implementacions Vistas :** Alex y Adri
 - **Implementacion Funcionalidades :** Alex, Alan y Adri
 - **Proofhub:** Alex y Alan
+
