@@ -42,7 +42,7 @@ const isLoggedIn = ref(localStorage.getItem('authToken') !== null);
 const username = ref(localStorage.getItem('username') || 'Usuario');
 const userPic = ref('https://via.placeholder.com/100'); // Imagen por defecto
 
-// Función para obtener la foto de perfil desde la API
+// Obtener la foto de perfil desde la API
 const fetchProfilePic = async () => {
   const userId = localStorage.getItem('userId');
   if (!userId) return;
@@ -51,8 +51,8 @@ const fetchProfilePic = async () => {
     const response = await axios.get(`https://protactics-api.onrender.com/usuarios/${userId}`);
     
     if (response.data.foto_url) {
-      userPic.value = response.data.foto_url;
-      localStorage.setItem('fotoUrl', response.data.foto_url);
+      userPic.value = `https://protactics-api.onrender.com${response.data.foto_url}`; 
+      localStorage.setItem('fotoUrl', userPic.value);
     }
   } catch (error) {
     console.error("Error al obtener la foto de perfil:", error);
@@ -64,21 +64,20 @@ watchEffect(() => {
   isLoggedIn.value = localStorage.getItem('authToken') !== null;
   username.value = localStorage.getItem('username') || 'Usuario';
 
-  // Obtener la foto desde el localStorage primero
   const storedPic = localStorage.getItem('fotoUrl');
   if (storedPic) {
     userPic.value = storedPic;
   } else {
-    fetchProfilePic(); // Si no está en el localStorage, hacer GET a la API
+    fetchProfilePic(); 
   }
 });
 
 // Función de logout
 const logout = () => {
-  localStorage.clear();  // Borra toda la sesión
+  localStorage.clear();
   isLoggedIn.value = false;
-  userPic.value = 'https://via.placeholder.com/100'; // Reset de la foto de perfil
-  router.push('/'); // Redirige a la página de inicio
+  userPic.value = 'https://via.placeholder.com/100';
+  router.push('/');
 };
 
 // Obtener la foto de perfil al cargar el componente
@@ -88,4 +87,5 @@ onMounted(() => {
   }
 });
 </script>
+
 

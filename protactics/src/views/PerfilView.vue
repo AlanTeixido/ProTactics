@@ -61,8 +61,9 @@ const uploadPhoto = async () => {
       headers: { 'Content-Type': 'multipart/form-data' }
     });
 
-    user.value.profilePicture = response.data.foto_url;
-    localStorage.setItem('fotoUrl', response.data.foto_url);
+    // Actualizar la imagen con la URL completa
+    user.value.profilePicture = `https://protactics-api.onrender.com${response.data.foto_url}`;
+    localStorage.setItem('fotoUrl', user.value.profilePicture);
 
     alert("Foto de perfil actualizada");
   } catch (error) {
@@ -70,6 +71,7 @@ const uploadPhoto = async () => {
     alert("Error al subir la imagen.");
   }
 };
+
 </script>
 
 <template>
