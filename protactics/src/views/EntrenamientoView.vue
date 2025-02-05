@@ -51,7 +51,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px 20px 20px; 
+  padding: 100px 20px 20px;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
 

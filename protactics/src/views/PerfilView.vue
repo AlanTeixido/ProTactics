@@ -80,7 +80,7 @@ const uploadPhoto = async () => {
     <div class="profile-card">
       <div class="profile-header">
         <img :src="user.profilePicture" alt="Foto de perfil" class="profile-picture" />
-        <h2>{{ user.username }}</h2>
+        <h2 class="username">{{ user.username }}</h2>
         <p class="email">{{ user.email }}</p>
       </div>
 
@@ -116,6 +116,8 @@ const uploadPhoto = async () => {
   display: flex;
   justify-content: center;
   padding: 120px 20px 50px;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 /* Tarjeta de perfil */
@@ -134,9 +136,8 @@ const uploadPhoto = async () => {
 .profile-picture {
   width: 120px;
   height: 120px;
-  border-radius: 50%;
+  border-radius: 50px 50px;
   object-fit: cover;
-  border: 3px solid #00c3ff;
   margin-bottom: 10px;
 }
 
@@ -144,6 +145,12 @@ const uploadPhoto = async () => {
 .email {
   font-size: 14px;
   color: #aaa;
+}
+
+.username{
+  text-transform: uppercase;
+  color: white;
+  font-size: 24px;
 }
 
 /* Sección de subida de imagen */
@@ -172,7 +179,7 @@ const uploadPhoto = async () => {
 
 /* Botón de subida de imagen */
 .upload-btn {
-  background-color: #0084c2;
+  border: 1px #00c3ff solid;
   border: none;
   padding: 10px;
   color: white;
@@ -222,16 +229,17 @@ const uploadPhoto = async () => {
 .profile-btn {
   width: 90%;
   padding: 10px;
-  background-color: #00c3ff;
+  border: 2px #00c3ff solid;
   color: white;
-  border: none;
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
   margin: 5px 0;
+  transition: 0.3s;
+  background-color: transparent;
 }
 
 .profile-btn:hover {
-  background-color: #0084c2;
+  transform: scale(1.05);
 }
 </style>

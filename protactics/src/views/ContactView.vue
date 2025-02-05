@@ -110,16 +110,18 @@ const enviarDades = () => {
 
 <style scoped>
 .contact-container {
-  max-width: 600px;
+  width: 35%;
   margin: 100px auto;
   padding: 20px;
-  background-color: #f9f9f9;
   border-radius: 8px;
+  margin-top: 10%;
+  margin-bottom: 10%;
 }
 
 h1 {
   text-align: center;
   margin-bottom: 20px;
+  text-transform: uppercase;
 }
 
 .form-group {
@@ -137,6 +139,8 @@ input, textarea, select {
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #ccc;
+  background-color: transparent;
+  color: white;
 }
 
 button {

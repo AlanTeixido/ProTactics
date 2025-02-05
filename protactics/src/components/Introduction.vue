@@ -1,9 +1,7 @@
 <template>
     <section class="intro">
-        <h1 v-if="username">Bienvenido/a, {{ username }} a <span class="brand">ProTactics</span></h1>
+        <h1 v-if="username">Bienvenido/a, <span class="username">{{ username }}</span> a <span class="brand">ProTactics</span></h1>
         <h1 v-else>Bienvenidos/as a <span class="brand">ProTactics</span></h1>
-        <p v-if="userEmail">📧 Tu correo: <span class="highlight">{{ userEmail }}</span></p>
-        <p>🎯 ¡Esperamos que disfrutes de la plataforma y mejores tus entrenamientos!</p>
     </section>
 </template>
 
@@ -27,9 +25,16 @@ onMounted(() => {
     border-radius: 10px;
 }
 
+.username {
+    text-transform: uppercase;
+    font-size: 100%;
+    color: white;
+   
+}
+
 h1 {
     font-size: 2.5rem;
-    font-weight: bold;
+    font-weight: 400;
     color: white;
 }
 

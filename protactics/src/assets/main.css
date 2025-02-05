@@ -30,7 +30,7 @@ body{
   position: fixed; 
   top: 0;
   left: 50%;
-  width: 50%;
+  width: 60%;
   display: flex;
   justify-content: center; 
   align-items: center;
@@ -312,8 +312,8 @@ body{
   margin: 0 auto;
   padding: 20px; 
   border-radius: 8px;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 4%;
+  margin-bottom: 10%;
 }
 .posts-list {
   display: flex;

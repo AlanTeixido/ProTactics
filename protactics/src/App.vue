@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-// Si estàs utilitzant Vue Router, el router-view s'encarrega de mostrar les vistes segons la ruta
+
 </script>
 
 <style>
