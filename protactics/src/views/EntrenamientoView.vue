@@ -1,89 +1,96 @@
 <template>
-  <HeaderSection/>
+  <HeaderSection />
   <div class="container">
-    <!-- Container de imágenes -->
-    <div class="grid">
-      <div class="grid-item">
-        <img src="../assets/img/futbol.jpg" alt="Deporte 1">
-      </div>
-      <div class="grid-item">
-        <img src="../assets/img/basquet.jpg" alt="Deporte 2">
-      </div>
-      <div class="grid-item">
-        <img src="../assets/img/padel.jpg" alt="Deporte 3">
-      </div>
-      <div class="grid-item">
-        <img src="../assets/img/gym.jpg" alt="Deporte 4">
-      </div>
-      <div class="grid-item">
-        <img src="../assets/img/ciclismo.jpg" alt="Deporte 5">
-      </div>
-      <div class="grid-item">
-        <img src="../assets/img/atletismo2.jpg" alt="Deporte 6">
+    <h2 class="section-title">Explora Deportes</h2>
+    <div class="wrapper">
+      <div v-for="(deporte, index) in deportes" :key="index" class="grid-item" :style="{ '--grid-area': deporte.gridArea }">
+        <p>{{ deporte.nombre }}</p>
+        <img :src="getImageUrl(deporte.imagen)" :alt="deporte.nombre" class="grid-image" />
       </div>
     </div>
   </div>
-  <FooterSection></FooterSection>
+  <FooterSection />
 </template>
-  
-  <script setup>
-  import { useRouter } from "vue-router";
-  import HeaderSection from '@/components/HeaderSection.vue';
-  import FooterSection from '@/components/FooterSection.vue';
 
-  const router = useRouter();
+<script setup>
+import { ref } from "vue";
+import HeaderSection from "@/components/HeaderSection.vue";
+import FooterSection from "@/components/FooterSection.vue";
 
+const getImageUrl = (path) => new URL(path, import.meta.url).href;
 
-  
-  // Navegación al detalle de la imagen
+const deportes = ref([
+  { nombre: "Fútbol", imagen: "../assets/img/futbol.jpg", gridArea: "sport" },
+  { nombre: "Baloncesto", imagen: "../assets/img/basquet.jpg", gridArea: "tees" },
+  { nombre: "Pádel", imagen: "../assets/img/padel.jpg", gridArea: "hoodies" },
+  { nombre: "Gimnasio", imagen: "../assets/img/gym.jpg", gridArea: "ladies-shirt" },
+  { nombre: "Ciclismo", imagen: "../assets/img/ciclismo.jpg", gridArea: "youth" },
+  { nombre: "Atletismo", imagen: "../assets/img/atletismo2.jpg", gridArea: "kids" }
+]);
+</script>
 
-  </script>
-  
-<style>
-/* Estilos generales */
+<style scoped>
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px 20px 20px;
-  margin-top: 10%;
-  margin-bottom: 10%;
+  padding: 50px 20px;
+  margin-bottom: 5%;
 }
 
+.section-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
 
-/* Grid de imágenes */
-.grid {
+.wrapper {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
+  gap: 1rem;
+  grid-auto-rows: 200px;
   width: 80%;
-  max-width: 1200px;
+  max-width: 1000px;
   margin-top: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
-/* Estilo de cada imagen */
 .grid-item {
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
 }
 
 .grid-item img {
   width: 100%;
-  display: block;
-  border-radius: 10px;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
   transition: transform 0.3s ease-in-out;
 }
 
-/* Efecto hover */
 .grid-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transform: scale(1.07);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .grid-item:hover img {
   transform: scale(1.1);
+}
+
+.grid-item p {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: bold;
 }
 </style>
