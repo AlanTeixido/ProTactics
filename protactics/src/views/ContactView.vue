@@ -1,80 +1,8 @@
-<script setup>
-import FooterSection from '@/components/FooterSection.vue';
-import HeaderSection from '@/components/HeaderSection.vue';
-import { ref } from 'vue';
-
-const name = ref('');
-const lastName = ref('');  // Añadido para el apellido
-const email = ref('');
-const phone = ref('');
-const subject = ref('');
-const message = ref('');
-
-const errors = ref({
-  name: '',
-  lastName: '',  // Añadido para los errores del apellido
-  email: '',
-  phone: '',
-  message: ''
-});
-
-const validateForm = () => {
-  errors.value = {
-    name: '',
-    lastName: '',  // Añadido para el apellido
-    email: '',
-    phone: '',
-    message: ''
-  };
-
-  let isValid = true;
-
-  if (name.value.length < 3) {
-    errors.value.name = 'El nombre debe tener al menos 3 caracteres.';
-    isValid = false;
-  }
-
-  if (lastName.value.length < 3) {  // Validación para el apellido
-    errors.value.lastName = 'El apellido debe tener al menos 3 caracteres.';
-    isValid = false;
-  }
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-    errors.value.email = 'Introduce un correo electrónico válido.';
-    isValid = false;
-  }
-
-  if (!/^\d{9,15}$/.test(phone.value)) {
-    errors.value.phone = 'El teléfono debe tener entre 9 y 15 números.';
-    isValid = false;
-  }
-
-  if (message.value.length < 10) {
-    errors.value.message = 'El mensaje debe tener al menos 10 caracteres.';
-    isValid = false;
-  }
-
-  return isValid;
-};
-
-const enviarDades = () => {
-  if (validateForm()) {
-    console.log('Formulario enviado', {
-      name: name.value,
-      lastName: lastName.value,  // Añadido para el apellido
-      email: email.value,
-      phone: phone.value,
-      subject: subject.value,
-      message: message.value
-    });
-  }
-};
-</script>
-
 <template>
   <HeaderSection />
   <div class="contact-container">
     <h1>Contacta con nosotros</h1>
+    <p>Rellena el siguiente formulario para ponerte en contacto con el grupo &copy; ProTactics.</p>
     <form @submit.prevent="enviarDades">
       <div class="form-group1-0">
         <div class="form-group">
@@ -104,110 +32,206 @@ const enviarDades = () => {
         </div>
 
         <div class="form-group">
-          <label for="subject">Asunto</label>
-          <select id="subject" v-model="subject">
-            <option value="">Selecciona un asunto</option>
-            <option value="consulta">Consulta</option>
-            <option value="soporte">Soporte Técnico</option>
-            <option value="sugerencia">Sugerencia</option>
-            <option value="otro">Otro</option>
-          </select>
-        </div>
-
-        <div class="form-group">
           <label for="message">Mensaje</label>
           <textarea id="message" v-model="message" placeholder="Escribe tu mensaje" required></textarea>
           <p class="error" v-if="errors.message">{{ errors.message }}</p>
         </div>
-
-        <button type="submit">Enviar</button>
       </div>
-
+      <button type="submit">Enviar</button>
     </form>
-  </div>
-  <div class="asist">
-    <h3>¿Tienes alguna duda o sugerencia? ¡Contáctanos!</h3>
-    <div>
-      <p>Habla con nuestro asistente</p>
-      <p>Habla con nuestro asistenteñajsgajsdfgba jfhgañjkfhgñj gafhgñahgfañghjfg sjfgañjfgh</p>
-    </div>
   </div>
   <FooterSection />
 </template>
 
+<script setup>
+import FooterSection from '@/components/FooterSection.vue';
+import HeaderSection from '@/components/HeaderSection.vue';
+import { ref } from 'vue';
+
+const name = ref('');
+const lastName = ref('');
+const email = ref('');
+const phone = ref('');
+const subject = ref('');
+const message = ref('');
+
+const errors = ref({
+  name: '',
+  lastName: '',
+  email: '',
+  phone: '',
+  message: ''
+});
+
+const validateForm = () => {
+  errors.value = {
+    name: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  };
+
+  let isValid = true;
+
+  if (name.value.length < 3) {
+    errors.value.name = 'El nombre debe tener al menos 3 caracteres.';
+    isValid = false;
+  }
+
+  if (lastName.value.length < 3) {
+    errors.value.lastName = 'El apellido debe tener al menos 3 caracteres.';
+    isValid = false;
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+    errors.value.email = 'Introduce un correo electrónico válido.';
+    isValid = false;
+  }
+
+  if (!/^\d{9,15}$/.test(phone.value)) {
+    errors.value.phone = 'El teléfono debe tener entre 9 y 15 números.';
+    isValid = false;
+  }
+
+  if (message.value.length < 10) {
+    errors.value.message = 'El mensaje debe tener al menos 10 caracteres.';
+    isValid = false;
+  }
+
+  return isValid;
+};
+
+const enviarDades = () => {
+  if (validateForm()) {
+    console.log('Formulario enviado', {
+      name: name.value,
+      lastName: lastName.value,
+      email: email.value,
+      phone: phone.value,
+      subject: subject.value,
+      message: message.value
+    });
+  }
+};
+</script>
+
 <style scoped>
+/* Estilos generales para centrar el formulario */
 .contact-container {
-  width: 35%;
-  margin: 100px auto;
-  padding: 20px;
+  width: 75%;
+  margin: 0 auto;  /* Centra el formulario horizontalmente */
+  padding: 15%;
   border-radius: 8px;
-  margin-top: 10%;
-  margin-bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
 }
 
+/* Título principal */
 h1 {
   text-align: center;
   margin-bottom: 20px;
+  color: white;
 }
 
+p{
+  color: rgb(0, 204, 184);
+}
+
+/* Contenedor de los grupos de formulario (2 columnas) */
 .form-group1-0 {
   display: flex;
   justify-content: space-between;
-}
-
-.form-group2-0 {
   width: 100%;
 }
 
-.form-group{
-  margin: 5%;
+/* Contenedor de los grupos de formulario */
+.form-group2-0 {
+  width: 207.5%;
 }
 
-form{
-  margin: 15%;
+
+/* Estilo para cada campo de formulario */
+.form-group {
+  width: 48%; /* Hace que los campos estén alineados en 2 columnas */
+  margin: 2% 0;
 }
 
+/* Formulario en general */
+form {
+  width: 100%;
+  margin: 2%;
+}
+
+/* Estilo de las etiquetas */
 label {
   display: block;
   margin-bottom: 5px;
-  font-weight: bold;
+  font-weight: 300;
+  color: white;
 }
 
+/* Estilo para los inputs, textarea, y select */
 input,
 textarea,
 select {
   width: 100%;
   padding: 10px;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1.5px solid white;
   background-color: transparent;
   color: white;
+  font-size: 1rem;
+  box-sizing: border-box;
 }
 
+/* Estilo para el botón */
 button {
-  padding: 10px 20px;
-  background-color: hsla(180, 100%, 35%, 1);
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
   color: white;
+  padding: 15px;
   border: none;
-  border-radius: 4px;
+  border-radius: 30px;
   cursor: pointer;
+  font-weight: bold;
+  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));
+  transition: 0.3s;
+  text-transform: uppercase;
 }
 
 button:hover {
   background-color: rgb(93, 238, 238);
 }
 
+/* Estilo para los mensajes de error */
 .error {
   color: red;
   font-size: 0.9em;
   margin-top: 5px;
 }
 
-.asist {
+/* Estilo para el contenedor de asistencia */
+.asist-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10%;
-  background-color: rgb(0, 0, 29);
+  background-color: rgb(82, 82, 82);
+}
+
+/* Estilo para la imagen y el texto de asistencia */
+.asist {
+  display: flex;
+  align-items: center;
+}
+
+.asist img {
+  width: 10%;
+  margin-right: 10px;
 }
 </style>
