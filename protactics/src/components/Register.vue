@@ -72,7 +72,6 @@ const register = async () => {
 };
 </script>
 
-
 <style scoped>
 .fondo-register {
   position: absolute;
