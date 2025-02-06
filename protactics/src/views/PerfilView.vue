@@ -9,14 +9,11 @@ const user = ref({
   id: localStorage.getItem('userId') || '',
   username: localStorage.getItem('username') || 'Usuario',
   email: localStorage.getItem('userEmail') || '',
-  profilePicture: localStorage.getItem('fotoUrl') || 'https://via.placeholder.com/150',
   trainings: 0,
   shared: 0,
   likes: 0,
   followers: 0
 });
-
-const selectedFile = ref(null);
 
 // Cargar datos del usuario desde la API
 const loadUserData = async () => {
@@ -27,12 +24,6 @@ const loadUserData = async () => {
     user.value.shared = response.data.shared || 0;
     user.value.likes = response.data.likes || 0;
     user.value.followers = response.data.followers || 0;
-
-    // Aquí assegurem que la imatge es carrega correctament des de la BD
-    if (response.data.foto_url) {
-      user.value.profilePicture = response.data.foto_url;
-      localStorage.setItem('fotoUrl', response.data.foto_url);
-    }
   } catch (error) {
     console.error('Error cargando los datos:', error);
   }
@@ -42,58 +33,16 @@ const loadUserData = async () => {
 onMounted(() => {
   loadUserData();
 });
-
-// Manejar selección de imagen
-const handleFileUpload = (event) => {
-  selectedFile.value = event.target.files[0];
-};
-
-// Subir la nueva foto de perfil
-const uploadPhoto = async () => {
-  if (!selectedFile.value) {
-    alert("Selecciona una imagen primero");
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append('foto', selectedFile.value); // Aquí s'ha de dir 'foto'
-  formData.append('id', user.value.id);
-
-  try {
-    const response = await axios.post('https://protactics-api.onrender.com/auth/upload-profile-pic', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-
-    user.value.profilePicture = response.data.foto_url;
-    localStorage.setItem('fotoUrl', response.data.foto_url);
-
-    alert("Foto de perfil actualizada!");
-  } catch (error) {
-    console.error("Error al subir la foto:", error);
-    alert("Error al subir la imagen.");
-  }
-};
-
-
-
 </script>
+
 
 <template>
   <HeaderSection />
   <div class="profile-container">
     <div class="profile-card1">
       <div class="profile-header">
-        <img :src="user.profilePicture" alt="Foto de perfil" class="profile-picture" />
         <h2 class="username">{{ user.username }}</h2>
         <p class="email">{{ user.email }}</p>
-      </div>
-
-      <div class="upload-section">
-        <label class="file-label">
-          Seleccionar Imagen
-          <input type="file" @change="handleFileUpload" class="file-input" />
-        </label>
-        <button @click="uploadPhoto" class="upload-btn">Cambiar Foto</button>
       </div>
     </div>
 
@@ -115,6 +64,7 @@ const uploadPhoto = async () => {
   </div>
   <FooterSection />
 </template>
+
 
 <style scoped>
 /* Contenedor principal */
