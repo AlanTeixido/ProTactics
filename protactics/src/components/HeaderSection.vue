@@ -2,14 +2,16 @@
   <header class="header">
     <nav class="nav-container">
       <div class="nav">
-        <RouterLink :to="`/`"><img src="../assets/img/logo.png" alt="Icon" class="nav-icon" /></RouterLink>
-        
+        <RouterLink :to="`/`">
+          <img src="../assets/img/logo.png" alt="Icon" class="nav-icon" />
+        </RouterLink>
+
         <div class="nav2">
           <RouterLink to="/" class="nav-link">INICIO</RouterLink>
-          <RouterLink to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
-          <RouterLink to="/perfil" class="nav-link">PERFIL</RouterLink>
+          <RouterLink v-if="isLoggedIn" to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
+          <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
           <RouterLink to="/contact" class="nav-link">CONTACTE</RouterLink>
-          <RouterLink to="/entrenamiento" class="nav-link">ENTRENAMIENTO</RouterLink>
+          <RouterLink v-if="isLoggedIn" to="/entrenamiento" class="nav-link">ENTRENAMIENTO</RouterLink>
         </div>
 
         <div class="log-regist">
@@ -20,7 +22,7 @@
             <button @click="logout" class="logout-btn">Cerrar Sesión</button>
           </div>
 
-          <!-- Si no está loggeado -->
+          <!-- Si NO está loggeado -->
           <div v-if="!isLoggedIn" class="login-register">
             <RouterLink to="/login" class="login-register-btn">Inicia Sesión</RouterLink>
           </div>
@@ -37,7 +39,7 @@ import axios from 'axios';
 
 const router = useRouter();
 
-// Variables de usuario
+// Estado de autenticación
 const isLoggedIn = ref(localStorage.getItem('authToken') !== null);
 const username = ref(localStorage.getItem('username') || 'Usuario');
 const userPic = ref('https://via.placeholder.com/100'); // Imagen por defecto
@@ -87,5 +89,3 @@ onMounted(() => {
   }
 });
 </script>
-
-
