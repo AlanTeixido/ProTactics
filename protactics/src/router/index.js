@@ -44,6 +44,11 @@ const router = createRouter({
       path: '/perfil',
       name: 'perfil',
       component: () => import('../views/PerfilView.vue')  // Asegúrate de tener esta vista
+    },
+    {
+      path: '/dragg',
+      name: 'dragg',
+      component: () => import('../components/Draggable.vue')  // Asegúrate de tener esta vista
     }
     
   ],
