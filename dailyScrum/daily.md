@@ -94,3 +94,14 @@
 - **Implementacion Funcionalidades :** Alex, Alan y Adri
 - **Proofhub:** Alex y Alan
 
+---
+
+## **Fecha:** 6/02/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **API :** Alan
+- **CSS + Animaciones :** Adri
+- **Implementacion Draggable :** Alex
+- **Implementacion Funcionalidades :** Alex, Alan y Adri
+- **Proofhub:** Alex y Alan
