@@ -6,7 +6,7 @@
         <h1>PROTACTICS</h1>
         <p>¡Conecta, crea gana!</p>
         <RouterLink :to="`/login`"><button class="cta-button">Empezar</button></RouterLink>
-        <img src="../assets/img/FondoHome2.png" alt="">
+        <img src="../assets/img/FondoHome2.png" class="popup-image" ref="image1">
       </div>
       <MainSection />
       <LogosSection />
@@ -24,6 +24,27 @@ import MainSection from '../components/MainSection.vue'
 import LogosSection from '../components/LogosSection.vue'
 import Slider from '../components/Slider.vue'
 import ThreeText from '../components/ThreeText.vue'
+import { ref, onMounted } from 'vue';
+
+const image1 = ref(null);
+
+ // Detectar cuando el elemento entra en la vista
+ const handleIntersection = (entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('popup-in-view');
+      }
+    });
+  };
+  
+  onMounted(() => {
+    const observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
+  
+    // Observar los textos e imágenes
+    observer.observe(image1.value);
+
+  });
+
 </script>
 
 <style scoped>
@@ -109,4 +130,16 @@ img {
 .cta-button:focus {
   outline: none;
 }
+
+  .popup-image {
+    opacity: 0;
+    transform: scale(0.5);  /* Inicia pequeño */
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    margin: 20px 0;
+  }
+  
+  .popup-image.popup-in-view {
+    opacity: 1;
+    transform: scale(1); /* Toma el tamaño original */
+  }
 </style>

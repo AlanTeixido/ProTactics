@@ -4,28 +4,22 @@
     <!-- Container de imágenes -->
     <div class="grid">
       <div class="grid-item">
-        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 1">
+        <img src="../assets/img/futbol.jpg" alt="Deporte 1">
       </div>
       <div class="grid-item">
-        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 2">
+        <img src="../assets/img/basquet.jpg" alt="Deporte 2">
       </div>
       <div class="grid-item">
-        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 3">
+        <img src="../assets/img/padel.jpg" alt="Deporte 3">
       </div>
       <div class="grid-item">
-        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 4">
+        <img src="../assets/img/gym.jpg" alt="Deporte 4">
       </div>
       <div class="grid-item">
-        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 5">
+        <img src="../assets/img/ciclismo.jpg" alt="Deporte 5">
       </div>
       <div class="grid-item">
-        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 6">
-      </div>
-      <div class="grid-item">
-        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 7">
-      </div> 
-      <div class="grid-item">
-        <img src="../assets/img/deportes/deporte.jpg" alt="Deporte 8">
+        <img src="../assets/img/atletismo2.jpg" alt="Deporte 6">
       </div>
     </div>
   </div>
