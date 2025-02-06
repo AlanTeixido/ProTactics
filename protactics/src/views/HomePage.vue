@@ -142,4 +142,5 @@ img {
     opacity: 1;
     transform: scale(1); /* Toma el tamaño original */
   }
+
 </style>
