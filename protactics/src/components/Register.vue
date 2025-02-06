@@ -53,17 +53,16 @@ const register = async () => {
   }
 
   try {
-    // ✅ Usamos el endpoint correcto según auth.js
-    const response = await axios.post('https://protactics-api.onrender.com/auth/register', {
+    // ✅ Llamada a la API para registrar al usuario
+    await axios.post('https://protactics-api.onrender.com/auth/register', {
       nombre_usuario: username.value,
       correo: email.value,
-      contrasena: password.value  // YA NO USAMOS contrasena_hash
+      contrasena: password.value  // 🟢 Asegurando que coincida con el backend
     });
 
     alert('Registro exitoso');
 
-    // No se recibe token en el registro, solo confirmación
-    // Puedes hacer que el usuario inicie sesión automáticamente
+    // Redirigir al login después del registro
     router.push('/login');
 
   } catch (error) {
