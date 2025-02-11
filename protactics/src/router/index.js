@@ -11,6 +11,9 @@ const router = createRouter({
     { path: '/register', name: 'register', component: Register },
     { path: '/dragg', name: 'dragg', component: () => import('../components/Draggable.vue') },
 
+    // 🔥 Nueva página Sobre Nosotros
+    { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') }, 
+
     // 🔒 Rutas protegidas (solo accesibles si está logueado)
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },
     { path: '/perfil', name: 'perfil', component: () => import('../views/PerfilView.vue'), meta: { requiresAuth: true } },
