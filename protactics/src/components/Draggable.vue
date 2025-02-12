@@ -1,21 +1,34 @@
 <script setup lang="ts">
 import { useDraggable } from '@vueuse/core' // Importamos Dragganle para hacer elementos arrastrables
-import { ref } from 'vue' 
-import HeaderSection from './HeaderSection.vue' 
-import FooterSection from './FooterSection.vue' 
+import { ref } from 'vue'
+import HeaderSection from './HeaderSection.vue'
+import FooterSection from './FooterSection.vue'
 
 // Creamos una referencia reactiva para el elemento que se podrá arrastrar
 const objeto = ref(null)
+const objeto1 = ref(null)
 
 // EVariable habilitar o deshabilitar draggable
 const disabled = ref(false)
 
-// Variable useDraggable , elemento movible
+/*// Variable useDraggable , elemento movible
 const { x, y, style } = useDraggable(objeto, {
   initialValue: { x: 600, y: 400 }, // Posición inicial del objeto
   preventDefault: true, // Evita comportamientos predeterminados del navegador (como el scroll)
   disabled, // Deshabilita el arrastre si disabled es true
-})
+});*/
+
+const draggable1 = useDraggable(objeto, {
+  initialValue: { x: 430, y: 425 },
+  preventDefault: true,
+  disabled,
+});
+
+const draggable2 = useDraggable(objeto1, {
+  initialValue: { x: 600, y: 430 },
+  preventDefault: true,
+  disabled,
+});
 </script>
 
 <template>
@@ -23,7 +36,7 @@ const { x, y, style } = useDraggable(objeto, {
 
   <!-- Contenedor principal que centra el contenido -->
   <div class="container">
-    
+
     <!-- Contenedor del checkbox para activar/desactivar el arrastre -->
     <div class="checkbox-container">
       <label class="checkbox">
@@ -37,11 +50,19 @@ const { x, y, style } = useDraggable(objeto, {
     <p class="description">Presiona para capturar elementos</p>
 
     <!-- Objeto arrastrable -->
-    <div ref="objeto" class="draggable" :style="style">
-      👋 Drag me!
+    <div ref="objeto" class="draggable" :style="draggable1.style.value">
+      👋 Dragg Me!
       <!-- Muestra la posición actual del elemento en la pantalla -->
-      <div class="position-text">I am at {{ Math.round(x) }}, {{ Math.round(y) }}</div>
+      <div class="position-text">I am at {{ Math.round(draggable1.x.value) }}, {{ Math.round(draggable1.y.value) }}</div>
     </div>
+
+       <!-- Objeto arrastrable -->
+       <div ref="objeto1" class="draggable" :style="draggable2.style.value">
+      👋 Dragg Me!
+      <!-- Muestra la posición actual del elemento en la pantalla -->
+      <!--<div class="position-text">I am at {{ Math.round(x) }}, {{ Math.round(y) }}</div>-->
+    </div>
+
   </div>
   <FooterSection />
 </template>
@@ -83,7 +104,6 @@ const { x, y, style } = useDraggable(objeto, {
 .draggable {
   position: absolute;
   background-color: #3b82f6;
-  /* Azul */
   color: white;
   user-select: none;
   cursor: move;
