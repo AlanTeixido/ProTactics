@@ -12,6 +12,7 @@
           <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
           <RouterLink to="/contact" class="nav-link">CONTACTE</RouterLink>
           <RouterLink v-if="isLoggedIn" to="/entrenamiento" class="nav-link">ENTRENAMIENTO</RouterLink>
+          <RouterLink v-if="isLoggedIn" to="/dragg" class="nav-link">DRAGG</RouterLink>
           <RouterLink v-if="isLoggedOff" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink> 
         </div>
 
