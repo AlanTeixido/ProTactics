@@ -105,3 +105,15 @@
 - **Implementacion Draggable :** Alex
 - **Implementacion Funcionalidades :** Alex, Alan y Adri
 - **Proofhub:** Alex y Alan
+
+---
+
+## **Fecha:** 12/02/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **API :** Alan
+- **Formulario, Inicio, Entrenamiento:** Adri
+- **Draggable Ampliación:** Alex
+- **Implementacion Funcionalidades :** Alex, Alan y Adri
+- **Proofhub:** Alex y Alan
