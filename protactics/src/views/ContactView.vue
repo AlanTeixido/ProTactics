@@ -128,6 +128,7 @@ const enviarDades = () => {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Título principal */
@@ -151,6 +152,7 @@ p{
 /* Contenedor de los grupos de formulario */
 .form-group2-0 {
   width: 207.5%;
+  
 }
 
 

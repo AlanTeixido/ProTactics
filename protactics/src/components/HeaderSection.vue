@@ -12,7 +12,7 @@
           <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
           <RouterLink to="/contact" class="nav-link">CONTACTE</RouterLink>
           <RouterLink v-if="isLoggedIn" to="/entrenamiento" class="nav-link">ENTRENAMIENTO</RouterLink>
-          <RouterLink to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink> 
+          <RouterLink v-if="isLoggedOff" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink> 
         </div>
 
         <div class="log-regist">
@@ -42,6 +42,9 @@ const router = useRouter();
 
 // Estado de autenticación
 const isLoggedIn = ref(localStorage.getItem('authToken') !== null);
+const isLoggedOff = ref(localStorage.getItem('authToken') == null);
+
+
 const username = ref(localStorage.getItem('username') || 'Usuario');
 const userPic = ref('https://via.placeholder.com/100'); // Imagen por defecto
 
