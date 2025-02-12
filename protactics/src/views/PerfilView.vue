@@ -41,25 +41,27 @@ onMounted(() => {
   <div class="profile-container">
     <div class="profile-card1">
       <div class="profile-header">
+        <img src="../assets/img/usuario.png" class="img-profile"/>
         <h2 class="username">{{ user.username }}</h2>
         <p class="email">{{ user.email }}</p>
+        <button class="profile-btn">Editar Perfil</button>
+        <div class="profile-bottom">
+          <button class="profile-btn-share"><img src="../assets/img/adelante.png" class="img"/></button>
+          <button class="profile-btn-config"><img src="../assets/img/configuraciones.png" class="img"/></button>
+          <button class="profile-btn-save"><img src="../assets/img/marcador.png" class="img"/></button>
+        </div>
       </div>
     </div>
 
     <div class="profile-card2">
       <div class="profile-stats">
-        <div class="stat-box"><strong>Seguidores</strong><span>{{ user.followers }}</span></div>
-        <div class="stat-box"><strong>Entrenamientos</strong><span>{{ user.trainings }}</span></div>
-        <div class="stat-box"><strong>Compartidos</strong><span>{{ user.shared }}</span></div>
-        <div class="stat-box"><strong>Likes</strong><span>{{ user.likes }}</span></div>
+        <div class="stat-box"><span>{{ user.followers }}</span><strong>Seguidores</strong></div>
+        <div class="stat-box"><span>{{ user.trainings }}</span><strong>Entrenamientos</strong></div>
+        <div class="stat-box"><span>{{ user.shared }}</span><strong>Compartidos</strong></div>
+        <div class="stat-box"><span>{{ user.likes }}</span><strong>Likes</strong></div>
       </div>
 
-      <div class="profile-bottom">
-        <button class="profile-btn">Editar Perfil</button>
-        <button class="profile-btn">Compartir Perfil</button>
-        <button class="profile-btn">Entrenamientos Guardados</button>
-        <button class="profile-btn">Ajustes</button>
-      </div>
+      
     </div>
   </div>
   <FooterSection />
@@ -170,34 +172,74 @@ onMounted(() => {
 
 .stat-box strong {
   display: block;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 15px;
 }
 
 .stat-box span {
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   color: #00c3ff;
 }
 
 /* Botones del perfil */
 .profile-bottom {
-  margin-top: 20px;
+  margin-top: 10px;
 }
-
-.profile-btn {
-  width: 90%;
+.profile-btn-share, .profile-btn-config, .profile-btn-save {
+  width: 10%;
   padding: 10px;
-  border: 2px white solid;
   color: white;
   border-radius: 40px;
   cursor: pointer;
   font-size: 14px;
   margin: 5px 0;
   transition: 0.3s;
+  border: none;
   background-color: transparent;
 }
 
-.profile-btn:hover {
-  transform: scale(1.05);
+.profile-btn-share:hover, .profile-btn-config:hover, .profile-btn-save:hover {
+  transform: scale(1.1);
+}
+
+.img{
+  width: 30px;
+  height: 30px;
+}
+
+.img-profile{
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.profile-btn {
+  margin-top: 20px;
+  width: 50%;
+  color: white;
+  font-weight: 5000;
+  text-decoration: none;
+  background: transparent; /* Fondo transparente */
+  padding: 10px 15px;
+  border-radius: 10px;
+  position: relative;
+  transition: 0.3s;
+  border: 2px solid transparent; /* Borde inicial transparente */
+  background-clip: padding-box;
+}
+
+.profile-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px; /* Grosor del borde */
+  border-radius: 10px;
+  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194)); /* Degradado en el borde */
+  -webkit-mask: 
+    linear-gradient(white 0 0) content-box, 
+    linear-gradient(white 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
 }
 </style>

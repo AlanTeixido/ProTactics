@@ -20,7 +20,7 @@
           <!-- Si está loggeado -->
           <div v-if="isLoggedIn" class="user-info">
             <span class="welcome-message">Bienvenido, {{ username }}</span>
-            <img class="profile-pic" :src="userPic" alt="Foto de perfil" />
+            <img class="profile-pic" src="../assets/img/usuario.png" alt="Foto de perfil" />
             <button @click="logout" class="logout-btn">Cerrar Sesión</button>
           </div>
 

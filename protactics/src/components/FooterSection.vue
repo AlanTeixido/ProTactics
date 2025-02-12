@@ -41,7 +41,8 @@
       <p>&copy; ProTactics</p>
       <p>|</p>
 
-      <p>Contacto</p>
+      <RouterLink to="/about" class="link">Sobre Nosotros</RouterLink>
+      <RouterLink to="/contact" class="link">Contacto</RouterLink>
 
       <p>Aviso legal</p>
       <p>Política de privacidad</p>
@@ -50,5 +51,9 @@
 </template>
 
 <style scoped>
+.link{
+  text-decoration: none;
+  color: white;
+}
 
 </style>
