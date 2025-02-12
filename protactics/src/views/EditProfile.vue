@@ -6,8 +6,6 @@ import { useRouter } from "vue-router";
 import axios from "axios";
 
 const router = useRouter();
-
-// Estat per missatges d'error i confirmació
 const errorMessage = ref("");
 const successMessage = ref("");
 
@@ -31,10 +29,7 @@ const selectedFile = ref(null);
 
 // 🔹 Carregar dades de l'usuari
 const loadUserData = async () => {
-  if (!user.value.id) {
-    console.error("⚠️ Error: No hi ha userId.");
-    return;
-  }
+  if (!user.value.id) return;
 
   try {
     const authToken = localStorage.getItem("authToken");
@@ -51,7 +46,7 @@ const loadUserData = async () => {
   }
 };
 
-// 🔹 Guardar dades generals (nom i correu)
+// 🔹 Guardar dades generals
 const saveProfile = async () => {
   if (!user.value.username.trim() || !user.value.email.trim()) {
     errorMessage.value = "❌ Tots els camps són obligatoris.";
@@ -156,7 +151,7 @@ onMounted(loadUserData);
       <div v-if="errorMessage" class="error-msg">{{ errorMessage }}</div>
       <div v-if="successMessage" class="success-msg">{{ successMessage }}</div>
 
-      <div class="form-section">
+      <div class="form-group">
         <label>Nom d'usuari</label>
         <input v-model="user.username" type="text" placeholder="Nom d'usuari" />
 
@@ -166,7 +161,7 @@ onMounted(loadUserData);
         <button @click="saveProfile">Guardar Canvis</button>
       </div>
 
-      <div class="password-section">
+      <div class="password-group">
         <h3>Canviar Contrasenya</h3>
         <input v-model="passwords.oldPassword" type="password" placeholder="Contrasenya actual" />
         <input v-model="passwords.newPassword" type="password" placeholder="Nova contrasenya" />
@@ -185,57 +180,60 @@ onMounted(loadUserData);
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px;
-  margin: 100px auto;
+  padding: 60px;
+  margin: 120px auto;
   background: #222;
   color: white;
-  border-radius: 10px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.3);
-  max-width: 950px;
+  border-radius: 15px;
+  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.3);
+  max-width: 1000px;
+  gap: 40px;
 }
 
 .edit-left {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 30px;
+  gap: 15px;
 }
 
 .profile-image {
-  width: 130px;
-  height: 130px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid white;
-  margin-bottom: 15px;
+  border: 3px solid white;
 }
 
-.file-label {
-  background-color: #00c3ff;
+.form-group, .password-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 6px;
+  border: 2px solid #555;
+  background-color: #333;
   color: white;
-  padding: 10px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 1rem;
 }
 
-.file-input {
-  display: none;
-}
-
-.upload-btn, button {
-  padding: 12px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
+button {
+  padding: 14px;
+  border-radius: 8px;
   color: white;
   background: #0072a5;
+  cursor: pointer;
   width: 100%;
-  margin-top: 10px;
+  font-weight: bold;
+  transition: 0.3s;
 }
 
-.upload-btn:hover, button:hover {
+button:hover {
   background: #005f85;
 }
 
@@ -245,11 +243,9 @@ onMounted(loadUserData);
 
 .error-msg {
   color: red;
-  font-weight: bold;
 }
 
 .success-msg {
   color: lightgreen;
-  font-weight: bold;
 }
 </style>
