@@ -55,17 +55,17 @@
         <h2 class="sub-title">Conoce al Equipo</h2>
         <div class="team-container">
           <div class="team-card">
-            <img src="../assets/img/alan.jpg" alt="Alan Teixidó" class="team-photo" />
+            <!-- <img src="../assets/img/alan.jpg" alt="Alan Teixidó" class="team-photo" /> -->
             <h3>Alan Teixidó</h3>
             <p>Lead Developer</p>
           </div>
           <div class="team-card">
-            <img src="../assets/img/adrian.jpg" alt="Adrian Rodriguez" class="team-photo" />
+            <!-- <img src="../assets/img/adrian.jpg" alt="Adrian Rodriguez" class="team-photo" /> -->
             <h3>Adrian Rodriguez</h3>
             <p>Backend Engineer</p>
           </div>
           <div class="team-card">
-            <img src="../assets/img/alex.jpg" alt="Alex Martín" class="team-photo" />
+            <!-- <img src="../assets/img/alex.jpg" alt="Alex Martín" class="team-photo" /> -->
             <h3>Alex Martín</h3>
             <p>UI/UX Designer</p>
           </div>
