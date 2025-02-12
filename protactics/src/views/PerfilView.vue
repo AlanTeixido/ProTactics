@@ -44,7 +44,7 @@ onMounted(() => {
         <img src="../assets/img/usuario.png" class="img-profile"/>
         <h2 class="username">{{ user.username }}</h2>
         <p class="email">{{ user.email }}</p>
-        <button class="profile-btn">Editar Perfil</button>
+        <button class="profile-btn" @click="$router.push('/editar')">Editar Perfil</button>
         <div class="profile-bottom">
           <button class="profile-btn-share"><img src="../assets/img/adelante.png" class="img"/></button>
           <button class="profile-btn-config"><img src="../assets/img/configuraciones.png" class="img"/></button>
