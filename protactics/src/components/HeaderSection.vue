@@ -10,7 +10,7 @@
           <RouterLink to="/" class="nav-link">INICIO</RouterLink>
           <RouterLink v-if="isLoggedIn" to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
           <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
-          <RouterLink to="/contact" class="nav-link">CONTACTE</RouterLink>
+          <RouterLink v-if="isLoggedOff" to="/contact" class="nav-link">CONTACTE</RouterLink>
           <RouterLink v-if="isLoggedIn" to="/entrenamiento" class="nav-link">ENTRENAMIENTO</RouterLink>
           <RouterLink v-if="isLoggedIn" to="/dragg" class="nav-link">DRAGG</RouterLink>
           <RouterLink v-if="isLoggedOff" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink> 
@@ -18,9 +18,11 @@
 
         <div class="log-regist">
           <!-- Si está loggeado -->
+          <span class="welcome-message">{{ username }}</span>
           <div v-if="isLoggedIn" class="user-info">
-            <span class="welcome-message">Bienvenido, {{ username }}</span>
-            <img class="profile-pic" src="../assets/img/usuario.png" alt="Foto de perfil" />
+            <RouterLink to="/perfil" class="profile-pic-link">
+              <img class="profile-pic" src="../assets/img/usuario.png" alt="Foto de perfil" />
+            </RouterLink>
             <button @click="logout" class="logout-btn">Cerrar Sesión</button>
           </div>
 

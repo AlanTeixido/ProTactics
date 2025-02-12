@@ -103,6 +103,7 @@ body{
   height: 30px;
   border-radius: 50%;
   object-fit: cover;
+  margin-left: 5px;
 }
 
 .logout-btn {
