@@ -39,11 +39,11 @@ const deportes = ref([
 
 .wrapper {
     display: grid;
-    gap: 20px 5px; /* Ajusté el espacio vertical (de arriba a abajo) a 10px y horizontal (entre columnas) a 5px */
+    gap: 15% 5px; /* Ajusté el espacio vertical (de arriba a abajo) a 10px y horizontal (entre columnas) a 5px */
     padding: 20px;
     margin-top: 5%;
     margin-bottom: 10%;
-    grid-template-columns: repeat(2, 1fr); /* Dos columnas de tamaño igual */
+    grid-template-columns: repeat(3, 1fr); /* Dos columnas de tamaño igual */
     place-items: center; /* Centra todos los ítems tanto horizontal como verticalmente */
 }
 
@@ -58,6 +58,7 @@ const deportes = ref([
 
 .grid-item img {
     width: 100%;
+    object-fit: cover;
     height: 500px;
     display: block;
     transition: transform 0.3s;
