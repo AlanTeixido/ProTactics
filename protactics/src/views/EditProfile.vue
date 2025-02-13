@@ -1,6 +1,6 @@
 <script setup>
-import FooterSection from '@/components/FooterSection.vue';
-import HeaderSection from '@/components/HeaderSection.vue';
+import FooterSection from "@/components/FooterSection.vue";
+import HeaderSection from "@/components/HeaderSection.vue";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
@@ -34,13 +34,16 @@ const loadUserData = async () => {
   try {
     const authToken = localStorage.getItem("authToken");
 
-    const response = await axios.get(`https://protactics-api.onrender.com/usuarios/${user.value.id}`, {
-      headers: { Authorization: `Bearer ${authToken}` },
-    });
+    const response = await axios.get(
+      `https://protactics-api.onrender.com/usuarios/${user.value.id}`,
+      {
+        headers: { Authorization: `Bearer ${authToken}` },
+      }
+    );
 
     user.value.username = response.data.nombre_usuario || "Usuari";
     user.value.email = response.data.correo || "";
-    user.value.profileImage = response.data.profileImage || "default.png";
+    user.value.profileImage = response.data.profile_image || "default.png";
   } catch (error) {
     console.error("⚠️ Error carregant dades:", error);
   }
@@ -74,7 +77,11 @@ const saveProfile = async () => {
 
 // 🔹 Canviar contrasenya
 const changePassword = async () => {
-  if (!passwords.value.oldPassword || !passwords.value.newPassword || !passwords.value.confirmPassword) {
+  if (
+    !passwords.value.oldPassword ||
+    !passwords.value.newPassword ||
+    !passwords.value.confirmPassword
+  ) {
     errorMessage.value = "❌ Tots els camps són obligatoris.";
     return;
   }
@@ -88,7 +95,7 @@ const changePassword = async () => {
     const authToken = localStorage.getItem("authToken");
 
     await axios.put(
-      `https://protactics-api.onrender.com/password`,
+      `https://protactics-api.onrender.com/edituser/${user.value.id}/password`,
       {
         contrasena_actual: passwords.value.oldPassword,
         contrasena_nova: passwords.value.newPassword,
@@ -100,6 +107,8 @@ const changePassword = async () => {
     passwords.value.oldPassword = "";
     passwords.value.newPassword = "";
     passwords.value.confirmPassword = "";
+
+    setTimeout(() => router.push("/perfil"), 1500);
   } catch (error) {
     errorMessage.value = "❌ Error canviant la contrasenya.";
   }
@@ -118,15 +127,30 @@ const uploadProfilePicture = async () => {
   try {
     const authToken = localStorage.getItem("authToken");
 
-    await axios.post(`https://protactics-api.onrender.com/usuarios/${user.value.id}/profile-picture`, formData, {
-      headers: { Authorization: `Bearer ${authToken}`, "Content-Type": "multipart/form-data" },
-    });
+    const response = await axios.post(
+      `https://protactics-api.onrender.com/usuarios/${user.value.id}/profile-picture`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
     successMessage.value = "✅ Foto de perfil actualitzada!";
+    user.value.profileImage = response.data.profileImage;
     setTimeout(loadUserData, 1500);
   } catch (error) {
     errorMessage.value = "❌ Error canviant la foto de perfil.";
   }
+};
+
+// 🔄 Funció per recarregar la pàgina
+const reloadPage = () => {
+  setTimeout(() => {
+    location.reload();
+  }, 1500);
 };
 
 // Carrega dades en muntar la pàgina
@@ -137,12 +161,22 @@ onMounted(loadUserData);
   <HeaderSection />
   <div class="edit-profile-container">
     <div class="edit-left">
-      <img :src="`/uploads/${user.profileImage}`" alt="Foto de perfil" class="profile-image">
+      <img
+        :src="`/uploads/${user.profileImage}`"
+        alt="Foto de perfil"
+        class="profile-image"
+      />
       <label class="file-label">
         Seleccionar imatge
-        <input type="file" @change="event => selectedFile = event.target.files[0]" class="file-input"/>
+        <input
+          type="file"
+          @change="(event) => (selectedFile = event.target.files[0])"
+          class="file-input"
+        />
       </label>
-      <button @click="uploadProfilePicture" class="upload-btn">Pujar Imatge</button>
+      <button @click="uploadProfilePicture" class="upload-btn">
+        Pujar Imatge
+      </button>
     </div>
 
     <div class="edit-right">
@@ -156,20 +190,38 @@ onMounted(loadUserData);
         <input v-model="user.username" type="text" placeholder="Nom d'usuari" />
 
         <label>Correu electrònic</label>
-        <input v-model="user.email" type="email" placeholder="Correu electrònic" />
+        <input
+          v-model="user.email"
+          type="email"
+          placeholder="Correu electrònic"
+        />
 
         <button @click="saveProfile">Guardar Canvis</button>
       </div>
 
       <div class="password-group">
         <h3>Canviar Contrasenya</h3>
-        <input v-model="passwords.oldPassword" type="password" placeholder="Contrasenya actual" />
-        <input v-model="passwords.newPassword" type="password" placeholder="Nova contrasenya" />
-        <input v-model="passwords.confirmPassword" type="password" placeholder="Confirma la nova contrasenya" />
+        <input
+          v-model="passwords.oldPassword"
+          type="password"
+          placeholder="Contrasenya actual"
+        />
+        <input
+          v-model="passwords.newPassword"
+          type="password"
+          placeholder="Nova contrasenya"
+        />
+        <input
+          v-model="passwords.confirmPassword"
+          type="password"
+          placeholder="Confirma la nova contrasenya"
+        />
         <button @click="changePassword">Canviar Contrasenya</button>
       </div>
 
-      <button @click="router.push('/perfil')" class="cancel-btn">Cancel·lar</button>
+      <button @click="router.push('/perfil')" class="cancel-btn">
+        Cancel·lar
+      </button>
     </div>
   </div>
   <FooterSection />
@@ -205,7 +257,8 @@ onMounted(loadUserData);
   border: 3px solid white;
 }
 
-.form-group, .password-group {
+.form-group,
+.password-group {
   display: flex;
   flex-direction: column;
   width: 100%;
