@@ -13,10 +13,12 @@ const router = createRouter({
     { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue') },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') }, 
 
+
     // 🔒 Rutas protegidas (solo accesibles si está logueado)
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },
     { path: '/perfil', name: 'perfil', component: () => import('../views/PerfilView.vue'), meta: { requiresAuth: true } },
-    { path: '/entrenamiento', name: 'entrenamiento', component: () => import('../views/EntrenamientoView.vue'), meta: { requiresAuth: true } }
+    { path: '/deportes', name: 'deportes', component: () => import('../views/DeportesView.vue'), meta: { requiresAuth: true } }, 
+    { path: '/futbol', name: 'futbol', component: () => import('../views/FootballView.vue'), meta: { requiresAuth: true } }
   ],
 });
 

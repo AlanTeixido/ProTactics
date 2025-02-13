@@ -117,3 +117,15 @@
 - **Draggable Ampliación:** Alex
 - **Implementacion Funcionalidades :** Alex, Alan y Adri
 - **Proofhub:** Alex y Alan
+
+---
+
+## **Fecha:** 13/02/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **API obtener info:** Alan
+- **Formulario de tareas:** Adri
+- **Vistas deportes, mejora draggable:** Alex
+- **Implementacion Funcionalidades :** Alex, Alan y Adri
+- **Proofhub:** Alex y Alan

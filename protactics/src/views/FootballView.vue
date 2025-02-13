@@ -1,14 +1,14 @@
 <template>
     <div class="contenedor">
       <div class="zona-arrastre">
-        <Draggable />
+        <Draggable/>
       </div>
     </div>
   </template>
   
   <script>
   import Draggable from '@/components/Draggable.vue';
-  
+
   </script>
   
   <style>

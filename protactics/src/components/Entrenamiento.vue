@@ -44,47 +44,55 @@ import FooterSection from "./FooterSection.vue";
   
 <style>
 /* Estilos generales */
-.container {
+/* .grid {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 100px 20px 20px; 
-}
+  padding: 100px 20px 20px;
+
+} */
 
 
 /* Grid de imágenes */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  width: 80%;
-  max-width: 1200px;
-  margin-top: 20px;
-}
 
-/* Estilo de cada imagen */
-.grid-item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+.grid {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .grid-item img {
-  width: 100%;
-  display: block;
-  border-radius: 10px;
-  transition: transform 0.3s ease-in-out;
+    width: 100%;
+    height: 500px;
+    display: block;
+    transition: transform 0.3s;
 }
 
-/* Efecto hover */
 .grid-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-.grid-item:hover img {
-  transform: scale(1.1);
+.grid-item-transition {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
 }
+
+.grid-item:hover .grid-item-transition {
+    opacity: 1;
+}
+
 </style>
