@@ -1,3 +1,35 @@
+<template>
+  <HeaderSection />
+  <div class="profile-container">
+    <div class="profile-card1">
+      <div class="profile-header">
+        <img src="../assets/img/usuario.png" class="img-profile"/>
+        <h2 class="username">{{ user.username }}</h2>
+        <p class="email">{{ user.email }}</p>
+        <button class="profile-btn" @click="$router.push('/editar')">Editar Perfil</button>
+        <div class="profile-bottom">
+          <button class="profile-btn-share"><img src="../assets/img/adelante.png" class="img"/></button>
+          <button class="profile-btn-config"><img src="../assets/img/configuraciones.png" class="img"/></button>
+          <button class="profile-btn-save"><img src="../assets/img/marcador.png" class="img"/></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="profile-card2">
+      <div class="profile-stats">
+        <div class="stat-box"><span>{{ user.followers }}</span><strong>Seguidores</strong></div>
+        <div class="stat-box"><span>{{ user.trainings }}</span><strong>Entrenamientos</strong></div>
+        <div class="stat-box"><span>{{ user.shared }}</span><strong>Compartidos</strong></div>
+        <div class="stat-box"><span>{{ user.likes }}</span><strong>Likes</strong></div>
+      </div>
+    </div>
+  </div>
+  
+  <Posts :userId="user.id" mode="profile"/>
+  
+  <FooterSection />
+</template>
+
 <script setup>
 import FooterSection from '@/components/FooterSection.vue';
 import HeaderSection from '@/components/HeaderSection.vue';
@@ -35,38 +67,6 @@ onMounted(() => {
   loadUserData();
 });
 </script>
-
-
-<template>
-  <HeaderSection />
-  <div class="profile-container">
-    <div class="profile-card1">
-      <div class="profile-header">
-        <img src="../assets/img/usuario.png" class="img-profile"/>
-        <h2 class="username">{{ user.username }}</h2>
-        <p class="email">{{ user.email }}</p>
-        <button class="profile-btn" @click="$router.push('/editar')">Editar Perfil</button>
-        <div class="profile-bottom">
-          <button class="profile-btn-share"><img src="../assets/img/adelante.png" class="img"/></button>
-          <button class="profile-btn-config"><img src="../assets/img/configuraciones.png" class="img"/></button>
-          <button class="profile-btn-save"><img src="../assets/img/marcador.png" class="img"/></button>
-        </div>
-      </div>
-    </div>
-
-    <div class="profile-card2">
-      <div class="profile-stats">
-        <div class="stat-box"><span>{{ user.followers }}</span><strong>Seguidores</strong></div>
-        <div class="stat-box"><span>{{ user.trainings }}</span><strong>Entrenamientos</strong></div>
-        <div class="stat-box"><span>{{ user.shared }}</span><strong>Compartidos</strong></div>
-        <div class="stat-box"><span>{{ user.likes }}</span><strong>Likes</strong></div>
-      </div>
-    </div>
-  </div>
-  <Posts/>
-  <FooterSection />
-</template>
-
 
 <style scoped>
 /* Contenedor principal */
