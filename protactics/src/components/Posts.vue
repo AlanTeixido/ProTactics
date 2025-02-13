@@ -24,12 +24,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 
 const props = defineProps({
-  userId: String, // ID de l'usuari que es passa com a prop
-  mode: String // "dashboard" per veure tots els posts, "profile" per veure només els de l'usuari
+  userId: String, // ID de l'usuari per al mode perfil
+  mode: String // "dashboard" per veure només posts públics, "profile" per veure tots els posts de l'usuari
 });
 
 const posts = ref([]);
@@ -38,10 +38,10 @@ const errorMessage = ref("");
 
 // 🔹 Funció per carregar els posts
 const loadPosts = async () => {
-  let url = "https://protactics-api.onrender.com/posts"; // Per defecte, carrega tots els posts
+  let url = "https://protactics-api.onrender.com/posts"; // Per defecte, només posts públics
 
   if (props.mode === "profile" && props.userId) {
-    url = `https://protactics-api.onrender.com/posts/user/${props.userId}`; // Carrega només els posts de l'usuari
+    url = `https://protactics-api.onrender.com/posts/user/${props.userId}`; // Carrega tots els posts de l'usuari
   }
 
   console.log("🔍 Carregant posts de:", url);
@@ -67,11 +67,10 @@ const loadPosts = async () => {
   }
 };
 
-// 🔹 Carregar els posts en muntar el component
+// 🔹 Carregar els posts en muntar el component i veure si canvia el `userId`
 onMounted(loadPosts);
+watch(() => props.userId, loadPosts);
 </script>
-
-
 
 <style scoped>
 .dashboard-container {
