@@ -53,6 +53,28 @@
     opacity: 1;
     transform: scale(1); /* Toma el tamaño original */
   }
+
+  .logos-section {
+  display: block;
+  justify-content: center;
+  padding: 5rem 0;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+}
+.logos-section h3{
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 2%;
+}
+.logos-section img {
+  height: 90px;
+  object-fit: contain;
+}
+.logos{
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+}
   
   </style>
   

@@ -18,3 +18,43 @@
 <script setup>
 </script>
 
+<style scoped>
+.section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-right: 5%;
+}
+.text{
+  width: 100%;
+  justify-content: center;
+  margin-top: 30%;
+}
+.text p{
+  width: 70%;
+  margin-left: 15%;
+}
+.main-section {
+  padding: 4rem 2rem;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 3rem;
+  margin-top: 10%;
+}
+.main-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+.main-section p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.estadistica{
+  width: 75%;
+  margin-left: 8%; 
+  transition: 1s;
+}
+.estadistica:hover{
+  transform: scale(1.1);
+}
+</style>

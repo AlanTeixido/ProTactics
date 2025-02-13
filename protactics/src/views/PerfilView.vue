@@ -1,6 +1,7 @@
 <script setup>
 import FooterSection from '@/components/FooterSection.vue';
 import HeaderSection from '@/components/HeaderSection.vue';
+import Posts from '@/components/Posts.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
@@ -60,10 +61,9 @@ onMounted(() => {
         <div class="stat-box"><span>{{ user.shared }}</span><strong>Compartidos</strong></div>
         <div class="stat-box"><span>{{ user.likes }}</span><strong>Likes</strong></div>
       </div>
-
-      
     </div>
   </div>
+  <Posts/>
   <FooterSection />
 </template>
 

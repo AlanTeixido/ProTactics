@@ -24,6 +24,14 @@
     </div>
     <img src="../assets/img/dispositivos.png" alt="" class="fondo-login">
   </div>
+
+  <!-- Popup de mensaje -->
+  <div v-if="popupVisible" class="popup">
+    <div class="popup-content">
+      <p>{{ popupMessage }}</p>
+      <button @click="closePopup" class="popup-close">Cerrar</button>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -34,6 +42,21 @@ import { useRouter } from 'vue-router';
 const email = ref('');
 const password = ref('');
 const router = useRouter();  // Hacemos uso de useRouter para la navegación programática
+
+// Agregar estado para controlar la visibilidad y el mensaje del popup
+const popupVisible = ref(false);
+const popupMessage = ref('');
+
+// Función para mostrar el popup
+const showPopup = (message) => {
+  popupMessage.value = message;
+  popupVisible.value = true;
+};
+
+// Función para cerrar el popup
+const closePopup = () => {
+  popupVisible.value = false;
+};
 
 // Función para iniciar sesión
 const login = async () => {
@@ -49,31 +72,31 @@ const login = async () => {
 
     if (response.data.token) {
       localStorage.setItem('authToken', response.data.token);
-
-      // ✅ Ara ho agafem de `response.data`
       localStorage.setItem('username', response.data.nombre_usuario);
       localStorage.setItem('userEmail', response.data.correo);
       localStorage.setItem('userId', response.data.id);
 
-      alert('Sessió iniciada correctament');
+      // Mostrar popup con mensaje de éxito
+      console.log('Sessió iniciada correctament');
       router.push('/dashboard');
     }
   } catch (error) {
     console.error('Error en el login:', error);
-    alert('Credencials incorrectes o error en el servidor.');
+    
+    // Mostrar popup con mensaje de error
+    showPopup('Credencials incorrectes o error en el servidor.');
   }
 };
-
-
 </script>
 
 <style scoped>
-.fondo-login{
+.fondo-login {
   position: absolute;
   filter: opacity(10%);
   z-index: -1;
   bottom: 2%;
 }
+
 .separator {
   width: 2px; /* Grosor de la línea */
   height: 70%; /* Altura de la línea (ajústala si es necesario) */
@@ -88,9 +111,7 @@ const login = async () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  /* Ocupar toda la altura de la pantalla */
-  gap: 5%;
-  /* Espaciado entre los elementos */
+  gap: 5%; /* Espaciado entre los elementos */
   color: white;
 }
 
@@ -119,7 +140,6 @@ const login = async () => {
   align-items: center;
   justify-content: center;
   width: 100%;
-  
 }
 
 .input-group {
@@ -145,8 +165,8 @@ const login = async () => {
 }
 
 .submit-btn {
-  margin-top: 20px; /* Espacio arriba */
-  width: 100%; /* Ajusta el tamaño según sea necesario */
+  margin-top: 20px;
+  width: 100%;
   text-align: center;
   color: white;
   padding: 15px;
@@ -157,7 +177,6 @@ const login = async () => {
   background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194)); /* Degradado de azul a verde */
   transition: 0.3s;
 }
-
 
 .submit-btn:hover {
   transform: scale(1.1);
@@ -177,5 +196,40 @@ const login = async () => {
   color: #ccc;
 }
 
+/* Estilos para el popup */
+.popup {
+  display: flex; /* Cambié display a flex para controlarlo con Vue */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
 
+.popup-content {
+  background-color: #1b1b1b;
+  padding: 5%;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+}
+
+.popup-close {
+  margin-top: 8%;
+  padding: 10px;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  border: 2px white solid;
+  border-radius: 5px;
+  box-shadow: 15px rgba(0, 0, 0, 0.8);
+  transition: 0.3s;
+}
+
+.popup-close:hover{
+  transform: scale(1.1) 
+}
 </style>

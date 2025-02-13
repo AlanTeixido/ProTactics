@@ -60,4 +60,24 @@ color: hsla(180, 100%, 35%, 1);
     opacity: 1;
     transform: translateY(0);
   }
+
+  .three-text {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8%; 
+  padding: 5% 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.three-text h2 {
+  margin-bottom: 10px;
+}
+
+.three-text p {
+  text-align: justify;
+  line-height: 160%;
+  margin: 2%;
+}
+
 </style>
