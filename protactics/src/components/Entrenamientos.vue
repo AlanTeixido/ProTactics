@@ -80,26 +80,127 @@ onMounted(loadEntrenamientos);
 </script>
 
 <style scoped>
+/* 🔹 Contenedor principal de entrenamientos */
 .entrenamientos-container {
-  width: 60%;
-  margin: 0 auto;
-  padding: 20px;
+  width: 85%;
+  margin: 50px auto;
+  margin-top: 10%;
+  padding: 30px;
   text-align: center;
+  background: #121212; /* Fondo oscuro moderno */
+  border-radius: 15px;
+  box-shadow: 0px 5px 20px rgba(0, 255, 255, 0.15); /* Brillo sutil */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* 🔹 Título */
+h2 {
+  font-size: 32px;
+  color: #00c3ff; /* Azul vibrante de la web */
+  font-weight: bold;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+/* 🔹 Tarjetas de entrenamiento */
 .entrenamiento-card {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  width: 90%;
+  max-width: 700px;
+  box-shadow: 0px 5px 15px rgba(0, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-left: 6px solid #00c3ff; /* Azul lateral para destacar */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
+.entrenamiento-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0px 6px 20px rgba(0, 255, 255, 0.3);
+}
+
+/* 🔹 Información del entrenamiento */
+.entrenamiento-card p {
+  font-size: 18px;
+  color: #e0e0e0;
+  margin: 10px 0;
+  text-align: left;
+}
+
+.entrenamiento-card strong {
+  color: #00c3ff;
+  font-weight: bold;
+}
+
+/* 🔹 Botones de acción */
 .actions {
-  margin-top: 10px;
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
-.delete-btn {
-  color: red;
-  margin-left: 10px;
+/* Botón Editar */
+.actions button {
+  background-color: #00c3ff;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
+
+.actions button:hover {
+  background-color: #0099cc;
+  transform: scale(1.05);
+}
+
+/* Botón Eliminar */
+.delete-btn {
+  background-color: #ff3b30;
+}
+
+.delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* 🔹 No hay entrenamientos */
+p.no-data {
+  font-size: 20px;
+  color: #00c3ff;
+  font-weight: bold;
+  margin-top: 30px;
+}
+
+/* 🔹 Ajustes generales para mejorar la legibilidad */
+@media (max-width: 768px) {
+  .entrenamientos-container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .entrenamiento-card {
+    width: 100%;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
 </style>
