@@ -3,44 +3,67 @@
   <div class="profile-container">
     <div class="profile-card1">
       <div class="profile-header">
-        <img src="../assets/img/usuario.png" class="img-profile"/>
+        <img src="../assets/img/usuario.png" class="img-profile" />
         <h2 class="username">{{ user.username }}</h2>
         <p class="email">{{ user.email }}</p>
-        <button class="profile-btn" @click="$router.push('/editar')">Editar Perfil</button>
+        <button class="profile-btn" @click="$router.push('/editar')">
+          Editar Perfil
+        </button>
       </div>
     </div>
 
     <div class="profile-card2">
       <div class="profile-stats">
-        <div class="stat-box"><span>{{ user.followers }}</span><strong>Seguidores</strong></div>
-        <div class="stat-box"><span>{{ user.trainings }}</span><strong>Entrenamientos</strong></div>
-        <div class="stat-box"><span>{{ user.shared }}</span><strong>Compartidos</strong></div>
-        <div class="stat-box"><span>{{ user.likes }}</span><strong>Likes</strong></div>
+        <div class="stat-box">
+          <span>{{ user.followers }}</span
+          ><strong>Seguidores</strong>
+        </div>
+        <div class="stat-box">
+          <span>{{ user.trainings }}</span
+          ><strong>Entrenamientos</strong>
+        </div>
+        <div class="stat-box">
+          <span>{{ user.shared }}</span
+          ><strong>Compartidos</strong>
+        </div>
+        <div class="stat-box">
+          <span>{{ user.likes }}</span
+          ><strong>Likes</strong>
+        </div>
       </div>
     </div>
   </div>
+  <!-- 🔹 NUEVO: Botón para gestionar entrenamientos -->
+  <div class="training-section">
+    <button class="training-btn" @click="$router.push('/mis-entrenamientos')">
+      📋 Gestionar Mis Entrenamientos
+    </button>
+  </div>
 
-  <!-- Solo cargar posts si userId está definido -->
-  <Posts v-if="user.id" :userId="user.id" mode="profile"/>
+  <!-- 🔹 Mostrar entrenamientos solo si el usuario está autenticado -->
+  <Entrenamientos v-if="user.id" :userId="user.id" />
+
+  <!-- 🔹 Mostrar posts solo si el usuario está autenticado -->
+  <Posts v-if="user.id" :userId="user.id" mode="profile" />
 
   <FooterSection />
 </template>
 
 <script setup>
-import FooterSection from '@/components/FooterSection.vue';
-import HeaderSection from '@/components/HeaderSection.vue';
-import Posts from '@/components/Posts.vue';
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
+import FooterSection from "@/components/FooterSection.vue";
+import HeaderSection from "@/components/HeaderSection.vue";
+import Posts from "@/components/Posts.vue";
+import { ref, onMounted } from "vue";
+import axios from "axios";
 
 const user = ref({
-  id: localStorage.getItem('userId') || '',
-  username: localStorage.getItem('username') || 'Usuario',
-  email: localStorage.getItem('userEmail') || '',
+  id: localStorage.getItem("userId") || "",
+  username: localStorage.getItem("username") || "Usuario",
+  email: localStorage.getItem("userEmail") || "",
   trainings: 0,
   shared: 0,
   likes: 0,
-  followers: 0
+  followers: 0,
 });
 
 // 🔹 Cargar datos del usuario desde la API
@@ -48,13 +71,15 @@ const loadUserData = async () => {
   if (!user.value.id) return;
 
   try {
-    const response = await axios.get(`https://protactics-api.onrender.com/usuarios/${user.value.id}`);
+    const response = await axios.get(
+      `https://protactics-api.onrender.com/usuarios/${user.value.id}`
+    );
     user.value.trainings = response.data.trainings || 0;
     user.value.shared = response.data.shared || 0;
     user.value.likes = response.data.likes || 0;
     user.value.followers = response.data.followers || 0;
   } catch (error) {
-    console.error('Error cargando los datos:', error);
+    console.error("Error cargando los datos:", error);
   }
 };
 
@@ -62,28 +87,55 @@ const loadUserData = async () => {
 onMounted(loadUserData);
 </script>
 
-
 <style scoped>
+
+/* 🔹 Sección para botón de entrenamientos */
+.training-section {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* 🔹 Botón de "Gestionar Mis Entrenamientos" */
+.training-btn {
+  background-color: #00c3ff;
+  color: white;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  border: none;
+  display: inline-block;
+  text-align: center;
+}
+
+.training-btn:hover {
+  background-color: #0099cc;
+  transform: scale(1.05);
+}
+
+
 /* Contenedor principal */
 .profile-container {
   display: flex;
-  justify-content: center;  
+  justify-content: center;
   padding: 2%;
   background-color: #222;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   margin: 8%;
   border-radius: 10px;
   margin-top: 15%;
-
 }
 
 /* Tarjeta de perfil */
-.profile-card1, .profile-card2 {
+.profile-card1,
+.profile-card2 {
   width: 45%;
   text-align: center;
   color: white;
   margin: 2%;
-
 }
 
 /* Foto de perfil */
@@ -181,7 +233,9 @@ onMounted(loadUserData);
 .profile-bottom {
   margin-top: 10px;
 }
-.profile-btn-share, .profile-btn-config, .profile-btn-save {
+.profile-btn-share,
+.profile-btn-config,
+.profile-btn-save {
   width: 10%;
   padding: 10px;
   color: white;
@@ -194,16 +248,18 @@ onMounted(loadUserData);
   background-color: transparent;
 }
 
-.profile-btn-share:hover, .profile-btn-config:hover, .profile-btn-save:hover {
+.profile-btn-share:hover,
+.profile-btn-config:hover,
+.profile-btn-save:hover {
   transform: scale(1.1);
 }
 
-.img{
+.img {
   width: 30px;
   height: 30px;
 }
 
-.img-profile{
+.img-profile {
   width: 100px;
   height: 100px;
   margin-bottom: 10px;
@@ -230,9 +286,12 @@ onMounted(loadUserData);
   inset: 0;
   padding: 2px; /* Grosor del borde */
   border-radius: 10px;
-  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194)); /* Degradado en el borde */
-  -webkit-mask: 
-    linear-gradient(white 0 0) content-box, 
+  background: linear-gradient(
+    45deg,
+    rgb(4, 196, 68),
+    rgb(0, 132, 194)
+  ); /* Degradado en el borde */
+  -webkit-mask: linear-gradient(white 0 0) content-box,
     linear-gradient(white 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
