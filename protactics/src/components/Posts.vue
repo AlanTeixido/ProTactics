@@ -24,34 +24,31 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watchEffect } from 'vue';
 import axios from 'axios';
 
 const props = defineProps({
-  userId: String, // ID de l'usuari per al mode perfil
-  mode: String // "dashboard" per veure només posts públics, "profile" per veure tots els posts de l'usuari
+  userId: String, // ID del usuario autenticado
+  mode: String // "dashboard" para posts públicos, "profile" para los del usuario
 });
 
 const posts = ref([]);
 const loading = ref(true);
 const errorMessage = ref("");
 
-// 🔹 Funció per carregar els posts
+// 🔹 Función corregida para cargar los posts
 const loadPosts = async () => {
-  let url = "https://protactics-api.onrender.com/posts"; // Per defecte, només posts públics
+  if (!props.userId && props.mode === "profile") return; // Evita peticiones incorrectas
 
-  if (props.mode === "profile" && props.userId) {
-    url = `https://protactics-api.onrender.com/posts/user/${props.userId}`; // Carrega tots els posts de l'usuari
+  let url = "https://protactics-api.onrender.com/posts"; // 🔹 Posts públicos por defecto
+  if (props.mode === "profile") {
+    url = `https://protactics-api.onrender.com/posts/user/${props.userId}`; // 🔹 Posts del usuario autenticado
   }
 
-  console.log("🔍 Carregant posts de:", url);
+  console.log("🔍 Cargando posts desde:", url);
 
   try {
     const response = await axios.get(url);
-
-    if (response.data.length === 0) {
-      console.warn("⚠️ No hi ha posts disponibles.");
-    }
 
     posts.value = response.data.map(post => ({
       id: post.id,
@@ -60,17 +57,24 @@ const loadPosts = async () => {
       description: post.contingut
     }));
   } catch (error) {
-    console.error("⚠️ Error carregant posts:", error);
-    errorMessage.value = "❌ Error carregant els posts.";
+    console.error("⚠️ Error cargando posts:", error);
+    errorMessage.value = "❌ Error cargando los posts.";
   } finally {
     loading.value = false;
   }
 };
 
-// 🔹 Carregar els posts en muntar el component i veure si canvia el `userId`
+// 🔹 Esperamos a que `userId` esté listo antes de hacer la petición
+watchEffect(() => {
+  if (props.mode === "profile" && props.userId) {
+    loadPosts();
+  }
+});
+
+// 🔹 Cargamos posts al montar el componente
 onMounted(loadPosts);
-watch(() => props.userId, loadPosts);
 </script>
+
 
 <style scoped>
 .dashboard-container {

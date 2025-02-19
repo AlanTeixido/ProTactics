@@ -7,11 +7,6 @@
         <h2 class="username">{{ user.username }}</h2>
         <p class="email">{{ user.email }}</p>
         <button class="profile-btn" @click="$router.push('/editar')">Editar Perfil</button>
-        <div class="profile-bottom">
-          <button class="profile-btn-share"><img src="../assets/img/adelante.png" class="img"/></button>
-          <button class="profile-btn-config"><img src="../assets/img/configuraciones.png" class="img"/></button>
-          <button class="profile-btn-save"><img src="../assets/img/marcador.png" class="img"/></button>
-        </div>
       </div>
     </div>
 
@@ -24,9 +19,10 @@
       </div>
     </div>
   </div>
-  
-  <Posts :userId="user.id" mode="profile"/>
-  
+
+  <!-- Solo cargar posts si userId está definido -->
+  <Posts v-if="user.id" :userId="user.id" mode="profile"/>
+
   <FooterSection />
 </template>
 
@@ -37,7 +33,6 @@ import Posts from '@/components/Posts.vue';
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 
-// Datos del usuario
 const user = ref({
   id: localStorage.getItem('userId') || '',
   username: localStorage.getItem('username') || 'Usuario',
@@ -48,11 +43,12 @@ const user = ref({
   followers: 0
 });
 
-// Cargar datos del usuario desde la API
+// 🔹 Cargar datos del usuario desde la API
 const loadUserData = async () => {
+  if (!user.value.id) return;
+
   try {
     const response = await axios.get(`https://protactics-api.onrender.com/usuarios/${user.value.id}`);
-    
     user.value.trainings = response.data.trainings || 0;
     user.value.shared = response.data.shared || 0;
     user.value.likes = response.data.likes || 0;
@@ -62,17 +58,16 @@ const loadUserData = async () => {
   }
 };
 
-// Cargar datos al montar el componente
-onMounted(() => {
-  loadUserData();
-});
+// 🔹 Cargar datos al montar el componente
+onMounted(loadUserData);
 </script>
+
 
 <style scoped>
 /* Contenedor principal */
 .profile-container {
   display: flex;
-  justify-content: center;
+  justify-content: center;  
   padding: 2%;
   background-color: #222;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
