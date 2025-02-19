@@ -27,7 +27,7 @@
     </div>
 
     <div v-else>
-      <p>No tienes entrenamientos creados.</p>
+      <p class="no-data">No tienes entrenamientos creados.</p>
     </div>
   </div>
 </template>
@@ -202,5 +202,4 @@ p.no-data {
     gap: 10px;
   }
 }
-
 </style>
