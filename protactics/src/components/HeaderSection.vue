@@ -95,16 +95,21 @@ onMounted(() => {
   display: flex;
   align-items: center;
   background-color: #1b1b1b;
-  padding: 2% 0;
+  padding: 0.75%;
   top: 0;
   position: fixed;
   z-index: 100;
 }
 
 .nav-icon{
-  width: 60px;
-  height: 60px;
+  width: 45px;
+  height: 45px;
   margin-left: 5%;
+  transition: 0.3s;
+}
+
+.nav-icon:hover {
+  transform: scale(1.1);
 }
 
 .profile-pic{
@@ -117,17 +122,17 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 10%;
+  padding: 0.5%;
 }
 
 .nav2 {
   display: flex;
   align-items: center;
-  
+  margin-left: 2%;
 }
 
 .nav-link {
-  margin-left: 20px;
+  margin-left: 25px;
   text-decoration: none;
   color: white;
   transition: 0.4s ease;
@@ -151,7 +156,11 @@ onMounted(() => {
   border-radius: 10px;
   text-decoration: none;
   margin-left: 20px;
-  
+  transition: 0.3s;
+}
+
+.login-register-btn:hover {
+  transform: scale(1.1);
 }
 
 .user-info {
@@ -177,6 +186,5 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-right: 15%;
 }
 </style>
