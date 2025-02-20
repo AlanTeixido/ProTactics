@@ -114,7 +114,7 @@ onMounted(() => {
 
 .nav-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   padding: 0 10%;
@@ -122,7 +122,6 @@ onMounted(() => {
 
 .nav2 {
   display: flex;
-  justify-content: center;
   align-items: center;
   
 }
@@ -139,13 +138,18 @@ onMounted(() => {
 
 .log-regist {
   display: flex;
-  justify-content: flex-end; /* Alinea los elementos a la derecha */
+  justify-content: space-between; /* Alinea los elementos a la derecha */
   align-items: center;
   width: 100%;
   margin-right: 5%; /* Espaciado a la derecha */
 }
 
 .login-register-btn {
+  color: white;
+  border: 2px solid white;
+  padding: 0.5em;
+  border-radius: 10px;
+  text-decoration: none;
   margin-left: 20px;
   
 }
@@ -173,5 +177,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 15%;
 }
 </style>
