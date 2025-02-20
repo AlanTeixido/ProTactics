@@ -3,16 +3,20 @@
   <div class="container">
     <h2 class="section-title">Explora Deportes</h2>
     <div class="wrapper">
-      <div v-for="(deporte, index) in deportes" :key="index" class="grid-item">
-        <RouterLink :to="`/futbol`"><img :src="getImageUrl(deporte.imagen)" class="grid-image" /></RouterLink> 
-        <div class="item-transition">
+  <!-- Usamos un v-for para recorrer el array de deportes -->
+  <div v-for="(deporte, index) in deportes" :key="index"  class="grid-item">
+    <!-- RouterLink para redirigir al clickear el nombre del deporte -->
+    <RouterLink :to="`/${deporte.nombre}`"><img :src="getImageUrl(deporte.imagen)" class="grid-image"/>
+    <div class="item-transition">
           <p class="title">{{ deporte.nombre }}</p>
         </div>
-      </div>
-    </div>
+    </RouterLink>
+  </div>
+</div>
   </div>
   <FooterSection />
 </template>
+
 
 <script setup>
 import { ref } from "vue";
@@ -22,12 +26,12 @@ import FooterSection from "@/components/FooterSection.vue";
 const getImageUrl = (path) => new URL(path, import.meta.url).href;
 
 const deportes = ref([
-  { nombre: "Fútbol", imagen: "../assets/img/futbol.jpg", gridArea: "sport" },
-  { nombre: "Baloncesto", imagen: "../assets/img/basquet.jpg", gridArea: "tees" },
-  { nombre: "Pádel", imagen: "../assets/img/padel.jpg", gridArea: "hoodies" },
-  { nombre: "Gimnasio", imagen: "../assets/img/gym.jpg", gridArea: "ladies-shirt" },
-  { nombre: "Ciclismo", imagen: "../assets/img/ciclismo.jpg", gridArea: "youth" },
-  { nombre: "Atletismo", imagen: "../assets/img/atletismo2.jpg", gridArea: "kids" }
+  { nombre: "futbol", imagen: "../assets/img/futbol.jpg", gridArea: "sport" },
+  { nombre: "baloncesto", imagen: "../assets/img/basquet.jpg", gridArea: "tees" },
+  { nombre: "padel", imagen: "../assets/img/padel.jpg", gridArea: "hoodies" },
+  { nombre: "gimnasio", imagen: "../assets/img/gym.jpg", gridArea: "ladies-shirt" },
+  { nombre: "ciclismo", imagen: "../assets/img/ciclismo.jpg", gridArea: "youth" },
+  { nombre: "atletismo", imagen: "../assets/img/atletismo2.jpg", gridArea: "kids" }
 ]);
 </script>
 
