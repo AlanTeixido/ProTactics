@@ -52,7 +52,7 @@
     </div>
 
     <div v-else>
-      <p class="no-data">No tienes entrenamientos creados.</p>
+      <p class="no-data">No tienes entrenamientos creados.</p> 
     </div>
     
   </div>
