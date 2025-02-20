@@ -125,7 +125,20 @@
 
 ### **Tareas:**  
 - **API obtener info:** Alan
-- **Formulario de tareas:** Adri
-- **Vistas deportes, mejora draggable:** Alex
+- **Logo:** Adri
+- **Mejora draggable:** Alex
 - **Implementacion Funcionalidades :** Alex, Alan y Adri
 - **Proofhub:** Alex y Alan
+
+---
+
+## **Fecha:** 20/02/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **API obtener info:** Alan
+- **Vistas deportes Router Link:** Alex
+- **Implementacion Funcionalidades :** Alex, Alan y Adri
+- **Proofhub:** Alex y Alan
+- **Mejora Estilos:**Adri
+- **Formularios Entrenamientos:** Adri
