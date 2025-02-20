@@ -43,6 +43,7 @@
         <div class="actions">
           <button @click="$router.push(`/editar-entrenamiento/${entrenamiento.id}`)">✏️ Editar</button>
           <button @click="eliminarEntrenamiento(entrenamiento.id)" class="delete-btn">🗑 Eliminar</button>
+          <button @click="volverDashboard" class="back-btn">🔙 Volver al Dashboard</button>
         </div>
       </div>
     </div>

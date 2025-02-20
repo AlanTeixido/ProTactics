@@ -75,7 +75,8 @@
         </template>
   
         <button type="submit">💾 Guardar Cambios</button>
-      </form>
+        <button type="button" @click="router.push('/mis-entrenamientos')" class="back-btn">🔙 Volver</button>
+              </form>
     </div>
   </template>
   
@@ -131,6 +132,27 @@
   </script>
   
   <style scoped>
+
+  .back-btn {
+    background-color: #555;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    margin-top: 10px;
+  }
+  
+  .back-btn:hover {
+    background-color: #444;
+    transform: scale(1.05);
+  }
+
+  
+  
   .editar-container {
     width: 50%;
     margin: 40px auto;
