@@ -13,12 +13,21 @@ const router = createRouter({
     { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue') },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 
+    // Ruta de cada deporte
+    { path: '/futbol', name: 'futbol', component: FutbolView },
+    { path: '/baloncesto', name: 'baloncesto', component: BaloncestoView },
+    { path: '/padel', name: 'padel', component: PadelView },
+    { path: '/gimnasio', name: 'gimnasio', component: GimnasioView },
+    { path: '/ciclismo', name: 'ciclismo', component: CiclismoView },
+    { path: '/atletismo', name: 'atletismo', component: AtletismoView },
+
     // 🔒 Rutas protegidas (solo accesibles si está logueado)
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },
     { path: '/perfil', name: 'perfil', component: () => import('../views/PerfilView.vue'), meta: { requiresAuth: true } },
     { path: '/deportes', name: 'deportes', component: () => import('../views/DeportesView.vue'), meta: { requiresAuth: true } },
     { path: '/mis-entrenamientos', name: 'mis-entrenamientos', component: () => import('../views/EntrenamientosView.vue'), meta: { requiresAuth: true } },
-    { path: '/editar-entrenamiento/:id', name: 'editar-entrenamiento', component: () => import('../views/EditarEntrenamiento.vue'), meta: { requiresAuth: true } 
+    {
+      path: '/editar-entrenamiento/:id', name: 'editar-entrenamiento', component: () => import('../views/EditarEntrenamiento.vue'), meta: { requiresAuth: true }
     }
   ],
 });
