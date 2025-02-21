@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
+import FutbolView from '@/views/Deportes/FutbolView.vue';
+import BaloncestoView from '@/views/Deportes/BaloncestoView.vue';
+import PadelView from '@/views/Deportes/PadelView.vue';
+import GimnasioView from '@/views/Deportes/GimnasioView.vue';
+import CiclismoView from '@/views/Deportes/CiclismoView.vue';
+import AtletismoView from '@/views/Deportes/AtletismoView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,7 +24,7 @@ const router = createRouter({
     { path: '/baloncesto', name: 'baloncesto', component: BaloncestoView },
     { path: '/padel', name: 'padel', component: PadelView },
     { path: '/gimnasio', name: 'gimnasio', component: GimnasioView },
-    { path: '/ciclismo', name: 'ciclismo', component: CiclismoView },
+    { path: '/ciclismo', name: 'ciclismo', component: CiclismoView},
     { path: '/atletismo', name: 'atletismo', component: AtletismoView },
 
     // 🔒 Rutas protegidas (solo accesibles si está logueado)
