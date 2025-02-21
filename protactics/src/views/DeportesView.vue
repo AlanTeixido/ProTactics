@@ -1,7 +1,7 @@
 <template>
   <HeaderSection />
   <div class="container">
-    <h2 class="section-title">Explora deportes</h2>
+    <h2 class="section-title">Explora <span>deportes</span></h2>
     <div class="wrapper">
       <!-- Usamos un v-for para recorrer el array de deportes -->
       <div v-for="deporte in deportes" :key="deporte.nombre" class="grid-item">
@@ -12,8 +12,8 @@
           </div>
         </RouterLink>
       </div>
-      <FormContact/>
     </div>
+    <FormContact/>
   </div>
   <FooterSection />
 </template>
@@ -37,6 +37,7 @@ const deportes = ref([
 </script>
 
 <style scoped>
+
 .section-title {
   text-align: left;
   margin-top: 10%;
@@ -109,5 +110,11 @@ const deportes = ref([
   text-align: center;
   color: #fff;
   text-transform: uppercase;
+}
+h2{
+  font-weight: 1000;
+}
+span{
+  font-weight: 300;
 }
 </style>

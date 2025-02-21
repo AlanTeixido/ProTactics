@@ -25,11 +25,11 @@
         <RouterLink to="/perfil" class="profile-pic-link">
           <img class="profile-pic" src="../assets/img/usuario.png" alt="Foto de perfil" />
         </RouterLink>
-        <button @click="logout" class="logout-btn">Cerrar Sesión</button>
+        <img @click="logout" src="../assets/img/logout.png" class="logout-logo">
       </div>
 
       <div v-if="!isLoggedIn" class="login-register">
-        <RouterLink to="/login" class="login-register-btn">Inicia Sesión</RouterLink>
+        <RouterLink to="/login" ><img src="../assets/img/enter.png" class="login-register-btn"></RouterLink>
       </div>
     </div>
   </header>
@@ -122,16 +122,21 @@ onMounted(() => {
 .nav2 {
   display: flex;
   align-items: center;
-  margin-left: 2%;
+  margin-left: 5%;
 }
 .nav-link {
   margin-left: 25px;
   text-decoration: none;
-  color: white;
+  color: transparent;
+  background-image: linear-gradient(to right, #0098e5, #00a86b);
+  background-clip: text;
+  -webkit-background-clip: text; /* Para compatibilidad con WebKit */
   transition: 0.4s ease;
 }
+
 .nav-link:hover {
   transform: scale(1.1);
+  font-weight: bolder;
 }
 .log-regist {
   display: flex;
@@ -141,14 +146,8 @@ onMounted(() => {
   margin-right: 5%; /* Espaciado a la derecha */
 }
 .login-register-btn {
-  color: white;
-  border: 2px solid white;
-  padding: 0.5em;
-  border-radius: 10px;
-  cursor: pointer;
-  text-decoration: none;
-  margin-left: 20px;
-  transition: 0.3s ease;
+  width: 30px;
+  height: 30px;
 }
 
 .login-register-btn:hover {
@@ -160,20 +159,14 @@ onMounted(() => {
   align-items: center;
   gap: 15px;
 }
-
-.logout-btn {
-  background-color: transparent;
-  color: #ff0000;
-  border: 2px solid #ff0000;
-  padding: 0.5em;
-  border-radius: 5px;
+.logout-logo{
+  width: 25px;
+  height: 25px;
   transition: 0.3s;
 }
-
-.logout-btn:hover {
+.logout-logo:hover {
   transform: scale(1.1);
 }
-
 .logo-container{
   display: flex;
   justify-content: center;
