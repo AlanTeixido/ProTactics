@@ -1,3 +1,9 @@
-<script setup></script>
-<template><h1>Hola Álex subnormal!</h1></template>
-<style scoped></style>
+<script setup>
+
+</script>
+<template>
+
+</template>
+<style scoped>
+
+</style>

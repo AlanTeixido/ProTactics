@@ -1,13 +1,9 @@
 <template>
   <div>
-    <h1>Detalles de {{ nombreDeporte }}</h1>
+    <h1>Detalles de {{ nombre }}</h1>
   </div>
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
 
-const route = useRoute();
-const nombreDeporte = route.params.nombre;
-console.log(nombreDeporte);
 </script>
