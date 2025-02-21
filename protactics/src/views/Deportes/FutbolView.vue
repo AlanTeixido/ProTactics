@@ -9,4 +9,5 @@ import { useRoute } from 'vue-router';
 
 const route = useRoute();
 const nombreDeporte = route.params.nombre;
+console.log(nombreDeporte);
 </script>

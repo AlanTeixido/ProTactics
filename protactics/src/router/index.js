@@ -14,12 +14,12 @@ const router = createRouter({
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 
     // Ruta de cada deporte
-    { path: '/deporte/:nombre', name: 'futbol',  component: () => import('../views/Deportes/FutbolView.vue') },
-    { path: '/deporte/:nombre', name: 'baloncesto',  component: () => import('../views/Deportes/BaloncestoView.vue') },
-    { path: '/deporte/:nombre', name: 'padel',  component: () => import('../views/Deportes/PadelView.vue') },
-    { path: '/deporte/:nombre', name: 'gimnasio',  component: () => import('../views/Deportes/GimnasioView.vue') },
-    { path: '/deporte/:nombre', name: 'ciclismo',  component: () => import('../views/Deportes/CiclismoView.vue') }, 
-    { path: '/deporte/:nombre', name: 'atletismo',  component: () => import('../views/Deportes/AtletismoView.vue') },
+    { path: '/futbol', name: 'futbol',  component: () => import('../views/Deportes/FutbolView.vue') },
+    { path: '/baloncesto', name: 'baloncesto',  component: () => import('../views/Deportes/BaloncestoView.vue') },
+    { path: '/padel', name: 'padel',  component: () => import('../views/Deportes/PadelView.vue') },
+    { path: '/gimnasio', name: 'gimnasio',  component: () => import('../views/Deportes/GimnasioView.vue') },
+    { path: '/ciclismo', name: 'ciclismo',  component: () => import('../views/Deportes/CiclismoView.vue') }, 
+    { path: '/atletismo', name: 'atletismo',  component: () => import('../views/Deportes/AtletismoView.vue') },
 
     // 🔒 Rutas protegidas (solo accesibles si está logueado)
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },

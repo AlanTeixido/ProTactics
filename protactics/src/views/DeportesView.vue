@@ -4,9 +4,9 @@
     <h2 class="section-title">Explora Deportes</h2>
     <div class="wrapper">
   <!-- Usamos un v-for para recorrer el array de deportes -->
-  <div v-for="(deporte, index) in deportes" :key="index"  class="grid-item">
+  <div v-for="deporte in deportes" :key="deporte.nombre"  class="grid-item">
     <!-- RouterLink para redirigir al clickear el nombre del deporte -->
-    <RouterLink :to="`/deporte/${deporte.nombre}`"><img :src="getImageUrl(deporte.imagen)" class="grid-image"/>
+    <RouterLink :to="`/${deporte.nombre}`"><img :src="getImageUrl(deporte.imagen)" class="grid-image"/>
     <div class="item-transition">
           <p class="title">{{ deporte.nombre }}</p>
         </div>
