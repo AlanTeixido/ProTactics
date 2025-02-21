@@ -100,37 +100,30 @@ onMounted(() => {
   position: fixed;
   z-index: 100;
 }
-
 .nav-icon{
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   margin-left: 5%;
   transition: 0.3s;
 }
-
 .nav-icon:hover {
   transform: scale(1.1);
 }
-
 .profile-pic{
   width: 30px;
   height: 30px;
 }
-
 .nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0.5%;
 }
-
 .nav2 {
   display: flex;
   align-items: center;
   margin-left: 2%;
 }
-
 .nav-link {
   margin-left: 25px;
   text-decoration: none;
@@ -140,7 +133,6 @@ onMounted(() => {
 .nav-link:hover {
   transform: scale(1.1);
 }
-
 .log-regist {
   display: flex;
   justify-content: space-between; /* Alinea los elementos a la derecha */
@@ -148,15 +140,15 @@ onMounted(() => {
   width: 100%;
   margin-right: 5%; /* Espaciado a la derecha */
 }
-
 .login-register-btn {
   color: white;
   border: 2px solid white;
   padding: 0.5em;
   border-radius: 10px;
+  cursor: pointer;
   text-decoration: none;
   margin-left: 20px;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 .login-register-btn:hover {
@@ -172,8 +164,8 @@ onMounted(() => {
 .logout-btn {
   background-color: transparent;
   color: #ff0000;
-  border: 1px solid #ff0000;
-  padding: 5px 10px;
+  border: 2px solid #ff0000;
+  padding: 0.5em;
   border-radius: 5px;
   transition: 0.3s;
 }

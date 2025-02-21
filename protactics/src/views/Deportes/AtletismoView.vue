@@ -1,4 +1,5 @@
 <template>
+  <HeaderSection/>
   <div class="container">
     <h1 class="title">Entrenamiento de {{ nombreDeporte }}</h1>
 
@@ -51,9 +52,12 @@
       <button type="submit" class="submit-btn">Guardar Entrenamiento</button>
     </form>
   </div>
+  <FooterSection/>
 </template>
 
 <script setup>
+import FooterSection from '@/components/FooterSection.vue';
+import HeaderSection from '@/components/HeaderSection.vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 
@@ -78,20 +82,12 @@ const enviarFormulario = () => {
 };
 </script>
 
-<style>
-/* Estilos generales */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
-}
+<style scoped>
 
 /* Contenedor principal */
 .container {
-  max-width: 600px;
+  width: 45%;
   margin: 40px auto;
-  background: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);

@@ -1,50 +1,12 @@
 <template>
   <HeaderSection />
-  <div class="contact-container">
-    <h1>Contacta con nosotros</h1>
-    <p>Rellena el siguiente formulario para ponerte en contacto con el grupo &copy; ProTactics.</p>
-    <form @submit.prevent="enviarDades">
-      <div class="form-group1-0">
-        <div class="form-group">
-          <label for="name">Nombre</label>
-          <input type="text" id="name" v-model="name" placeholder="Nombre" required />
-          <p class="error" v-if="errors.name">{{ errors.name }}</p>
-        </div>
-
-        <div class="form-group">
-          <label for="lastName">Apellido</label>
-          <input type="text" id="lastName" v-model="lastName" placeholder="Apellido" required />
-          <p class="error" v-if="errors.lastName">{{ errors.lastName }}</p>
-        </div>
-      </div>
-
-      <div class="form-group2-0">
-        <div class="form-group">
-          <label for="email">Correo Electrónico</label>
-          <input type="email" id="email" v-model="email" placeholder="Tu correo" required />
-          <p class="error" v-if="errors.email">{{ errors.email }}</p>
-        </div>
-
-        <div class="form-group">
-          <label for="phone">Teléfono</label>
-          <input type="text" id="phone" v-model="phone" placeholder="Tu teléfono" required />
-          <p class="error" v-if="errors.phone">{{ errors.phone }}</p>
-        </div>
-
-        <div class="form-group">
-          <label for="message">Mensaje</label>
-          <textarea id="message" v-model="message" placeholder="Escribe tu mensaje" required></textarea>
-          <p class="error" v-if="errors.message">{{ errors.message }}</p>
-        </div>
-      </div>
-      <button type="submit">Enviar</button>
-    </form>
-  </div>
+  <FormContact />
   <FooterSection />
 </template>
 
 <script setup>
 import FooterSection from '@/components/FooterSection.vue';
+import FormContact from '@/components/FormContact.vue';
 import HeaderSection from '@/components/HeaderSection.vue';
 import { ref } from 'vue';
 
