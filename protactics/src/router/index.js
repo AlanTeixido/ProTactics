@@ -1,12 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Login from '@/components/Login.vue';
 import Register from '@/components/Register.vue';
-import FutbolView from '@/views/Deportes/FutbolView.vue';
-import BaloncestoView from '@/views/Deportes/BaloncestoView.vue';
-import PadelView from '@/views/Deportes/PadelView.vue';
-import GimnasioView from '@/views/Deportes/GimnasioView.vue';
-import CiclismoView from '@/views/Deportes/CiclismoView.vue';
-import AtletismoView from '@/views/Deportes/AtletismoView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -20,12 +14,12 @@ const router = createRouter({
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 
     // Ruta de cada deporte
-    { path: '/futbol', name: 'futbol', component: FutbolView },
-    { path: '/baloncesto', name: 'baloncesto', component: BaloncestoView },
-    { path: '/padel', name: 'padel', component: PadelView },
-    { path: '/gimnasio', name: 'gimnasio', component: GimnasioView },
-    { path: '/ciclismo', name: 'ciclismo', component: CiclismoView},
-    { path: '/atletismo', name: 'atletismo', component: AtletismoView },
+    { path: '/deporte/:nombre', name: 'futbol',  component: () => import('../views/Deportes/FutbolView.vue') },
+    { path: '/deporte/:nombre', name: 'baloncesto',  component: () => import('../views/Deportes/BaloncestoView.vue') },
+    { path: '/deporte/:nombre', name: 'padel',  component: () => import('../views/Deportes/PadelView.vue') },
+    { path: '/deporte/:nombre', name: 'gimnasio',  component: () => import('../views/Deportes/GimnasioView.vue') },
+    { path: '/deporte/:nombre', name: 'ciclismo',  component: () => import('../views/Deportes/CiclismoView.vue') }, 
+    { path: '/deporte/:nombre', name: 'atletismo',  component: () => import('../views/Deportes/AtletismoView.vue') },
 
     // 🔒 Rutas protegidas (solo accesibles si está logueado)
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },

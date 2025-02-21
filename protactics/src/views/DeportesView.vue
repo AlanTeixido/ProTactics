@@ -6,7 +6,7 @@
   <!-- Usamos un v-for para recorrer el array de deportes -->
   <div v-for="(deporte, index) in deportes" :key="index"  class="grid-item">
     <!-- RouterLink para redirigir al clickear el nombre del deporte -->
-    <RouterLink :to="`/${deporte.nombre}`"><img :src="getImageUrl(deporte.imagen)" class="grid-image"/>
+    <RouterLink :to="`/deporte/${deporte.nombre}`"><img :src="getImageUrl(deporte.imagen)" class="grid-image"/>
     <div class="item-transition">
           <p class="title">{{ deporte.nombre }}</p>
         </div>
@@ -16,7 +16,6 @@
   </div>
   <FooterSection />
 </template>
-
 
 <script setup>
 import { ref } from "vue";
