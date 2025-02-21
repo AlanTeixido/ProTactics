@@ -142,3 +142,14 @@
 - **Proofhub:** Alex y Alan
 - **Mejora Estilos:**Adri
 - **Formularios Entrenamientos:** Adri
+
+---
+
+## **Fecha:** 20/02/2025  
+**Alumnos:** Alex, Adri
+
+### **Tareas:**  
+- **Cargar Info en Vistas Entrenamiento:** Alex
+- **Proofhub:** Alex 
+- **Mejora Estilos:** Adri
+- **Formularios Entrenamientos:** Adri
