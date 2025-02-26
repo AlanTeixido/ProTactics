@@ -12,7 +12,7 @@ onMounted(async () => {
   }
 
   try {
-    const response = await axios.get("http://localhost:3000/activity_feed", {
+    const response = await axios.get("https://protactics-api.onrender.com/activity_feed", {
       headers: { Authorization: `Bearer ${token}` },
     });
     activities.value = response.data;

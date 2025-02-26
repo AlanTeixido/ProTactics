@@ -34,7 +34,7 @@ const router = useRouter();
 // 🔹 Funció per carregar l'últim entrenament
 const loadLastTraining = async () => {
   try {
-    const response = await axios.get("http://localhost:3000/entrenamientos/last");
+    const response = await axios.get("https://protactics-api.onrender.com/entrenamientos/last");
     training.value = response.data;
   } catch (error) {
     console.error("❌ Error carregant l'últim entrenament:", error);

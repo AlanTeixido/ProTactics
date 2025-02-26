@@ -6,21 +6,10 @@ const userStats = ref(null);
 const loading = ref(true);
 const errorMessage = ref(""); // Per mostrar errors a la UI
 
-// 🔹 Funció per carregar les estadístiques de l'usuari autenticat
+// 🔹 Funció per carregar les estadístiques generals dels entrenaments
 const loadUserStats = async () => {
-  const token = localStorage.getItem("authToken"); // 📌 FIX: Ara usa "authToken", que és el que es guarda realment
-
-  if (!token) {
-    console.error("🚨 No hi ha token disponible.");
-    errorMessage.value = "⚠️ No s'ha trobat cap sessió activa.";
-    loading.value = false;
-    return;
-  }
-
   try {
-    const response = await axios.get("http://localhost:3000/user_stats", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.get("https://protactics-api.onrender.com/user_stats/public");
 
     if (!response.data || Object.keys(response.data).length === 0) {
       errorMessage.value = "ℹ️ No hi ha dades disponibles.";
@@ -35,17 +24,7 @@ const loadUserStats = async () => {
     userStats.value = stats;
   } catch (error) {
     console.error("❌ Error carregant estadístiques:", error);
-
-    if (error.response) {
-      if (error.response.status === 401) {
-        errorMessage.value = "⚠️ La sessió ha expirat. Fes login de nou.";
-      } else {
-        errorMessage.value = `❌ Error: ${error.response.data.error || "No s'han pogut obtenir les estadístiques."}`;
-      }
-    } else {
-      errorMessage.value = "❌ Error de connexió amb el servidor.";
-    }
-
+    errorMessage.value = "❌ No s'han pogut obtenir les estadístiques.";
     userStats.value = null;
   } finally {
     loading.value = false;
@@ -54,7 +33,7 @@ const loadUserStats = async () => {
 
 // 🔹 Funció per formatar el temps en hores i minuts correctament
 const formatTime = (timeString) => {
-  if (!timeString) return "0h 0m";
+  if (!timeString || typeof timeString !== "string") return "0h 0m";
   
   const timeParts = timeString.split(" ");
   const hours = parseInt(timeParts[0]) || 0;
@@ -69,7 +48,7 @@ onMounted(loadUserStats);
 
 <template>
   <div class="user-stats">
-    <h3>📊 Les teves estadístiques</h3>
+    <h3>📊 Estadístiques Generals</h3>
 
     <div v-if="loading">
       <p>🔄 Carregant estadístiques...</p>
@@ -83,7 +62,7 @@ onMounted(loadUserStats);
       <p><strong>🏋️‍♂️ Entrenaments totals:</strong> {{ userStats.total_trainings }}</p>
       <p><strong>⏳ Temps total:</strong> {{ userStats.total_time }}</p>
       <p><strong>🔥 Calories cremades:</strong> {{ userStats.total_calories }}</p>
-      <p><strong>❤️ Freqüència cardíaca mitjana:</strong> {{ userStats.avg_heart_rate }} bpm</p>
+      <p><strong>⚡ Rendiment mitjà:</strong> {{ userStats.avg_performance }} %</p> 
     </div>
   </div>
 </template>
