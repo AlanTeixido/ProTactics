@@ -123,14 +123,15 @@ const login = async () => {
 }
 
 .intro-login h1 {
+  width: 100%;
   font-family: 'Bebas Neue', sans-serif;
   font-weight: 400;
-  font-size: 4rem;
+  font-size: 6rem;
 }
 
 .intro-login img {
-  width: 20%;
-  margin-right: -75%;
+  width: 35%;
+  margin-right: -90%;
 }
 
 .form-login {
@@ -140,6 +141,7 @@ const login = async () => {
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-right: 15%;
 }
 
 .input-group {

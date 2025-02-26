@@ -72,6 +72,7 @@ const register = async () => {
 };
 </script>
 
+
 <style scoped>
 .fondo-register {
   position: absolute;
@@ -105,14 +106,15 @@ const register = async () => {
 }
 
 .intro-register h1 {
+  width: 100%;
   font-family: 'Bebas Neue', sans-serif;
   font-weight: 400;
-  font-size: 4rem;
+  font-size: 6rem;
 }
 
 .intro-register img {
-  width: 20%;
-  margin-right: -75%;
+  width: 35%;
+  margin-right: -90%;
 }
 
 .form-register {
@@ -122,6 +124,7 @@ const register = async () => {
   align-items: center;
   justify-content: center;
   width: 100%;
+  margin-right: 15%;
 }
 
 .input-group {
@@ -176,5 +179,42 @@ const register = async () => {
 
 .login-link .link:hover {
   color: #ccc;
+}
+
+/* Estilos para el popup (si es necesario) */
+.popup {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #1b1b1b;
+  padding: 5%;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+}
+
+.popup-close {
+  margin-top: 8%;
+  padding: 10px;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  border: 2px white solid;
+  border-radius: 5px;
+  box-shadow: 15px rgba(0, 0, 0, 0.8);
+  transition: 0.3s;
+}
+
+.popup-close:hover {
+  transform: scale(1.1);
 }
 </style>

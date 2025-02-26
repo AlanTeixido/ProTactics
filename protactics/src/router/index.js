@@ -30,6 +30,9 @@ const router = createRouter({
       path: '/editar-entrenamiento/:id', name: 'editar-entrenamiento', component: () => import('../views/EditarEntrenamiento.vue'), meta: { requiresAuth: true }
     }
   ],
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 }; // Scroll al inicio de la página al cambiar de ruta
+  }
 });
 
 // Middleware para proteger rutas

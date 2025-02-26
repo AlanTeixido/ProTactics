@@ -1,12 +1,7 @@
 <template>
   <div class="entrenamientos-container">
-    <h2>Mis Entrenamientos</h2>
-    <div class="top-bar">
-      <button @click="volverDashboard" class="back-btn">🔙 Volver al Dashboard</button>
-    </div>
-
     <div v-if="loading">
-      <p>🔄 Cargando entrenamientos...</p>
+      <p>Cargando entrenamientos...</p>
     </div>
 
     <div v-else-if="entrenamientos.length" class="entrenamientos-list">

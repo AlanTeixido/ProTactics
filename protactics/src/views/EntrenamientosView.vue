@@ -1,7 +1,6 @@
 <template>
     <HeaderSection />
     <div class="entrenamientos-page">
-      <h1>Mis Entrenamientos</h1>
       <Entrenamientos />
     </div>
     <FooterSection />

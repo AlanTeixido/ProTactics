@@ -2,6 +2,7 @@
   <HeaderSection />
   <div class="profile-container">
     <div class="profile-card1">
+      <!-- Sección de Foto, Nombre, Email y Botón -->
       <div class="profile-header">
         <img src="../assets/img/usuario.png" class="img-profile" />
         <h2 class="username">{{ user.username }}</h2>
@@ -13,39 +14,46 @@
     </div>
 
     <div class="profile-card2">
+      <!-- Sección de estadísticas (Seguidores, Entrenamientos, Likes, Compartidos) -->
       <div class="profile-stats">
         <div class="stat-box">
-          <span>{{ user.followers }}</span
-          ><strong>Seguidores</strong>
+          <span>{{ user.shared }}</span>
+          <strong>Publicaciones</strong>
         </div>
         <div class="stat-box">
-          <span>{{ user.trainings }}</span
-          ><strong>Entrenamientos</strong>
+          <span>{{ user.followers }}</span>
+          <strong>Seguidores</strong>
         </div>
         <div class="stat-box">
-          <span>{{ user.shared }}</span
-          ><strong>Compartidos</strong>
-        </div>
-        <div class="stat-box">
-          <span>{{ user.likes }}</span
-          ><strong>Likes</strong>
+          <span>{{ user.trainings }}</span>
+          <strong>Entrenamientos</strong>
         </div>
       </div>
     </div>
   </div>
-  <!-- 🔹 NUEVO: Botón para gestionar entrenamientos -->
-  <div class="training-section">
-    <button class="training-btn" @click="$router.push('/mis-entrenamientos')">
-      📋 Gestionar Mis Entrenamientos
-    </button>
+
+  <!-- Sección de slider -->
+  <div class="profile-slider">
+    <div class="profile-slider-option" :class="{ active: isProfileSelected, faded: !isProfileSelected }"
+      @click="isProfileSelected = true">
+      <span class="slider-text">Mi perfil</span>
+    </div>
+    <div class="profile-slider-option" :class="{ active: !isProfileSelected, faded: isProfileSelected }"
+      @click="isProfileSelected = false">
+      <span class="slider-text">Mis entrenamientos</span>
+    </div>
   </div>
 
-  <!-- 🔹 Mostrar entrenamientos solo si el usuario está autenticado -->
-  <Entrenamientos v-if="user.id" :userId="user.id" />
-
-  <!-- 🔹 Mostrar posts solo si el usuario está autenticado -->
-  <Posts v-if="user.id" :userId="user.id" mode="profile" />
-
+  <!-- Mostrar contenido según el slider -->
+  <div class="slider-content">
+    <div v-if="isProfileSelected">
+      <!-- Mostrar posts solo si el usuario está autenticado -->
+      <Posts v-if="user.id" :userId="user.id" mode="profile" />
+    </div>
+    <div v-else class="trainings-content">
+      <Entrenamientos />
+    </div>
+  </div>
   <FooterSection />
 </template>
 
@@ -55,18 +63,21 @@ import HeaderSection from "@/components/HeaderSection.vue";
 import Posts from "@/components/Posts.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import Entrenamientos from "@/components/Entrenamientos.vue";
 
 const user = ref({
   id: localStorage.getItem("userId") || "",
   username: localStorage.getItem("username") || "Usuario",
   email: localStorage.getItem("userEmail") || "",
-  trainings: 0,
+  publications: 0,
   shared: 0,
-  likes: 0,
   followers: 0,
 });
 
-// 🔹 Cargar datos del usuario desde la API
+// Estado para controlar el contenido seleccionado
+const isProfileSelected = ref(true); // "true" para mostrar el perfil por defecto
+
+// Cargar datos del usuario desde la API
 const loadUserData = async () => {
   if (!user.value.id) return;
 
@@ -83,217 +94,145 @@ const loadUserData = async () => {
   }
 };
 
-// 🔹 Cargar datos al montar el componente
+// Cargar datos al montar el componente
 onMounted(loadUserData);
 </script>
 
 <style scoped>
-
-/* 🔹 Sección para botón de entrenamientos */
-.training-section {
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-/* 🔹 Botón de "Gestionar Mis Entrenamientos" */
-.training-btn {
-  background-color: #00c3ff;
-  color: white;
-  padding: 12px 20px;
-  font-size: 16px;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s ease-in-out;
-  border: none;
-  display: inline-block;
-  text-align: center;
-}
-
-.training-btn:hover {
-  background-color: #0099cc;
-  transform: scale(1.05);
-}
-
-
 /* Contenedor principal */
 .profile-container {
   display: flex;
   justify-content: center;
-  padding: 2%;
-  background-color: #222;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  margin: 8%;
-  border-radius: 10px;
-  margin-top: 15%;
+  margin-top: 10%;
+  padding-bottom: 3%;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 /* Tarjeta de perfil */
-.profile-card1,
-.profile-card2 {
-  width: 45%;
-  text-align: center;
-  color: white;
-  margin: 2%;
-}
-
-/* Foto de perfil */
-.profile-picture {
-  width: 120px;
-  height: 120px;
-  border-radius: 50px 50px;
-  object-fit: cover;
-  margin-bottom: 10px;
-}
-
-/* Email del usuario */
-.email {
-  font-size: 14px;
-  color: #aaa;
-}
-
-.username {
-  text-transform: uppercase;
-  color: white;
-  font-size: 24px;
-}
-
-/* Sección de subida de imagen */
-.upload-section {
+.profile-card1 {
+  width: 35%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 10px 0;
-}
-
-/* Botón de selección de archivo */
-.file-label {
-  background-color: #00c3ff;
+  text-align: center;
   color: white;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  display: inline-block;
-  font-weight: bold;
-  margin-bottom: 10px;
 }
 
-.file-input {
-  display: none;
-}
-
-/* Botón de subida de imagen */
-.upload-btn {
-  border: 2px white solid;
-  background-color: transparent;
-  padding: 10px;
-  color: white;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 5px;
-  width: 80%;
-}
-
-.upload-btn:hover {
-  background-color: #0072a5;
-}
-
-/* Estadísticas del perfil */
-.profile-stats {
+.profile-header {
   display: flex;
-  grid-template-rows: repeat(1, 1fr);
-  margin-top: 15px;
-  flex-wrap: wrap;
-}
-
-.stat-box {
-  display: grid;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  border-radius: 5px;
-  width: 20%;
-  margin: 5px;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
-.stat-box strong {
-  display: block;
-  font-weight: 400;
-  font-size: 15px;
+.img-profile {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.username {
+  font-size: 24px;
+  color: white;
+  text-transform: uppercase;
+  margin: 10px 0;
+}
+
+.email {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 15px;
+}
+
+.profile-btn {
+  padding: 10px 20px;
+  background-color: transparent;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.747);
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.profile-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Estilo para las estadísticas */
+.profile-card2 {
+  width: 55%;
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+}
+
+.profile-stats {
+  display: flex;
+  justify-content: space-between;
+  width: 65%;
+  margin-top: 20px;
+}
+
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
 }
 
 .stat-box span {
   font-size: 20px;
   font-weight: bold;
-  color: #00c3ff;
+  color: white;
 }
 
-/* Botones del perfil */
-.profile-bottom {
-  margin-top: 10px;
-}
-.profile-btn-share,
-.profile-btn-config,
-.profile-btn-save {
-  width: 10%;
-  padding: 10px;
-  color: white;
-  border-radius: 40px;
-  cursor: pointer;
+.stat-box strong {
   font-size: 14px;
-  margin: 5px 0;
-  transition: 0.3s;
-  border: none;
-  background-color: transparent;
+  font-weight: 300;
+  text-transform: uppercase;
 }
 
-.profile-btn-share:hover,
-.profile-btn-config:hover,
-.profile-btn-save:hover {
-  transform: scale(1.1);
-}
-
-.img {
-  width: 30px;
-  height: 30px;
-}
-
-.img-profile {
-  width: 100px;
-  height: 100px;
-  margin-bottom: 10px;
-}
-
-.profile-btn {
+/* Sección del slider */
+.profile-slider {
+  display: flex;
+  justify-content: space-around;
   margin-top: 20px;
-  width: 50%;
-  color: white;
-  font-weight: 5000;
-  text-decoration: none;
-  background: transparent; /* Fondo transparente */
-  padding: 10px 15px;
-  border-radius: 10px;
-  position: relative;
-  transition: 0.3s;
-  border: 2px solid transparent; /* Borde inicial transparente */
-  background-clip: padding-box;
 }
 
-.profile-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 2px; /* Grosor del borde */
-  border-radius: 10px;
-  background: linear-gradient(
-    45deg,
-    rgb(4, 196, 68),
-    rgb(0, 132, 194)
-  ); /* Degradado en el borde */
-  -webkit-mask: linear-gradient(white 0 0) content-box,
-    linear-gradient(white 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+.profile-slider-option {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: white;
 }
+
+.profile-slider-option.active {
+  font-weight: bolder;
+}
+
+.profile-slider-option .slider-text {
+  transition: opacity 0.3s;
+}
+
+.profile-slider-option.faded .slider-text {
+  opacity: 0.3;
+}
+
+/* Contenido del slider */
+.slider-content {
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+  color: white;
+}
+
 </style>

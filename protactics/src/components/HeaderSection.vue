@@ -122,22 +122,24 @@ onMounted(() => {
 .nav2 {
   display: flex;
   align-items: center;
-  margin-left: 5%;
+  margin-left: 8%;
 }
 .nav-link {
-  margin-left: 25px;
+  margin-left: 30px;
   text-decoration: none;
-  color: transparent;
-  background-image: linear-gradient(to right, #0098e5, #00a86b);
-  background-clip: text;
-  -webkit-background-clip: text; /* Para compatibilidad con WebKit */
-  transition: 0.4s ease;
+  color: white;
+  transition: 0.3s ease;
 }
 
 .nav-link:hover {
   transform: scale(1.1);
   font-weight: bolder;
+  color: transparent;
+  background-image: linear-gradient(to right, #0098e5, #00a86b);
+  background-clip: text;
+  -webkit-background-clip: text; 
 }
+
 .log-regist {
   display: flex;
   justify-content: space-between; /* Alinea los elementos a la derecha */
