@@ -153,3 +153,15 @@
 - **Proofhub:** Alex 
 - **Mejora Estilos:** Adri
 - **Formularios Entrenamientos:** Adri
+
+
+## **Fecha:** 20/02/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Cargarnueva info dashboard:** Alan
+- **Proofhub:** Alan 
+- **Mejora Estilos:** Adri
+- **API:** Alan
+- **Nuevas paginas:** Alan
+- **Implementacion Draggable :** Alex
