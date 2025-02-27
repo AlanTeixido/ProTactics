@@ -1,11 +1,42 @@
 <script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios'; // Si no tens axios importat, cal importar-lo
 import HeaderSection from "@/components/HeaderSection.vue";
 import FooterSection from "@/components/FooterSection.vue";
 import Posts from "@/components/Posts.vue";
 import UserStats from "@/components/UserStats.vue";
-import ActivityFeed from "@/components/ActivityFeed.vue";
 import LastTraining from "@/components/LastTraining.vue";
+import Motivation from "@/components/Motivation.vue"; // Afegim el component "Motivation"
+
+const isLoading = ref(true); // Per controlar si el contingut s'està carregant
+
+// Funció per carregar les dades inicials
+const loadDashboardData = async () => {
+  try {
+    // Recuperar el token des de localStorage
+    const token = localStorage.getItem("authToken");
+
+    if (!token) {
+      throw new Error("No s'ha trobat el token.");
+    }
+
+    // Afegir el token a les capçaleres de la petició
+    await axios.get('https://protactics-api.onrender.com/user_stats/monthly_goal', {
+      headers: {
+        Authorization: `Bearer ${token}`  // Passar el token a la capçalera Authorization
+      }
+    });
+
+    isLoading.value = false;
+  } catch (error) {
+    console.error('Error carregant dades:', error);
+    isLoading.value = false; // Acaba la càrrega fins i tot si hi ha un error
+  }
+};
+
+onMounted(loadDashboardData);  // Carregar dades en muntar el component
 </script>
+
 
 <template>
   <HeaderSection />
@@ -17,19 +48,25 @@ import LastTraining from "@/components/LastTraining.vue";
 
     <div class="dashboard-right">
       <UserStats />
-      <ActivityFeed />
-      <LastTraining />
+      <LastTraining /> <!-- Aquí es manté el component de "Last Training" -->
+      <Motivation />   <!-- Afegim "Motivation" per als objectius mensuals -->
     </div>
   </div>
 
   <FooterSection />
+
+  <!-- Loader per mostrar durant la càrrega de dades -->
+  <div v-if="isLoading" class="loading-overlay">
+    <div class="spinner"></div> <!-- Afegeix el teu spinner aquí -->
+    <p>Carregant...</p>
+  </div>
 </template>
 
 <style scoped>
 .dashboard-container {
   margin-top: 80px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 20px;
   gap: 20px;
 }
@@ -45,7 +82,7 @@ import LastTraining from "@/components/LastTraining.vue";
   gap: 20px;
 }
 
-.last-training-container, .user-stats {
+.last-training-container, .user-stats, .motivation {
   box-shadow: 0px 10px 30px rgba(0, 255, 255, 0.3);
   padding: 20px;
   border-radius: 12px;
@@ -53,7 +90,7 @@ import LastTraining from "@/components/LastTraining.vue";
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.last-training-container:hover, .user-stats:hover {
+.last-training-container:hover, .user-stats:hover, .motivation:hover {
   box-shadow: 0px 10px 25px rgba(0, 255, 255, 0.4);
   transform: translateY(-5px);
 }
@@ -81,7 +118,7 @@ h3, h4 {
   transform: scale(1.05);
 }
 
-/* Responsive design */
+/* Responsivitat per pantalles petites */
 @media (max-width: 768px) {
   .dashboard-container {
     flex-direction: column;
@@ -97,5 +134,31 @@ h3, h4 {
   }
 }
 
+/* Estils per al loader */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
 
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #00c3ff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 </style>
