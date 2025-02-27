@@ -1,6 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios'; // Si no tens axios importat, cal importar-lo
+import { ref, onMounted } from 'vue';  // Importa correctament `ref` i `onMounted`
 import HeaderSection from "@/components/HeaderSection.vue";
 import FooterSection from "@/components/FooterSection.vue";
 import Posts from "@/components/Posts.vue";
@@ -13,20 +12,8 @@ const isLoading = ref(true); // Per controlar si el contingut s'està carregant
 // Funció per carregar les dades inicials
 const loadDashboardData = async () => {
   try {
-    // Recuperar el token des de localStorage
-    const token = localStorage.getItem("authToken");
-
-    if (!token) {
-      throw new Error("No s'ha trobat el token.");
-    }
-
-    // Afegir el token a les capçaleres de la petició
-    await axios.get('https://protactics-api.onrender.com/user_stats/monthly_goal', {
-      headers: {
-        Authorization: `Bearer ${token}`  // Passar el token a la capçalera Authorization
-      }
-    });
-
+    // Cridem a l'API real per carregar les dades de l'usuari
+    await axios.get('https://protactics-api.onrender.com/user_stats/monthly_goal');  // Endpoint real per obtenir l'objectiu mensual
     isLoading.value = false;
   } catch (error) {
     console.error('Error carregant dades:', error);
@@ -36,7 +23,6 @@ const loadDashboardData = async () => {
 
 onMounted(loadDashboardData);  // Carregar dades en muntar el component
 </script>
-
 
 <template>
   <HeaderSection />
