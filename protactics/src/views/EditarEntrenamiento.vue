@@ -17,6 +17,7 @@
           <option value="piscina">Natación</option>
           <option value="futbol">Fútbol</option>
           <option value="padel">Pádel</option>
+          <option value="gimnasio">Gimnasio</option>
         </select>
   
         <label>Duración (minutos):</label>

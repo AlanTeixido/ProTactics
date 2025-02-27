@@ -1,27 +1,30 @@
 <template>
-  <HeaderSection/>
+  <HeaderSection />
   <div class="container">
     <h1 class="title">Entrenamiento de {{ nombreDeporte }}</h1>
 
     <form @submit.prevent="enviarFormulario" class="form">
       <!-- Nombre del entrenamiento -->
       <div class="form-group">
-        <label for="nombre">Nombre del entrenamiento</label>
-        <input type="text" id="nombre" v-model="formulario.nombre" required />
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" placeholder="Nombre del entrenamiento" v-model="formulario.nombre" required />
       </div>
-
-      <!-- Fecha -->
+      <!-- Nombre del entrenamiento -->
       <div class="form-group">
-        <label for="fecha">Fecha</label>
-        <input type="date" id="fecha" v-model="formulario.fecha" required />
+        <label for="nombre">Descripción</label>
+        <input type="textarea" id="descripcion" placeholder="Descripcion del entrenamiento"
+          v-model="formulario.descripcion" required />
       </div>
-
       <!-- Duración -->
       <div class="form-group">
         <label for="duracion">Duración (minutos)</label>
         <input type="number" id="duracion" v-model="formulario.duracion" required min="1" />
       </div>
-
+      <!-- Fecha -->
+      <div class="form-group">
+        <label for="fecha">Fecha</label>
+        <input type="date" id="fecha" v-model="formulario.fecha" required />
+      </div>
       <!-- Nivel de dificultad -->
       <div class="form-group">
         <label for="dificultad">Nivel de dificultad</label>
@@ -31,7 +34,6 @@
           <option value="avanzado">Avanzado</option>
         </select>
       </div>
-
       <!-- Campos específicos según el deporte -->
       <div v-if="nombreDeporte === 'atletismo'" class="form-group">
         <label for="distancia">Distancia (km)</label>
@@ -52,7 +54,7 @@
       <button type="submit" class="submit-btn">Guardar Entrenamiento</button>
     </form>
   </div>
-  <FooterSection/>
+  <FooterSection />
 </template>
 
 <script setup>
@@ -67,6 +69,7 @@ const nombreDeporte = route.params.nombre;
 // Definir formulario con valores iniciales
 const formulario = ref({
   nombre: '',
+  descripcion: '',
   fecha: '',
   duracion: '',
   dificultad: 'principiante',
@@ -83,7 +86,6 @@ const enviarFormulario = () => {
 </script>
 
 <style scoped>
-
 /* Contenedor principal */
 .container {
   width: 45%;

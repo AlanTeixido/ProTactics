@@ -6,14 +6,16 @@
       <!-- Usamos un v-for para recorrer el array de deportes -->
       <div v-for="deporte in deportes" :key="deporte.nombre" class="grid-item">
         <!-- RouterLink para redirigir al clickear el nombre del deporte -->
-        <RouterLink :to="`/${deporte.nombre}`"><img :src="getImageUrl(deporte.imagen)" class="grid-image" />
+        <RouterLink :to="`/entrenamiento/${deporte.nombre}`">
+          <img :src="getImageUrl(deporte.imagen)" class="grid-image" />
           <div class="item-transition">
             <p class="title">{{ deporte.nombre }}</p>
           </div>
         </RouterLink>
+
       </div>
     </div>
-    <FormContact/>
+    <FormContact />
   </div>
   <FooterSection />
 </template>
@@ -37,7 +39,6 @@ const deportes = ref([
 </script>
 
 <style scoped>
-
 .section-title {
   text-align: left;
   margin-top: 10%;
@@ -111,10 +112,12 @@ const deportes = ref([
   color: #fff;
   text-transform: uppercase;
 }
-h2{
+
+h2 {
   font-weight: 1000;
 }
-span{
+
+span {
   font-weight: 300;
 }
 </style>
