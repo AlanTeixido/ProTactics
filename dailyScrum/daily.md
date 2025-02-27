@@ -132,7 +132,7 @@
 
 ---
 
-## **Fecha:** 20/02/2025  
+## **Fecha:** 19/02/2025  
 **Alumnos:** Alex, Alan y Adri
 
 ### **Tareas:**  
@@ -146,6 +146,19 @@
 ---
 
 ## **Fecha:** 20/02/2025  
+**Alumnos:** Alex, Alan y Adri
+
+### **Tareas:**  
+- **API obtener info:** Alan
+- **Vistas deportes Router Link:** Alex
+- **Implementacion Funcionalidades :** Alex, Alan y Adri
+- **Proofhub:** Alex y Alan
+- **Mejora Estilos:**Adri
+- **Formularios Entrenamientos:** Adri
+
+---
+
+## **Fecha:** 21/02/2025  
 **Alumnos:** Alex, Adri
 
 ### **Tareas:**  
@@ -154,14 +167,28 @@
 - **Mejora Estilos:** Adri
 - **Formularios Entrenamientos:** Adri
 
+---
 
-## **Fecha:** 20/02/2025  
+## **Fecha:** 26/02/2025  
 **Alumnos:** Alex, Adri i Alan
 
 ### **Tareas:**  
-- **Cargarnueva info dashboard:** Alan
+- **Cargarnueva info perfil:** Alan
 - **Proofhub:** Alan 
 - **Mejora Estilos:** Adri
 - **API:** Alan
-- **Nuevas paginas:** Alan
+- **Nuevas paginas:** Alan, Adri
 - **Implementacion Draggable :** Alex
+
+---
+
+## **Fecha:** 27/02/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Entrenamiento API:** Alan
+- **Proofhub:** Alan , Alex
+- **Estilos Entrenamiento:** Adri
+- **Paginas Entrenamiento:** Alex
+
+
