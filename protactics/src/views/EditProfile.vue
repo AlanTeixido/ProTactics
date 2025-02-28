@@ -162,47 +162,62 @@ onMounted(loadUserData);
   <div class="profile-container">
     <div class="profile-image-section">
       <!-- <img :src="`/uploads/${user.profileImage}`" alt="Foto de perfil" class="profile-image" /> -->
-      <img src="../assets/img/futbol.jpg" class="profile-image"/>
-      <label class="file-label">
+      <img src="../assets/img/futbol.jpg" class="profile-image" />
+
+      <!-- Esta es la parte de cambio de imagen -->
+      <label class="file-label" for="file-input">
         Cambiar Imagen
-        <input type="file" @change="(event) => (selectedFile = event.target.files[0])" class="file-input" />
       </label>
+      <input id="file-input" type="file" ref="fileInput" @change="(event) => selectedFile.value = event.target.files[0]"
+        class="file-input" style="display: none;" />
+
       <button @click="uploadProfilePicture" class="upload-btn">
         Actualizar Imagen
       </button>
     </div>
 
     <div class="profile-edit-section">
-      <h2>Editar Perfil</h2>
-
       <div v-if="errorMessage" class="error-msg">{{ errorMessage }}</div>
       <div v-if="successMessage" class="success-msg">{{ successMessage }}</div>
 
       <div class="input-group">
-        <label>Usuario</label>
-        <input v-model="user.username" type="text" placeholder="Usuario" />
+        <div class="input-row">
+          <label for="username">Usuario</label>
+          <input id="username" v-model="user.username" type="text" placeholder="Usuario" />
+        </div>
 
-        <label>Correo Electrónico</label>
-        <input v-model="user.email" type="email" placeholder="Correo electrónico" />
+        <div class="input-row">
+          <label for="email">Correo Electrónico</label>
+          <input id="email" v-model="user.email" type="email" placeholder="Correo electrónico" />
+        </div>
 
         <button @click="saveProfile" class="save-btn">Guardar Cambios</button>
+
+        <div class="password-container">
+        <div class="input-row">
+          <label for="oldPassword">Contraseña actual</label>
+          <input id="oldPassword" v-model="passwords.oldPassword" type="password" placeholder="Contraseña actual" />
+        </div>
+        <div class="input-row">
+          <label for="newPassword">Nueva contraseña</label>
+          <input id="newPassword" v-model="passwords.newPassword" type="password" placeholder="Nueva contraseña" />
+        </div>
+        <div class="input-row">
+          <label for="confirmPassword">Confirmar nueva contraseña</label>
+          <input id="confirmPassword" v-model="passwords.confirmPassword" type="password" placeholder="Confirmar nueva contraseña" />
+        </div>
       </div>
 
-      <div class="password-group">
-        <h3>Cambiar Contraseña</h3>
-        <input v-model="passwords.oldPassword" type="password" placeholder="Contraseña actual" />
-        <input v-model="passwords.newPassword" type="password" placeholder="Nueva contraseña" />
-        <input v-model="passwords.confirmPassword" type="password" placeholder="Confirmar nueva contraseña" />
         <button @click="changePassword" class="save-btn">Actualizar Contraseña</button>
+        <button @click="router.push('/perfil')" class="cancel-btn">
+          Cancelar
+        </button>
       </div>
-
-      <button @click="router.push('/perfil')" class="cancel-btn">
-        Cancelar
-      </button>
     </div>
   </div>
   <FooterSection />
 </template>
+
 
 <style scoped>
 /* Estilos para la página de perfil */
@@ -214,9 +229,15 @@ onMounted(loadUserData);
   margin-top: 10%;
   margin-bottom: 10%;
   width: 100%;
-  max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
+}
+
+.profile-edit-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 30px;
+  width: 50%;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .profile-image-section {
@@ -233,29 +254,46 @@ onMounted(loadUserData);
   object-fit: cover;
 }
 
-.input-group,
-.password-group {
+.input-group {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  gap: 30px;
+
+}
+
+.password-container {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
-  margin-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 5%;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+label {
+  font-weight: 450;
+  color: #ffffff;
+  width: 40%;
 }
 
 input {
-  padding: 15px;
-  border-radius: 8px;
-  border: 2px solid #ccc;
-  background-color: #f9f9f9;
-  color: #333;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Línea gris solo en la parte inferior */
+  background-color: transparent;
+  color: #8b8b8b;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  width: 55%;
 }
 
 input:focus {
-  border-color: #0072a5;
   outline: none;
-  background-color: #fff;
+  border-bottom: 2px solid rgb(255, 255, 255); /* Cambio de color de la línea al hacer foco */
 }
 
 button {
@@ -275,12 +313,17 @@ button:hover {
 }
 
 .cancel-btn {
-  background: #e74c3c;
+  background: transparent;
+  border: 2px red solid;
   margin-top: 20px;
+  color: red;
 }
-
+.cancel-btn:hover {
+  background: rgba(255, 0, 0, 0.39);
+}
 .save-btn {
-  background: #0072a5;
+  background: transparent;
+  border: 2px white solid;
   margin-top: 20px;
 }
 
@@ -296,29 +339,24 @@ button:hover {
   text-align: center;
 }
 
-.file-label {
-  font-size: 0.9rem;
-  color: #0072a5;
-  cursor: pointer;
-}
 
-.file-input{
+
+.file-input {
   background-color: transparent;
   border: none;
+  display: none;
 }
 
 .upload-btn {
   padding: 10px;
   border-radius: 8px;
-  background-color: #0072a5;
+  background-color: transparent;
   color: white;
-  border: none;
+  border: 2px solid white;
   font-weight: bold;
   margin-top: 10px;
   cursor: pointer;
 }
 
-.upload-btn:hover {
-  background-color: #005f85;
-}
 </style>
+
