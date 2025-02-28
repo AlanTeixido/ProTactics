@@ -28,6 +28,10 @@
           <span>{{ user.trainings }}</span>
           <strong>Entrenamientos</strong>
         </div>
+        <!-- <div class="stat-box">
+          <span>{{ user.likes }}</span>
+          <strong>Likes</strong>
+        </div> -->
       </div>
     </div>
   </div>
@@ -47,7 +51,6 @@
   <!-- Mostrar contenido según el slider -->
   <div class="slider-content">
     <div v-if="isProfileSelected">
-      <!-- Mostrar posts solo si el usuario está autenticado -->
       <Posts v-if="user.id" :userId="user.id" mode="profile" />
     </div>
     <div v-else class="trainings-content">
@@ -72,29 +75,30 @@ const user = ref({
   publications: 0,
   shared: 0,
   followers: 0,
+  trainings: 0,
+  likes: 0  // Reinserim likes
 });
 
 // Estado para controlar el contenido seleccionado
-const isProfileSelected = ref(true); // "true" para mostrar el perfil por defecto
+const isProfileSelected = ref(true);
 
-// Cargar datos del usuario desde la API
+// Cargar datos del usuario desde la API (resumen complet)
 const loadUserData = async () => {
   if (!user.value.id) return;
 
   try {
     const response = await axios.get(
-      `https://protactics-api.onrender.com/usuarios/${user.value.id}`
+      `https://protactics-api.onrender.com/usuarios/${user.value.id}/resumen`
     );
     user.value.trainings = response.data.trainings || 0;
     user.value.shared = response.data.shared || 0;
-    user.value.likes = response.data.likes || 0;
+    user.value.likes = response.data.likes || 0; // Asegurem q carregui els likes
     user.value.followers = response.data.followers || 0;
   } catch (error) {
     console.error("Error cargando los datos:", error);
   }
 };
 
-// Cargar datos al montar el componente
 onMounted(loadUserData);
 </script>
 

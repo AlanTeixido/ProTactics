@@ -14,6 +14,15 @@
             <img class="post-image" :src="post.image || '/default-post.png'" alt="Imagen del post" />
             <p class="description">{{ post.description }}</p>
           </div>
+
+          <!-- Sección de Likes -->
+          <div class="likes-section">
+            <button @click="toggleLike(post)">
+              {{ post.likedByUser ? '❤️' : '🤍' }}
+            </button>
+            <span>{{ post.likes }} likes</span>
+          </div>
+
           <div class="final">
             <p class="letters">&copy; ProTactics</p>
           </div>
@@ -40,38 +49,64 @@ const posts = ref([]);
 const loading = ref(true);
 const errorMessage = ref("");
 
-// Función corregida para cargar los posts
-const loadPosts = async () => {
-  if (!props.userId && props.mode === "profile") return; // Evita peticiones incorrectas
+const usuarioId = localStorage.getItem('userId');  // Obtenim directament l'ID de l'usuari loguejat
 
-  let url = "https://protactics-api.onrender.com/posts"; // Posts públicos por defecto
+// Carregar posts
+const loadPosts = async () => {
+  if (!props.userId && props.mode === "profile") return;
+
+  let url = "https://protactics-api.onrender.com/posts";
   if (props.mode === "profile") {
-    url = `https://protactics-api.onrender.com/posts/user/${props.userId}`; // Posts del usuario autenticado
+    url = `https://protactics-api.onrender.com/posts/user/${props.userId}`;
   }
 
   try {
-    const response = await axios.get(url);
+    const response = await axios.get(url, { params: { usuario_id: usuarioId } });
+
     posts.value = response.data.map(post => ({
       id: post.id,
       username: post.nombre_usuario || "Usuari desconegut",
       image: post.image_url || "/default-post.png",
-      description: post.contingut
+      description: post.contingut,
+      likes: post.likes_count || 0,
+      likedByUser: post.liked_by_user || false
     }));
   } catch (error) {
-    errorMessage.value = "Error cargando los posts.";
+    console.error("Error carregant posts:", error);
+    errorMessage.value = "Error carregant els posts.";
   } finally {
     loading.value = false;
   }
 };
 
-// Esperamos a que `userId` esté listo antes de hacer la petición
+// Like/Unlike sense authMiddleware
+const toggleLike = async (post) => {
+  const url = `https://protactics-api.onrender.com/posts/${post.id}/like`;
+
+  try {
+    if (post.likedByUser) {
+      await axios.delete(url, {
+        data: { usuario_id: usuarioId } // Passar usuario_id pel body al DELETE
+      });
+      post.likes -= 1;
+      post.likedByUser = false;
+    } else {
+      await axios.post(url, { usuario_id: usuarioId });  // Passar usuario_id pel body al POST
+      post.likes += 1;
+      post.likedByUser = true;
+    }
+  } catch (error) {
+    console.error("Error actualitzant el like:", error);
+  }
+};
+
+// Carregar posts quan es carrega el component
 watchEffect(() => {
   if (props.mode === "profile" && props.userId) {
     loadPosts();
   }
 });
 
-// Cargamos posts al montar el componente
 onMounted(loadPosts);
 </script>
 
@@ -81,7 +116,6 @@ onMounted(loadPosts);
   margin: 0 auto;
   padding: 20px;
   border-radius: 8px;
-
 }
 
 .loading-text, .no-posts {
@@ -99,8 +133,7 @@ onMounted(loadPosts);
 
 .post-card {
   width: 100%;
-  max-width: 600px; /* Limita el tamaño máximo de las tarjetas */
-  /* background-color: rgba(255 255 255 / .05); */
+  max-width: 600px;
   background-color: rgba(0 0 0);
   border-radius: 15px;
   padding: 20px;
@@ -131,6 +164,25 @@ onMounted(loadPosts);
   color: #e0e0e0;
   line-height: 1.6;
   margin-top: 15px;
+}
+
+.likes-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.likes-section button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.likes-section span {
+  font-size: 14px;
+  color: white;
 }
 
 .final {
