@@ -1,7 +1,7 @@
 <template>
   <HeaderSection />
   <div class="container">
-    <h2 class="section-title">Explora <span>deportes</span></h2>
+
     <div class="wrapper">
       <!-- Usamos un v-for para recorrer el array de deportes -->
       <div v-for="deporte in deportes" :key="deporte.nombre" class="grid-item">

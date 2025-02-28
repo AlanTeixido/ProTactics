@@ -149,6 +149,7 @@ onMounted(loadUserData);
 }
 
 .profile-btn {
+  width: 150%;
   padding: 10px 20px;
   background-color: transparent;
   color: white;
@@ -204,7 +205,7 @@ onMounted(loadUserData);
 }
 
 .profile-slider-option {
-  flex: 1;
+
   text-align: center;
   padding: 12px;
   font-size: 18px;

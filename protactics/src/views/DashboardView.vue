@@ -26,7 +26,6 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 
 <template>
   <HeaderSection />
-
   <div class="dashboard-container">
     <div class="dashboard-left">
       <Posts mode="dashboard" />
@@ -37,6 +36,8 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
       <LastTraining /> <!-- Aquí es manté el component de "Last Training" -->
       <Motivation />   <!-- Afegim "Motivation" per als objectius mensuals -->
     </div>
+    <RouterLink :to="`/deportes`"><button>NEW</button></RouterLink>
+    
   </div>
 
   <FooterSection />
