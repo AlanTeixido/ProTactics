@@ -9,7 +9,7 @@ const router = useRouter();
 const errorMessage = ref("");
 const successMessage = ref("");
 
-// Dades de l'usuari
+// Datos del usuario
 const user = ref({
   id: localStorage.getItem("userId") || "",
   username: "",
@@ -17,17 +17,17 @@ const user = ref({
   profileImage: "",
 });
 
-// Contrasenyes
+// Contraseñas
 const passwords = ref({
   oldPassword: "",
   newPassword: "",
   confirmPassword: "",
 });
 
-// Imatge de perfil
+// Imagen de perfil
 const selectedFile = ref(null);
 
-// 🔹 Carregar dades de l'usuari
+// 🔹 Cargar datos del usuario
 const loadUserData = async () => {
   if (!user.value.id) return;
 
@@ -41,18 +41,18 @@ const loadUserData = async () => {
       }
     );
 
-    user.value.username = response.data.nombre_usuario || "Usuari";
+    user.value.username = response.data.nombre_usuario || "Usuario";
     user.value.email = response.data.correo || "";
     user.value.profileImage = response.data.profile_image || "default.png";
   } catch (error) {
-    console.error("⚠️ Error carregant dades:", error);
+    console.error("⚠️ Error cargando datos:", error);
   }
 };
 
-// 🔹 Guardar dades generals
+// 🔹 Guardar datos generales
 const saveProfile = async () => {
   if (!user.value.username.trim() || !user.value.email.trim()) {
-    errorMessage.value = "❌ Tots els camps són obligatoris.";
+    errorMessage.value = "❌ Todos los campos son obligatorios.";
     return;
   }
 
@@ -68,26 +68,26 @@ const saveProfile = async () => {
       { headers: { Authorization: `Bearer ${authToken}` } }
     );
 
-    successMessage.value = "✅ Perfil actualitzat correctament!";
+    successMessage.value = "✅ Perfil actualizado correctamente!";
     setTimeout(() => router.push("/perfil"), 1500);
   } catch (error) {
-    errorMessage.value = "❌ No s'ha pogut actualitzar el perfil.";
+    errorMessage.value = "❌ No se pudo actualizar el perfil.";
   }
 };
 
-// 🔹 Canviar contrasenya
+// 🔹 Cambiar contraseña
 const changePassword = async () => {
   if (
     !passwords.value.oldPassword ||
     !passwords.value.newPassword ||
     !passwords.value.confirmPassword
   ) {
-    errorMessage.value = "❌ Tots els camps són obligatoris.";
+    errorMessage.value = "❌ Todos los campos son obligatorios.";
     return;
   }
 
   if (passwords.value.newPassword !== passwords.value.confirmPassword) {
-    errorMessage.value = "❌ Les noves contrasenyes no coincideixen.";
+    errorMessage.value = "❌ Las nuevas contraseñas no coinciden.";
     return;
   }
 
@@ -103,21 +103,21 @@ const changePassword = async () => {
       { headers: { Authorization: `Bearer ${authToken}` } }
     );
 
-    successMessage.value = "✅ Contrasenya actualitzada!";
+    successMessage.value = "✅ Contraseña actualizada!";
     passwords.value.oldPassword = "";
     passwords.value.newPassword = "";
     passwords.value.confirmPassword = "";
 
     setTimeout(() => router.push("/perfil"), 1500);
   } catch (error) {
-    errorMessage.value = "❌ Error canviant la contrasenya.";
+    errorMessage.value = "❌ Error cambiando la contraseña.";
   }
 };
 
-// 🔹 Canviar foto de perfil
+// 🔹 Cambiar foto de perfil
 const uploadProfilePicture = async () => {
   if (!selectedFile.value) {
-    errorMessage.value = "❌ Selecciona una imatge.";
+    errorMessage.value = "❌ Selecciona una imagen.";
     return;
   }
 
@@ -138,89 +138,66 @@ const uploadProfilePicture = async () => {
       }
     );
 
-    successMessage.value = "✅ Foto de perfil actualitzada!";
+    successMessage.value = "✅ Foto de perfil actualizada!";
     user.value.profileImage = response.data.profileImage;
     setTimeout(loadUserData, 1500);
   } catch (error) {
-    errorMessage.value = "❌ Error canviant la foto de perfil.";
+    errorMessage.value = "❌ Error cambiando la foto de perfil.";
   }
 };
 
-// 🔄 Funció per recarregar la pàgina
+// 🔄 Función para recargar la página
 const reloadPage = () => {
   setTimeout(() => {
     location.reload();
   }, 1500);
 };
 
-// Carrega dades en muntar la pàgina
+// Cargar datos al montar la página
 onMounted(loadUserData);
 </script>
 
 <template>
   <HeaderSection />
-  <div class="edit-profile-container">
-    <div class="edit-left">
-      <img
-        :src="`/uploads/${user.profileImage}`"
-        alt="Foto de perfil"
-        class="profile-image"
-      />
+  <div class="profile-container">
+    <div class="profile-image-section">
+      <!-- <img :src="`/uploads/${user.profileImage}`" alt="Foto de perfil" class="profile-image" /> -->
+      <img src="../assets/img/futbol.jpg" class="profile-image"/>
       <label class="file-label">
-        Seleccionar imatge
-        <input
-          type="file"
-          @change="(event) => (selectedFile = event.target.files[0])"
-          class="file-input"
-        />
+        Cambiar Imagen
+        <input type="file" @change="(event) => (selectedFile = event.target.files[0])" class="file-input" />
       </label>
       <button @click="uploadProfilePicture" class="upload-btn">
-        Pujar Imatge
+        Actualizar Imagen
       </button>
     </div>
 
-    <div class="edit-right">
+    <div class="profile-edit-section">
       <h2>Editar Perfil</h2>
 
       <div v-if="errorMessage" class="error-msg">{{ errorMessage }}</div>
       <div v-if="successMessage" class="success-msg">{{ successMessage }}</div>
 
-      <div class="form-group">
-        <label>Nom d'usuari</label>
-        <input v-model="user.username" type="text" placeholder="Nom d'usuari" />
+      <div class="input-group">
+        <label>Usuario</label>
+        <input v-model="user.username" type="text" placeholder="Usuario" />
 
-        <label>Correu electrònic</label>
-        <input
-          v-model="user.email"
-          type="email"
-          placeholder="Correu electrònic"
-        />
+        <label>Correo Electrónico</label>
+        <input v-model="user.email" type="email" placeholder="Correo electrónico" />
 
-        <button @click="saveProfile">Guardar Canvis</button>
+        <button @click="saveProfile" class="save-btn">Guardar Cambios</button>
       </div>
 
       <div class="password-group">
-        <h3>Canviar Contrasenya</h3>
-        <input
-          v-model="passwords.oldPassword"
-          type="password"
-          placeholder="Contrasenya actual"
-        />
-        <input
-          v-model="passwords.newPassword"
-          type="password"
-          placeholder="Nova contrasenya"
-        />
-        <input
-          v-model="passwords.confirmPassword"
-          type="password"
-          placeholder="Confirma la nova contrasenya"
-        />
-        <button @click="changePassword">Canviar Contrasenya</button>
+        <h3>Cambiar Contraseña</h3>
+        <input v-model="passwords.oldPassword" type="password" placeholder="Contraseña actual" />
+        <input v-model="passwords.newPassword" type="password" placeholder="Nueva contraseña" />
+        <input v-model="passwords.confirmPassword" type="password" placeholder="Confirmar nueva contraseña" />
+        <button @click="changePassword" class="save-btn">Actualizar Contraseña</button>
       </div>
 
       <button @click="router.push('/perfil')" class="cancel-btn">
-        Cancel·lar
+        Cancelar
       </button>
     </div>
   </div>
@@ -228,21 +205,21 @@ onMounted(loadUserData);
 </template>
 
 <style scoped>
-.edit-profile-container {
+/* Estilos para la página de perfil */
+.profile-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding: 60px;
-  margin: 120px auto;
-  background: #222;
-  color: white;
-  border-radius: 15px;
-  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.3);
-  max-width: 1000px;
-  gap: 40px;
+  justify-content: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  width: 100%;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.edit-left {
+.profile-image-section {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -250,55 +227,98 @@ onMounted(loadUserData);
 }
 
 .profile-image {
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid white;
 }
 
-.form-group,
+.input-group,
 .password-group {
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 10px;
+  gap: 20px;
+  margin-top: 30px;
 }
 
 input {
-  width: 100%;
-  padding: 14px;
-  border-radius: 6px;
-  border: 2px solid #555;
-  background-color: #333;
-  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid #ccc;
+  background-color: #f9f9f9;
+  color: #333;
   font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  border-color: #0072a5;
+  outline: none;
+  background-color: #fff;
 }
 
 button {
-  padding: 14px;
+  padding: 15px;
   border-radius: 8px;
+  background: #333;
   color: white;
-  background: #0072a5;
+  font-size: 1rem;
   cursor: pointer;
-  width: 100%;
   font-weight: bold;
-  transition: 0.3s;
+  border: none;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background: #005f85;
+  background: #555;
 }
 
 .cancel-btn {
-  background: red;
+  background: #e74c3c;
+  margin-top: 20px;
+}
+
+.save-btn {
+  background: #0072a5;
+  margin-top: 20px;
 }
 
 .error-msg {
   color: red;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 .success-msg {
-  color: lightgreen;
+  color: green;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.file-label {
+  font-size: 0.9rem;
+  color: #0072a5;
+  cursor: pointer;
+}
+
+.file-input{
+  background-color: transparent;
+  border: none;
+}
+
+.upload-btn {
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #0072a5;
+  color: white;
+  border: none;
+  font-weight: bold;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+.upload-btn:hover {
+  background-color: #005f85;
 }
 </style>

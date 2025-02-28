@@ -1,6 +1,6 @@
 <template>
   <div class="entrenamientos-container">
-    <div v-if="loading">
+    <div v-if="loading" class="loading-text">
       <p>Cargando entrenamientos...</p>
     </div>
 
@@ -236,6 +236,10 @@ onMounted(loadEntrenamientos);
 
 .back-btn:hover {
   background-color: #45a049;
+}
+
+.loading-text {
+  color: #888;
 }
 
 /* 🔹 Ajustes para pantallas medianas y móviles */

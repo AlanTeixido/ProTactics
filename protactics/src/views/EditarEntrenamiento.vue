@@ -76,7 +76,7 @@
         </template>
   
         <button type="submit">💾 Guardar Cambios</button>
-        <button type="button" @click="router.push('/mis-entrenamientos')" class="back-btn">🔙 Volver</button>
+        <button type="button" @click="router.push('/editar')" class="back-btn">🔙 Volver</button>
               </form>
     </div>
   </template>
