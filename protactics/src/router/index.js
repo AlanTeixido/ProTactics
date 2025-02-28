@@ -15,7 +15,7 @@ const router = createRouter({
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 
     // Ruta para cargar el formulario según deporte
-    { path: '/entrenamiento/:nombre', name: 'entrenamiento', component: () => import('../views/FormsDeportes.vue'), props: true },
+    { path: '/entrenamiento/:nombre', name: 'entrenamiento', component: () => import('../views/CrearEntrenamiento.vue'), props: true },
     
 
     // 🔒 Rutas protegidas (solo accesibles si está logueado)

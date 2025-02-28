@@ -103,45 +103,60 @@
   </div>
   <FooterSection />
 </template>
+
 <script setup>
-import FooterSection from '@/components/FooterSection.vue';
-import HeaderSection from '@/components/HeaderSection.vue';
-import { ref, computed } from 'vue';
-import { useRoute } from 'vue-router';
+import axios from "axios";
+import { ref, computed } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import FooterSection from "@/components/FooterSection.vue";
+import HeaderSection from "@/components/HeaderSection.vue";
 
 const route = useRoute();
-const nombreDeporte = computed(() => route.params.nombre);  // Captura dinámica del nombre del deporte
+const router = useRouter();
+
+const nombreDeporte = computed(() => route.params.nombre); // Captura el tipo de deporte
 
 const formulario = ref({
-  nombre: '',
-  descripcion: '',
-  fecha: '',
-  duracion: '',
-  dificultad: 'principiante',
+  nombre: "",
+  descripcion: "",
+  fecha: "",
+  duracion: "",
+  dificultad: "principiante",
   distancia: null,
-  repeticiones: null,
   velocidad: null,
   potencia: null,
   cadencia: null,
   velocidad_maxima: null,
-  tipo: '',
-  posicion: '',
+  tipo: "",
+  posicion: "",
   goles: null,
   asistencias: null,
   sets: null,
   puntos_ganados: null,
-  superficie: '',
+  superficie: "",
   num_piscinas: null,
-  tamano_piscina: '',
-  estilo: '',
-  ritmo_medio: '',
-  altimetria: '',
-  zancada_media: '',
+  tamano_piscina: "",
+  estilo: "",
+  ritmo_medio: "",
+  altimetria: "",
+  zancada_media: "",
 });
 
-const enviarFormulario = () => {
-  console.log('Datos del entrenamiento:', formulario.value);
-  alert(`Entrenamiento de ${nombreDeporte.value} guardado correctamente.`);
+// 🔹 Función para enviar datos al backend
+const enviarFormulario = async () => {
+  try {
+    // Agregamos el tipo de deporte al objeto antes de enviarlo
+    formulario.value.tipo_deporte = nombreDeporte.value;
+
+    // Enviar datos con una petición POST
+    await axios.post("http://localhost:4000/entrenamientos", formulario.value);
+
+    alert("✅ Entrenamiento guardado correctamente.");
+    router.push("/mis-entrenamientos"); // Redirigir a la lista de entrenamientos
+  } catch (error) {
+    console.error("❌ Error guardando el entrenamiento:", error);
+    alert("⚠️ Hubo un problema al guardar el entrenamiento.");
+  }
 };
 </script>
 <style scoped>
