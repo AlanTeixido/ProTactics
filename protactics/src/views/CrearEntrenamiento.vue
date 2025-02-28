@@ -126,12 +126,17 @@ const detalles = ref({});
 const enviarFormulario = async () => {
   try {
     const payload = {
-      ...formulario.value,
-      tipo_deporte: nombreDeporte.value,
       usuario_id: localStorage.getItem("userId"),
+      titulo: formulario.value.nombre,
+      descripcion: formulario.value.descripcion,
+      inicio: formulario.value.fecha,
+      duracion: formulario.value.duracion,  // ja el backend ho converteix a JSON
       visibilidad: 'privado',
+      tipo_deporte: nombreDeporte.value,
       detalles: detalles.value
     };
+
+    console.log("📤 Enviant entrenament:", payload);
 
     await axios.post("https://protactics-api.onrender.com/entrenamientos", payload);
 
@@ -142,6 +147,7 @@ const enviarFormulario = async () => {
     alert("⚠️ Hubo un problema al guardar el entrenamiento.");
   }
 };
+
 </script>
 <style scoped>
 /* Estilos generales */

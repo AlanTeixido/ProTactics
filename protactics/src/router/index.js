@@ -14,32 +14,38 @@ const router = createRouter({
     { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue') },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 
-    // Ruta para cargar el formulario según deporte
-    { path: '/entrenamiento/:nombre', name: 'entrenamiento', component: () => import('../views/CrearEntrenamiento.vue'), props: true },
-    
+    // ✅ Ruta correcta per crear entrenaments segons esport (captura param 'nombre')
+    { 
+      path: '/entrenamiento/:nombre', 
+      name: 'crear-entrenamiento', 
+      component: () => import('../views/CrearEntrenamiento.vue') 
+    },
 
-    // 🔒 Rutas protegidas (solo accesibles si está logueado)
+    // 🔒 Rutes protegides (només si loguejat)
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },
     { path: '/perfil', name: 'perfil', component: () => import('../views/PerfilView.vue'), meta: { requiresAuth: true } },
     { path: '/deportes', name: 'deportes', component: () => import('../views/DeportesView.vue'), meta: { requiresAuth: true } },
     { path: '/mis-entrenamientos', name: 'mis-entrenamientos', component: () => import('../views/EntrenamientosView.vue'), meta: { requiresAuth: true } },
-    {
-      path: '/editar-entrenamiento/:id', name: 'editar-entrenamiento', component: () => import('../views/EditarEntrenamiento.vue'), meta: { requiresAuth: true }
+    { 
+      path: '/editar-entrenamiento/:id', 
+      name: 'editar-entrenamiento', 
+      component: () => import('../views/EditarEntrenamiento.vue'), 
+      meta: { requiresAuth: true } 
     }
   ],
   scrollBehavior(to, from, savedPosition) {
-    return { top: 0 }; // Scroll al inicio de la página al cambiar de ruta
+    return { top: 0 }; // Scroll al inici de la pàgina al canviar de ruta
   }
 });
 
-// Middleware para proteger rutas
+// Middleware de protecció de rutes
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('authToken'); // Verifica si hay sesión activa
+  const isAuthenticated = !!localStorage.getItem('authToken'); // Verifica si hi ha sessió activa
 
   if (to.meta.requiresAuth && !isAuthenticated) {
-    next('/login'); // Redirigir a login si no está autenticado
+    next('/login'); // Redirigeix a login si no està autenticat
   } else {
-    next(); // Permitir acceso
+    next(); // Permet accés
   }
 });
 
