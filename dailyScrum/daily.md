@@ -191,4 +191,16 @@
 - **Estilos Entrenamiento:** Adri
 - **Paginas Entrenamiento:** Alex
 
+---
+
+## **Fecha:** 28/02/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Entrenamiento API:** Alan
+- **Crear Entrenamiento:** Alex
+- **Proofhub:** Alan , Alex
+- **Estilos Editar Entrenamiento:** Adri
+- **SprintReview:** Adri
+- **Entrenamientos Form:** Alex
 
