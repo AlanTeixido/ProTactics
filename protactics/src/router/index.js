@@ -10,7 +10,6 @@ const router = createRouter({
     { path: '/login', name: 'login', component: Login },
     { path: '/register', name: 'register', component: Register },
     { path: '/dragg', name: 'dragg', component: () => import('../components/Draggable.vue') },
-    { path: '/draggable', name: 'draggable', component: () => import('../components/DragAndDrop/Draggable1.vue') },
     { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue') },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 

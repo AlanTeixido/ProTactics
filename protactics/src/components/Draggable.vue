@@ -1,150 +1,138 @@
-<script setup lang="ts">
-import { useDraggable } from '@vueuse/core' // Importamos Dragganle para hacer elementos arrastrables
+<script setup>
 import { ref } from 'vue'
 import HeaderSection from './HeaderSection.vue'
 import FooterSection from './FooterSection.vue'
 
-// Creamos una referencia reactiva para el elemento que se podrá arrastrar
-const objeto = ref(null)
-const objeto1 = ref(null)
+// Variable reactiva para bloquear/desbloquear el movimiento
+const isCaptured = ref(false)
 
-// EVariable habilitar o deshabilitar draggable
-const disabled = ref(false)
+// Lista de 10 objetos con posición inicial y estado de arrastre
+const items = ref(
+  Array.from({ length: 10 }, (_, index) => ({
+    id: index,
+    x: 50 + index * 120, // Posición inicial (separados horizontalmente)
+    y: 600, // 🔥 Altura ajustada para que los objetos sean visibles
+    isDragging: false, 
+    offsetX: 0, 
+    offsetY: 0  
+  }))
+)
 
-/*// Variable useDraggable , elemento movible
-const { x, y, style } = useDraggable(objeto, {
-  initialValue: { x: 600, y: 400 }, // Posición inicial del objeto
-  preventDefault: true, // Evita comportamientos predeterminados del navegador (como el scroll)
-  disabled, // Deshabilita el arrastre si disabled es true
-});*/
+// Función para iniciar el arrastre
+const startDrag = (event, item) => {
+  if (isCaptured.value) return // Si está capturado, no se puede mover
 
-const draggable1 = useDraggable(objeto, {
-  initialValue: { x: 430, y: 425 },
-  preventDefault: true,
-  disabled,
-});
+  item.isDragging = true
+  item.offsetX = event.clientX - item.x
+  item.offsetY = event.clientY - item.y
 
-const draggable2 = useDraggable(objeto1, {
-  initialValue: { x: 600, y: 430 },
-  preventDefault: true,
-  disabled,
-});
+  // Se añaden eventos para mover y soltar el objeto
+  window.addEventListener('mousemove', (e) => onDrag(e, item))
+  window.addEventListener('mouseup', () => stopDrag(item))
+}
+
+// Función que actualiza la posición del objeto mientras se arrastra
+const onDrag = (event, item) => {
+  if (!item.isDragging) return
+  item.x = event.clientX - item.offsetX
+  item.y = event.clientY - item.offsetY
+}
+
+// Función para soltar el objeto y remover los eventos
+const stopDrag = (item) => {
+  item.isDragging = false
+  window.removeEventListener('mousemove', (e) => onDrag(e, item))
+  window.removeEventListener('mouseup', () => stopDrag(item))
+}
+
+// Alternar entre capturar/liberar los objetos
+const toggleCapture = () => {
+  isCaptured.value = !isCaptured.value
+}
 </script>
 
 <template>
   <HeaderSection />
 
-  <!-- Contenedor principal que centra el contenido -->
   <div class="container">
+    <!-- Botón Capturar -->
+    <button class="capture-btn" @click="toggleCapture">
+      {{ isCaptured ? 'Liberar' : 'Capturar' }}
+    </button>
 
-    <!-- Contenedor del checkbox para activar/desactivar el arrastre -->
-    <div class="checkbox-container">
-      <label class="checkbox">
-        <!-- Checkbox draggble está habilitado o no -->
-        <input v-model="disabled" type="checkbox" class="checkbox-input">
-        <span>Desactivar drag and drop</span>
-      </label>
+    <!-- Objetos Draggeables -->
+    <div
+      v-for="item in items"
+      :key="item.id"
+      class="draggable"
+      :class="{ disabled: isCaptured }"
+      :style="{ left: item.x + 'px', top: item.y + 'px' }"
+      @mousedown="(event) => startDrag(event, item)"
+    >
+      {{ item.id }} [{{ item.x }} - {{ item.y }}]
     </div>
-
-    <!-- Texto de descripción con opacidad reducida -->
-    <p class="description">Presiona para capturar elementos</p>
-
-    <!-- Objeto arrastrable -->
-    <div ref="objeto" class="draggable" :style="draggable1.style.value">
-      👋 Dragg Me!
-      <!-- Muestra la posición actual del elemento en la pantalla -->
-      <div class="position-text">I am at {{ Math.round(draggable1.x.value) }}, {{ Math.round(draggable1.y.value) }}</div>
-    </div>
-
-       <!-- Objeto arrastrable -->
-       <div ref="objeto1" class="draggable" :style="draggable2.style.value">
-      👋 Dragg Me!
-      <!-- Muestra la posición actual del elemento en la pantalla -->
-      <!--<div class="position-text">I am at {{ Math.round(x) }}, {{ Math.round(y) }}</div>-->
-    </div>
-
   </div>
+  
   <FooterSection />
 </template>
 
-
 <style scoped>
-/* Contenedor principal */
+/* 🔥 Ajustamos el contenedor */
 .container {
+  width: 100vw;
+  height: 100vh; /* 🔥 Asegura que todo el espacio esté disponible */
+  background-color: #f0f0f0;
+  position: relative;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  margin-top: 60px; /* 🔥 Empuja el contenedor hacia abajo */
+  padding-bottom: 50px; /* 🔥 Para que los objetos no queden pegados al footer */
 }
 
-/* Checkbox */
-.checkbox-container {
-  margin-bottom: 1rem;
+/* Estilo del botón */
+.capture-btn {
+  position: absolute; /* 🔥 Posición absoluta dentro de .container */
+  left: 1150px; /* 🔥 Mueve el botón más cerca */
+  top: 750px; /* 🔥 Ajusta la altura para que sea visible */
+  
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff5733;
+  color: white;
+  border: none;
+  border-radius: 5px;
 }
 
-.checkbox {
+.capture-btn:hover {
+  background-color: #e04a2b;
+}
+
+/* Estilo de los elementos draggeables */
+.draggable {
+  width: 80px;
+  height: 80px;
+  background-color: royalblue;
+  color: white;
+  font-size: 10px;
   display: flex;
   align-items: center;
-}
-
-.checkbox-input {
-  margin-right: 0.5rem;
-}
-
-/* Descripción */
-.description {
-  font-style: italic;
-  opacity: 0.5;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-/* Elemento draggable */
-.draggable {
+  justify-content: center;
   position: absolute;
-  background-color: #3b82f6;
-  color: white;
+  cursor: grab;
   user-select: none;
-  cursor: move;
-  padding: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  touch-action: none;
+  border-radius: 10px;
+}
+.draggable:active {
+  cursor: grabbing;
 }
 
-/* Segundo draggable con handle */
-.draggable-alt {
-  position: absolute;
-  background-color: #ef4444;
-  /* Rojo */
-  color: white;
-  user-select: none;
-  padding: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  margin-top: 1rem;
-}
-
-/* Texto dentro de los draggables */
-.position-text {
-  font-size: 0.875rem;
-  opacity: 0.75;
-}
-
-.handle-text {
-  font-size: 0.75rem;
-  opacity: 0.5;
-}
-
-/* Efecto hover */
-.draggable:hover {
-  transform: scale(1.05);
-  transition: transform 0.2s ease-in-out;
-}
-
-.draggable-alt:hover {
-  transform: scale(1.05);
-  transition: transform 0.2s ease-in-out;
+/* Si está capturado, deshabilitamos el cursor */
+.draggable.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 </style>
