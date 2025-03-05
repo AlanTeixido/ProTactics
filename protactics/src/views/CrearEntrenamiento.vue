@@ -15,6 +15,11 @@
       </div>
 
       <div class="form-group">
+        <label for="objetivo">Objetivo</label>
+        <textarea v-model="formulario.objetivo" required></textarea>
+      </div>
+
+      <div class="form-group">
         <label for="duracion">Duración (minutos)</label>
         <input type="number" v-model="formulario.duracion" required min="1" />
       </div>
@@ -25,7 +30,7 @@
       </div>
 
       <div class="form-group">
-        <label for="dificultad">Nivel de dificultad</label>
+        <label for="dificultad">Nivel de intensidad</label>
         <select v-model="formulario.dificultad">
           <option value="principiante">Principiante</option>
           <option value="intermedio">Intermedio</option>
@@ -37,6 +42,10 @@
       <div v-if="nombreDeporte === 'atletismo'" class="form-group">
         <label>Distancia (km)</label>
         <input type="number" v-model="detalles.distancia" min="0" step="0.1" />
+
+        // Ritmo nuevo campo
+        <!-- <label>Ritmo</label>
+        <input type="number" v-model="detalles.ritmo" min="0" step="0.1" /> -->
       </div>
 
       <div v-if="nombreDeporte === 'gimnasio'" class="form-group">
@@ -59,13 +68,18 @@
 
       <div v-if="nombreDeporte === 'futbol'" class="form-group">
         <label>Tipo</label>
-        <input type="text" v-model="detalles.tipo" />
-        <label>Posición</label>
-        <input type="text" v-model="detalles.posicion" />
-        <label>Goles</label>
-        <input type="number" v-model="detalles.goles" />
-        <label>Asistencias</label>
-        <input type="number" v-model="detalles.asistencias" />
+        <select v-model="detalles.tipo">
+          <option value="amistoso">Futbol 7</option>
+          <option value="entrenamiento">Futbol 11</option>
+        </select>
+
+        <label>Categoria de ejercicio</label>
+        <select v-model="detalles.categoria">
+          <option value="fuerza">Finalización</option>
+          <option value="resistencia">Juegos de posición</option>
+          <option value="velocidad">Calentamiento</option>
+          <option value="flexibilidad">ABP</option>
+        </select>
       </div>
 
       <div v-if="nombreDeporte === 'padel'" class="form-group">
