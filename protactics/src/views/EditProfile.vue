@@ -43,13 +43,15 @@ const loadUserData = async () => {
 
     user.value.username = response.data.nombre_usuario || "Usuario";
     user.value.email = response.data.correo || "";
-    user.value.profileImage = response.data.profile_image || "default.png";
+    user.value.profileImage = response.data.foto_url
+      ? `https://protactics-api.onrender.com${response.data.foto_url}`
+      : "/uploads/default.png";
   } catch (error) {
     console.error("⚠️ Error cargando datos:", error);
   }
 };
 
-// 🔹 Guardar datos generales
+// 🔹 Guardar cambios en perfil
 const saveProfile = async () => {
   if (!user.value.username.trim() || !user.value.email.trim()) {
     errorMessage.value = "❌ Todos los campos son obligatorios.";
@@ -71,7 +73,7 @@ const saveProfile = async () => {
     successMessage.value = "✅ Perfil actualizado correctamente!";
     setTimeout(() => router.push("/perfil"), 1500);
   } catch (error) {
-    errorMessage.value = "❌ No se pudo actualizar el perfil.";
+    errorMessage.value = error.response?.data?.error || "❌ No se pudo actualizar el perfil.";
   }
 };
 
@@ -95,7 +97,7 @@ const changePassword = async () => {
     const authToken = localStorage.getItem("authToken");
 
     await axios.put(
-      `https://protactics-api.onrender.com/edituser/${user.value.id}/password`,
+      `https://protactics-api.onrender.com/usuarios/${user.value.id}/password`,
       {
         contrasena_actual: passwords.value.oldPassword,
         contrasena_nova: passwords.value.newPassword,
@@ -110,7 +112,7 @@ const changePassword = async () => {
 
     setTimeout(() => router.push("/perfil"), 1500);
   } catch (error) {
-    errorMessage.value = "❌ Error cambiando la contraseña.";
+    errorMessage.value = error.response?.data?.error || "❌ Error cambiando la contraseña.";
   }
 };
 
@@ -139,18 +141,11 @@ const uploadProfilePicture = async () => {
     );
 
     successMessage.value = "✅ Foto de perfil actualizada!";
-    user.value.profileImage = response.data.profileImage;
+    user.value.profileImage = `https://protactics-api.onrender.com${response.data.foto_url}`;
     setTimeout(loadUserData, 1500);
   } catch (error) {
-    errorMessage.value = "❌ Error cambiando la foto de perfil.";
+    errorMessage.value = error.response?.data?.error || "❌ Error cambiando la foto de perfil.";
   }
-};
-
-// 🔄 Función para recargar la página
-const reloadPage = () => {
-  setTimeout(() => {
-    location.reload();
-  }, 1500);
 };
 
 // Cargar datos al montar la página
@@ -161,10 +156,9 @@ onMounted(loadUserData);
   <HeaderSection />
   <div class="profile-container">
     <div class="profile-image-section">
-      <!-- <img :src="`/uploads/${user.profileImage}`" alt="Foto de perfil" class="profile-image" /> -->
-      <img src="../assets/img/futbol.jpg" class="profile-image" />
+      <img :src="user.profileImage" class="profile-image" />
 
-      <!-- Esta es la parte de cambio de imagen -->
+      <!-- Cambio de imagen -->
       <label class="file-label" for="file-input">
         Cambiar Imagen
       </label>
@@ -194,19 +188,20 @@ onMounted(loadUserData);
         <button @click="saveProfile" class="save-btn">Guardar Cambios</button>
 
         <div class="password-container">
-        <div class="input-row">
-          <label for="oldPassword">Contraseña actual</label>
-          <input id="oldPassword" v-model="passwords.oldPassword" type="password" placeholder="Contraseña actual" />
+          <div class="input-row">
+            <label for="oldPassword">Contraseña actual</label>
+            <input id="oldPassword" v-model="passwords.oldPassword" type="password" placeholder="Contraseña actual" />
+          </div>
+          <div class="input-row">
+            <label for="newPassword">Nueva contraseña</label>
+            <input id="newPassword" v-model="passwords.newPassword" type="password" placeholder="Nueva contraseña" />
+          </div>
+          <div class="input-row">
+            <label for="confirmPassword">Confirmar nueva contraseña</label>
+            <input id="confirmPassword" v-model="passwords.confirmPassword" type="password"
+              placeholder="Confirmar nueva contraseña" />
+          </div>
         </div>
-        <div class="input-row">
-          <label for="newPassword">Nueva contraseña</label>
-          <input id="newPassword" v-model="passwords.newPassword" type="password" placeholder="Nueva contraseña" />
-        </div>
-        <div class="input-row">
-          <label for="confirmPassword">Confirmar nueva contraseña</label>
-          <input id="confirmPassword" v-model="passwords.confirmPassword" type="password" placeholder="Confirmar nueva contraseña" />
-        </div>
-      </div>
 
         <button @click="changePassword" class="save-btn">Actualizar Contraseña</button>
         <button @click="router.push('/perfil')" class="cancel-btn">

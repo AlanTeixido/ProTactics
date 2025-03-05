@@ -1,15 +1,15 @@
 <template>
   <header class="header">
     <nav class="nav-container">
-        <div class="nav2">
-          <RouterLink v-if="isLoggedOff" to="/" class="nav-link">INICIO</RouterLink>
-          <RouterLink v-if="isLoggedIn" to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
-          <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
-          <RouterLink v-if="isLoggedOff" to="/contact" class="nav-link">CONTACTO</RouterLink>
-          <RouterLink v-if="isLoggedIn" to="/deportes" class="nav-link">DEPORTES</RouterLink>
-          <RouterLink v-if="isLoggedIn" to="/dragg" class="nav-link">PIZARRA</RouterLink>
-          <RouterLink v-if="isLoggedOff" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink>
-        </div>
+      <div class="nav2">
+        <RouterLink v-if="!isLoggedIn" to="/" class="nav-link">INICIO</RouterLink>
+        <RouterLink v-if="isLoggedIn" to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
+        <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
+        <RouterLink v-if="!isLoggedIn" to="/contact" class="nav-link">CONTACTO</RouterLink>
+        <RouterLink v-if="isLoggedIn" to="/deportes" class="nav-link">DEPORTES</RouterLink>
+        <RouterLink v-if="isLoggedIn" to="/dragg" class="nav-link">PIZARRA</RouterLink>
+        <RouterLink v-if="!isLoggedIn" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink>
+      </div>
     </nav>
 
     <div class="logo-container">
@@ -20,9 +20,9 @@
 
     <div class="log-regist">
       <div v-if="isLoggedIn" class="user-info">
-        <!-- 🔽 Dropdown mejorado con animaciones y colores -->
+        <!-- 🔽 Dropdown con animación y corrección de estados -->
         <div class="dropdown">
-          <button @click="toggleDropdown" class="dropdown-btn" :class="{'rotated': isDropdownOpen}">+</button>
+          <button @click="toggleDropdown" class="dropdown-btn" :class="{ 'rotated': isDropdownOpen }">+</button>
           <transition name="fade">
             <div v-if="isDropdownOpen" class="dropdown-menu">
               <RouterLink to="/deportes" class="dropdown-item">🏋️ Crear Entrenamiento</RouterLink>
@@ -32,7 +32,7 @@
         </div>
 
         <RouterLink to="/perfil" class="profile-pic-link">
-          <img class="profile-pic" src="../assets/img/usuario.png" alt="Foto de perfil" />
+          <img class="profile-pic" :src="userPic" alt="Foto de perfil" />
         </RouterLink>
 
         <img @click="logout" src="../assets/img/logout.png" class="logout-logo">
@@ -48,19 +48,22 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 const router = useRouter();
+const isLoggedIn = ref(false); // Estado reactivo
+const isDropdownOpen = ref(false);
 
-const isLoggedIn = ref(localStorage.getItem('authToken') !== null);
-const isLoggedOff = ref(localStorage.getItem('authToken') == null);
-const isDropdownOpen = ref(false); 
-
-const username = ref(localStorage.getItem('username') || 'Usuario');
 const userPic = ref('https://via.placeholder.com/100');
 
+// 🔹 Función para actualizar el estado del usuario
+const checkAuthStatus = () => {
+  isLoggedIn.value = !!localStorage.getItem('authToken');
+};
+
+// 🔹 Cargar imagen de perfil si está logueado
 const fetchProfilePic = async () => {
   const userId = localStorage.getItem('userId');
   if (!userId) return;
@@ -76,33 +79,33 @@ const fetchProfilePic = async () => {
   }
 };
 
-watchEffect(() => {
-  isLoggedIn.value = localStorage.getItem('authToken') !== null;
-  username.value = localStorage.getItem('username') || 'Usuario';
-
-  const storedPic = localStorage.getItem('fotoUrl');
-  if (storedPic) {
-    userPic.value = storedPic;
-  } else {
-    fetchProfilePic();
-  }
-});
-
+// 🔹 Función para cerrar sesión
 const logout = () => {
   localStorage.clear();
   isLoggedIn.value = false;
   userPic.value = 'https://via.placeholder.com/100';
   router.push('/');
+
+  // Forzar una recarga de la página para limpiar cualquier estado persistente
+  setTimeout(() => {
+    window.location.reload();
+  }, 500);
 };
 
+// 🔹 Manejo del dropdown
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 
+// 🔹 Detectar cambios en localStorage y actualizar estado
+watch(isLoggedIn, (newValue) => {
+  if (newValue) fetchProfilePic();
+});
+
+// 🔹 Comprobar estado de autenticación al montar el componente
 onMounted(() => {
-  if (isLoggedIn.value) {
-    fetchProfilePic();
-  }
+  checkAuthStatus();
+  if (isLoggedIn.value) fetchProfilePic();
 });
 </script>
 
@@ -134,6 +137,16 @@ onMounted(() => {
   height: 30px;
   border-radius: 50%;
 }
+
+.login-register-btn {
+  width: 30px;
+  height: 30px;
+}
+
+.login-register-btn:hover {
+  transform: scale(1.1);
+}
+
 
 .nav-container {
   display: flex;
