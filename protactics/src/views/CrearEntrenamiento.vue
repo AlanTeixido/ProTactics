@@ -1,9 +1,10 @@
 <template>
   <HeaderSection />
   <div class="container">
-    <h1 class="title">Entrenamiento de {{ nombreDeporte }}</h1>
-
+    
     <form @submit.prevent="enviarFormulario" class="form">
+      <h1 class="title">Entrenamiento de {{ nombreDeporte }}</h1>
+
       <div class="form-group">
         <label for="nombre">Nombre</label>
         <input type="text" v-model="formulario.nombre" required />
@@ -20,8 +21,8 @@
       </div>
 
       <div class="form-group">
-        <label for="duracion">Duración (minutos)</label>
-        <input type="number" v-model="formulario.duracion" required min="1" />
+        <label for="duracion">Duración</label>
+        <input type="number" v-model="formulario.duracion" required min="1" placeholder="Minutos"/>
       </div>
 
       <div class="form-group">
@@ -164,87 +165,129 @@ const enviarFormulario = async () => {
 
 </script>
 <style scoped>
-/* Estilos generales */
+/* Estilos generales para la página de formulario de entrenamiento */
 .container {
-  max-width: 800px;
-  margin: 80px auto 20px;
-  /* Espaciado para evitar que el header lo tape */
-  padding: 20px;
-  background: #1e1e1e;
-  /* Fondo negro-gris oscuro */
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  width: 100%;
 }
 
 .title {
-  text-align: center;
-  font-size: 24px;
+  font-size: 2rem;
+  color: #fff;
   margin-bottom: 20px;
-  color: #80e4d4;
-  /* Azul celeste verdoso */
+  text-transform: uppercase;
 }
 
 .form {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  width: 40%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 5%;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 .form-group {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-  color: #ccc;
-  /* Gris claro */
+  font-weight: 450;
+  color: #fff;
+  font-size: 1rem;
 }
 
-input,
-textarea,
-select {
-  width: 100%;
+input, textarea, select {
   padding: 10px;
-  border: 1px solid #555;
-  /* Gris oscuro */
-  border-radius: 5px;
-  font-size: 16px;
-  background: #2a2a2a;
-  /* Fondo oscuro */
-  color: #e0e0e0;
-  /* Texto claro */
+  border: none;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #fff;
+  font-size: 1rem;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.1); /* Línea gris solo en la parte inferior */
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.336); /* Cambio de color al hacer foco */
 }
 
 textarea {
+  min-height: 100px;
   resize: vertical;
-  min-height: 80px;
 }
 
-/* Botón */
-.submit-btn {
-  background: #80e4d4;
-  /* Azul celeste verdoso */
-  color: #1e1e1e;
-  /* Texto oscuro */
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
-  font-size: 18px;
+button {
+  padding: 15px;
+  border-radius: 8px;
+  background: #333;
+  color: white;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background 0.3s ease;
+  font-weight: bold;
+  border: none;
+  transition: background-color 0.3s ease;
 }
 
-.submit-btn:hover {
-  background: #5ec2b1;
-  /* Un tono más oscuro del azul verdoso */
+button:hover {
+  background: #555;
 }
 
-/* Ajuste para pantallas pequeñas */
-@media (max-width: 600px) {
-  .container {
-    width: 90%;
-    margin: 100px auto 20px;
-  }
+.submit-btn {
+  background: transparent;
+  border: 2px white solid;
+  margin-top: 20px;
 }
+
+.error-msg {
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.success-msg {
+  color: green;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* Estilos específicos para campos del deporte */
+.form-group input[type="number"], .form-group input[type="text"], .form-group select {
+  width: 100%;
+}
+
+.form-group input[type="date"] {
+  width: 100%;
+}
+
+.form-group textarea {
+  width: 100%;
+}
+
+/* Campos específicos para cada deporte */
+.form-group input[type="number"]:not([type="number"]:disabled) {
+  max-width: 100%;
+}
+
+input[type="number"]:disabled {
+  background-color: #f0f0f0;
+}
+
+/* Opcional: Si deseas aplicar algo diferente a los campos con información condicionada según deporte */
+.form-group input, .form-group select {
+  border: 2px solid #444;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 </style>
+
+
