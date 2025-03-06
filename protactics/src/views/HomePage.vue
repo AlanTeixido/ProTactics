@@ -12,6 +12,7 @@
       <LogosSection />
       <Slider />
       <ThreeText />
+      <FormContact />
     </main>
     <FooterSection />
   </div>
@@ -25,6 +26,7 @@ import LogosSection from '../components/LogosSection.vue'
 import Slider from '../components/Slider.vue'
 import ThreeText from '../components/ThreeText.vue'
 import { ref, onMounted } from 'vue';
+import FormContact from '@/components/FormContact.vue';
 
 const image1 = ref(null);
 

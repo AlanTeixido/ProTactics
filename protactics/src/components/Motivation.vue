@@ -35,10 +35,9 @@ onMounted(loadMonthlyGoal);
 
 <style scoped>
 .motivation {
-background: #2a2a2a;
+background: #adadad;
 padding: 15px;
 border-radius: 10px;
-box-shadow: 0px 5px 15px rgba(0, 255, 255, 0.2);
 margin-bottom: 20px;
 }
 

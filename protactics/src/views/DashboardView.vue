@@ -6,6 +6,7 @@ import Posts from "@/components/Posts.vue";
 import UserStats from "@/components/UserStats.vue";
 import LastTraining from "@/components/LastTraining.vue";
 import Motivation from "@/components/Motivation.vue"; // Afegim el component "Motivation"
+import MenuHamburger from '@/components/MenuHamburger.vue';
 
 const isLoading = ref(true); // Per controlar si el contingut s'està carregant
 
@@ -25,9 +26,10 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 </script>
 
 <template>
-  <HeaderSection />
+  
   <div class="dashboard-container">
     <div class="dashboard-left">
+      <h2>Welcome, Alex</h2>
       <Posts mode="dashboard" />
     </div>
 
@@ -35,9 +37,7 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
       <UserStats />
       <LastTraining /> <!-- Aquí es manté el component de "Last Training" -->
       <Motivation />   <!-- Afegim "Motivation" per als objectius mensuals -->
-    </div>
-    <RouterLink :to="`/deportes`"><button>NEW</button></RouterLink>
-    
+    </div>    
   </div>
 
   <FooterSection />
@@ -50,6 +50,12 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 </template>
 
 <style scoped>
+h2{
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 550;
+}
+
 .dashboard-container {
   margin-top: 80px;
   display: flex;
@@ -60,26 +66,22 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 
 .dashboard-left {
   width: 65%;
+  margin-top: 5%;
 }
 
 .dashboard-right {
-  width: 30%;
-  display: flex;
+  width: 20%;
   flex-direction: column;
-  gap: 20px;
+  
+  border-radius: 10px;
+  padding: 5%;
 }
 
 .last-training-container, .user-stats, .motivation {
-  box-shadow: 0px 10px 30px rgba(0, 255, 255, 0.3);
   padding: 20px;
   border-radius: 12px;
-  background: #2a2a2a;
+  margin-bottom: 10%;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.last-training-container:hover, .user-stats:hover, .motivation:hover {
-  box-shadow: 0px 10px 25px rgba(0, 255, 255, 0.4);
-  transform: translateY(-5px);
 }
 
 h3, h4 {
@@ -97,11 +99,10 @@ h3, h4 {
   border: none;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
+  transition: 0.3s ease, transform 0.2s ease;
 }
 
 .view-all-btn:hover {
-  background: #0099cc;
   transform: scale(1.05);
 }
 
