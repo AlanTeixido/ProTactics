@@ -1,114 +1,57 @@
 <template>
   <HeaderSection />
   <div class="container">
-    
     <form @submit.prevent="enviarFormulario" class="form">
       <h1 class="title">Entrenamiento de {{ nombreDeporte }}</h1>
 
       <div class="form-group">
-        <label for="nombre">Nombre</label>
+        <label>Nombre</label>
         <input type="text" v-model="formulario.nombre" required />
       </div>
 
       <div class="form-group">
-        <label for="descripcion">Descripción</label>
+        <label>Descripción</label>
         <textarea v-model="formulario.descripcion" required></textarea>
       </div>
 
       <div class="form-group">
-        <label for="objetivo">Objetivo</label>
-        <textarea v-model="formulario.objetivo" required></textarea>
+        <label>Duración (minutos)</label>
+        <input type="number" v-model="formulario.duracion" required min="1" />
       </div>
 
       <div class="form-group">
-        <label for="duracion">Duración</label>
-        <input type="number" v-model="formulario.duracion" required min="1" placeholder="Minutos"/>
+        <label>Fecha y Hora de Inicio</label>
+        <input type="datetime-local" v-model="formulario.inicio" required />
       </div>
 
       <div class="form-group">
-        <label for="fecha">Fecha</label>
-        <input type="date" v-model="formulario.fecha" required />
-      </div>
-
-      <div class="form-group">
-        <label for="dificultad">Nivel de intensidad</label>
-        <select v-model="formulario.dificultad">
-          <option value="principiante">Principiante</option>
-          <option value="intermedio">Intermedio</option>
-          <option value="avanzado">Avanzado</option>
+        <label>Visibilidad</label>
+        <select v-model="formulario.visibilidad">
+          <option value="publico">Público</option>
+          <option value="privado">Privado</option>
         </select>
       </div>
 
-      <!-- Campos específicos según el deporte -->
-      <div v-if="nombreDeporte === 'atletismo'" class="form-group">
-        <label>Distancia (km)</label>
-        <input type="number" v-model="detalles.distancia" min="0" step="0.1" />
-
-        // Ritmo nuevo campo
-        <!-- <label>Ritmo</label>
-        <input type="number" v-model="detalles.ritmo" min="0" step="0.1" /> -->
-      </div>
-
-      <div v-if="nombreDeporte === 'gimnasio'" class="form-group">
-        <label>Tipo</label>
-        <input type="text" v-model="detalles.tipo" />
-        <label>Músculos</label>
-        <textarea v-model="detalles.musculos"></textarea>
-      </div>
-
-      <div v-if="nombreDeporte === 'ciclismo'" class="form-group">
-        <label>Velocidad Promedio (km/h)</label>
-        <input type="number" v-model="detalles.velocidad" />
+      <!-- Campos específicos por deporte -->
+      <div v-if="nombreDeporte === 'ciclismo'">
         <label>Potencia Media (W)</label>
-        <input type="number" v-model="detalles.potencia" />
-        <label>Cadencia</label>
+        <input type="number" v-model="detalles.potencia_media" />
+        <label>Cadencia (rpm)</label>
         <input type="number" v-model="detalles.cadencia" />
         <label>Velocidad Máxima (km/h)</label>
         <input type="number" v-model="detalles.velocidad_maxima" />
       </div>
 
-      <div v-if="nombreDeporte === 'futbol'" class="form-group">
-        <label>Tipo</label>
-        <select v-model="detalles.tipo">
-          <option value="amistoso">Futbol 7</option>
-          <option value="entrenamiento">Futbol 11</option>
-        </select>
-
-        <label>Categoria de ejercicio</label>
-        <select v-model="detalles.categoria">
-          <option value="fuerza">Finalización</option>
-          <option value="resistencia">Juegos de posición</option>
-          <option value="velocidad">Calentamiento</option>
-          <option value="flexibilidad">ABP</option>
-        </select>
-      </div>
-
-      <div v-if="nombreDeporte === 'padel'" class="form-group">
-        <label>Sets</label>
-        <input type="number" v-model="detalles.sets" />
-        <label>Puntos Ganados</label>
-        <input type="number" v-model="detalles.puntos_ganados" />
-        <label>Superficie</label>
-        <input type="text" v-model="detalles.superficie" />
-      </div>
-
-      <div v-if="nombreDeporte === 'piscina'" class="form-group">
+      <div v-if="nombreDeporte === 'piscina'">
         <label>Número de Piscinas</label>
         <input type="number" v-model="detalles.num_piscinas" />
-        <label>Tamaño de la Piscina</label>
+        <label>Tamaño de Piscina</label>
         <input type="text" v-model="detalles.tamano_piscina" />
         <label>Estilo</label>
         <input type="text" v-model="detalles.estilo" />
       </div>
 
-      <div v-if="nombreDeporte === 'running'" class="form-group">
-        <label>Ritmo Medio</label>
-        <input type="text" v-model="detalles.ritmo_medio" />
-        <label>Altimetría</label>
-        <input type="text" v-model="detalles.altimetria" />
-        <label>Zancada Media</label>
-        <input type="text" v-model="detalles.zancada_media" />
-      </div>
+      <!-- Añade el resto de deportes igual... -->
 
       <button type="submit" class="submit-btn">Guardar Entrenamiento</button>
     </form>
@@ -131,39 +74,90 @@ const nombreDeporte = computed(() => route.params.nombre);
 const formulario = ref({
   nombre: "",
   descripcion: "",
-  fecha: "",
-  duracion: "",
-  dificultad: "principiante"
+  duracion: 60,
+  inicio: "",
+  visibilidad: "privado",
 });
 
 const detalles = ref({});
 
 const enviarFormulario = async () => {
   try {
+    const authToken = localStorage.getItem("authToken");
+    const userId = localStorage.getItem("userId");
+
+    if (!authToken) {
+      alert("⚠️ No hay token de autenticación. Por favor, inicia sesión nuevamente.");
+      return;
+    }
+
     const payload = {
-      usuario_id: localStorage.getItem("userId"),
+      usuario_id: userId,
       titulo: formulario.value.nombre,
       descripcion: formulario.value.descripcion,
-      inicio: formulario.value.fecha,
-      duracion: formulario.value.duracion,  // ja el backend ho converteix a JSON
-      visibilidad: 'privado',
       tipo_deporte: nombreDeporte.value,
-      detalles: detalles.value
+      duracion: { minutes: formulario.value.duracion },
+      inicio: new Date(formulario.value.inicio).toISOString(),
+      visibilidad: formulario.value.visibilidad,
+      detalles: getDetallesEspecificos(),
     };
 
-    console.log("📤 Enviant entrenament:", payload);
+    console.log("📤 Enviando:", payload);
 
-    await axios.post("https://protactics-api.onrender.com/entrenamientos", payload);
+    await axios.post("https://protactics-api.onrender.com/entrenamientos", payload, {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    });
 
     alert("✅ Entrenamiento guardado correctamente.");
     router.push("/mis-entrenamientos");
   } catch (error) {
-    console.error("❌ Error guardando el entrenamiento:", error);
+    console.error("❌ Error guardando el entrenamiento:", error.response?.data || error.message);
     alert("⚠️ Hubo un problema al guardar el entrenamiento.");
   }
 };
 
+const getDetallesEspecificos = () => {
+  const tipo = nombreDeporte.value;
+  const d = detalles.value;
+
+  switch (tipo) {
+    case "ciclismo":
+      return {
+        potencia_media: d.potencia_media,
+        cadencia: d.cadencia,
+        velocidad_maxima: d.velocidad_maxima
+      };
+    case "piscina":
+      return {
+        num_piscinas: d.num_piscinas,
+        tamano_piscina: d.tamano_piscina,
+        estilo: d.estilo
+      };
+    case "futbol":
+      return {
+        tipo: d.tipo,
+        categoria: d.categoria,
+        goles: d.goles || 0,
+        asistencias: d.asistencias || 0
+      };
+    case "padel":
+      return {
+        sets: d.sets,
+        puntos_ganados: d.puntos_ganados,
+        superficie: d.superficie
+      };
+    case "atletismo":
+      return {
+        distancia: d.distancia
+      };
+    default:
+      return {};  // En caso de deporte no contemplado (por seguridad)
+  }
+};
 </script>
+
 <style scoped>
 /* Estilos generales para la página de formulario de entrenamiento */
 .container {
