@@ -204,3 +204,25 @@
 - **SprintReview:** Adri
 - **Entrenamientos Form:** Alex
 
+---
+
+## **Fecha:** 5/03/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Entrenamiento API:** Alan
+- **Proofhub:** Alan , Alex
+- **Forms Estilos:** Adri
+- **Pizzara:** Alex
+
+---
+
+## **Fecha:** 6/03/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Histories Usuari:** Alan
+- **Proofhub:** Alan , Alex
+- **Estilos:** Adri
+- **Proofhub:** Adri
+- **Pizzarra Implementar Imagenes** Alex
