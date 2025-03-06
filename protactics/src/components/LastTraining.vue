@@ -72,64 +72,59 @@ const goToTrainings = () => {
 
 onMounted(loadLastTraining);
 </script>
-
 <style scoped>
 .last-training-container {
-  background: #2a2a2a;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: 12px;
+  padding: 15px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+  text-align: left;
 }
 
 h3 {
-  font-size: 20px;
-  font-weight: bold;
-  color: #00c3ff;
-  margin-bottom: 10px;
+  color: #00e6e6;
+  font-size: 18px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
 }
 
 .training-card {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(15, 15, 15, 0.95);
   padding: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 }
 
-h4 {
-  font-size: 18px;
-  color: #00c3ff;
+.training-card h4 {
+  color: #00e6e6;
+  font-size: 16px;
   margin-bottom: 8px;
 }
 
-.training-description {
-  font-size: 14px;
-  color: #e0e0e0;
-  margin-bottom: 10px;
-}
-
 p {
-  font-size: 14px;
-  color: #ccc;
+  color: #bfbfbf;
+  font-size: 13px;
   margin: 5px 0;
 }
 
-.view-all-btn {
-  margin-top: 10px;
-  background: #00c3ff;
-  color: white;
+button {
+  background: #00e6e6;
+  color: #000;
   padding: 8px 12px;
-  border-radius: 5px;
   border: none;
-  font-weight: bold;
+  border-radius: 5px;
   cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
 }
 
-.view-all-btn:hover {
-  background: #0099cc;
+button:hover {
+  background: #00cccc;
 }
 
 .error-message {
-  color: #ff3b30;
-  font-size: 14px;
+  color: #ff4c4c;
   font-weight: bold;
 }
+
 </style>
