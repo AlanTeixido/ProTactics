@@ -213,7 +213,7 @@
 - **Entrenamiento API:** Alan
 - **Proofhub:** Alan , Alex
 - **Forms Estilos:** Adri
-- **Pizzara:** Alex
+- **Pizara:** Alex
 
 ---
 
@@ -225,4 +225,4 @@
 - **Proofhub:** Alan , Alex
 - **Estilos:** Adri
 - **Proofhub:** Adri
-- **Pizzarra Implementar Imagenes** Alex
+- **Pizarra Implementar Imagenes** Alex
