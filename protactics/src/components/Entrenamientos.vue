@@ -90,29 +90,55 @@ const formatDuracion = (duracion) => {
 
 // 🔹 Cargar entrenamientos del usuario autenticado
 const loadEntrenamientos = async () => {
-  if (!userId) return;
+    const authToken = localStorage.getItem("authToken");
 
-  try {
-    const response = await axios.get(`https://protactics-api.onrender.com/entrenamientos/user/${userId}`);
-    entrenamientos.value = response.data;
-  } catch (error) {
-    console.error("❌ Error cargando entrenamientos:", error);
-  } finally {
-    loading.value = false;
-  }
+    if (!userId) {
+        console.error("⚠️ No hay userId guardado.");
+        return;
+    }
+
+    if (!authToken) {
+        console.error("⚠️ No hay authToken guardado.");
+        return;
+    }
+
+    try {
+        const response = await axios.get(`https://protactics-api.onrender.com/entrenamientos/user/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${authToken}`
+            }
+        });
+        entrenamientos.value = response.data;
+    } catch (error) {
+        console.error("❌ Error cargando entrenamientos:", error.response?.data || error.message);
+    } finally {
+        loading.value = false;
+    }
 };
 
 // 🔹 Función para eliminar entrenamiento
 const eliminarEntrenamiento = async (id) => {
-  if (!confirm("¿Seguro que quieres eliminar este entrenamiento?")) return;
+    if (!confirm("¿Seguro que quieres eliminar este entrenamiento?")) return;
 
-  try {
-    await axios.delete(`https://protactics-api.onrender.com/entrenamientos/${id}`);
-    entrenamientos.value = entrenamientos.value.filter(e => e.id !== id);
-  } catch (error) {
-    console.error("❌ Error eliminando entrenamiento:", error);
-  }
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+        alert("⚠️ No tienes autorización. Inicia sesión de nuevo.");
+        return;
+    }
+
+    try {
+        await axios.delete(`https://protactics-api.onrender.com/entrenamientos/${id}`, {
+            headers: {
+                Authorization: `Bearer ${authToken}`
+            }
+        });
+        entrenamientos.value = entrenamientos.value.filter(e => e.id !== id);
+    } catch (error) {
+        console.error("❌ Error eliminando entrenamiento:", error.response?.data || error.message);
+        alert("❌ Error eliminando el entrenamiento.");
+    }
 };
+
 
 onMounted(loadEntrenamientos);
 </script>
