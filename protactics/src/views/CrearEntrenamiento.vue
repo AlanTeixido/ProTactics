@@ -33,6 +33,30 @@
       </div>
 
       <!-- Campos específicos por deporte -->
+      
+      <!-- Baloncesto -->
+      <div v-if="nombreDeporte === 'baloncesto'" class="futbol-grid">
+        <label>Tipo</label>
+        <select v-model="detalles.tipo">
+            <option value="partido">Partido</option>
+            <option value="entrenamiento">Entrenamiento</option>
+        </select>
+    
+        <label>Posición</label>
+        <input type="text" v-model="detalles.posicion" placeholder="Base, Escolta, etc." />
+    
+        <label>Puntos</label>
+        <input type="number" v-model="detalles.puntos" />
+    
+        <label>Asistencias</label>
+        <input type="number" v-model="detalles.asistencias" />
+    
+        <label>Rebotes</label>
+        <input type="number" v-model="detalles.rebotes" />
+    </div>
+    
+
+      <!-- Ciclismo -->
       <div v-if="nombreDeporte === 'ciclismo'">
         <label>Potencia Media (W)</label>
         <input type="number" v-model="detalles.potencia_media" />
@@ -42,6 +66,7 @@
         <input type="number" v-model="detalles.velocidad_maxima" />
       </div>
 
+      <!-- Piscina -->
       <div v-if="nombreDeporte === 'piscina'">
         <label>Número de Piscinas</label>
         <input type="number" v-model="detalles.num_piscinas" />
@@ -51,7 +76,47 @@
         <input type="text" v-model="detalles.estilo" />
       </div>
 
-      <!-- Añade el resto de deportes igual... -->
+      <!-- Futbol -->
+      <div v-if="nombreDeporte === 'futbol'">
+        <label>Tipo</label>
+        <select v-model="detalles.tipo">
+          <option value="amistoso">Amistoso</option>
+          <option value="entrenamiento">Entrenamiento</option>
+        </select>
+
+        <label>Posición</label>
+        <input type="text" v-model="detalles.posicion" />
+
+        <label>Goles</label>
+        <input type="number" v-model="detalles.goles" />
+
+        <label>Asistencias</label>
+        <input type="number" v-model="detalles.asistencias" />
+      </div>
+
+      <!-- Atletismo -->
+      <div v-if="nombreDeporte === 'atletismo'">
+        <label>Distancia (km)</label>
+        <input type="number" v-model="detalles.distancia" step="0.1" />
+      </div>
+
+      <!-- Padel -->
+      <div v-if="nombreDeporte === 'padel'">
+        <label>Sets</label>
+        <input type="number" v-model="detalles.sets" />
+        <label>Puntos Ganados</label>
+        <input type="number" v-model="detalles.puntos_ganados" />
+        <label>Superficie</label>
+        <input type="text" v-model="detalles.superficie" />
+      </div>
+
+      <!-- Gimnasio -->
+      <div v-if="nombreDeporte === 'gimnasio'">
+        <label>Tipo de Ejercicio</label>
+        <input type="text" v-model="detalles.tipo" />
+        <label>Músculos Trabajados</label>
+        <textarea v-model="detalles.musculos"></textarea>
+      </div>
 
       <button type="submit" class="submit-btn">Guardar Entrenamiento</button>
     </form>
@@ -138,7 +203,7 @@ const getDetallesEspecificos = () => {
     case "futbol":
       return {
         tipo: d.tipo,
-        categoria: d.categoria,
+        posicion: d.posicion,
         goles: d.goles || 0,
         asistencias: d.asistencias || 0
       };
@@ -152,21 +217,28 @@ const getDetallesEspecificos = () => {
       return {
         distancia: d.distancia
       };
+    case "gimnasio":
+      return {
+        tipo: d.tipo,
+        musculos: d.musculos
+      };
     default:
-      return {};  // En caso de deporte no contemplado (por seguridad)
+      return {};
   }
 };
 </script>
 
+
+
 <style scoped>
-/* Estilos generales para la página de formulario de entrenamiento */
+/* Contenedor general */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 10%;
-  margin-bottom: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
   width: 100%;
 }
 
@@ -175,44 +247,51 @@ const getDetallesEspecificos = () => {
   color: #fff;
   margin-bottom: 20px;
   text-transform: uppercase;
+  text-align: center;
 }
 
+/* Formulario */
 .form {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  width: 40%;
+  width: 90%;
+  max-width: 700px;
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 5%;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
 }
 
+/* Grupos de formulario */
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
 }
 
+/* Labels */
 label {
-  font-weight: 450;
+  font-weight: 500;
   color: #fff;
   font-size: 1rem;
 }
 
+/* Inputs, selects y textarea */
 input, textarea, select {
   padding: 10px;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 8px;
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.6);
   color: #fff;
   font-size: 1rem;
-  border-bottom: 0.5px solid rgba(255, 255, 255, 0.1); /* Línea gris solo en la parte inferior */
+  transition: border-color 0.3s;
+  width: 100%;
 }
 
 input:focus, textarea:focus, select:focus {
   outline: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.336); /* Cambio de color al hacer foco */
+  border-color: #fff;
 }
 
 textarea {
@@ -220,10 +299,11 @@ textarea {
   resize: vertical;
 }
 
+/* Botón submit */
 button {
   padding: 15px;
   border-radius: 8px;
-  background: #333;
+  background: #444;
   color: white;
   font-size: 1rem;
   cursor: pointer;
@@ -233,15 +313,18 @@ button {
 }
 
 button:hover {
-  background: #555;
+  background: #666;
 }
 
 .submit-btn {
   background: transparent;
-  border: 2px white solid;
+  border: 2px solid white;
   margin-top: 20px;
+  width: 100%;
+  text-transform: uppercase;
 }
 
+/* Mensajes de error o éxito */
 .error-msg {
   color: red;
   font-size: 0.9rem;
@@ -254,34 +337,62 @@ button:hover {
   text-align: center;
 }
 
-/* Estilos específicos para campos del deporte */
-.form-group input[type="number"], .form-group input[type="text"], .form-group select {
+/* Inputs en línea para deportes */
+.inline-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  align-items: center;
+}
+
+/* Ajuste de inputs específicos */
+.form-group input[type="number"], 
+.form-group input[type="text"], 
+.form-group select {
+  width: 100%;
+  max-width: none;
+}
+
+.form-group input[type="datetime-local"] {
   width: 100%;
 }
 
-.form-group input[type="date"] {
-  width: 100%;
+/* Estilo específico para el grid de futbol y otros deportes */
+.futbol-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  align-items: center;
 }
 
-.form-group textarea {
-  width: 100%;
+.futbol-grid label {
+  grid-column: span 4;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #fff;
 }
 
-/* Campos específicos para cada deporte */
-.form-group input[type="number"]:not([type="number"]:disabled) {
-  max-width: 100%;
+.futbol-grid input {
+  text-align: center;
 }
 
-input[type="number"]:disabled {
-  background-color: #f0f0f0;
+/* Para deportes con bloques verticales */
+.block-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-/* Opcional: Si deseas aplicar algo diferente a los campos con información condicionada según deporte */
-.form-group input, .form-group select {
-  border: 2px solid #444;
-  background-color: rgba(0, 0, 0, 0.3);
+/* Modo oscuro */
+input::placeholder, textarea::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }
 
+/* Añadir espacio al final */
+.form {
+  margin-bottom: 20px;
+}
 </style>
+
 
 
