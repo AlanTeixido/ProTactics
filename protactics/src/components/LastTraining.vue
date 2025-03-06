@@ -33,16 +33,30 @@ const router = useRouter();
 
 // 🔹 Funció per carregar l'últim entrenament
 const loadLastTraining = async () => {
+  const authToken = localStorage.getItem("authToken");
+
+  if (!authToken) {
+    errorMessage.value = "⚠️ No tens permís per veure aquesta informació. Inicia sessió.";
+    loading.value = false;
+    return;
+  }
+
   try {
-    const response = await axios.get("https://protactics-api.onrender.com/entrenamientos/last");
+    const response = await axios.get("https://protactics-api.onrender.com/entrenamientos/last", {
+      headers: {
+        Authorization: `Bearer ${authToken}`
+      }
+    });
+
     training.value = response.data;
   } catch (error) {
-    console.error("❌ Error carregant l'últim entrenament:", error);
-    errorMessage.value = "No s'ha pogut carregar l'últim entrenament.";
+    console.error("❌ Error carregant l'últim entrenament:", error.message);
+    errorMessage.value = "⚠️ No s'ha pogut carregar l'últim entrenament.";
   } finally {
     loading.value = false;
   }
 };
+
 
 // 🔹 Funció per formatar la duració correctament
 const formatDuracion = (duracion) => {
