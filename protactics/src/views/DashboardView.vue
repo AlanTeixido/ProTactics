@@ -26,7 +26,7 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 </script>
 
 <template>
-  
+  <MenuHamburger/>
   <div class="dashboard-container">
     <div class="dashboard-left">
       <h2>Welcome, Alex</h2>
