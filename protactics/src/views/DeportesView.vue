@@ -1,29 +1,31 @@
 <template>
-  <HeaderSection />
-  <div class="container">
+  <div class="dashboard">
+    <!-- Menú fijo a la izquierda -->
+    <div class="dashboard-menu">
+      <MenuDashboard />
+    </div>
 
-    <div class="wrapper">
-      <!-- Usamos un v-for para recorrer el array de deportes -->
-      <div v-for="deporte in deportes" :key="deporte.nombre" class="grid-item">
-        <!-- RouterLink para redirigir al clickear el nombre del deporte -->
-        <RouterLink :to="`/entrenamiento/${deporte.nombre}`">
-          <img :src="getImageUrl(deporte.imagen)" class="grid-image" />
-          <div class="item-transition">
-            <p class="title">{{ deporte.nombre }}</p>
-          </div>
-        </RouterLink>
-
+    <!-- Contenido principal -->
+    <div class="dashboard-content">
+      <div class="wrapper">
+        <!-- Usamos un v-for para recorrer el array de deportes -->
+        <div v-for="deporte in deportes" :key="deporte.nombre" class="grid-item">
+          <!-- RouterLink para redirigir al hacer clic en el deporte -->
+          <RouterLink :to="`/entrenamiento/${deporte.nombre}`">
+            <img :src="getImageUrl(deporte.imagen)" class="grid-image" />
+            <div class="item-transition">
+              <p class="title">{{ deporte.nombre }}</p>
+            </div>
+          </RouterLink>
+        </div>
       </div>
     </div>
   </div>
-  <FooterSection />
 </template>
 
 <script setup>
 import { ref } from "vue";
-import HeaderSection from "@/components/HeaderSection.vue";
-import FooterSection from "@/components/FooterSection.vue";
-import FormContact from "@/components/FormContact.vue";
+import MenuDashboard from "@/components/MenuDashboard.vue";
 
 const getImageUrl = (path) => new URL(path, import.meta.url).href;
 
@@ -38,27 +40,49 @@ const deportes = ref([
 </script>
 
 <style scoped>
-.section-title {
-  text-align: left;
-  margin-top: 10%;
-  border-bottom: 1px solid #cccccc4d;
-  margin-left: 4.5%;
-  margin-right: 4.5%;
-  text-transform: uppercase;
-  font-style: italic;
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Contenedor principal */
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #f3f3f3;
+}
+
+/* Menú a la izquierda fijo */
+.dashboard-menu {
+  width: 250px;
+  height: 100vh;
+  background-color: #1e1e1e;
+  color: white;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+/* Contenido derecho */
+.dashboard-content {
+  flex: 1;
+  margin-left: 250px; /* Ajuste para evitar que el menú lo tape */
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/* Estilos del grid */
 .wrapper {
   display: grid;
-  gap: 15% 5px;
-  /* Ajusté el espacio vertical (de arriba a abajo) a 10px y horizontal (entre columnas) a 5px */
+  gap: 30px;
   padding: 20px;
-  margin-top: 8%;
-  margin-bottom: 10%;
-  grid-template-columns: repeat(3, 1fr);
-  /* Dos columnas de tamaño igual */
+  margin-top: 3%;
+  grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+  /* Se adapta automáticamente al tamaño de la pantalla */
   place-items: center;
-  /* Centra todos los ítems tanto horizontal como verticalmente */
 }
 
 .grid-item {
@@ -67,14 +91,13 @@ const deportes = ref([
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
-  width: 80%;
-  margin-top: 15%;
+  width: 90%;
 }
 
 .grid-item img {
   width: 100%;
   object-fit: cover;
-  height: 500px;
+  height: 300px;
   display: block;
   transition: transform 0.3s;
 }
@@ -105,18 +128,30 @@ const deportes = ref([
 }
 
 .title {
-  font-size: 1.5em;
-  margin: 10px;
+  font-size: 1.2em;
   text-align: center;
   color: #fff;
   text-transform: uppercase;
 }
 
-h2 {
-  font-weight: 1000;
-}
+/* Responsive */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
 
-span {
-  font-weight: 300;
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .dashboard-content {
+    margin-left: 0;
+  }
+
+  .wrapper {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
 }
 </style>

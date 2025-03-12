@@ -152,12 +152,12 @@ onMounted(loadEntrenamientos);
   padding: 30px;
   text-align: center;
   border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra sutil para profundidad */
   display: flex;
   flex-direction: column;
   align-items: center;
   font-family: 'Helvetica Neue', Arial, sans-serif;
   color: #333; /* Color de texto oscuro para buen contraste */
+  background-color: #f3f3f3;
 }
 
 .entrenamientos-list {

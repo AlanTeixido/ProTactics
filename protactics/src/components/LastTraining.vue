@@ -74,11 +74,12 @@ onMounted(loadLastTraining);
 </script>
 <style scoped>
 .last-training-container {
+  width: 67%;
   background: rgb(255, 255, 255);
   border-radius: 12px;
   padding: 15px;
-  box-shadow: 0 0 20px rgba(46, 46, 46, 0.13);
   text-align: left;
+  margin-top: 4%;
 }
 
 h3 {
@@ -114,7 +115,7 @@ button {
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  transition: background 0.3s ease;
+  transition: 0.3s ease;
 }
 
 button:hover {

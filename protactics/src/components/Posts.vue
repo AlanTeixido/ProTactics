@@ -6,25 +6,24 @@
 
     <div v-else-if="posts.length" class="posts-list">
       <div v-for="post in posts" :key="post.id" class="post-card">
+        <!-- Nueva cabecera con imagen de perfil y usuario -->
+        <div class="post-header">
+          <!--<img :src="post.profileImage || '/default-avatar.png'" class="profile-image" />-->
+          <img src="../assets/img/usuario.png" class="profile-image">
+          <span class="username">@{{ post.username }}</span>
+        </div>
+
         <div class="post-body">
           <div class="post-content">
-            <div class="post-header">
-              <span class="username">@{{ post.username }}</span>
+            <img src="../assets/img/padel.jpg" class="post-image" />
+             <!-- Sección de Likes -->
+             <div class="likes-section">
+              <button @click="toggleLike(post)">
+                {{ post.likedByUser ? '❤️' : '🤍' }}
+              </button>
+              <span>{{ post.likes }}</span>
             </div>
-            <img class="post-image" :src="post.image || '/default-post.png'" alt="Imagen del post" />
             <p class="description">{{ post.description }}</p>
-          </div>
-
-          <!-- Sección de Likes -->
-          <div class="likes-section">
-            <button @click="toggleLike(post)">
-              {{ post.likedByUser ? '❤️' : '🤍' }}
-            </button>
-            <span>{{ post.likes }} likes</span>
-          </div>
-
-          <div class="final">
-            <p class="letters">&copy; ProTactics</p>
           </div>
         </div>
       </div>
@@ -112,13 +111,13 @@ onMounted(loadPosts);
 
 <style scoped>
 .dashboard-container {
-  width: 80%;
+  width: 100%;
+
   margin: 0 auto;
-  padding: 20px;
-  border-radius: 8px;
 }
 
-.loading-text, .no-posts {
+.loading-text,
+.no-posts {
   text-align: center;
   color: #888;
 }
@@ -126,25 +125,53 @@ onMounted(loadPosts);
 .posts-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 50px;
   justify-content: center;
   align-items: center;
+  margin-right: 44%;
+  margin-top: 4%;
+
 }
 
 .post-card {
-  width: 100%;
-  max-width: 600px;
+  width: 95%;
+  height: 420px;
   background-color: rgba(212, 212, 212, 0.295);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.233);
   border-radius: 15px;
-  padding: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15%;
 }
 
 .post-header {
+  display: flex;
+  align-items: center;
+  padding: 5px;
   font-weight: bold;
   font-size: 18px;
   color: #333;
   margin-bottom: 10px;
+  margin-top: -35px;
+  margin-left: -30px;
+}
+
+.profile-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  margin-right: 5px;
+}
+
+.post-content p {
+  padding: 20px;
+}
+
+.post-content img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin-top: -15px;
 }
 
 .username {
@@ -155,7 +182,6 @@ onMounted(loadPosts);
 .post-image {
   width: 100%;
   height: auto;
-  border-radius: 8px;
   margin-top: 15px;
 }
 
@@ -171,7 +197,8 @@ onMounted(loadPosts);
   align-items: center;
   gap: 10px;
   margin-top: 10px;
-  
+  padding: 10px;
+
 }
 
 .likes-section button {
@@ -194,8 +221,27 @@ onMounted(loadPosts);
   font-size: 12px;
 }
 
-.letters {
-  font-size: 12px;
-  color: #aaa;
+/*ESTILOS DEL SCROLL*/
+/* Estilo para navegadores basados en WebKit (Chrome, Edge, Safari) */
+.dashboard-container::-webkit-scrollbar {
+  width: 4px;
+  /* Ancho de la barra de scroll */
+}
+
+.dashboard-container::-webkit-scrollbar-track {
+  background: #f3f3f3;
+  /* Color de fondo de la pista del scroll */
+  border-radius: 10px;
+}
+
+.dashboard-container::-webkit-scrollbar-thumb {
+  background: #e2e2e2;
+  /* Color del "pulgar" del scroll */
+  border-radius: 10px;
+}
+
+.dashboard-container::-webkit-scrollbar-thumb:hover {
+  background: #656d6d;
+  /* Color cuando se pasa el mouse */
 }
 </style>

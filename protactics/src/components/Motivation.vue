@@ -1,11 +1,13 @@
 <template>
   <div class="motivation">
     <h4>Objectiu Mensual</h4>
-    <p>Objectiu: Correr 120 km aquest mes</p>
-    <div class="progress-bar">
-      <div class="progress" :style="{ width: progress + '%' }"></div>
+    <div class="motivation-content">
+      <p>Objectiu: Correr 120 km aquest mes</p>
+      <div class="progress-bar">
+        <div class="progress" :style="{ width: progress + '%' }"></div>
+      </div>
+      <p>Progress: {{ progress }}%</p>
     </div>
-    <p>Progress: {{ progress }}%</p>
   </div>
 </template>
 
@@ -17,17 +19,17 @@ const progress = ref(0);
 
 // Carregar el progrés de l'objectiu mensual
 const loadMonthlyGoal = async () => {
-try {
-  const response = await axios.get("https://protactics-api.onrender.com/user_stats/monthly_goal");  // Crida a l'API sense token
+  try {
+    const response = await axios.get("https://protactics-api.onrender.com/user_stats/monthly_goal");  // Crida a l'API sense token
 
-  const completed = response.data.completed;
-  const goal = response.data.goal;
+    const completed = response.data.completed;
+    const goal = response.data.goal;
 
-  // Càlcul del percentatge de progrés
-  progress.value = (completed / goal) * 100;
-} catch (error) {
-  console.error("Error carregant el progrés mensual:", error);
-}
+    // Càlcul del percentatge de progrés
+    progress.value = (completed / goal) * 100;
+  } catch (error) {
+    console.error("Error carregant el progrés mensual:", error);
+  }
 };
 
 onMounted(loadMonthlyGoal);
@@ -35,11 +37,17 @@ onMounted(loadMonthlyGoal);
 
 <style scoped>
 .motivation {
+  width: 67%;
   background: rgb(255, 255, 255);
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 0 20px rgba(46, 46, 46, 0.13);
   text-align: center;
+  margin-top: 3%;
+}
+
+.motivation-content{
+  margin-top: 8%;
+
 }
 
 h4 {
@@ -74,5 +82,4 @@ p {
   font-size: 12px;
   margin-top: 5px;
 }
-
 </style>

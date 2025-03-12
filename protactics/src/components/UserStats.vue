@@ -139,19 +139,19 @@ onMounted(loadUserStats);
 
     <div v-else-if="userStats" class="stats-content">
       <div class="stat-box">
-        <h5>🔥 Calorías Quemadas</h5>
+        <h5>🔥</h5>
         <Doughnut :data="caloriesData" :options="caloriesOptions" class="grafico1"/>
       </div>
       <div class="stat-box">
-        <h5>⚡ Rendimiento Medio</h5>
+        <h5>⚡</h5>
         <Doughnut :data="performanceData" :options="performanceOptions" />
       </div>
       <div class="stat-box">
-        <h5>🏋️‍♂️ Entrenamientos Realizados</h5>
+        <h5>🏋️‍♂️</h5>
         <Doughnut :data="trainingsData" :options="trainingsOptions" />
       </div>
       <div class="stat-box">
-        <h5>⏳ Tiempo Total</h5>
+        <h5>⏳</h5>
         <Doughnut :data="timeData" :options="timeOptions" />
       </div>
     </div>
@@ -159,12 +159,10 @@ onMounted(loadUserStats);
 </template>
 <style scoped>
 .user-stats {
-  background: rgb(255, 255, 255);
+  width: 70%;
   border-radius: 16px;
-  padding: 20px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20%;
+  margin-top: 4%;
 }
 
 h3 {
@@ -173,14 +171,16 @@ h3 {
   margin-bottom: 15px;
   text-transform: uppercase;
   font-weight: bold;
-  letter-spacing: 1px;
+  text-align: center;
 }
 
 .stats-content {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
   align-items: center;
+  margin-top: 8%;
+  margin-right: 25px;
 }
 
 .stat-box {
@@ -188,13 +188,13 @@ h3 {
   border-radius: 12px;
   padding: 8%;
   text-align: center;
-  width: 75%;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 90%;
+  height: 90%;
 }
 
 h5 {
   color: #00000098;
-  font-size: 14px;
+  font-size: 10px;
   margin-bottom: 8px;
   text-transform: uppercase;
   font-weight: bold;
