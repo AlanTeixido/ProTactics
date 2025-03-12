@@ -9,15 +9,23 @@ const route = useRoute();
 const deporteSeleccionado = route.params.deporte;
 
 // Mapeo de imágenes según el deporte
+import futbol from "@/assets/img/deportes/pistaFutbol.jpg";
+import baloncesto from "@/assets/img/deportes/pistaBasquet.jpg";
+import padel from "@/assets/img/deportes/pistaPadel.jpg";
+import gimnasio from "@/assets/img/deportes/salaFitness.jpg";
+import ciclismo from "@/assets/img/deportes/pistaBici.jpg";
+import atletismo from "@/assets/img/deportes/pistaAtletismo.jpg";
+
 
 const imagenesDeporte = {
-  futbol: "../assets/img/deportes/pistaFutbol.jpg",
-  baloncesto: "../assets/img/deportes/pistaBasquet.jpg",
-  padel: "../assets/img/deportes/pistaPadel.jpg",
-  gimnasio: "../assets/img/deportes/salaFitness.jpg",
-  ciclismo: "../assets/img/deportes/pistaBici.jpg",
-  atletismo: "../assets/img/deportes/pistaAtletismo.jpg"
+  futbol: futbol,
+  baloncesto: baloncesto,
+  padel: padel,
+  gimnasio: gimnasio,
+  ciclismo: ciclismo,
+  atletismo: atletismo,
 };
+
 
 // Computed para obtener la imagen correcta
 const imagenDeFondo = computed(() => imagenesDeporte[deporteSeleccionado] || "../assets/img/default.png");
