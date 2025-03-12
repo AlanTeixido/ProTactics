@@ -134,7 +134,7 @@ onMounted(loadPosts);
 .post-card {
   width: 100%;
   max-width: 600px;
-  background-color: rgba(0 0 0);
+  background-color: rgba(212, 212, 212, 0.295);
   border-radius: 15px;
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -161,7 +161,7 @@ onMounted(loadPosts);
 
 .description {
   font-size: 14px;
-  color: #e0e0e0;
+  color: #3b3b3b;
   line-height: 1.6;
   margin-top: 15px;
 }
@@ -171,6 +171,7 @@ onMounted(loadPosts);
   align-items: center;
   gap: 10px;
   margin-top: 10px;
+  
 }
 
 .likes-section button {
@@ -182,7 +183,7 @@ onMounted(loadPosts);
 
 .likes-section span {
   font-size: 14px;
-  color: white;
+  color: #3b3b3b;
 }
 
 .final {

@@ -1,12 +1,10 @@
 <script setup>
 import { ref, onMounted } from 'vue';  // Importa correctament `ref` i `onMounted`
-import HeaderSection from "@/components/HeaderSection.vue";
-import FooterSection from "@/components/FooterSection.vue";
 import Posts from "@/components/Posts.vue";
 import UserStats from "@/components/UserStats.vue";
 import LastTraining from "@/components/LastTraining.vue";
 import Motivation from "@/components/Motivation.vue"; // Afegim el component "Motivation"
-import MenuHamburger from '@/components/MenuHamburger.vue';
+import MenuDashboard from '@/components/MenuDashboard.vue';
 
 const isLoading = ref(true); // Per controlar si el contingut s'està carregant
 
@@ -26,8 +24,11 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 </script>
 
 <template>
-  <MenuHamburger/>
+
   <div class="dashboard-container">
+    <div class="dashboard-menu">
+      <MenuDashboard />
+    </div>
     <div class="dashboard-left">
       <h2>Welcome, Alex</h2>
       <Posts mode="dashboard" />
@@ -36,12 +37,9 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
     <div class="dashboard-right">
       <UserStats />
       <LastTraining /> <!-- Aquí es manté el component de "Last Training" -->
-      <Motivation />   <!-- Afegim "Motivation" per als objectius mensuals -->
-    </div>    
+      <Motivation /> <!-- Afegim "Motivation" per als objectius mensuals -->
+    </div>
   </div>
-
-  <FooterSection />
-
   <!-- Loader per mostrar durant la càrrega de dades -->
   <div v-if="isLoading" class="loading-overlay">
     <div class="spinner"></div> <!-- Afegeix el teu spinner aquí -->
@@ -50,41 +48,48 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 </template>
 
 <style scoped>
-h2{
+*{
+  margin: 0;
+}
+h2 {
   text-align: center;
   text-transform: uppercase;
+  font-size: 250%;
   font-weight: 550;
+  color: rgb(102, 102, 102);
 }
 
 .dashboard-container {
-  margin-top: 80px;
   display: flex;
   justify-content: center;
-  padding: 20px;
-  gap: 20px;
+  background-color: #f3f3f3;
+  
 }
 
 .dashboard-left {
   width: 65%;
   margin-top: 5%;
+  margin-left: 15%;
 }
 
 .dashboard-right {
   width: 20%;
   flex-direction: column;
-  
   border-radius: 10px;
   padding: 5%;
 }
 
-.last-training-container, .user-stats, .motivation {
+.last-training-container,
+.user-stats,
+.motivation {
   padding: 20px;
   border-radius: 12px;
   margin-bottom: 10%;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-h3, h4 {
+h3,
+h4 {
   font-size: 22px;
   font-weight: 600;
   color: #00c3ff;
@@ -112,7 +117,8 @@ h3, h4 {
     flex-direction: column;
   }
 
-  .dashboard-left, .dashboard-right {
+  .dashboard-left,
+  .dashboard-right {
     width: 100%;
   }
 
@@ -146,7 +152,12 @@ h3, h4 {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

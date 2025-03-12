@@ -74,35 +74,34 @@ onMounted(loadLastTraining);
 </script>
 <style scoped>
 .last-training-container {
-  background: rgba(20, 20, 20, 0.9);
+  background: rgb(255, 255, 255);
   border-radius: 12px;
   padding: 15px;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(46, 46, 46, 0.13);
   text-align: left;
 }
 
 h3 {
-  color: #00e6e6;
+  color: #000000b7;
   font-size: 18px;
   margin-bottom: 15px;
   text-transform: uppercase;
 }
 
 .training-card {
-  background: rgba(15, 15, 15, 0.95);
+  background: rgba(207, 207, 207, 0.274);
   padding: 15px;
   border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
 }
 
 .training-card h4 {
-  color: #00e6e6;
+  color: #000000ad;
   font-size: 16px;
   margin-bottom: 8px;
 }
 
 p {
-  color: #bfbfbf;
+  color: #00000077;
   font-size: 13px;
   margin: 5px 0;
 }
@@ -124,7 +123,6 @@ button:hover {
 
 .error-message {
   color: #ff4c4c;
-  font-weight: bold;
 }
 
 </style>

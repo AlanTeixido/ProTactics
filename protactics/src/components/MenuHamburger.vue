@@ -97,7 +97,7 @@ onMounted(fetchProfilePic);
 </script>
 
 <style scoped>
-.dashboard-header {
+/*.dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -182,7 +182,7 @@ onMounted(fetchProfilePic);
   background: #c9302c;
 }
 
-/* Submenú con hover */
+
 .submenu-wrapper {
   position: relative;
 }
@@ -210,7 +210,7 @@ onMounted(fetchProfilePic);
   background: #00a86b;
 }
 
-/* Animaciones */
+
 .slide-enter-active, .slide-leave-active {
   transition: transform 0.3s ease;
 }
@@ -227,7 +227,7 @@ onMounted(fetchProfilePic);
   opacity: 0;
 }
 
-/* Perfil y logout */
+
 .user-controls {
   display: flex;
   align-items: center;
@@ -250,5 +250,5 @@ onMounted(fetchProfilePic);
 
 .logout-logo:hover {
   transform: scale(1.1);
-}
+}*/
 </style>

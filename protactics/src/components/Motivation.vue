@@ -35,28 +35,28 @@ onMounted(loadMonthlyGoal);
 
 <style scoped>
 .motivation {
-  background: rgba(15, 15, 15, 0.95);
+  background: rgb(255, 255, 255);
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+  box-shadow: 0 0 20px rgba(46, 46, 46, 0.13);
   text-align: center;
 }
 
 h4 {
-  color: #00e6e6;
+  color: #000000b7;
   font-size: 18px;
   margin-bottom: 10px;
   text-transform: uppercase;
 }
 
 p {
-  color: #bfbfbf;
+  color: #494949;
   font-size: 13px;
   margin-bottom: 5px;
 }
 
 .progress-bar {
-  background: rgba(50, 50, 50, 0.8);
+  background: rgba(214, 214, 214, 0.8);
   height: 8px;
   border-radius: 4px;
   overflow: hidden;
