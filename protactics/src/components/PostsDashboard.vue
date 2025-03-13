@@ -105,29 +105,36 @@
     }
   };
   
-  // Función para manejar "seguir" y "dejar de seguir"
-  const toggleFollow = async (post) => {
-    try {
-      if (!usuarioId || !post.userId) return; // Verifica que el usuario está autenticado
-  
-      if (post.isFollowing) {
-        await axios.delete(
-          `https://protactics-api.onrender.com/seguimientos/${post.userId}/dejar-seguir`,
-          { data: { seguidor_id: usuarioId } }
-        );
-      } else {
-        await axios.post(
-          `https://protactics-api.onrender.com/seguimientos/${post.userId}/seguir`,
-          { seguidor_id: usuarioId }
-        );
-      }
-  
-      post.isFollowing = !post.isFollowing; // Actualizamos la UI inmediatamente
-    } catch (error) {
-      console.error("Error al seguir/dejar de seguir:", error);
+// Función para manejar "seguir" y "dejar de seguir"
+const toggleFollow = async (post) => {
+  try {
+    if (!usuarioId || !post.userId) return; // Verifica que el usuario está autenticado
+
+    // Mostrar en consola per veure l'estat abans de l'acció
+    console.log(`Seguiendo a ${post.username}: ${post.isFollowing}`);
+
+    if (post.isFollowing) {
+      // Realitzar la crida per deixar de seguir
+      await axios.delete(
+        `https://protactics-api.onrender.com/seguimientos/${post.userId}/dejar-seguir`,
+        { data: { seguidor_id: usuarioId } }
+      );
+    } else {
+      // Realitzar la crida per seguir
+      await axios.post(
+        `https://protactics-api.onrender.com/seguimientos/${post.userId}/seguir`,
+        { seguidor_id: usuarioId }
+      );
     }
-  };
-  
+
+    // Actualitzar l'estat del seguiment i mostrar-ho per consola
+    post.isFollowing = !post.isFollowing;
+    console.log(`Després de l'acció, seguint a ${post.username}: ${post.isFollowing}`);
+  } catch (error) {
+    console.error("Error al seguir/dejar de seguir:", error);
+  }
+};
+
   onMounted(loadPosts); // Cargamos los posts al montar el componente
   </script>
 

@@ -13,6 +13,7 @@ const user = ref({
   username: "",
   email: "",
   profileImage: "",
+  followingCount: 0, // Variable per a la quantitat de seguidors
 });
 
 // Contraseñas
@@ -32,6 +33,7 @@ const loadUserData = async () => {
   try {
     const authToken = localStorage.getItem("authToken");
 
+    // Obtenim les dades generals de l'usuari
     const response = await axios.get(
       `https://protactics-api.onrender.com/usuarios/${user.value.id}`,
       {
@@ -42,6 +44,15 @@ const loadUserData = async () => {
     user.value.username = response.data.nombre_usuario || "Usuario";
     user.value.email = response.data.correo || "";
     user.value.profileImage = response.data.profile_image || "default.png";
+
+    // Ara obtenim el nombre d'usuaris que segueixes
+    const followingResponse = await axios.get(
+      `https://protactics-api.onrender.com/seguimientos/${user.value.id}/seguidos`,
+      {
+        headers: { Authorization: `Bearer ${authToken}` },
+      }
+    );
+    user.value.followingCount = followingResponse.data.length; // Actualitzem el compte de seguidors
   } catch (error) {
     console.error("⚠️ Error cargando datos:", error);
   }
@@ -158,7 +169,6 @@ onMounted(loadUserData);
 <template>
   <div class="profile-container">
     <div class="profile-image-section">
-      <!-- <img :src="`/uploads/${user.profileImage}`" alt="Foto de perfil" class="profile-image" /> -->
       <img src="../assets/img/futbol.jpg" class="profile-image" />
 
       <!-- Esta es la parte de cambio de imagen -->
@@ -188,22 +198,27 @@ onMounted(loadUserData);
           <input id="email" v-model="user.email" type="email" placeholder="Correo electrónico" />
         </div>
 
+        <div class="input-row">
+          <label>Sigues a: </label>
+          <span>{{ user.followingCount }} personas</span> <!-- Mostrem la quantitat de persones que segueixes -->
+        </div>
+
         <button @click="saveProfile" class="save-btn">Guardar Cambios</button>
 
         <div class="password-container">
-        <div class="input-row">
-          <label for="oldPassword">Contraseña actual</label>
-          <input id="oldPassword" v-model="passwords.oldPassword" type="password" placeholder="Contraseña actual" />
+          <div class="input-row">
+            <label for="oldPassword">Contraseña actual</label>
+            <input id="oldPassword" v-model="passwords.oldPassword" type="password" placeholder="Contraseña actual" />
+          </div>
+          <div class="input-row">
+            <label for="newPassword">Nueva contraseña</label>
+            <input id="newPassword" v-model="passwords.newPassword" type="password" placeholder="Nueva contraseña" />
+          </div>
+          <div class="input-row">
+            <label for="confirmPassword">Confirmar nueva contraseña</label>
+            <input id="confirmPassword" v-model="passwords.confirmPassword" type="password" placeholder="Confirmar nueva contraseña" />
+          </div>
         </div>
-        <div class="input-row">
-          <label for="newPassword">Nueva contraseña</label>
-          <input id="newPassword" v-model="passwords.newPassword" type="password" placeholder="Nueva contraseña" />
-        </div>
-        <div class="input-row">
-          <label for="confirmPassword">Confirmar nueva contraseña</label>
-          <input id="confirmPassword" v-model="passwords.confirmPassword" type="password" placeholder="Confirmar nueva contraseña" />
-        </div>
-      </div>
 
         <button @click="changePassword" class="save-btn">Actualizar Contraseña</button>
         <button @click="router.push('/perfil')" class="cancel-btn">
@@ -214,9 +229,8 @@ onMounted(loadUserData);
   </div>
 </template>
 
-
 <style scoped>
-/* Estilos para la página de perfil */
+/* Estils per al perfil */
 .profile-container {
   display: flex;
   flex-direction: column;
@@ -253,7 +267,6 @@ onMounted(loadUserData);
   display: flex;
   flex-direction: column;
   gap: 30px;
-
 }
 
 .password-container {
@@ -278,7 +291,7 @@ label {
 input {
   padding: 10px;
   border: none;
-  border-bottom: 1px solid rgba(73, 73, 73, 0.267); /* Línea gris solo en la parte inferior */
+  border-bottom: 1px solid rgba(73, 73, 73, 0.267);
   background-color: transparent;
   color: #8b8b8b;
   font-size: 1rem;
@@ -287,7 +300,7 @@ input {
 
 input:focus {
   outline: none;
-  border-bottom: 2px solid rgb(73, 73, 73); /* Cambio de color de la línea al hacer foco */
+  border-bottom: 2px solid rgb(73, 73, 73);
 }
 
 button {
@@ -315,6 +328,7 @@ button:hover {
 .cancel-btn:hover {
   background: rgba(255, 0, 0, 0.288);
 }
+
 .save-btn {
   background: transparent;
   border: 2px rgb(73, 73, 73) solid;
@@ -332,7 +346,6 @@ button:hover {
   font-size: 0.9rem;
   text-align: center;
 }
-
 
 .file-input {
   background-color: transparent;
@@ -352,4 +365,3 @@ button:hover {
 }
 
 </style>
-
