@@ -1,6 +1,4 @@
 <script setup>
-import FooterSection from "@/components/FooterSection.vue";
-import HeaderSection from "@/components/HeaderSection.vue";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
@@ -158,7 +156,6 @@ onMounted(loadUserData);
 </script>
 
 <template>
-  <HeaderSection />
   <div class="profile-container">
     <div class="profile-image-section">
       <!-- <img :src="`/uploads/${user.profileImage}`" alt="Foto de perfil" class="profile-image" /> -->
@@ -215,7 +212,6 @@ onMounted(loadUserData);
       </div>
     </div>
   </div>
-  <FooterSection />
 </template>
 
 
@@ -226,9 +222,9 @@ onMounted(loadUserData);
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 10%;
-  margin-bottom: 10%;
-  width: 100%;
+  background-color: #f3f3f3;
+  padding-top: 5%;
+  padding-bottom: 5%;
 }
 
 .profile-edit-section {
@@ -237,7 +233,6 @@ onMounted(loadUserData);
   gap: 20px;
   margin-top: 30px;
   width: 50%;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .profile-image-section {
@@ -265,7 +260,6 @@ onMounted(loadUserData);
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
   margin-top: 5%;
 }
 
@@ -277,14 +271,14 @@ onMounted(loadUserData);
 
 label {
   font-weight: 450;
-  color: #ffffff;
+  color: rgb(73, 73, 73);
   width: 40%;
 }
 
 input {
   padding: 10px;
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Línea gris solo en la parte inferior */
+  border-bottom: 1px solid rgba(73, 73, 73, 0.267); /* Línea gris solo en la parte inferior */
   background-color: transparent;
   color: #8b8b8b;
   font-size: 1rem;
@@ -293,14 +287,14 @@ input {
 
 input:focus {
   outline: none;
-  border-bottom: 2px solid rgb(255, 255, 255); /* Cambio de color de la línea al hacer foco */
+  border-bottom: 2px solid rgb(73, 73, 73); /* Cambio de color de la línea al hacer foco */
 }
 
 button {
   padding: 15px;
   border-radius: 8px;
   background: #333;
-  color: white;
+  color: rgb(73, 73, 73);
   font-size: 1rem;
   cursor: pointer;
   font-weight: bold;
@@ -309,7 +303,7 @@ button {
 }
 
 button:hover {
-  background: #555;
+  background: #55555534;
 }
 
 .cancel-btn {
@@ -319,11 +313,11 @@ button:hover {
   color: red;
 }
 .cancel-btn:hover {
-  background: rgba(255, 0, 0, 0.39);
+  background: rgba(255, 0, 0, 0.288);
 }
 .save-btn {
   background: transparent;
-  border: 2px white solid;
+  border: 2px rgb(73, 73, 73) solid;
   margin-top: 20px;
 }
 
@@ -340,7 +334,6 @@ button:hover {
 }
 
 
-
 .file-input {
   background-color: transparent;
   border: none;
@@ -351,8 +344,8 @@ button:hover {
   padding: 10px;
   border-radius: 8px;
   background-color: transparent;
-  color: white;
-  border: 2px solid white;
+  color: rgb(73, 73, 73);
+  border: 2px solid rgb(73, 73, 73);
   font-weight: bold;
   margin-top: 10px;
   cursor: pointer;
