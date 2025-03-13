@@ -1,8 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import HeaderSection from './HeaderSection.vue';
-import FooterSection from './FooterSection.vue';
+
 
 // Capturamos el deporte desde la URL
 const route = useRoute();
@@ -46,9 +45,9 @@ const generarObjetos = () => {
     id: index,
     x: 50 + index * 120, // Posición inicial horizontal
     y: 600, // Altura ajustada
-    isDragging: false, 
-    offsetX: 0, 
-    offsetY: 0  
+    isDragging: false,
+    offsetX: 0,
+    offsetY: 0
   }));
 };
 
@@ -105,53 +104,59 @@ const eliminarObjetos = () => {
 </script>
 
 <template>
-  <MenuDashboard/>
-
-  <div class="container">
-    <h1>Pizarra - {{ deporteSeleccionado }}</h1>
-
-    <!-- Botón Capturar -->
-    <button class="capture-btn" @click="capturarObjetos">
-      {{ isCaptured ? 'Editar' : 'Capturar' }}
-    </button>
-
-    <!-- Botón Objetos Nuevos -->
-    <div class="objects-btn">
-      <button @click="nuevosObjetos" :disabled="isCaptured">+</button>
-      <button @click="eliminarObjetos" :disabled="isCaptured">-</button>
+  <div class="contenedor">
+    <div class="menu">
+      <MenuDashboard />
     </div>
+    <div class="content">
+      <h1>Pizarra - {{ deporteSeleccionado }}</h1>
 
-    <!-- Campo con imagen de fondo según el deporte seleccionado -->
-    <div class="campo-deporte" :style="{ backgroundImage: `url(${imagenDeFondo})` }">
-      <!-- Objetos Draggeables -->
-      <div
-        v-for="item in items"
-        :key="item.id"
-        class="draggable"
-        :class="{ disabled: isCaptured }"
-        :style="{ left: item.x + 'px', top: item.y + 'px' }"
-        @mousedown="(event) => startDrag(event, item)"
-      >
-        {{ item.id }}
+      <!-- Botón Capturar -->
+      <button class="capture-btn" @click="capturarObjetos">
+        {{ isCaptured ? 'Editar' : 'Capturar' }}
+      </button>
+
+      <!-- Botón Objetos Nuevos -->
+      <div class="objects-btn">
+        <button @click="nuevosObjetos" :disabled="isCaptured">+</button>
+        <button @click="eliminarObjetos" :disabled="isCaptured">-</button>
+      </div>
+
+      <!-- Campo con imagen de fondo según el deporte seleccionado -->
+      <div class="campo-deporte" :style="{ backgroundImage: `url(${imagenDeFondo})` }">
+        <!-- Objetos Draggeables -->
+        <div v-for="item in items" :key="item.id" class="draggable" :class="{ disabled: isCaptured }"
+          :style="{ left: item.x + 'px', top: item.y + 'px' }" @mousedown="(event) => startDrag(event, item)">
+          {{ item.id }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* 🔥 Ajustamos el contenedor */
-.container {
-  width: 100vw;
-  height: 100vh;
-  background-color: #f0f0f0;
-  position: relative;
-  overflow: hidden;
+/* Contenedor principal */
+.contenedor {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 60px;
-  padding-bottom: 50px;
+  height: 100vh;
+  background-color:#f3f3f3;
+}
+
+/* Menú a la izquierda fijo */
+.menu {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+}
+
+.content {
+  flex: 1;
+  margin-left: 250px; /* Para no solaparse con el menú */
+  padding: 20px;
+  overflow-y: auto;
 }
 
 /* Estilo del botón */

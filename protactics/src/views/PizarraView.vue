@@ -1,12 +1,12 @@
 <template>
-  <div class="dashboard">
+  <div class="contenedor">
     <!-- Menú fijo a la izquierda -->
-    <div class="dashboard-menu">
+    <div class="menu">
       <MenuDashboard />
     </div>
 
     <!-- Contenido principal -->
-    <div class="dashboard-content">
+    <div class="content">
       <div class="container">
         <h2 class="section-title">Selecciona un deporte</h2>
         <div class="wrapper">
@@ -27,8 +27,6 @@
 <script setup>
 import { ref } from "vue";
 import MenuDashboard from "@/components/MenuDashboard.vue";
-import HeaderSection from "@/components/HeaderSection.vue";
-import FooterSection from "@/components/FooterSection.vue";
 
 const getImageUrl = (path) => new URL(path, import.meta.url).href;
 
@@ -43,24 +41,22 @@ const deportes = ref([
 </script>
 
 <style scoped>
-.dashboard {
+.contenedor {
   display: flex;
   height: 100vh;
   background-color: #f3f3f3;
 }
 
-.dashboard-menu {
+.menu {
   width: 250px;
   height: 100vh;
-  background-color: #1e1e1e;
-  color: white;
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
 }
 
-.dashboard-content {
+.content {
   flex: 1;
   margin-left: 250px;
   padding: 20px;
