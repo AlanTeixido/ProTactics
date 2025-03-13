@@ -130,17 +130,6 @@ const getDetallesEspecificos = () => {
           <input type="datetime-local" v-model="formulario.inicio" required />
         </div>
 
-        <div class="form-group">
-          <label>Visibilidad</label>
-          <!-- Toggle Visibilidad -->
-          <div class="toggle-container">
-            <label class="switch">
-              <input type="checkbox" v-model="formulario.visibilidad" />
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
-
         <!-- Campos específicos por deporte -->
 
         <!-- Baloncesto -->
@@ -224,6 +213,17 @@ const getDetallesEspecificos = () => {
           <input type="text" v-model="detalles.tipo" />
           <label>Músculos Trabajados</label>
           <textarea v-model="detalles.musculos"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Visibilidad</label>
+          <!-- Toggle Visibilidad -->
+          <div class="toggle-container">
+            <label class="switch">
+              <input type="checkbox" v-model="formulario.visibilidad" />
+              <span class="slider"></span>
+            </label>
+          </div>
         </div>
 
         <button type="submit" class="submit-btn">Guardar Entrenamiento</button>
