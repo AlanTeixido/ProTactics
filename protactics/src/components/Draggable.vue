@@ -105,9 +105,11 @@ const eliminarObjetos = () => {
 
 <template>
   <div class="contenedor">
+
     <div class="menu">
       <MenuDashboard />
     </div>
+
     <div class="content">
       <h1>Pizarra - {{ deporteSeleccionado }}</h1>
 
@@ -138,8 +140,7 @@ const eliminarObjetos = () => {
 /* Contenedor principal */
 .contenedor {
   display: flex;
-  height: 100vh;
-  background-color:#f3f3f3;
+  background-color: #f3f3f3;
 }
 
 /* Menú a la izquierda fijo */
@@ -153,11 +154,13 @@ const eliminarObjetos = () => {
 }
 
 .content {
-  flex: 1;
-  margin-left: 250px; /* Para no solaparse con el menú */
-  padding: 20px;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 270px;
 }
+
 
 /* Estilo del botón */
 .capture-btn {
