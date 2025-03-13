@@ -7,6 +7,7 @@
 
     <!-- Contenido principal -->
     <div class="dashboard-content">
+      <h2>Selecciona un deporte</h2>
       <div class="wrapper">
         <!-- Usamos un v-for para recorrer el array de deportes -->
         <div v-for="deporte in deportes" :key="deporte.nombre" class="grid-item">
@@ -35,7 +36,8 @@ const deportes = ref([
   { nombre: "padel", imagen: "../assets/img/padel.jpg", gridArea: "hoodies" },
   { nombre: "gimnasio", imagen: "../assets/img/gym.jpg", gridArea: "ladies-shirt" },
   { nombre: "ciclismo", imagen: "../assets/img/ciclismo.jpg", gridArea: "youth" },
-  { nombre: "atletismo", imagen: "../assets/img/atletismo2.jpg", gridArea: "kids" }
+  { nombre: "atletismo", imagen: "../assets/img/atletismo2.jpg", gridArea: "kids" },
+  { nombre: "natacion", imagen: "../assets/img/natacion.jpeg", gridArea: "kids" }
 ]);
 </script>
 
@@ -133,6 +135,14 @@ const deportes = ref([
   color: #fff;
   text-transform: uppercase;
 }
+
+h2 {
+    color: rgb(73, 73, 73);
+    text-transform: uppercase;
+    text-align: left;
+    margin-top: 5%;
+    margin-left: 3%;
+  }
 
 /* Responsive */
 @media (max-width: 768px) {
