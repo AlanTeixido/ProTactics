@@ -130,6 +130,8 @@ import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import FooterSection from "@/components/FooterSection.vue";
 import HeaderSection from "@/components/HeaderSection.vue";
+import PizarraView from "./PizarraView.vue";
+import Draggable from "@/components/Draggable.vue";
 
 const route = useRoute();
 const router = useRouter();

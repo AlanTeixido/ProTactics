@@ -15,6 +15,7 @@ import padel from "@/assets/img/deportes/pistaPadel.jpg";
 import gimnasio from "@/assets/img/deportes/salaFitness.jpg";
 import ciclismo from "@/assets/img/deportes/pistaBici.jpg";
 import atletismo from "@/assets/img/deportes/pistaAtletismo.jpg";
+import MenuDashboard from './MenuDashboard.vue';
 
 
 const imagenesDeporte = {
@@ -104,7 +105,7 @@ const eliminarObjetos = () => {
 </script>
 
 <template>
-  <HeaderSection />
+  <MenuDashboard/>
 
   <div class="container">
     <h1>Pizarra - {{ deporteSeleccionado }}</h1>
@@ -135,8 +136,6 @@ const eliminarObjetos = () => {
       </div>
     </div>
   </div>
-
-  <FooterSection />
 </template>
 
 <style scoped>
