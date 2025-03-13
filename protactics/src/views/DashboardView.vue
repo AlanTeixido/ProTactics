@@ -1,10 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue';  // Importa correctament `ref` i `onMounted`
+import { ref, onMounted } from 'vue';  
 import Posts from "@/components/Posts.vue";
 import UserStats from "@/components/UserStats.vue";
 import LastTraining from "@/components/LastTraining.vue";
-import Motivation from "@/components/Motivation.vue"; // Afegim el component "Motivation"
+import Motivation from "@/components/Motivation.vue"; 
 import MenuDashboard from '@/components/MenuDashboard.vue';
+import axios from "axios"; 
+
 
 const isLoading = ref(true); // Per controlar si el contingut s'està carregant
 
