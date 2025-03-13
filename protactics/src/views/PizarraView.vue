@@ -4,8 +4,9 @@
     <div class="menu">
       <MenuDashboard />
     </div>
+    <Draggable />
 
-    <!-- Contenido principal -->
+    <!-- Contenido principal
     <div class="content">
       <div class="container">
         <h2 class="section-title">Selecciona un deporte</h2>
@@ -20,13 +21,15 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import MenuDashboard from "@/components/MenuDashboard.vue";
+import DeportesView from "./DeportesView.vue";
+import Draggable from "@/components/Draggable.vue";
 
 const getImageUrl = (path) => new URL(path, import.meta.url).href;
 

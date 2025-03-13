@@ -28,7 +28,13 @@ const imagenesDeporte = {
 
 
 // Computed para obtener la imagen correcta
-const imagenDeFondo = computed(() => imagenesDeporte[deporteSeleccionado] || "../assets/img/default.png");
+// const imagenDeFondo = computed(() => imagenesDeporte[deporteSeleccionado] || "../assets/img/deportes/pistaFutbol.jpg");
+const imagenDeFondo = computed(() => {
+  const imagen = imagenesDeporte[deporteSeleccionado] || "../assets/img/deportes/pistaFutbol.jpg";
+  console.log(imagen); // Verifica la ruta de la imagen
+  return imagen;
+});
+
 
 // Variable reactiva para bloquear/desbloquear el movimiento
 const isCaptured = ref(false);
@@ -124,12 +130,14 @@ const eliminarObjetos = () => {
         <button @click="eliminarObjetos" :disabled="isCaptured">-</button>
       </div>
 
-      <!-- Campo con imagen de fondo según el deporte seleccionado -->
-      <div class="campo-deporte" :style="{ backgroundImage: `url(${imagenDeFondo})` }">
-        <!-- Objetos Draggeables -->
-        <div v-for="item in items" :key="item.id" class="draggable" :class="{ disabled: isCaptured }"
-          :style="{ left: item.x + 'px', top: item.y + 'px' }" @mousedown="(event) => startDrag(event, item)">
-          {{ item.id }}
+      <div class="container">
+        <!-- Campo con imagen de fondo según el deporte seleccionado -->
+        <div class="campo-deporte" :style="{ backgroundImage: `url(${imagenDeFondo})` }">
+          <!-- Objetos Draggeables -->
+          <div v-for="item in items" :key="item.id" class="fichas" :class="{ disabled: isCaptured }"
+            :style="{ left: item.x + 'px', top: item.y + 'px' }" @mousedown="(event) => startDrag(event, item)">
+            {{ item.id }}
+          </div>
         </div>
       </div>
     </div>
@@ -204,15 +212,17 @@ const eliminarObjetos = () => {
 /* Estilo de la cancha de deportes */
 .campo-deporte {
   width: 1000px;
-  height: 400px;
+  height: 500px;
   background-size: cover;
   background-position: center;
   position: relative;
-  border: 2px solid #000;
+  border: 1px solid #000;
+  margin-bottom: 10%;
+  margin-top: 5%;
 }
 
 /* Estilo de los objetos draggeables */
-.draggable {
+.fichas {
   width: 80px;
   height: 80px;
   background-color: royalblue;

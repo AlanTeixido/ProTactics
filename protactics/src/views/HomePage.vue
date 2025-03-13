@@ -51,6 +51,8 @@ onMounted(() => {
 /* Contenedor principal */
 #app {
   font-family: Arial, sans-serif;
+  background-color: #1b1b1b;
+  
 }
 
 /* Sección introductoria */
