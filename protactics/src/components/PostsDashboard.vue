@@ -7,19 +7,19 @@
       <div v-else-if="posts.length" class="posts-list">
         <div v-for="post in posts" :key="post.id" class="post-card">
           <!-- Cabecera con imagen de perfil y usuario -->
+        <!-- Botón de seguir SIEMPRE visible, alineado a la derecha -->
+          <button
+          @click="toggleFollow(post)"
+          :class="['follow-btn', post.isFollowing ? 'dejar-seguir' : '']"
+          class="follow-btn-container"
+        >
+          {{ post.isFollowing ? "Dejar de seguir" : "Seguir" }}
+        </button>
+
           <div class="post-header">
             <img src="../assets/img/usuario.png" class="profile-image" />
             <span class="username">@{{ post.username }}</span>
           </div>
-  
-          <!-- Botón de seguir SIEMPRE visible, alineado a la derecha -->
-          <button
-            @click="toggleFollow(post)"
-            :class="['follow-btn', post.isFollowing ? 'dejar-seguir' : '']"
-            class="follow-btn-container"
-          >
-            {{ post.isFollowing ? "Dejar de seguir" : "Seguir" }}
-          </button>
   
           <div class="post-body">
             <div class="post-content">
@@ -45,28 +45,26 @@
   
   <script setup>
   import { ref, onMounted } from "vue";
-  import axios from "axios"; 
+  import axios from "axios";
   
   const posts = ref([]);
   const loading = ref(true);
   
   // Recuperar el userId de localStorage
-  const usuarioId = parseInt(localStorage.getItem("userId"), 10) || null; // Asegurarse de que se obtiene el ID correctamente
+  const usuarioId = parseInt(localStorage.getItem("userId"), 10) || null;
   
   // Cargar posts
   const loadPosts = async () => {
     let url = "https://protactics-api.onrender.com/posts";
-    
+  
     try {
       const response = await axios.get(url);
-      console.log("📌 Posts cargados:", response.data);
   
       // Obtener la lista de seguidos por el usuario actual
       const seguidosRes = await axios.get(
         `https://protactics-api.onrender.com/seguimientos/${usuarioId}/seguidos`
       );
       const seguidosIds = seguidosRes.data.map((user) => user.id);
-      console.log("Seguidos por el usuario:", seguidosIds);
   
       // Asignar la variable `isFollowing` correctamente a los posts
       posts.value = response.data.map((post) => ({
@@ -132,130 +130,155 @@
   
   onMounted(loadPosts); // Cargamos los posts al montar el componente
   </script>
-  
+
   <style scoped>
-  /* Estilo de botón de Seguir */
-  .follow-btn-container {
-    align-self: flex-end;
-    background-color: #00c3ff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    transition: 0.3s ease-in-out;
-    margin-top: 10px;
-  }
-  
-  .follow-btn-container.dejar-seguir {
-    background-color: #ff4c4c;
-  }
-  
-  .follow-btn-container:hover {
-    transform: scale(1.1);
-  }
-  
-  /* Resto de estilos */
-  .dashboard-container {
-    width: 100%;
-    margin: 0 auto;
-  }
-  
-  .loading-text,
-  .no-posts {
-    text-align: center;
-    color: #888;
-  }
-  
-  .posts-list {
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    justify-content: center;
-    align-items: center;
-    margin-right: 44%;
-    margin-top: 4%;
-  }
-  
-  .post-card {
-    width: 95%;
-    height: 420px;
-    background-color: rgba(212, 212, 212, 0.295);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.233);
-    border-radius: 15px;
-    margin-bottom: 15%;
-  }
-  
-  .post-header {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    font-weight: bold;
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 10px;
-    margin-top: -35px;
-    margin-left: -30px;
-  }
-  
-  .profile-image {
-    width: 30px;
-    height: 30px;
-    border-radius: 50px;
-    margin-right: 5px;
-  }
-  
-  .post-content p {
-    padding: 20px;
-  }
-  
-  .post-content img {
-    width: 100%;
-    height: 250px;
-    object-fit: cover;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    margin-top: -15px;
-  }
-  
-  .username {
-    font-size: 16px;
-    color: #019999;
-  }
-  
-  .post-image {
-    width: 100%;
-    height: auto;
-    margin-top: 15px;
-  }
-  
-  .description {
-    font-size: 14px;
-    color: #3b3b3b;
-    line-height: 1.6;
-    margin-top: 15px;
-  }
-  
-  .likes-section {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-    padding: 10px;
-  }
-  
-  .likes-section button {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-  }
-  
-  .likes-section span {
-    font-size: 14px;
-    color: #3b3b3b;
-  }
+/* Estils generals */
+.dashboard-container {
+  width: 70%;
+  margin: 40px auto;
+}
+
+/* Texts de càrrega i de no posts */
+.loading-text,
+.no-posts {
+  text-align: center;
+  color: #888;
+}
+
+/* Estils de la llista de posts */
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4%;
+}
+
+/* Estils de la targeta del post */
+.post-card {
+  width: 95%;
+  height: 420px;
+  background-color: rgba(212, 212, 212, 0.295);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.233);
+  border-radius: 15px;
+  margin-bottom: 15%;
+  position: relative;
+}
+
+/* Estils de la capçalera del post */
+.post-header {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+  margin-top: -35px;
+  margin-left: -30px;
+}
+
+/* Estils de la imatge de perfil */
+.profile-image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50px;
+  margin-right: 5px;
+}
+
+/* Estils de la imatge de post */
+.post-content img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  margin-top: -15px;
+}
+
+/* Descripció del post */
+.description {
+  font-size: 14px;
+  color: #3b3b3b;
+  line-height: 1.6;
+  margin-top: 15px;
+}
+
+/* Secció de likes */
+.likes-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  padding: 10px;
+}
+
+/* Botó de like */
+.likes-section button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Nombre de likes */
+.likes-section span {
+  font-size: 14px;
+  color: #3b3b3b;
+}
+
+/* Estil del botó "Seguir"/"Dejar de seguir" */
+.follow-btn-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #00c3ff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s ease-in-out;
+}
+
+.follow-btn-container.dejar-seguir {
+  background-color: #ff4c4c; /* Color quan es deixa de seguir */
+}
+
+.follow-btn-container:hover {
+  transform: scale(1.1); /* Efecte de "hover" */
+}
+
+/* Scrollbar personalitzat */
+.dashboard-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.dashboard-container::-webkit-scrollbar-track {
+  background: #f3f3f3;
+  border-radius: 10px;
+}
+
+.dashboard-container::-webkit-scrollbar-thumb {
+  background: #e2e2e2;
+  border-radius: 10px;
+}
+
+.dashboard-container::-webkit-scrollbar-thumb:hover {
+  background: #656d6d;
+}
+
+/* Estils addicionals */
+.final {
+  margin-top: 20px;
+  padding: 10px 0;
+  text-align: center;
+  color: #333;
+  font-size: 12px;
+}
+
   </style>
   
