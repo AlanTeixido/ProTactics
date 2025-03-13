@@ -4,6 +4,8 @@ import axios from "axios";
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import MenuDashboard from "@/components/MenuDashboard.vue";
+import PizarraView from "./PizarraView.vue";
+import Draggable from "@/components/Draggable.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -228,6 +230,7 @@ const getDetallesEspecificos = () => {
 
         <button type="submit" class="submit-btn">Guardar Entrenamiento</button>
       </form>
+      <Draggable />
     </div>
   </div>
 </template>
