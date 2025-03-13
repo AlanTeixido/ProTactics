@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';  
-import Posts from "@/components/Posts.vue";
+import Posts from "@/components/PostsDashboard.vue";
 import UserStats from "@/components/UserStats.vue";
 import LastTraining from "@/components/LastTraining.vue";
 import Motivation from "@/components/Motivation.vue"; 
