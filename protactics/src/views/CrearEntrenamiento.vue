@@ -4,13 +4,12 @@ import axios from "axios";
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import MenuDashboard from "@/components/MenuDashboard.vue";
-import PizarraView from "./PizarraView.vue";
 import Draggable from "@/components/Draggable.vue";
 
 const route = useRoute();
 const router = useRouter();
 
-const nombreDeporte = computed(() => route.params.nombre);
+const nombreDeporte = route.params.nombre;
 
 const formulario = ref({
   nombre: "",
@@ -230,24 +229,38 @@ const getDetallesEspecificos = () => {
 
         <button type="submit" class="submit-btn">Guardar Entrenamiento</button>
       </form>
-      <Draggable />
+      <Draggable :deporte="nombreDeporte" />
     </div>
   </div>
 </template>
 
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .create-training-container {
   display: flex;
+  height: 100vh; /* Ocupa toda la pantalla */
   background-color: #f3f3f3;
+  overflow: hidden; /* Evita que el contenido se salga */
 }
+
+
 /* Contenedor general */
 .container {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 80%;
+  align-items: center; /* Centra horizontalmente */
+  justify-content: flex-start; /* Asegura que el contenido fluya sin cortar */
+  overflow-y: auto; /* Permite scroll si es necesario */
+  min-height: 100vh; /* Asegura que se expanda con el contenido */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .title {
@@ -260,14 +273,14 @@ const getDetallesEspecificos = () => {
 
 /* Formulario */
 .form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 35%;
+  width: 100%;
+  max-width: 500px; /* Ajusta el tamaño máximo del formulario */
   background-color: rgba(0, 0, 0, 0.5);
   padding: 2%;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  overflow: visible; /* Evita que se corte el contenido */
+  margin-bottom: 5%;
 }
 
 /* Grupos de formulario */
@@ -378,10 +391,6 @@ textarea::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* Añadir espacio al final */
-.form {
-  margin-bottom: 20px;
-}
 
 /* Toggle */
 /* Estilos del toggle */

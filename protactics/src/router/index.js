@@ -10,7 +10,7 @@ const router = createRouter({
     { path: '/login', name: 'login', component: Login },
     { path: '/register', name: 'register', component: Register },
     { path: '/pizarra', name: 'pizarra', component: () => import('../views/PizarraView.vue') },
-    { path: '/pizarra/:deporte', name: 'draggable', component: () => import('../components/Draggable.vue') },
+    /*{ path: '/pizarra/:deporte', name: 'draggable', component: () => import('../components/Draggable.vue') },*/
     { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue') },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 

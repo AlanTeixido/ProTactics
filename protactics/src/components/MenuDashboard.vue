@@ -74,7 +74,7 @@ onMounted(() => {
                 <RouterLink v-if="isLoggedIn" to="/mis-entrenamientos" class="nav-link">ENTRENAMIENTOS</RouterLink>
                 <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
                 <RouterLink v-if="!isLoggedIn" to="/contact" class="nav-link">CONTACTO</RouterLink>
-                <RouterLink v-if="isLoggedIn" to="/pizarra" class="nav-link">PIZARRA</RouterLink>
+                
                 <RouterLink v-if="!isLoggedIn" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink>
             </div>
         </nav>

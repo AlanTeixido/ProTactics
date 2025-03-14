@@ -1,39 +1,32 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { defineProps, ref, computed } from 'vue';
 import { useRoute } from 'vue-router';
 
 
 // Capturamos el deporte desde la URL
 const route = useRoute();
 const deporteSeleccionado = route.params.deporte;
+console.log("Deporte seleccionado:", deporteSeleccionado);
+
 
 // Mapeo de imágenes según el deporte
-import futbol from "@/assets/img/deportes/pistaFutbol.jpg";
-import baloncesto from "@/assets/img/deportes/pistaBasquet.jpg";
-import padel from "@/assets/img/deportes/pistaPadel.jpg";
-import gimnasio from "@/assets/img/deportes/salaFitness.jpg";
-import ciclismo from "@/assets/img/deportes/pistaBici.jpg";
-import atletismo from "@/assets/img/deportes/pistaAtletismo.jpg";
-import MenuDashboard from './MenuDashboard.vue';
+import futbol from "../assets/img/deportes/pistaFutbol.png";
+import baloncesto from "../assets/img/deportes/pistaBaloncesto.jpg";
+import padel from "../assets/img/deportes/pistaPadel.png";
 
+const props = defineProps(['deporte']);
 
 const imagenesDeporte = {
-  futbol: futbol,
-  baloncesto: baloncesto,
-  padel: padel,
-  gimnasio: gimnasio,
-  ciclismo: ciclismo,
-  atletismo: atletismo,
+  futbol,
+  baloncesto,
+  padel,
 };
 
 
 // Computed para obtener la imagen correcta
-// const imagenDeFondo = computed(() => imagenesDeporte[deporteSeleccionado] || "../assets/img/deportes/pistaFutbol.jpg");
-const imagenDeFondo = computed(() => {
-  const imagen = imagenesDeporte[deporteSeleccionado] || "../assets/img/deportes/pistaFutbol.jpg";
-  console.log(imagen); // Verifica la ruta de la imagen
-  return imagen;
-});
+// Obtener la imagen correspondiente
+const imagenDeFondo = computed(() => imagenesDeporte[props.deporte] || futbol);
+
 
 
 // Variable reactiva para bloquear/desbloquear el movimiento
@@ -93,7 +86,7 @@ const capturarObjetos = () => {
 };
 
 // Función para añadir un nuevo objeto
-const nuevosObjetos = () => {
+const añadirFichas = () => {
   if (!isCaptured.value) {
     objetos.value += 1;
     generarObjetos(); // Regeneramos la lista de objetos con el nuevo número
@@ -101,7 +94,7 @@ const nuevosObjetos = () => {
 };
 
 // Función para eliminar un objeto
-const eliminarObjetos = () => {
+const eleiminarFichas = () => {
   if (!isCaptured.value && objetos.value > 1) {
     objetos.value -= 1;
     generarObjetos(); // Regeneramos la lista de objetos con el nuevo número
@@ -111,33 +104,25 @@ const eliminarObjetos = () => {
 
 <template>
   <div class="contenedor">
-
-    <div class="menu">
-      <MenuDashboard />
-    </div>
-
-    <div class="content">
-      <h1>Pizarra - {{ deporteSeleccionado }}</h1>
-
+    <div>
       <!-- Botón Capturar -->
       <button class="capture-btn" @click="capturarObjetos">
         {{ isCaptured ? 'Editar' : 'Capturar' }}
       </button>
-
       <!-- Botón Objetos Nuevos -->
       <div class="objects-btn">
-        <button @click="nuevosObjetos" :disabled="isCaptured">+</button>
-        <button @click="eliminarObjetos" :disabled="isCaptured">-</button>
+        <button @click="añadirFichas" :disabled="isCaptured">+</button>
+        <button @click="eleiminarFichas" :disabled="isCaptured">-</button>
       </div>
+    </div>
 
-      <div class="container">
-        <!-- Campo con imagen de fondo según el deporte seleccionado -->
-        <div class="campo-deporte" :style="{ backgroundImage: `url(${imagenDeFondo})` }">
-          <!-- Objetos Draggeables -->
-          <div v-for="item in items" :key="item.id" class="fichas" :class="{ disabled: isCaptured }"
-            :style="{ left: item.x + 'px', top: item.y + 'px' }" @mousedown="(event) => startDrag(event, item)">
-            {{ item.id }}
-          </div>
+    <div class="container">
+      <!-- Campo con imagen de fondo según el deporte seleccionado -->
+      <div class="campo-deporte" :style="{ backgroundImage: `url(${imagenDeFondo})` }">
+        <!-- Objetos Draggeables -->
+        <div v-for="item in items" :key="item.id" class="fichas" :class="{ disabled: isCaptured }"
+          :style="{ left: item.x + 'px', top: item.y + 'px' }" @mousedown="(event) => startDrag(event, item)">
+          {{ item.id }}
         </div>
       </div>
     </div>
@@ -147,102 +132,107 @@ const eliminarObjetos = () => {
 <style scoped>
 /* Contenedor principal */
 .contenedor {
-  display: flex;
-  background-color: #f3f3f3;
-}
-
-/* Menú a la izquierda fijo */
-.menu {
-  width: 250px;
-  height: 100vh;
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
-}
-
-.content {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-left: 270px;
+  gap: 20px;
 }
 
-
-/* Estilo del botón */
-.capture-btn {
-  margin-top: 20px;
-  padding: 10px 20px;
+/* Botones */
+button {
+  padding: 10px 15px;
   font-size: 16px;
-  cursor: pointer;
-  background-color: #ff5733;
-  color: white;
+  font-weight: 500;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:  0.3s ease-in-out;
+}
+
+/* Botón Capturar */
+.capture-btn {
+  background-color: #ff6b6b;
+  color: white;
 }
 
 .capture-btn:hover {
-  background-color: #e04a2b;
+  background-color: #e63946;
 }
 
-/* Estilo de los botones de añadir/eliminar objetos */
+/* Botones de añadir/eliminar objetos */
 .objects-btn {
-  margin-top: 10px;
   display: flex;
-  justify-content: space-around;
-  width: 200px;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .objects-btn button {
-  font-size: 18px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: #007BFF;
+  background-color: #4c6ef5;
   color: white;
-  border: none;
-  border-radius: 5px;
+}
+
+.objects-btn button:hover {
+  background-color: #364fc7;
 }
 
 .objects-btn button:disabled {
-  opacity: 0.7;
+  background-color: #b0b3b8;
   cursor: not-allowed;
 }
 
-/* Estilo de la cancha de deportes */
+/* Contenedor del campo */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+  height: 800px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  margin-bottom: 5%;
+
+}
+
+/* Imagen de fondo */
 .campo-deporte {
-  width: 1000px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   background-size: cover;
   background-position: center;
   position: relative;
-  border: 1px solid #000;
-  margin-bottom: 10%;
-  margin-top: 5%;
+  border-radius: 12px;
+  
 }
 
-/* Estilo de los objetos draggeables */
+/* Fichas Draggeables */
 .fichas {
-  width: 80px;
-  height: 80px;
-  background-color: royalblue;
+  width: 30px;
+  height: 30px;
+  background-color: #2d98da;
   color: white;
   font-size: 14px;
+  font-weight: 550;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
+  border-radius: 50%;
   cursor: grab;
   user-select: none;
-  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.draggable:active {
+.fichas:active {
   cursor: grabbing;
 }
 
-.draggable.disabled {
+.fichas.disabled {
   cursor: not-allowed;
-  opacity: 0.7;
+  opacity: 0.5;
 }
+
 </style>
