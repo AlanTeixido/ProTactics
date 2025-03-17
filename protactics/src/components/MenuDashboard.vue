@@ -80,7 +80,7 @@ onMounted(() => {
         </nav>
 
         <div>
-            <RouterLink :to="`/deportes`"><button class="newTraining">CREAR ENTRENAMIENTO</button></RouterLink>
+            <RouterLink :to="`/deportes`"><button class="newTraining">+</button></RouterLink>
         </div>
 
         <div class="log-regist">
@@ -186,14 +186,17 @@ onMounted(() => {
 }
 
 .newTraining{
-    padding: 15px;
-    border-radius: 15px;
+    padding: 10px;
+    padding-left: 7%;
+    padding-right: 7%;
+    border-radius: 50%;
     border: 2px white solid;
     background-color: transparent;
     color: white;
     margin-top: 10%;
-    margin-left: 8%;
+    margin-left: 15%;
     transition: 0.5s;
+    font-size: 150%;
 }
 
 .newTraining:hover{
