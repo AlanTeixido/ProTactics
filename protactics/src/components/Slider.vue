@@ -18,11 +18,13 @@ font-size: 5vw;
 text-transform: uppercase;
 position: absolute;
 color: white;
-margin-top: 10%;
+margin-top: 5%;
 margin-left: 10%;
 margin-right: 10%;
+margin-bottom: 5%;
 z-index: 1;
-text-align: center;
+text-align: left;
+line-height: 90%;
 }
 
 .title span {
