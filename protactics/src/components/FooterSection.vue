@@ -17,11 +17,11 @@
       <div class="footer-section">
         <p class="text-footer">Métodos de Pago</p>
         <ul class="payment-methods">
-          <li><img src="../assets/img/bizum.png"  /></li>
-          <li><img src="../assets/img/mastercard.png"  /></li>
+          <li><img src="../assets/img/bizum.png" /></li>
+          <li><img src="../assets/img/mastercard.png" /></li>
           <li><img src="../assets/img/paypal.png" /></li>
-          <li><img src="../assets/img/googlepay.png"  /></li>
-          <li><img src="../assets/img/applepay.png"  /></li>
+          <li><img src="../assets/img/googlepay.png" /></li>
+          <li><img src="../assets/img/applepay.png" /></li>
         </ul>
       </div>
 
@@ -74,11 +74,13 @@ footer {
   align-items: center;
   /* Alinea verticalmente */
   margin-top: 8%;
+  flex-wrap: wrap;
 }
 
 .footer-section {
   margin: 5%;
   text-align: center;
+  flex: 1 1 250px; /* Esto asegura que las secciones se ajusten correctamente en pantallas pequeñas */
 }
 
 .footer-section a{
@@ -134,6 +136,58 @@ footer {
   justify-content: center;
   gap: 2rem;
   /* Espacio entre los enlaces legales */
+}
+
+@media (max-width: 768px) {
+  footer {
+    padding: 20px 5%;
+  }
+
+  .footer-container {
+    flex-direction: column; 
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .footer-section {
+    margin: 10px 0;
+    flex: 1 1 100%; /* Cada sección ocupa el 100% del ancho */
+    text-align: center;
+  }
+
+  .social-links, .payment-methods {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .social-links img, .payment-methods img {
+    width: 40px; /* Ajusta el tamaño de los iconos para pantallas más pequeñas */
+  }
+
+  .legals {
+    flex-direction: column;
+    gap: 1rem;
+    font-size: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  footer {
+    padding: 20px 3%;
+  }
+
+  .footer-container {
+    margin-top: 0;
+  }
+
+  .social-links img, .payment-methods img {
+    width: 30px; /* Ajusta aún más el tamaño de los iconos */
+  }
+
+  .legals {
+    font-size: 85%;
+  }
 }
 
 </style>

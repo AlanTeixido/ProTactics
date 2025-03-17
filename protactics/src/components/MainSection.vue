@@ -23,11 +23,13 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   margin-right: 5%;
+  align-items: center;
 }
 .text{
   width: 100%;
   justify-content: center;
-  margin-top: 30%;
+  margin-top: 10%;
+  text-align: left;
 }
 .text p{
   width: 70%;
@@ -56,5 +58,50 @@
 }
 .estadistica:hover{
   transform: scale(1.1);
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .section {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .text {
+    margin-top: 5%;
+    text-align: center;
+  }
+  .text p {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .estadistica {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-section h1 {
+    font-size: 2rem;
+  }
+  .main-section p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-section {
+    padding: 2rem 1rem;
+  }
+  .main-section h1 {
+    font-size: 1.8rem;
+  }
+  .main-section p {
+    font-size: 0.9rem;
+  }
+  .estadistica {
+    width: 100%;
+  }
 }
 </style>

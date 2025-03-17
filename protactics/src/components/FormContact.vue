@@ -1,49 +1,47 @@
 <template>
-    <div class="contact-container">
-      <h1>Contacta con nosotros</h1>
-      <p>Rellena el siguiente formulario para ponerte en contacto con el grupo &copy; ProTactics.</p>
-      <form @submit.prevent="enviarDades">
-        <div class="form-group1-0">
-          <div class="form-group">
-            <label for="name">Nombre</label>
-            <input type="text" id="name" v-model="name" placeholder="Nombre" required />
-            <p class="error" v-if="errors.name">{{ errors.name }}</p>
-          </div>
-  
-          <div class="form-group">
-            <label for="lastName">Apellido</label>
-            <input type="text" id="lastName" v-model="lastName" placeholder="Apellido" required />
-            <p class="error" v-if="errors.lastName">{{ errors.lastName }}</p>
-          </div>
+  <div class="contact-container">
+    <h1>Contacta con nosotros</h1>
+    <p>Rellena el siguiente formulario para ponerte en contacto con el grupo &copy; ProTactics.</p>
+    <form @submit.prevent="enviarDades">
+      <div class="form-group1-0">
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" v-model="name" placeholder="Nombre" required />
+          <p class="error" v-if="errors.name">{{ errors.name }}</p>
         </div>
-  
-        <div class="form-group2-0">
-          <div class="form-group">
-            <label for="email">Correo Electrónico</label>
-            <input type="email" id="email" v-model="email" placeholder="Tu correo" required />
-            <p class="error" v-if="errors.email">{{ errors.email }}</p>
-          </div>
-  
-          <div class="form-group">
-            <label for="phone">Teléfono</label>
-            <input type="text" id="phone" v-model="phone" placeholder="Tu teléfono" required />
-            <p class="error" v-if="errors.phone">{{ errors.phone }}</p>
-          </div>
-  
-          <div class="form-group">
-            <label for="message">Mensaje</label>
-            <textarea id="message" v-model="message" placeholder="Escribe tu mensaje" required></textarea>
-            <p class="error" v-if="errors.message">{{ errors.message }}</p>
-          </div>
+
+        <div class="form-group">
+          <label for="lastName">Apellido</label>
+          <input type="text" id="lastName" v-model="lastName" placeholder="Apellido" required />
+          <p class="error" v-if="errors.lastName">{{ errors.lastName }}</p>
         </div>
-        <button type="submit">Enviar</button>
-      </form>
-    </div>
-  </template>
+      </div>
+
+      <div class="form-group2-0">
+        <div class="form-group">
+          <label for="email">Correo Electrónico</label>
+          <input type="email" id="email" v-model="email" placeholder="Tu correo" required />
+          <p class="error" v-if="errors.email">{{ errors.email }}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Teléfono</label>
+          <input type="text" id="phone" v-model="phone" placeholder="Tu teléfono" required />
+          <p class="error" v-if="errors.phone">{{ errors.phone }}</p>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Mensaje</label>
+          <textarea id="message" v-model="message" placeholder="Escribe tu mensaje" required></textarea>
+          <p class="error" v-if="errors.message">{{ errors.message }}</p>
+        </div>
+      </div>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+</template>
   
   <script setup>
-  import FooterSection from '@/components/FooterSection.vue';
-  import HeaderSection from '@/components/HeaderSection.vue';
   import { ref } from 'vue';
   
   const name = ref('');
@@ -115,58 +113,43 @@
   </script>
   
   <style scoped>
-  /* Estilos generales para centrar el formulario */
   .contact-container {
     width: 75%;
-    margin: 0 auto;  /* Centra el formulario horizontalmente */
-    padding: 15%;
+    margin: 0 auto;
+    padding: 10%;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    overflow-x: hidden;
   }
   
-  /* Título principal */
   h1 {
     text-align: center;
     margin-bottom: 20px;
     color: white;
   }
   
-  p{
+  p {
     color: rgb(0, 204, 184);
   }
   
-  /* Contenedor de los grupos de formulario (2 columnas) */
-  .form-group1-0 {
+  .form-group1-0, .form-group2-0 {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     width: 100%;
   }
   
-  /* Contenedor de los grupos de formulario */
-  .form-group2-0 {
-    width: 207.5%;
-    
-  }
-  
-  
-  /* Estilo para cada campo de formulario */
   .form-group {
-    width: 48%; /* Hace que los campos estén alineados en 2 columnas */
+    width: 48%;
     margin: 2% 0;
   }
   
-  /* Formulario en general */
   form {
     width: 100%;
-    margin: 2%;
   }
   
-  /* Estilo de las etiquetas */
   label {
     display: block;
     margin-bottom: 5px;
@@ -174,10 +157,7 @@
     color: white;
   }
   
-  /* Estilo para los inputs, textarea, y select */
-  input,
-  textarea,
-  select {
+  input, textarea, select {
     width: 100%;
     padding: 10px;
     border-radius: 4px;
@@ -188,7 +168,6 @@
     box-sizing: border-box;
   }
   
-  /* Estilo para el botón */
   button {
     margin-top: 20px;
     width: 100%;
@@ -208,31 +187,28 @@
     background-color: rgb(93, 238, 238);
   }
   
-  /* Estilo para los mensajes de error */
   .error {
     color: red;
     font-size: 0.9em;
     margin-top: 5px;
   }
   
-  /* Estilo para el contenedor de asistencia */
-  .asist-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10%;
-    background-color: rgb(82, 82, 82);
+  @media (max-width: 768px) {
+    .form-group {
+      width: 100%;
+    }
   }
   
-  /* Estilo para la imagen y el texto de asistencia */
-  .asist {
-    display: flex;
-    align-items: center;
-  }
-  
-  .asist img {
-    width: 10%;
-    margin-right: 10px;
+  @media (max-width: 480px) {
+    .contact-container {
+      width: 90%;
+      padding: 5%;
+    }
+    
+    button {
+      font-size: 0.9rem;
+      padding: 12px;
+    }
   }
   </style>
   

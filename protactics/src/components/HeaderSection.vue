@@ -1,7 +1,13 @@
 <template>
   <header class="header">
     <nav class="nav-container">
-      <div class="nav2">
+      <div class="menu-icon" @click="toggleMenu">
+        <div class="bar" :class="{ 'open': isMenuOpen }"></div>
+        <div class="bar" :class="{ 'open': isMenuOpen }"></div>
+        <div class="bar" :class="{ 'open': isMenuOpen }"></div>
+      </div>
+      
+      <div class="nav2" :class="{ 'open': isMenuOpen }">
         <RouterLink v-if="!isLoggedIn" to="/" class="nav-link">INICIO</RouterLink>
         <RouterLink v-if="isLoggedIn" to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
         <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
@@ -20,7 +26,6 @@
 
     <div class="log-regist">
       <div v-if="isLoggedIn" class="user-info">
-        <!-- 🔽 Dropdown con animación y corrección de estados -->
         <div class="dropdown">
           <button @click="toggleDropdown" class="dropdown-btn" :class="{ 'rotated': isDropdownOpen }">+</button>
           <transition name="fade">
@@ -53,17 +58,15 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 const router = useRouter();
-const isLoggedIn = ref(false); // Estado reactivo
+const isLoggedIn = ref(false);
 const isDropdownOpen = ref(false);
-
+const isMenuOpen = ref(false);
 const userPic = ref('https://via.placeholder.com/100');
 
-// 🔹 Función para actualizar el estado del usuario
 const checkAuthStatus = () => {
   isLoggedIn.value = !!localStorage.getItem('authToken');
 };
 
-// 🔹 Cargar imagen de perfil si está logueado
 const fetchProfilePic = async () => {
   const userId = localStorage.getItem('userId');
   if (!userId) return;
@@ -79,30 +82,28 @@ const fetchProfilePic = async () => {
   }
 };
 
-// 🔹 Función para cerrar sesión
 const logout = () => {
   localStorage.clear();
   isLoggedIn.value = false;
   userPic.value = 'https://via.placeholder.com/100';
   router.push('/');
-
-  // Forzar una recarga de la página para limpiar cualquier estado persistente
   setTimeout(() => {
     window.location.reload();
   }, 500);
 };
 
-// 🔹 Manejo del dropdown
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 
-// 🔹 Detectar cambios en localStorage y actualizar estado
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+
 watch(isLoggedIn, (newValue) => {
   if (newValue) fetchProfilePic();
 });
 
-// 🔹 Comprobar estado de autenticación al montar el componente
 onMounted(() => {
   checkAuthStatus();
   if (isLoggedIn.value) fetchProfilePic();
@@ -110,6 +111,7 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
 .header {
   width: 100%;
   display: flex;
@@ -272,5 +274,60 @@ onMounted(() => {
   transform: translateX(-50%);
   display: flex;
   align-items: center;
+}
+.menu-icon {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.bar {
+  width: 30px;
+  height: 4px;
+  background-color: white;
+  margin: 5px 0;
+  transition: 0.3s;
+}
+
+.bar.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.bar.open:nth-child(2) {
+  opacity: 0;
+}
+
+.bar.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.nav2 {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .menu-icon {
+    display: flex;
+  }
+
+  .nav2 {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #1b1b1b;
+    flex-direction: column;
+    align-items: center;
+    display: none;
+  }
+
+  .nav2.open {
+    display: flex;
+  }
+
+  .nav-link {
+    padding: 15px;
+  }
 }
 </style>

@@ -23,7 +23,6 @@
   const text2 = ref(null);
   const text3 = ref(null);
   
-  // Detectar cuando el elemento entra en la vista
   const handleIntersection = (entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -34,8 +33,6 @@
   
   onMounted(() => {
     const observer = new IntersectionObserver(handleIntersection, { threshold: 0.5 });
-  
-    // Observar los textos e imágenes
     observer.observe(text1.value);
     observer.observe(text2.value);
     observer.observe(text3.value);
@@ -43,28 +40,28 @@
 </script>
 
 <style scoped>
-span{
-font-weight: bold;
-font-style: italic;
-color: hsla(180, 100%, 35%, 1);
+span {
+  font-weight: bold;
+  font-style: italic;
+  color: hsla(180, 100%, 35%, 1);
 }
 
 .text-item {
-    opacity: 0;
-    transform: translateY(50px);
-    transition: opacity 0.5s, transform 0.5s ease-in-out;
-    margin: 20px 0;
-  }
-  
-  .text-item.in-view, .text-item.in-view {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.5s, transform 0.5s ease-in-out;
+  margin: 20px 0;
+}
 
-  .three-text {
+.text-item.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.three-text {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8%; 
+  gap: 5%;
   padding: 5% 10%;
   margin-top: 5%;
   margin-bottom: 5%;
@@ -80,4 +77,28 @@ color: hsla(180, 100%, 35%, 1);
   margin: 2%;
 }
 
+@media (max-width: 1024px) {
+  .three-text {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4%;
+  }
+}
+
+@media (max-width: 768px) {
+  .three-text {
+    grid-template-columns: 1fr;
+    gap: 3%;
+    padding: 5% 8%;
+  }
+}
+
+@media (max-width: 480px) {
+  .three-text {
+    padding: 5% 5%;
+  }
+
+  .text-item {
+    text-align: center;
+  }
+}
 </style>
