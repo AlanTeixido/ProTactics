@@ -161,9 +161,6 @@ onMounted(loadPosts);
   margin-right: 5px;
 }
 
-.post-content p {
-  padding: 20px;
-}
 
 .post-content img {
   width: 100%;

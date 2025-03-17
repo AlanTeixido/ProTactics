@@ -58,8 +58,8 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 
     <!-- Loader para mostrar durante la carga -->
     <div v-if="isLoading" class="loading-overlay">
-      <div class="spinner"></div>
-      <p>Carregant...</p>
+      <div class="spinner"><img src="../assets/img/logo.png" ></div>
+      
     </div>
   </div>
 </template>
@@ -153,13 +153,10 @@ h2 {
   z-index: 9999;
 }
 
-.spinner {
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #00c3ff;
-  border-radius: 50%;
+.spinner img{
   width: 50px;
   height: 50px;
-  animation: spin 2s linear infinite;
+  animation: spin 0.1s linear infinite;
 }
 
 /* Estilo para navegadores basados en WebKit (Chrome, Edge, Safari) */
