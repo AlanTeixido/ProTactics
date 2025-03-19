@@ -84,12 +84,14 @@ onMounted(loadLastTraining);
 
 h3 {
   color: #000000b7;
-  font-size: 18px;
+  font-size: 100%;
   margin-bottom: 15px;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .training-card {
+  text-align: center;
   background: rgba(207, 207, 207, 0.274);
   padding: 15px;
   border-radius: 10px;
@@ -97,17 +99,18 @@ h3 {
 
 .training-card h4 {
   color: #000000ad;
-  font-size: 16px;
+  font-size: 100%;
   margin-bottom: 8px;
 }
 
 p {
   color: #00000077;
-  font-size: 13px;
+  font-size: 80%;
   margin: 5px 0;
 }
 
 button {
+  width: 80%;
   background: #00e6e6;
   color: #000;
   padding: 8px 12px;

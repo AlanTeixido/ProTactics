@@ -178,7 +178,6 @@ h2 {
 }
 
 
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -189,28 +188,13 @@ h2 {
   }
 }
 
-/* ===== Responsividad para pantallas pequeñas ===== */
-@media (max-width: 768px) {
-  .dashboard {
-    flex-direction: column;
-  }
-
+@media (max-width: 1500px) {
   .dashboard-menu {
-    width: 100%;
-    height: auto;
-    position: relative;
+    width: 200px;
   }
 
   .dashboard-container {
-    margin-left: 0;
-  }
-
-  .dashboard-top {
-    flex-direction: column;
-  }
-
-  .dashboard-down {
-    flex-direction: column;
+    margin-left: 200px;
   }
 }
 </style>

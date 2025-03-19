@@ -206,10 +206,12 @@ const toggleFollow = async (post) => {
 
 /* Descripció del post */
 .description {
-  font-size: 14px;
+  font-size: 90%;
   color: #3b3b3b;
   line-height: 1.6;
   margin-top: 15px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 /* Secció de likes */
@@ -217,8 +219,8 @@ const toggleFollow = async (post) => {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
-  padding: 10px;
+  margin-top: 2%;
+  margin-left: 5%;
 }
 
 /* Botó de like */

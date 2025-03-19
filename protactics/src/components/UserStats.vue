@@ -4,10 +4,10 @@ import axios from "axios";
 import { Doughnut } from "vue-chartjs";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-// Registrar els components necessaris de Chart.js
+// Registrar los componentes necesarios de Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-// 🔹 Estat de les dades
+// 🔹 Estado de los datos
 const userStats = ref(null);
 const loading = ref(true);
 const errorMessage = ref("");
@@ -17,18 +17,19 @@ const performanceData = ref({});
 const trainingsData = ref({});
 const timeData = ref({});
 
-// 🔹 Opcions de cada gràfic (perquè el text personalitzat va aquí)
+// 🔹 Opciones de cada gráfico
 const caloriesOptions = ref({});
 const performanceOptions = ref({});
 const trainingsOptions = ref({});
 const timeOptions = ref({});
 
-// 🔹 Crear dades del gràfic
+// 🔹 Crear datos del gráfico
 const createChartData = (value, total, color) => ({
   datasets: [{
     data: [value, total - value],
-    backgroundColor: [color, '#fff'],
-    cutout: '85%'  // Más alto = anillo más fino (prueba entre 80% y 90%)
+    backgroundColor: [color, '#e0e0e0'], // Color más suave para el fondo
+    borderWidth: 0, // Sin borde para un look más limpio
+    cutout: '80%'  // Grosor del anillo de la dona más delgado
   }],
   options: {
     responsive: true,
@@ -38,23 +39,31 @@ const createChartData = (value, total, color) => ({
       customText: {
         value: `${Math.round((value / total) * 100)}%`,
       }
+    },
+    elements: {
+      arc: {
+        borderWidth: 0, // Eliminar borde de las secciones del gráfico
+      }
     }
   }
 });
 
-
-
-// 🔹 Crear opcions del gràfic (amb el text al mig)
+// 🔹 Crear opciones del gráfico
 const createChartOptions = (value, total) => ({
   responsive: true,
   plugins: {
     legend: { display: false },
     tooltip: { enabled: false },
     customText: { value: `${Math.round((value / total) * 100)}%` }
+  },
+  elements: {
+    arc: {
+      borderWidth: 0,
+    }
   }
 });
 
-// 🔹 Plugin per mostrar text al centre del Doughnut
+// 🔹 Plugin para mostrar texto en el centro del Doughnut
 ChartJS.register({
   id: "customText",
   beforeDraw(chart) {
@@ -62,8 +71,8 @@ ChartJS.register({
     const text = chart.options.plugins.customText?.value || "";
 
     ctx.save();
-    ctx.font = "45px Montserrat";
-    ctx.fillStyle = "#00000098";
+    ctx.font = "36px Roboto, sans-serif"; // Tipografía más moderna
+    ctx.fillStyle = "#00000080"; // Texto más suave
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(text, width / 2, height / 2);
@@ -71,13 +80,13 @@ ChartJS.register({
   }
 });
 
-// 🔹 Carregar estadístiques
+// 🔹 Cargar estadísticas
 const loadUserStats = async () => {
   try {
     const response = await axios.get("https://protactics-api.onrender.com/user_stats/public");
 
     if (!response.data || Object.keys(response.data).length === 0) {
-      throw new Error("ℹ️ No hi ha dades disponibles.");
+      throw new Error("ℹ️ No hay datos disponibles.");
     }
 
     const stats = {
@@ -90,28 +99,28 @@ const loadUserStats = async () => {
 
     userStats.value = stats;
 
-    caloriesData.value = createChartData(stats.total_calories, 10000, "#0075d1");
+    caloriesData.value = createChartData(stats.total_calories, 10000, "#4285f4"); // Azul de Google
     caloriesOptions.value = createChartOptions(stats.total_calories, 10000);
 
-    performanceData.value = createChartData(stats.avg_performance, 100, "#eaca00");
+    performanceData.value = createChartData(stats.avg_performance, 100, "#34a853"); // Verde de Google
     performanceOptions.value = createChartOptions(stats.avg_performance, 100);
 
-    trainingsData.value = createChartData(stats.total_trainings, 100, "#ea6000");
+    trainingsData.value = createChartData(stats.total_trainings, 100, "#fbbc05"); // Amarillo de Google
     trainingsOptions.value = createChartOptions(stats.total_trainings, 100);
 
-    timeData.value = createChartData(stats.total_time_numeric, 1000, "#83ea00");
+    timeData.value = createChartData(stats.total_time_numeric, 1000, "#ea4335"); // Rojo de Google
     timeOptions.value = createChartOptions(stats.total_time_numeric, 1000);
 
   } catch (error) {
-    console.error("❌ Error carregant estadístiques:", error.message);
-    errorMessage.value = "❌ No s'han pogut obtenir les estadístiques.";
+    console.error("❌ Error cargando estadísticas:", error.message);
+    errorMessage.value = "❌ No se pudieron obtener las estadísticas.";
     userStats.value = null;
   } finally {
     loading.value = false;
   }
 };
 
-// 🔹 Convertir "2h 50m" a minuts totals
+// 🔹 Convertir "2h 50m" a minutos totales
 const parseTotalMinutes = (timeString) => {
   if (!timeString || typeof timeString !== "string") return 0;
 
@@ -157,6 +166,7 @@ onMounted(loadUserStats);
     </div>
   </div>
 </template>
+
 <style scoped>
 .user-stats {
   width: 70%;
@@ -166,7 +176,7 @@ onMounted(loadUserStats);
 }
 
 h3 {
-  color: #000000b7;
+  color: #202124; /* Color oscuro */
   font-size: 18px;
   margin-bottom: 15px;
   text-transform: uppercase;
@@ -184,7 +194,7 @@ h3 {
 }
 
 .stat-box {
-  background-color: rgba(212, 212, 212, 0.295);
+  background: rgb(255, 255, 255);
   border-radius: 12px;
   padding: 8%;
   text-align: center;
@@ -193,7 +203,7 @@ h3 {
 }
 
 h5 {
-  color: #00000098;
+  color: #202124;
   font-size: 10px;
   margin-bottom: 8px;
   text-transform: uppercase;
@@ -205,6 +215,4 @@ h5 {
   font-size: 14px;
   margin-top: 10px;
 }
-
 </style>
-
