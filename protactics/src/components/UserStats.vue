@@ -29,7 +29,7 @@ const createChartData = (value, total, color) => ({
     data: [value, total - value],
     backgroundColor: [color, '#e0e0e0'], // Color más suave para el fondo
     borderWidth: 0, // Sin borde para un look más limpio
-    cutout: '80%'  // Grosor del anillo de la dona más delgado
+    cutout: '88%'  // Grosor del anillo de la dona más delgado
   }],
   options: {
     responsive: true,
@@ -43,6 +43,7 @@ const createChartData = (value, total, color) => ({
     elements: {
       arc: {
         borderWidth: 0, // Eliminar borde de las secciones del gráfico
+        borderRadius: 15, // Establecer bordes redondeados en los segmentos
       }
     }
   }
@@ -59,6 +60,7 @@ const createChartOptions = (value, total) => ({
   elements: {
     arc: {
       borderWidth: 0,
+      borderRadius: 15, // Establecer bordes redondeados en los segmentos
     }
   }
 });
