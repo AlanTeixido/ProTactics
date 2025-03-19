@@ -22,6 +22,11 @@ const loadDashboardData = async () => {
   }
 };
 
+const user = ref({
+  username: localStorage.getItem("username") || "Usuario"
+});
+
+
 onMounted(loadDashboardData);  // Carregar dades en muntar el component
 
 </script>
@@ -37,7 +42,7 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
     <div class="dashboard-container">
       <div class="dashboard-top">
         <div>
-          <h2>Bienvenido, Alex</h2>
+          <h2>Bienvenido, {{user.username}}</h2>
           <!-- Sección izquierda: Posts -->
           <div class="dashboard-left">
             <Posts mode="dashboard" />
