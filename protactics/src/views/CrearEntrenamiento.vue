@@ -35,10 +35,10 @@ const enviarFormulario = async () => {
       usuario_id: userId,
       titulo: formulario.value.nombre,
       descripcion: formulario.value.descripcion,
-      tipo_deporte: nombreDeporte.value,
+      tipo_deporte: nombreDeporte,
       duracion: { minutes: formulario.value.duracion },
       inicio: new Date(formulario.value.inicio).toISOString(),
-      visibilidad: formulario.value.visibilidad,
+      visibilidad: formulario.value.visibilidad ? "publico" : "privado",
       detalles: getDetallesEspecificos(),
     };
 
@@ -59,7 +59,7 @@ const enviarFormulario = async () => {
 };
 
 const getDetallesEspecificos = () => {
-  const tipo = nombreDeporte.value;
+  const tipo = nombreDeporte;
   const d = detalles.value;
 
   switch (tipo) {

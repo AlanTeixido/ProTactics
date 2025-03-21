@@ -96,11 +96,26 @@
   // Carga los detalles específicos del deporte
   const cargarEntrenamiento = async () => {
   try {
-    // Obtiene TODOS los entrenamientos del usuario
-    const response = await axios.get(`https://protactics-api.onrender.com/entrenamientos/user/${localStorage.getItem('userId')}`);
+    const authToken = localStorage.getItem("authToken"); // 🔥 Obtén el token
 
-    // Busca el entrenamiento por ID dentro de la lista
-    entrenamiento.value = response.data.find(e => e.id == entrenamientoId) || {};
+    if (!authToken) {
+      alert("⚠️ No hay token de autenticación. Por favor, inicia sesión nuevamente.");
+      router.push("/login");
+      return;
+    }
+
+    // 🛠️ PETICIÓ GET AMB TOKEN
+    const response = await axios.get(
+      `https://protactics-api.onrender.com/entrenamientos/user/${localStorage.getItem("userId")}`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`, // 🔥 Afegeix el token aquí
+        },
+      }
+    );
+
+    // 🔍 Busca l'entrenament per ID dins la llista
+    entrenamiento.value = response.data.find((e) => e.id == entrenamientoId) || {};
 
     // Asegura que los detalles existen
     entrenamiento.value.detalles = entrenamiento.value.detalles || {};
