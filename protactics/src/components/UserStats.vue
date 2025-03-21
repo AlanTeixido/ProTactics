@@ -141,7 +141,7 @@ onMounted(loadUserStats);
     <h3>Estadísticas Generales</h3>
 
     <div v-if="loading">
-      <p>🔄 Cargando estadísticas...</p>
+      <p>Cargando estadísticas...</p>
     </div>
 
     <div v-else-if="errorMessage">

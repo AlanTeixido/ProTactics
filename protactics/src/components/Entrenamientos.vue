@@ -1,7 +1,7 @@
 <template>
   <div class="entrenamientos-container">
     <div v-if="loading" class="loading-text">
-      <p>Cargando entrenamientos...</p>
+      <Loader/>
     </div>
 
     <div v-else-if="entrenamientos.length" class="entrenamientos-list">
@@ -64,6 +64,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import Loader from './Loader.vue';
 
 const router = useRouter();
 const userId = localStorage.getItem('userId');

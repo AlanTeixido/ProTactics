@@ -207,6 +207,7 @@ const login = async () => {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
 }

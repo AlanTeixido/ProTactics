@@ -5,7 +5,8 @@ import UserStats from "@/components/UserStats.vue";
 import LastTraining from "@/components/LastTraining.vue";
 import Motivation from "@/components/Motivation.vue"; 
 import MenuDashboard from '@/components/MenuDashboard.vue';
-import axios from "axios"; 
+import axios from "axios";
+import Loader from "@/components/Loader.vue"; 
 
 
 const isLoading = ref(true); // Per controlar si el contingut s'està carregant
@@ -33,6 +34,7 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 
 <template>
   <div class="dashboard">
+
     <!-- Menú a la izquierda -->
     <div class="dashboard-menu">
       <MenuDashboard />
@@ -56,15 +58,6 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
           <Motivation />
         </div>
       </div>
-
-      <!-- Parte inferior: Último entrenamiento y Motivación -->
-
-    </div>
-
-    <!-- Loader para mostrar durante la carga -->
-    <div v-if="isLoading" class="loading-overlay">
-      <div class="spinner"><img src="../assets/img/logo.png" ></div>
-      
     </div>
   </div>
 </template>
@@ -145,23 +138,8 @@ h2 {
   margin-top: 5%;
 }
 
-/* ===== Loader ===== */
-.loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.spinner img{
-  width: 50px;
-  height: 50px;
-  animation: spin 0.1s linear infinite;
+.loading-text {
+  color: #888;
 }
 
 /* Estilo para navegadores basados en WebKit (Chrome, Edge, Safari) */
@@ -180,17 +158,6 @@ h2 {
   background: #bbbbbb79;
   /* Color del "pulgar" del scroll */
   border-radius: 10px;
-}
-
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 @media (max-width: 1500px) {

@@ -3,7 +3,7 @@
     <h3>Últim Entrenament</h3>
 
     <div v-if="loading">
-      <p>🔄 Carregant entrenament...</p>
+      <p>Carregant entrenament...</p>
     </div>
 
     <div v-else-if="errorMessage">
