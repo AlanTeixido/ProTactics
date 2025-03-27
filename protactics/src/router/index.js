@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Login from '@/components/formularios/Login.vue';
-import Register from '@/components/formularios/Register.vue';
+import Login from '../components/formularios/Login.vue';
+import Register from '../components/formularios/Register.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -10,18 +10,18 @@ const router = createRouter({
     { path: '/login', name: 'login', component: Login },
     { path: '/register', name: 'register', component: Register },
     { path: '/pizarra', name: 'pizarra', component: () => import('../views/PizarraView.vue') },
-    /*{ path: '/pizarra/:deporte', name: 'draggable', component: () => import('../components/Draggable.vue') },*/
-    { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue') },
+    // { path: '/pizarra/:deporte', name: 'draggable', component: () => import('../components/Draggable.vue') },
+    { path: '/editar', name: 'editar', component: () => import('../views/EditProfile.vue') },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 
-    // ✅ Ruta correcta per crear entrenaments segons esport (captura param 'nombre')
+    // Crear entrenament per esport (paràmetre dinàmic)
     { 
       path: '/entrenamiento/:nombre', 
       name: 'crear-entrenamiento', 
       component: () => import('../views/CrearEntrenamiento.vue') 
     },
 
-    // 🔒 Rutes protegides (només si loguejat)
+    // Rutes protegides
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },
     { path: '/perfil', name: 'perfil', component: () => import('../views/PerfilView.vue'), meta: { requiresAuth: true } },
     { path: '/deportes', name: 'deportes', component: () => import('../views/DeportesView.vue'), meta: { requiresAuth: true } },
@@ -33,19 +33,19 @@ const router = createRouter({
       meta: { requiresAuth: true } 
     }
   ],
-  scrollBehavior(to, from, savedPosition) {
-    return { top: 0 }; // Scroll al inici de la pàgina al canviar de ruta
+  scrollBehavior() {
+    return { top: 0 }; // Scroll al principi
   }
 });
 
-// Middleware de protecció de rutes
+// Middleware per protegir rutes
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = !!localStorage.getItem('authToken'); // Verifica si hi ha sessió activa
+  const isAuthenticated = !!localStorage.getItem('authToken');
 
   if (to.meta.requiresAuth && !isAuthenticated) {
-    next('/login'); // Redirigeix a login si no està autenticat
+    next('/login');
   } else {
-    next(); // Permet accés
+    next();
   }
 });
 

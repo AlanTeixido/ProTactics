@@ -7,7 +7,7 @@ import Motivation from "@/components/Motivation.vue";
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import axios from "axios";
 import Loader from "@/components/Loader.vue"; 
-import ButtonCrearTarea from '@/components/ButtonCrearTarea.vue';
+import ButtonCrearTarea from '@/components/botones/ButtonCrearTarea.vue';
 
 
 const isLoading = ref(true); // Per controlar si el contingut s'està carregant
