@@ -2,7 +2,7 @@
   <div class="register-container">
     <div class="intro-register">
       <RouterLink to="/" class="back-home-btn">
-        <img src="../assets/img/logo.png" alt="Logo">
+        <img src="../assets/img/logo.png" alt="Logo" />
       </RouterLink>
       <h1>&copy; ProTactics</h1>
     </div>
@@ -10,64 +10,67 @@
     <div class="separator"></div>
 
     <div class="form-register">
-      <h2 class="register-title">Regístrate</h2>
+      <h2 class="register-title">Registro de Club</h2>
+      <p class="register-subtitle">Crea el perfil oficial de tu club y comienza a gestionar entrenadores, jugadores y entrenamientos.</p>
+
       <form @submit.prevent="register" class="register-form">
         <div class="input-group">
-          <input v-model="username" type="text" placeholder="Club" required class="input-field" />
+          <label class="input-label">Nombre del Club</label>
+          <input v-model="nombre" type="text" placeholder="Ej. FC Prat" required class="input-field" />
         </div>
         <div class="input-group">
-          <input v-model="email" type="email" placeholder="Correo Electrónico" required class="input-field" />
+          <label class="input-label">Correo Electrónico</label>
+          <input v-model="correo" type="email" placeholder="correo@club.com" required class="input-field" />
         </div>
         <div class="input-group">
-          <input v-model="password" type="password" placeholder="Contraseña" required class="input-field" />
+          <label class="input-label">Contraseña</label>
+          <input v-model="password" type="password" placeholder="••••••••" required class="input-field" />
         </div>
         <div class="input-group">
-          <input v-model="confirmPassword" type="password" placeholder="Confirmar Contraseña" required class="input-field" />
+          <label class="input-label">Confirmar Contraseña</label>
+          <input v-model="confirmPassword" type="password" placeholder="••••••••" required class="input-field" />
         </div>
-        <button type="submit" class="submit-btn">Registrarse</button>
+        <button type="submit" class="submit-btn">Crear Club</button>
       </form>
+
       <p class="login-link">
-        ¿Ya tienes cuenta? <RouterLink to="/login" class="link">Inicia sesión</RouterLink>
+        ¿Ya tienes cuenta? <RouterLink to="/login" class="link">Inicia sesión aquí</RouterLink>
       </p>
     </div>
-    <img src="../assets/img/dispositivos.png" alt="" class="fondo-register">
+
+    <img src="../assets/img/dispositivos.png" alt="Fondo visual" class="fondo-register" />
   </div>
 </template>
+
 
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
-const username = ref('');
-const email = ref('');
+const nombre = ref('');
+const correo = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const router = useRouter();
 
-// Función para registrar al usuario
 const register = async () => {
   if (password.value !== confirmPassword.value) {
-    alert('Las contraseñas no coinciden');
-    return;
+    return alert('❌ Las contraseñas no coinciden');
   }
 
   try {
-    // ✅ Llamada a la API para registrar al usuario
-    await axios.post('https://protactics-api.onrender.com/auth/register', {
-      nombre_usuario: username.value,
-      correo: email.value,
-      contrasena: password.value  // 🟢 Asegurando que coincida con el backend
+    await axios.post('https://protactics-api.onrender.com/auth/register/club', {
+      nombre: nombre.value,
+      correo: correo.value,
+      password: password.value
     });
 
-    alert('Registro exitoso');
-
-    // Redirigir al login después del registro
+    alert('✅ Registro de club exitoso');
     router.push('/login');
-
   } catch (error) {
-    console.error('Error en el registro', error);
-    alert(error.response?.data?.error || 'Error al registrarse');
+    console.error('Error al registrar club:', error);
+    alert(error.response?.data?.error || 'Error en el registro');
   }
 };
 </script>
@@ -217,4 +220,20 @@ const register = async () => {
 .popup-close:hover {
   transform: scale(1.1);
 }
+
+.register-subtitle {
+  text-align: center;
+  max-width: 400px;
+  font-size: 1rem;
+  color: #ccc;
+  margin-bottom: 30px;
+}
+
+.input-label {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 6px;
+  padding-left: 4px;
+}
+
 </style>

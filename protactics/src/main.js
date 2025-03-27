@@ -1,17 +1,18 @@
-import './assets/main.css'
+import './assets/main.css';
 import { createApp } from 'vue';
 import App from './App.vue';
-import router from './router'; 
+import router from './router';
 import axios from 'axios';
 
+// 🔗 Estableix base URL de l'API
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'https://protactics-api.onrender.com';
 
-
-// Prueba de conexión a la API
-axios.get('/usuarios')
-  .then(response => console.log("✅ API Conectada:", response.data))
+// ✅ Prova de connexió (ara amb ruta vàlida)
+axios.get('/clubes')
+  .then(response => console.log("✅ API Conectada (clubs):", response.data))
   .catch(error => console.error("❌ Error al conectar la API:", error));
 
+// 🧠 Integrar Axios globalment
 const app = createApp(App);
 app.config.globalProperties.$axios = axios;
 

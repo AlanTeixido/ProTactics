@@ -10,6 +10,18 @@
 
     <div class="form-login">
       <h2 class="login-title">Iniciar sesión</h2>
+
+
+      <div class="login-role-toggle">
+        <span :class="{ active: rolSeleccionado === 'club' }" @click="rolSeleccionado = 'club'">
+          Club
+        </span>
+        <span :class="{ active: rolSeleccionado === 'entrenador' }" @click="rolSeleccionado = 'entrenador'">
+          Entrenador
+        </span>
+      </div>
+      
+      
       <form @submit.prevent="login" class="login-form">
         <div class="input-group">
           <input v-model="email" type="email" placeholder="Correo Electrónico" required class="input-field" />
@@ -40,52 +52,51 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
+// States
 const email = ref('');
 const password = ref('');
-const router = useRouter();  // Hacemos uso de useRouter para la navegación programática
+const rolSeleccionado = ref('club');
 
-// Agregar estado para controlar la visibilidad y el mensaje del popup
+// Router per navegar després del login
+const router = useRouter();
+
+// Popup
 const popupVisible = ref(false);
 const popupMessage = ref('');
 
-// Función para mostrar el popup
 const showPopup = (message) => {
   popupMessage.value = message;
   popupVisible.value = true;
 };
 
-// Función para cerrar el popup
 const closePopup = () => {
   popupVisible.value = false;
 };
 
-// Función para iniciar sesión
 const login = async () => {
   try {
-    console.log('Iniciant sessió amb:', { email: email.value, password: password.value });
+    console.log('Iniciant sessió com a', rolSeleccionado.value, 'amb:', email.value);
 
     const response = await axios.post('https://protactics-api.onrender.com/auth/login', {
       correo: email.value,
-      contrasena: password.value
+      password: password.value
     });
 
-    console.log('Resposta del servidor:', response.data);  // 📌 Mira què retorna l'API
+    const data = response.data;
 
-    if (response.data.token) {
-      localStorage.setItem('authToken', response.data.token);
-      localStorage.setItem('username', response.data.nombre_usuario);
-      localStorage.setItem('userEmail', response.data.correo);
-      localStorage.setItem('userId', response.data.id);
+    if (data.token) {
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('username', data.nombre);
+      localStorage.setItem('userEmail', data.correo);
+      localStorage.setItem('userId', data.id);
+      localStorage.setItem('userRol', data.rol);
 
-      // Mostrar popup con mensaje de éxito
-      console.log('Sessió iniciada correctament');
+      alert(`✅ Sesión iniciada como ${data.rol}`);
       router.push('/dashboard');
     }
   } catch (error) {
     console.error('Error en el login:', error);
-
-    // Mostrar popup con mensaje de error
-    showPopup('Credencials incorrectes.');
+    showPopup(error.response?.data?.error || 'Credenciales incorrectas.');
   }
 };
 </script>
@@ -243,4 +254,33 @@ const login = async () => {
 .popup-close:hover {
   transform: scale(1.1)
 }
+
+.login-role-toggle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2a2a2a;
+  border-radius: 25px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  width: 300px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.login-role-toggle span {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
+  color: #ccc;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.login-role-toggle span.active {
+  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));
+  color: white;
+}
+
+
 </style>
