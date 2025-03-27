@@ -32,12 +32,12 @@ const getImageUrl = (path) => new URL(path, import.meta.url).href;
 
 const deportes = ref([
   { nombre: "futbol", imagen: "../assets/img/futbol.jpg", gridArea: "sport" },
-  { nombre: "baloncesto", imagen: "../assets/img/basquet.jpg", gridArea: "tees" },
+  /*{ nombre: "baloncesto", imagen: "../assets/img/basquet.jpg", gridArea: "tees" },
   { nombre: "padel", imagen: "../assets/img/padel.jpg", gridArea: "hoodies" },
   { nombre: "gimnasio", imagen: "../assets/img/gym.jpg", gridArea: "ladies-shirt" },
   { nombre: "ciclismo", imagen: "../assets/img/ciclismo.jpg", gridArea: "youth" },
   { nombre: "atletismo", imagen: "../assets/img/atletismo2.jpg", gridArea: "kids" },
-  { nombre: "natacion", imagen: "../assets/img/natacion.jpeg", gridArea: "kids" }
+  { nombre: "natacion", imagen: "../assets/img/natacion.jpeg", gridArea: "kids" }*/
 ]);
 </script>
 

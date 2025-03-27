@@ -84,7 +84,7 @@ const login = async () => {
     console.error('Error en el login:', error);
     
     // Mostrar popup con mensaje de error
-    showPopup('Credencials incorrectes o error en el servidor.');
+    showPopup('Credencials incorrectes.');
   }
 };
 </script>

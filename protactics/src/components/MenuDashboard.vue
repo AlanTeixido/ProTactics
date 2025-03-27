@@ -79,9 +79,9 @@ onMounted(() => {
             </div>
         </nav>
 
-        <div>
+        <!--<div>
             <RouterLink :to="`/deportes`"><button class="newTraining">+</button></RouterLink>
-        </div>
+        </div>-->
 
         <div class="log-regist">
             <div v-if="isLoggedIn" class="user-info">

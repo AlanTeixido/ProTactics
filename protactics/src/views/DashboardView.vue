@@ -7,6 +7,7 @@ import Motivation from "@/components/Motivation.vue";
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import axios from "axios";
 import Loader from "@/components/Loader.vue"; 
+import ButtonCrearTarea from '@/components/ButtonCrearTarea.vue';
 
 
 const isLoading = ref(true); // Per controlar si el contingut s'està carregant
@@ -53,9 +54,10 @@ onMounted(loadDashboardData);  // Carregar dades en muntar el component
 
         <!-- Sección derecha: Estadísticas del usuario -->
         <div class="dashboard-right">
-          <UserStats />
+          <!--<UserStats />-->
           <LastTraining />
           <Motivation />
+          <ButtonCrearTarea/>
         </div>
       </div>
     </div>

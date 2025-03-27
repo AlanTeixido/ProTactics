@@ -9,6 +9,21 @@ import Draggable from "@/components/Draggable.vue";
 const route = useRoute();
 const router = useRouter();
 
+// Agregar estado para controlar la visibilidad y el mensaje del popup
+const popupVisible = ref(false);
+const popupMessage = ref('');
+
+// Función para mostrar el popup
+const showPopup = (message) => {
+  popupMessage.value = message;
+  popupVisible.value = true;
+};
+
+// Función para cerrar el popup
+const closePopup = () => {
+  popupVisible.value = false;
+};
+
 const nombreDeporte = route.params.nombre;
 
 const formulario = ref({
@@ -50,11 +65,11 @@ const enviarFormulario = async () => {
       }
     });
 
-    alert("✅ Entrenamiento guardado correctamente.");
+    showPopup('✅ Entrenamiento guardado correctamente.');
     router.push("/mis-entrenamientos");
   } catch (error) {
     console.error("❌ Error guardando el entrenamiento:", error.response?.data || error.message);
-    alert("⚠️ Hubo un problema al guardar el entrenamiento.");
+    showPopup('Hubo un problema al guardar el entrenamiento.');
   }
 };
 
