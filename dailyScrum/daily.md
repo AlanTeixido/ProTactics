@@ -226,3 +226,11 @@
 - **Estilos:** Adri
 - **Proofhub:** Adri
 - **Pizarra Implementar Imagenes** Alex
+
+## **Fecha:** 27/03/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Reedefinir Projecte:** Alan, Adri i Alex 
+- **Reestructuració Backend:** Alan, Adri i Alex 
+
