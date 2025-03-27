@@ -9,6 +9,9 @@
     <div class="dashboard-content">
       <h2>Selecciona un deporte</h2>
       <div class="wrapper">
+        <RouterLink>
+          <ButtonCrearJugador />
+        </RouterLink>
         <!-- Usamos un v-for para recorrer el array de deportes -->
         <div v-for="deporte in deportes" :key="deporte.nombre" class="grid-item">
           <!-- RouterLink para redirigir al hacer clic en el deporte -->
@@ -27,6 +30,7 @@
 <script setup>
 import { ref } from "vue";
 import MenuDashboard from "@/components/MenuDashboard.vue";
+import ButtonCrearJugador from "@/components/botones/ButtonCrearJugador.vue";
 
 const getImageUrl = (path) => new URL(path, import.meta.url).href;
 

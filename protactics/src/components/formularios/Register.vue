@@ -13,7 +13,7 @@
       <h2 class="register-title">Regístrate</h2>
       <form @submit.prevent="register" class="register-form">
         <div class="input-group">
-          <input v-model="username" type="text" placeholder="Nombre de usuario" required class="input-field" />
+          <input v-model="username" type="text" placeholder="Club" required class="input-field" />
         </div>
         <div class="input-group">
           <input v-model="email" type="email" placeholder="Correo Electrónico" required class="input-field" />

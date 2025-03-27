@@ -6,7 +6,7 @@
 
 <script setup>
 import FooterSection from '@/components/FooterSection.vue';
-import FormContact from '@/components/FormContact.vue';
+import FormContact from '@/components/formularios/FormContact.vue';
 import HeaderSection from '@/components/HeaderSection.vue';
 import { ref } from 'vue';
 

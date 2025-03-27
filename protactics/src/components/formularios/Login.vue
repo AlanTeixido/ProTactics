@@ -1,7 +1,8 @@
 <template>
   <div class="login-container">
     <div class="intro-login">
-      <RouterLink to="/" class="back-home-btn"><img src="../assets/img/logo.png" alt=""></RouterLink> <!-- Botón de volver al inicio -->
+      <RouterLink to="/" class="back-home-btn"><img src="../assets/img/logo.png" alt=""></RouterLink>
+      <!-- Botón de volver al inicio -->
       <h1>&copy ProTactics</h1>
     </div>
 
@@ -82,7 +83,7 @@ const login = async () => {
     }
   } catch (error) {
     console.error('Error en el login:', error);
-    
+
     // Mostrar popup con mensaje de error
     showPopup('Credencials incorrectes.');
   }
@@ -98,10 +99,14 @@ const login = async () => {
 }
 
 .separator {
-  width: 2px; /* Grosor de la línea */
-  height: 70%; /* Altura de la línea (ajústala si es necesario) */
-  background-color: rgba(255, 255, 255, 0.5); /* Color de la línea (blanco con transparencia) */
-  border-radius: 10px; /* Bordes redondeados */
+  width: 2px;
+  /* Grosor de la línea */
+  height: 70%;
+  /* Altura de la línea (ajústala si es necesario) */
+  background-color: rgba(255, 255, 255, 0.5);
+  /* Color de la línea (blanco con transparencia) */
+  border-radius: 10px;
+  /* Bordes redondeados */
 }
 
 /* El diseño y estilos permanecen igual que antes */
@@ -111,7 +116,8 @@ const login = async () => {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  gap: 5%; /* Espaciado entre los elementos */
+  gap: 5%;
+  /* Espaciado entre los elementos */
   color: white;
 }
 
@@ -176,7 +182,8 @@ const login = async () => {
   border-radius: 30px;
   cursor: pointer;
   font-weight: bold;
-  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194)); /* Degradado de azul a verde */
+  background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));
+  /* Degradado de azul a verde */
   transition: 0.3s;
 }
 
@@ -200,7 +207,8 @@ const login = async () => {
 
 /* Estilos para el popup */
 .popup {
-  display: flex; /* Cambié display a flex para controlarlo con Vue */
+  display: flex;
+  /* Cambié display a flex para controlarlo con Vue */
   position: fixed;
   top: 0;
   left: 0;
@@ -232,7 +240,7 @@ const login = async () => {
   transition: 0.3s;
 }
 
-.popup-close:hover{
-  transform: scale(1.1) 
+.popup-close:hover {
+  transform: scale(1.1)
 }
 </style>
