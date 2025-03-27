@@ -1,0 +1,174 @@
+<template>
+    <div class="crear-entrenador-container">
+      <h2 class="title">Crear Entrenador</h2>
+      
+      <form @submit.prevent="crearEntrenador" class="form-create">
+        <div class="input-group">
+          <label for="nombre">Nom del entrenador</label>
+          <input v-model="nombre" type="text" id="nombre" placeholder="Nom complet" required />
+        </div>
+  
+        <div class="input-group">
+          <label for="correo">Correu electrònic</label>
+          <input v-model="correo" type="email" id="correo" placeholder="correu@entrenador.com" required />
+        </div>
+  
+        <div class="input-group">
+          <label for="password">Contrasenya</label>
+          <input v-model="password" type="password" id="password" placeholder="••••••••" required />
+        </div>
+  
+        <div class="input-group">
+          <label for="equipo">Equip del entrenador</label>
+          <input v-model="equipo" type="text" id="equipo" placeholder="Ex: Primer equip" required />
+        </div>
+  
+        <button type="submit" class="submit-btn">Crear Entrenador</button>
+      </form>
+  
+      <div v-if="popupVisible" class="popup">
+        <div class="popup-content">
+          <p>{{ popupMessage }}</p>
+          <button @click="closePopup" class="popup-close">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </template>
+  
+  <script setup>
+  import { ref } from 'vue';
+  import axios from 'axios';
+  import { useRouter } from 'vue-router';
+  
+  // States
+  const nombre = ref('');
+  const correo = ref('');
+  const password = ref('');
+  const equipo = ref('');
+  const popupVisible = ref(false);
+  const popupMessage = ref('');
+  
+  // Router per redirigir després de la creació
+  const router = useRouter();
+  
+  const showPopup = (message) => {
+    popupMessage.value = message;
+    popupVisible.value = true;
+  };
+  
+  const closePopup = () => {
+    popupVisible.value = false;
+  };
+  
+  const crearEntrenador = async () => {
+    try {
+      const token = localStorage.getItem('authToken');
+      const userRol = localStorage.getItem('userRol');
+      if (userRol !== 'club') {
+        showPopup("❌ No tens permís per crear entrenadors.");
+        return;
+      }
+  
+      const response = await axios.post(
+        'https://protactics-api.onrender.com/entrenadores/register',
+        {
+          nombre: nombre.value,
+          correo: correo.value,
+          password: password.value,
+          equipo: equipo.value,
+          club_id: localStorage.getItem('userId')
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      );
+  
+      showPopup(response.data.message);
+      router.push('/dashboard'); // Redirigir al dashboard després de crear el entrenador
+    } catch (error) {
+      console.error('Error al crear entrenador:', error);
+      showPopup(error.response?.data?.error || 'Error en la creació de l\'entrenador.');
+    }
+  };
+  </script>
+  
+  <style scoped>
+  .crear-entrenador-container {
+    padding: 20px;
+    color: white;
+  }
+  
+  .title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .form-create {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input {
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    background-color: #2a2a2a;
+    color: white;
+  }
+  
+  .submit-btn {
+    padding: 12px;
+    background: linear-gradient(45deg, #4caf50, #0a74da);
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  
+  .submit-btn:hover {
+    transform: scale(1.05);
+  }
+  
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-content {
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+  }
+  
+  .popup-close {
+    margin-top: 15px;
+    padding: 8px;
+    cursor: pointer;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+  }
+  </style>
+  
