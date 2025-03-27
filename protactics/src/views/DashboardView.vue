@@ -1,68 +1,77 @@
 <script setup>
-import { ref, onMounted } from 'vue';  
+import { ref, computed, onMounted } from 'vue';  
 import Posts from "@/components/PostsDashboard.vue";
-import UserStats from "@/components/UserStats.vue";
-import LastTraining from "@/components/LastTraining.vue";
-import Motivation from "@/components/Motivation.vue"; 
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import axios from "axios";
 import Loader from "@/components/Loader.vue"; 
 import ButtonCrearTarea from '@/components/botones/ButtonCrearTarea.vue';
 
+// Loading
+const isLoading = ref(true);
 
-const isLoading = ref(true); // Per controlar si el contingut s'està carregant
+// Usuari i rol
+const user = ref({
+  username: localStorage.getItem("username") || "Usuario",
+  rol: localStorage.getItem("userRol") || "desconocido"
+});
 
-// Funció per carregar les dades inicials
+const esClub = computed(() => user.value.rol === 'club');
+const esEntrenador = computed(() => user.value.rol === 'entrenador');
+
+// Carreguem dades inicials
 const loadDashboardData = async () => {
   try {
-    // Cridem a l'API real per carregar les dades de l'usuari
-    await axios.get('https://protactics-api.onrender.com/user_stats/monthly_goal');  // Endpoint real per obtenir l'objectiu mensual
-    isLoading.value = false;
+    await axios.get('https://protactics-api.onrender.com/user_stats/monthly_goal');
   } catch (error) {
     console.error('Error carregant dades:', error);
-    isLoading.value = false; // Acaba la càrrega fins i tot si hi ha un error
+  } finally {
+    isLoading.value = false;
   }
 };
 
-const user = ref({
-  username: localStorage.getItem("username") || "Usuario"
-});
-
-
-onMounted(loadDashboardData);  // Carregar dades en muntar el component
-
+onMounted(loadDashboardData);
 </script>
+
 
 <template>
   <div class="dashboard">
-
-    <!-- Menú a la izquierda -->
     <div class="dashboard-menu">
       <MenuDashboard />
     </div>
 
-    <!-- Contenedor principal del dashboard -->
     <div class="dashboard-container">
       <div class="dashboard-top">
+
         <div>
-          <h2>Bienvenido, {{user.username}}</h2>
-          <!-- Sección izquierda: Posts -->
-          <div class="dashboard-left">
+          <h2>Bienvenido, {{ user.username }}</h2>
+
+          <div v-if="esClub" class="dashboard-left">
             <Posts mode="dashboard" />
+            <!-- Aquí puedes poner cosas exclusivas del club -->
+            <p style="margin: 20px; color: #4a4a4a;">Accediendo como <strong>Club</strong></p>
+          </div>
+
+          <div v-else-if="esEntrenador" class="dashboard-left">
+            <Posts mode="dashboard" />
+            <!-- Aquí puedes poner cosas exclusivas del entrenador -->
+            <p style="margin: 20px; color: #4a4a4a;">Accediendo como <strong>Entrenador</strong></p>
+          </div>
+
+          <div v-else class="dashboard-left">
+            <p>No se ha podido identificar el rol.</p>
           </div>
         </div>
 
-        <!-- Sección derecha: Estadísticas del usuario -->
         <div class="dashboard-right">
-          <!--<UserStats />-->
+          <!-- <UserStats />
           <LastTraining />
-          <Motivation />
-          <ButtonCrearTarea/>
+          <ButtonCrearTarea/> -->
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <style scoped>
 /* Estilos generales */
