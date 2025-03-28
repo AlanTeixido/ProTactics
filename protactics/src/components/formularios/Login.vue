@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <div class="intro-login">
-      <RouterLink to="/" class="back-home-btn"><img src="../assets/img/logo.png" alt=""></RouterLink>
+      <RouterLink to="/" class="back-home-btn"><img src="/src/assets/img/logo.png"></RouterLink>
       <!-- Botón de volver al inicio -->
       <h1>&copy ProTactics</h1>
     </div>
@@ -35,7 +35,7 @@
         ¿No tienes cuenta? <RouterLink to="/register" class="link">Regístrate</RouterLink>
       </p>
     </div>
-    <img src="../assets/img/dispositivos.png" alt="" class="fondo-login">
+    <img src="/src/assets/img/dispositivos.png" alt="" class="fondo-login">
   </div>
 
   <!-- Popup de mensaje -->

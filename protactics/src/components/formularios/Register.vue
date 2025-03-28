@@ -2,7 +2,7 @@
   <div class="register-container">
     <div class="intro-register">
       <RouterLink to="/" class="back-home-btn">
-        <img src="../assets/img/logo.png" alt="Logo" />
+        <img src="/src/assets/img/logo.png" alt="Logo" />
       </RouterLink>
       <h1>&copy; ProTactics</h1>
     </div>
@@ -38,7 +38,7 @@
       </p>
     </div>
 
-    <img src="../assets/img/dispositivos.png" alt="Fondo visual" class="fondo-register" />
+    <img src="/src/assets/img/dispositivos.png" alt="Fondo visual" class="fondo-register" />
   </div>
 </template>
 
