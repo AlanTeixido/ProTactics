@@ -1,24 +1,25 @@
 <template>
   <div class="crear-entrenador-container">
     <form @submit.prevent="crearEntrenador" class="form-create">
+      <h2>Información del entrenador</h2>
       <div class="input-group">
-        <label for="nombre">Nom del entrenador</label>
-        <input v-model="nombre" type="text" id="nombre" placeholder="Nom complet" required />
+        <label for="nombre">Nombre del entrenador</label>
+        <input v-model="nombre" type="text" id="nombre" placeholder="Nombre" required />
       </div>
 
       <div class="input-group">
-        <label for="correo">Correu electrònic</label>
-        <input v-model="correo" type="email" id="correo" placeholder="correu@entrenador.com" required />
+        <label for="correo">Correo electrónico</label>
+        <input v-model="correo" type="email" id="correo" placeholder="correo@entrenador.com" required />
       </div>
 
       <div class="input-group">
-        <label for="password">Contrasenya</label>
+        <label for="password">Contraseña</label>
         <input v-model="password" type="password" id="password" placeholder="••••••••" required />
       </div>
 
       <div class="input-group">
-        <label for="equipo">Equip del entrenador</label>
-        <input v-model="equipo" type="text" id="equipo" placeholder="Ex: Primer equip" required />
+        <label for="equipo">Equipo del entrenador</label>
+        <input v-model="equipo" type="text" id="equipo" placeholder="Ej: Primer equipo" required />
       </div>
 
       <button type="submit" class="submit-btn">Crear Entrenador</button>
@@ -122,23 +123,30 @@ label {
 }
 
 input {
-  padding: 10px;
+  padding: 15px;
   font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
+  border-radius: 50px;
+  border: 2px solid #eeeeee;
+  margin-top: 8px;
   background-color: #2a2a2a18;
   color: white;
 }
 
+input:focus {
+  border-color: white; /* Cambia el borde a blanco cuando el campo está enfocado */
+  outline: none; /* Elimina el borde predeterminado del navegador */
+}
 .submit-btn {
-  padding: 12px;
+  padding: 15px;
   background: linear-gradient(45deg, #4caf50, #0a74da);
   border: none;
   color: white;
   font-weight: bold;
   border-radius: 25px;
   cursor: pointer;
+  transition: 0.3s;
+  font-size: 20px;
+  text-transform: uppercase;
 }
 
 .submit-btn:hover {

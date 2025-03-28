@@ -1,6 +1,8 @@
 <script setup>
 import FormCrearEntrenador from '@/components/formularios/FormCrearEntrenador.vue';
 import MenuDashboard from '@/components/MenuDashboard.vue';
+
+
 </script>
 <template>
     <div class="dashboard">

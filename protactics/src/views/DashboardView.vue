@@ -42,11 +42,10 @@ onMounted(loadDashboardData);
     </div>
 
     <div class="dashboard-container">
-      <div class="dashboard-top">
         <div>
           <h2>Bienvenido, {{ user.username }}</h2>
 
-          <div v-if="esClub" class="dashboard-left">
+          <div v-if="esClub" class="buttonsDashboard">
             <Posts mode="dashboard" />
             <p style="margin: 20px; color: #4a4a4a;">Accediendo como <strong>Club</strong></p>
             
@@ -54,7 +53,7 @@ onMounted(loadDashboardData);
             <ButtonCrearEntrenador />
           </div>
 
-          <div v-else-if="esEntrenador" class="dashboard-left">
+          <div v-else-if="esEntrenador" class="buttonsDashboard">
             <Posts mode="dashboard" />
             <p style="margin: 20px; color: #4a4a4a;">Accediendo como <strong>Entrenador</strong></p>
             
@@ -62,15 +61,7 @@ onMounted(loadDashboardData);
             <ButtonCrearJugador />  <
           </div>
 
-          <div v-else class="dashboard-left">
-            <p>No se ha podido identificar el rol.</p>
-          </div>
         </div>
-
-        <div class="dashboard-right">
-          <!-- Puedes agregar más contenido aquí -->
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -112,24 +103,7 @@ onMounted(loadDashboardData);
 }
 
 /* ===== Parte superior (Posts + Stats) ===== */
-.dashboard-top {
-  display: flex;
-}
 
-.dashboard-left {
-  flex: 2;
-  display: flex;
-  flex-direction: column;
-  height: 750px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  margin-top: 3%;
-}
-
-.dashboard-right {
-  margin-left: 10%;
-  flex: 1;
-}
 
 h2 {
   text-align: center;
