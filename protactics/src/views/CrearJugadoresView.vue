@@ -1,11 +1,9 @@
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import axios from "axios";
 
-// Lista de jugadores simulada (esto vendría de una API en un caso real)
-const jugadores = ref([
-  { id: 1, nombre: "Player 1", dorsal: 7, posicion: "Delantero" },
-  { id: 2, nombre: "Player 2", dorsal: 10, posicion: "Mediocampista" }
-]);
+// Lista de jugadores
+const jugadores = ref([]);
 
 // Estado del modal
 const showModal = ref(false);
@@ -13,26 +11,60 @@ const showModal = ref(false);
 // Datos del nuevo jugador
 const nuevoJugador = ref({
   nombre: "",
+  apellido: "",
   dorsal: "",
   posicion: ""
 });
 
-// Función para agregar un nuevo jugador
-const agregarJugador = () => {
-  if (!nuevoJugador.value.nombre || !nuevoJugador.value.dorsal || !nuevoJugador.value.posicion) {
-    alert("Todos los campos son obligatorios");
-    return;
+// Función para obtener jugadores (simulado con API)
+const obtenerJugadores = async () => {
+  try {
+    const response = await axios.get("https://protactics-api.onrender.com/jugadores", {
+      headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` }
+    });
+    jugadores.value = response.data;
+  } catch (error) {
+    console.error("Error al obtener jugadores:", error);
   }
-
-  jugadores.value.push({
-    id: jugadores.value.length + 1,
-    ...nuevoJugador.value
-  });
-
-  // Limpiar el formulario y cerrar el modal
-  nuevoJugador.value = { nombre: "", dorsal: "", posicion: "" };
-  showModal.value = false;
 };
+
+// Función para agregar un nuevo jugador
+const agregarJugador = async () => {
+  try {
+    const token = localStorage.getItem("authToken");
+    const entrenador_id = localStorage.getItem("entrenadorId"); // ID del entrenador que crea el jugador
+
+    if (!entrenador_id) {
+      alert("Error: No se encontró el entrenador.");
+      return;
+    }
+
+    // Enviar datos a la API
+    const response = await axios.post(
+      "https://protactics-api.onrender.com/jugadores/register",
+      {
+        ...nuevoJugador.value,
+        entrenador_id
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
+
+    // Agregar el nuevo jugador a la lista local
+    jugadores.value.push(response.data.jugador);
+
+    // Cerrar modal y limpiar formulario
+    nuevoJugador.value = { nombre: "", apellido: "", dorsal: "", posicion: "" };
+    showModal.value = false;
+  } catch (error) {
+    console.error("Error al crear jugador:", error);
+    alert("Error al crear el jugador. Revisa los datos.");
+  }
+};
+
+// Cargar jugadores al montar el componente
+onMounted(obtenerJugadores);
 </script>
 
 <template>
@@ -53,9 +85,9 @@ const agregarJugador = () => {
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div 
           v-for="jugador in jugadores" 
-          :key="jugador.id" 
+          :key="jugador.jugador_id" 
           class="bg-gray-700 p-4 rounded-lg shadow-md text-center">
-          <p class="text-lg font-semibold">{{ jugador.nombre }}</p>
+          <p class="text-lg font-semibold">{{ jugador.nombre }} {{ jugador.apellido }}</p>
           <p class="text-sm text-gray-400">Dorsal: {{ jugador.dorsal }}</p>
           <p class="text-sm text-gray-400">{{ jugador.posicion }}</p>
         </div>
@@ -72,6 +104,12 @@ const agregarJugador = () => {
             v-model="nuevoJugador.nombre"
             type="text"
             placeholder="Nombre"
+            class="w-full p-2 rounded bg-gray-800 text-white mb-2" />
+
+          <input 
+            v-model="nuevoJugador.apellido"
+            type="text"
+            placeholder="Apellido"
             class="w-full p-2 rounded bg-gray-800 text-white mb-2" />
 
           <input 
