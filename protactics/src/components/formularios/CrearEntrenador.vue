@@ -40,7 +40,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
-// States
+// Estados
 const nombre = ref('');
 const correo = ref('');
 const password = ref('');
@@ -48,7 +48,7 @@ const equipo = ref('');
 const popupVisible = ref(false);
 const popupMessage = ref('');
 
-// Router per redirigir després de la creació
+// Router para redirigir después de la creación
 const router = useRouter();
 
 const showPopup = (message) => {
@@ -79,7 +79,7 @@ const crearEntrenador = async () => {
         correo: correo.value,
         password: password.value,
         equipo: equipo.value,
-        club_id: localStorage.getItem('userId')
+        club_id: localStorage.getItem('userId') // Este es el id del club del cual se está creando el entrenador
       },
       {
         headers: {
@@ -89,13 +89,12 @@ const crearEntrenador = async () => {
     );
 
     showPopup(response.data.message);
-    router.push('/dashboard'); // Redirigir al dashboard després de crear el entrenador
+    router.push('/dashboard'); // Redirigir al dashboard después de crear el entrenador
   } catch (error) {
     console.error('Error al crear entrenador:', error);
     showPopup(error.response?.data?.error || 'Error en la creació de l\'entrenador.');
   }
 };
-
 </script>
 
 <style scoped>
