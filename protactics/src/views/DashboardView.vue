@@ -5,6 +5,8 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 import axios from "axios";
 import Loader from "@/components/Loader.vue"; 
 import ButtonCrearTarea from '@/components/botones/ButtonCrearTarea.vue';
+import CrearEntrenador from '@/components/formularios/CrearEntrenador.vue';
+
 
 // Loading
 const isLoading = ref(true);
@@ -49,7 +51,11 @@ onMounted(loadDashboardData);
             <Posts mode="dashboard" />
             <!-- Aquí puedes poner cosas exclusivas del club -->
             <p style="margin: 20px; color: #4a4a4a;">Accediendo como <strong>Club</strong></p>
+            
+            <!-- Afegir el formulari per crear entrenadors -->
+            <CrearEntrenador />
           </div>
+          
 
           <div v-else-if="esEntrenador" class="dashboard-left">
             <Posts mode="dashboard" />
