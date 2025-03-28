@@ -263,7 +263,7 @@ const login = async () => {
   border-radius: 25px;
   overflow: hidden;
   margin-bottom: 20px;
-  width: 300px;
+  width: 250px;
   height: 40px;
   cursor: pointer;
 }

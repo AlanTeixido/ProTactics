@@ -5,7 +5,8 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 import axios from "axios";
 import Loader from "@/components/Loader.vue"; 
 import ButtonCrearTarea from '@/components/botones/ButtonCrearTarea.vue';
-import CrearEntrenador from '@/components/formularios/CrearEntrenador.vue';
+import CrearEntrenador from '@/components/formularios/FormCrearEntrenador.vue';
+import ButtonCrearEntrenador from '@/components/botones/ButtonCrearEntrenador.vue';
 
 
 // Loading
@@ -53,6 +54,7 @@ onMounted(loadDashboardData);
             <p style="margin: 20px; color: #4a4a4a;">Accediendo como <strong>Club</strong></p>
             
             <!-- Afegir el formulari per crear entrenadors -->
+             <ButtonCrearEntrenador />
             <CrearEntrenador />
           </div>
           
