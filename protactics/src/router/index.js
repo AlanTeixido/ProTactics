@@ -36,6 +36,11 @@ const router = createRouter({
       path: '/crearEntrenador', 
       name: 'crearEntrenador', 
       component: () => import('../views/CrearEntrenadorPage.vue')
+    },
+    { 
+      path: '/crearJugador', 
+      name: 'crearJugador', 
+      component: () => import('../views/CrearJugadorPage.vue')
     }
   ],
   scrollBehavior(to, from, savedPosition) {
