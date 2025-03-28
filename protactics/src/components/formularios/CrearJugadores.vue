@@ -1,6 +1,7 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import axios from "axios";
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { useRouter } from 'vue-router';
 
 // Lista de jugadores
 const jugadores = ref([]);
@@ -10,38 +11,38 @@ const showModal = ref(false);
 
 // Datos del nuevo jugador
 const nuevoJugador = ref({
-  nombre: "",
-  apellido: "",
-  dorsal: "",
-  posicion: ""
+  nombre: '',
+  apellido: '',
+  dorsal: '',
+  posicion: ''
 });
 
-// Función para obtener jugadores (simulado con API)
+// Función para obtener jugadores
 const obtenerJugadores = async () => {
   try {
-    const response = await axios.get("https://protactics-api.onrender.com/jugadores", {
-      headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` }
+    const response = await axios.get('https://protactics-api.onrender.com/jugadores', {
+      headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` }
     });
     jugadores.value = response.data;
   } catch (error) {
-    console.error("Error al obtener jugadores:", error);
+    console.error('Error al obtener jugadores:', error);
   }
 };
 
 // Función para agregar un nuevo jugador
 const agregarJugador = async () => {
   try {
-    const token = localStorage.getItem("authToken");
-    const entrenador_id = localStorage.getItem("entrenadorId"); // ID del entrenador que crea el jugador
+    const token = localStorage.getItem('authToken');
+    const entrenador_id = localStorage.getItem('entrenadorId'); // ID del entrenador que crea el jugador
 
     if (!entrenador_id) {
-      alert("Error: No se encontró el entrenador.");
+      alert('Error: No se encontró el entrenador.');
       return;
     }
 
     // Enviar datos a la API
     const response = await axios.post(
-      "https://protactics-api.onrender.com/jugadores/register",
+      'https://protactics-api.onrender.com/jugadores/register',
       {
         ...nuevoJugador.value,
         entrenador_id
@@ -55,11 +56,12 @@ const agregarJugador = async () => {
     jugadores.value.push(response.data.jugador);
 
     // Cerrar modal y limpiar formulario
-    nuevoJugador.value = { nombre: "", apellido: "", dorsal: "", posicion: "" };
+    nuevoJugador.value = { nombre: '', apellido: '', dorsal: '', posicion: '' };
     showModal.value = false;
+    alert('Jugador creado exitosamente');
   } catch (error) {
-    console.error("Error al crear jugador:", error);
-    alert("Error al crear el jugador. Revisa los datos.");
+    console.error('Error al crear jugador:', error);
+    alert('Error al crear el jugador. Revisa los datos.');
   }
 };
 
@@ -93,7 +95,7 @@ onMounted(obtenerJugadores);
         </div>
       </div>
 
-      <!-- Modal -->
+      <!-- Modal para agregar jugador -->
       <div 
         v-if="showModal"
         class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -133,3 +135,82 @@ onMounted(obtenerJugadores);
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Estilos generales */
+.crear-entrenador-container {
+  padding: 20px;
+  color: white;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.form-create {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.submit-btn {
+  padding: 12px;
+  background: linear-gradient(45deg, #4caf50, #0a74da);
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  transform: scale(1.05);
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: white;
+}
+
+.popup-close {
+  margin-top: 15px;
+  padding: 8px;
+  cursor: pointer;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+</style>
