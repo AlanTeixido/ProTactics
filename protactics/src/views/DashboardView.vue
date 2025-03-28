@@ -52,7 +52,6 @@ onMounted(loadDashboardData);
             
             <!-- Botón para crear entrenador -->
             <ButtonCrearEntrenador />
-            <CrearEntrenador />
           </div>
 
           <div v-else-if="esEntrenador" class="dashboard-left">

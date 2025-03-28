@@ -1,7 +1,5 @@
 <template>
   <div class="crear-entrenador-container">
-    <h2 class="title">Crear Entrenador</h2>
-
     <form @submit.prevent="crearEntrenador" class="form-create">
       <div class="input-group">
         <label for="nombre">Nom del entrenador</label>
@@ -99,25 +97,28 @@ const crearEntrenador = async () => {
 
 <style scoped>
 .crear-entrenador-container {
-  padding: 20px;
   color: white;
-}
-
-.title {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
 }
 
 .form-create {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 400px; /* Ancho fijo para el formulario */
+  max-width: 100%; /* Asegura que no se desborde en pantallas pequeñas */
 }
 
 .input-group {
   display: flex;
   flex-direction: column;
+}
+
+label {
+  color: #2a2a2a;
 }
 
 input {
@@ -126,7 +127,7 @@ input {
   border-radius: 5px;
   border: 1px solid #ccc;
   margin-top: 5px;
-  background-color: #2a2a2a;
+  background-color: #2a2a2a18;
   color: white;
 }
 
