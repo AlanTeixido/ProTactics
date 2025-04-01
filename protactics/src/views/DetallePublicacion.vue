@@ -1,13 +1,13 @@
 <template>
-    <div class="max-w-3xl mx-auto p-4">
-      <div v-if="loading" class="text-center">Cargando...</div>
+    <div class="container">
+      <div v-if="loading" class="loading">Cargando...</div>
       <div v-else>
-        <div class="border p-6 rounded-lg shadow-md">
-          <h1 class="text-2xl font-bold">{{ publicacion.titulo }}</h1>
-          <p class="text-gray-600">Por {{ publicacion.entrenador }}</p>
-          <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="w-full h-64 object-cover my-4 rounded-lg">
-          <p class="text-gray-700">{{ publicacion.contenido }}</p>
-          <button @click="toggleLike" class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
+        <div class="post-card">
+          <h1 class="title">{{ publicacion.titulo }}</h1>
+          <p class="author">Por {{ publicacion.entrenador }}</p>
+          <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="post-image">
+          <p class="content">{{ publicacion.contenido }}</p>
+          <button @click="toggleLike" class="like-button">
             {{ liked ? 'Quitar Like' : 'Dar Like' }}
           </button>
         </div>
@@ -52,3 +52,67 @@
   
   onMounted(fetchPublicacion);
   </script>
+  
+  <style scoped>
+  .container {
+    max-width: 768px;
+    margin: 0 auto;
+    padding: 16px;
+  }
+  
+  .loading {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+  }
+  
+  .post-card {
+    border: 1px solid #e5e5e5;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .author {
+    font-size: 1rem;
+    color: #555;
+    margin-top: 8px;
+  }
+  
+  .post-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    margin-top: 16px;
+    border-radius: 8px;
+  }
+  
+  .content {
+    font-size: 1rem;
+    color: #333;
+    margin-top: 16px;
+  }
+  
+  .like-button {
+    margin-top: 16px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .like-button:hover {
+    background-color: #2980b9;
+  }
+  </style>
+  
