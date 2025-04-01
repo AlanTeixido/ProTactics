@@ -47,6 +47,18 @@ const router = createRouter({
       name: 'Jugadores',
       component: () => import('@/views/JugadoresDashboard.vue'),
     },
+    {
+      path: '/publicaciones',
+      name: 'publicaciones',
+      component: () => import('../views/PublicacionesView.vue'),
+      props: true
+    },
+    {
+      path: '/publicaciones/:id',
+      name: 'detalle-publicacion',
+      component: () => import('../views/DetallePublicacion.vue'),
+      props: true
+    },
     // router/index.js o on tinguis definides les rutes
 {
   path: '/jugadores/editar/:id',
