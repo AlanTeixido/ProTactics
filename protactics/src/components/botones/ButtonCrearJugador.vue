@@ -1,23 +1,19 @@
-<script setup></script>
+<script setup>
+</script>
 
 <template>
-  <div>
-    <!-- Botón con RouterLink para redirigir a /crearJugador -->
-    <button class="button-crear-jugador">
-      <RouterLink to="/crearJugador" class="router-link">
-        <div class="button-content">
-          <span class="plus-sign">+</span>
-          <p>Crear Jugador</p>
-        </div>
-      </RouterLink>
-    </button>
-  </div>
+  <!-- RouterLink directe amb classes de botó -->
+  <RouterLink to="/crearJugador" class="button-crear-jugador">
+    <div class="button-content">
+      <span class="plus-sign">+</span>
+      <p>Crear Jugador</p>
+    </div>
+  </RouterLink>
 </template>
 
 <style scoped>
-/* Estilo para el botón de añadir jugador */
 .button-crear-jugador {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   padding: 10px 20px;
@@ -27,15 +23,11 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
+  text-decoration: none; /* Eliminar subratllat */
 }
 
 .button-crear-jugador:hover {
   background-color: #45a049;
-}
-
-.router-link {
-  text-decoration: none; /* Eliminar el subrayado en el enlace */
-  color: white; /* Mantener el texto blanco */
 }
 
 .button-content {

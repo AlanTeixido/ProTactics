@@ -41,7 +41,13 @@ const router = createRouter({
       path: '/crearJugador', 
       name: 'crearJugador', 
       component: () => import('../views/CrearJugadorPage.vue')
+    },
+    {
+      path: '/jugadores',
+      name: 'Jugadores',
+      component: () => import('@/views/JugadoresDashboard.vue'),
     }
+    
   ],
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 }; // Scroll al inici de la pàgina al canviar de ruta

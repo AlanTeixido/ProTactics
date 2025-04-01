@@ -1,38 +1,27 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';  
-import Posts from "@/components/PostsDashboard.vue";
+import { useRouter } from 'vue-router';
+import { ref } from 'vue';
 import MenuDashboard from '@/components/MenuDashboard.vue';
-import axios from "axios";
-import Loader from "@/components/Loader.vue"; 
-import ButtonCrearTarea from '@/components/botones/ButtonCrearTarea.vue';
-import CrearEntrenador from '@/components/formularios/FormCrearEntrenador.vue';
-import ButtonCrearEntrenador from '@/components/botones/ButtonCrearEntrenador.vue';
-import ButtonCrearJugador from '@/components/botones/ButtonCrearJugador.vue';  // Botón para crear jugador
 
-// Loading
-const isLoading = ref(true);
+const router = useRouter();
 
-// Usuari i rol
 const user = ref({
-  username: localStorage.getItem("username") || "Usuario",
-  rol: localStorage.getItem("userRol") || "desconocido"
+  username: localStorage.getItem("username") || "Usuari",
+  rol: localStorage.getItem("userRol") || "desconegut",
 });
 
-const esClub = computed(() => user.value.rol === 'club');
-const esEntrenador = computed(() => user.value.rol === 'entrenador');
-
-// Cargar datos iniciales
-const loadDashboardData = async () => {
-  try {
-    await axios.get('https://protactics-api.onrender.com/user_stats/monthly_goal');
-  } catch (error) {
-    console.error('Error cargando datos:', error);
-  } finally {
-    isLoading.value = false;
-  }
+const goTo = (path) => {
+  router.push(path);
 };
 
-onMounted(loadDashboardData);
+const options = [
+  { label: "Entrenaments", icon: "📋", path: "/entrenamientos", color: "#1e3a8a" },
+  { label: "Partits", icon: "⚽", path: "/partits", color: "#1e3a8a" },
+  { label: "Pissarra", icon: "🧠", path: "/pissarra", color: "#facc15" },
+  { label: "Planificador", icon: "📅", path: "/planificador", color: "#facc15" },
+  { label: "Jugadors", icon: "🧍", path: "/jugadores", color: "#16a34a" },
+  { label: "Configuració", icon: "⚙️", path: "/configuracio", color: "#9ca3af" },
+];
 </script>
 
 <template>
@@ -42,102 +31,109 @@ onMounted(loadDashboardData);
     </div>
 
     <div class="dashboard-container">
-        <div>
-          <h2>Bienvenido, {{ user.username }}</h2>
+      <h2 class="titulo">Benvingut, {{ user.username }}</h2>
+      <div class="rol-badge">Accedint com a <strong>{{ user.rol }}</strong></div>
 
-          <div v-if="esClub" class="buttonsDashboard">
-            <Posts mode="dashboard" />
-            <p style="margin: 20px; color: #4a4a4a;">Accediendo como <strong>Club</strong></p>
-            
-            <!-- Botón para crear entrenador -->
-            <ButtonCrearEntrenador />
-          </div>
-
-          <div v-else-if="esEntrenador" class="buttonsDashboard">
-            <Posts mode="dashboard" />
-            <p style="margin: 20px; color: #4a4a4a;">Accediendo como <strong>Entrenador</strong></p>
-            
-            <!-- Botón para crear jugador, visible solo para entrenadores -->
-            <ButtonCrearJugador />  <
-          </div>
-
+      <div class="grid">
+        <div
+          v-for="(opt, i) in options"
+          :key="i"
+          class="card"
+          :style="{ backgroundColor: opt.color }"
+          @click="goTo(opt.path)"
+        >
+          <div class="icon">{{ opt.icon }}</div>
+          <div class="label">{{ opt.label }}</div>
         </div>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Estilos generales */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-color: #f3f3f3;
-}
-
 .dashboard {
   display: flex;
   height: 100vh;
-  background-color: #f3f3f3;
+  background: linear-gradient(to right, #0f172a, #155e75);
+  color: white;
 }
 
-/* ===== Menú a la izquierda ===== */
 .dashboard-menu {
   width: 250px;
   height: 100vh;
   background-color: rgb(36, 36, 36);
-  color: white;
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   bottom: 0;
 }
 
-/* ===== Contenedor principal del dashboard ===== */
 .dashboard-container {
   flex: 1;
   margin-left: 250px;
+  padding: 60px 40px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  align-items: center;
+  gap: 40px;
 }
 
-/* ===== Parte superior (Posts + Stats) ===== */
+/* Títol i rol */
+.titulo {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #fff;
+}
 
+.rol-badge {
+  background-color: #ffffff22;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  color: #e2e8f0;
+}
 
-h2 {
+/* Targetes */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.card {
+  padding: 35px 20px;
+  border-radius: 15px;
   text-align: center;
-  font-size: 250%;
-  font-weight: 500;
-  color: rgb(73, 73, 73);
-  margin-top: 5%;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
 
-.loading-text {
-  color: #888;
+.card:hover {
+  transform: translateY(-6px);
 }
 
-.dashboard-left::-webkit-scrollbar {
-  width: 4px;
+.icon {
+  font-size: 2.6rem;
+  margin-bottom: 10px;
 }
 
-.dashboard-left::-webkit-scrollbar-track {
-  background: #f3f3f3;
-  border-radius: 10px;
+.label {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: white;
 }
 
-.dashboard-left::-webkit-scrollbar-thumb {
-  background: #bbbbbb79;
-  border-radius: 10px;
-}
-
-@media (max-width: 1500px) {
-  .dashboard-menu {
-    width: 200px;
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin-left: 0;
+    padding: 30px 20px;
   }
 
-  .dashboard-container {
-    margin-left: 200px;
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   }
 }
 </style>
