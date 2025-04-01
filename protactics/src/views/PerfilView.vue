@@ -65,7 +65,6 @@
 </template>
 
 <script setup>
-import Posts from "@/components/Posts.vue";
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import Entrenamientos from "@/components/Entrenamientos.vue";

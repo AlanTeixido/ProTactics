@@ -12,7 +12,6 @@
 </template>
 
 <script setup>
-import Entrenamientos from "@/components/Entrenamientos.vue";
 import MenuDashboard from "@/components/MenuDashboard.vue";
 </script>
 
