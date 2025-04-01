@@ -77,29 +77,33 @@ onMounted(cargarJugadores);
     </div>
 
     <div class="dashboard-container">
-      <h2 class="titulo">Gestió de jugadors</h2>
-      <div class="rol-badge">Accedint com a <strong>{{ user.rol }}</strong></div>
+      <h2 class="titulo">Gestión de jugadores</h2>
+      <div class="rol-badge">Accediendo como <strong>{{ user.rol }}</strong></div>
 
       <div class="crear-jugador-box">
         <ButtonCrearJugador />
       </div>
 
       <div class="jugadors-llista">
-        <h3>Jugadors del teu equip:</h3>
+        <h3>Jugadores de tu equipo:</h3>
         <div v-if="jugadores.length === 0" class="empty-msg">
-          No tens jugadors registrats encara.
+          Todavía no has registrado jugadores.
         </div>
 
         <ul class="jugadors">
           <li v-for="j in jugadores" :key="j.jugador_id" class="jugador">
             <div v-if="jugadorEditando !== j.jugador_id" class="jugador-info">
-              <strong>{{ j.nombre }} {{ j.apellido }}</strong>
-              <span>· Posició: {{ j.posicion }}</span>
-              <span>· Dorsal: {{ j.dorsal }}</span>
+              <div class="camiseta-jugador">
+                <strong class="nombre">{{ j.nombre }} {{ j.apellido }}</strong>
+                <span class="dorsal">{{ j.dorsal }}</span>
+              </div>
+
+              <!--
               <div class="botones">
                 <button class="btn-edit" @click="iniciarEdicion(j)">✏️</button>
                 <button class="btn-delete" @click="eliminarJugador(j.jugador_id)">🗑️</button>
               </div>
+              -->
             </div>
 
             <div v-else class="jugador-info editando">
@@ -178,19 +182,15 @@ onMounted(cargarJugadores);
 
 .jugadors {
   list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid;
-  gap: 15px;
+  display: flex;
+  gap: 45px;
 }
 
-.jugador {
-  background-color: #1e293b;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
+.camiseta-jugador:hover {
+  cursor: pointer;
+  transform: scale(1.1);
 
+}
 .jugador-info {
   display: flex;
   justify-content: space-between;
@@ -217,7 +217,10 @@ onMounted(cargarJugadores);
   margin-top: 10px;
 }
 
-.btn-delete, .btn-edit, .btn-guardar, .btn-cancelar {
+.btn-delete,
+.btn-edit,
+.btn-guardar,
+.btn-cancelar {
   padding: 6px 10px;
   border: none;
   border-radius: 5px;
@@ -225,15 +228,61 @@ onMounted(cargarJugadores);
   cursor: pointer;
 }
 
-.btn-delete { background: #dc2626; color: white; }
-.btn-delete:hover { background: #b91c1c; }
+.btn-delete {
+  background: #dc2626;
+  color: white;
+}
 
-.btn-edit { background: #4b5563; color: white; }
-.btn-edit:hover { background: #374151; }
+.btn-delete:hover {
+  background: #b91c1c;
+}
 
-.btn-guardar { background: #22c55e; color: white; }
-.btn-guardar:hover { background: #16a34a; }
+.btn-edit {
+  background: #4b5563;
+  color: white;
+}
 
-.btn-cancelar { background: #9ca3af; color: black; }
-.btn-cancelar:hover { background: #6b7280; }
+.btn-edit:hover {
+  background: #374151;
+}
+
+.btn-guardar {
+  background: #22c55e;
+  color: white;
+}
+
+.btn-guardar:hover {
+  background: #16a34a;
+}
+
+.btn-cancelar {
+  background: #9ca3af;
+  color: black;
+}
+
+.btn-cancelar:hover {
+  background: #6b7280;
+}
+
+.camiseta-jugador {
+  background-color: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 130px;
+  height: 100px;
+  transition: 0.3s;
+
+}
+.nombre{
+  font-size: 108%;
+  font-weight: 400;
+}
+.dorsal{
+  font-size: 300%;
+  font-weight: 600;
+}
 </style>
