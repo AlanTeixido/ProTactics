@@ -2,8 +2,8 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
+import MenuDashboard from '@/components/MenuDashboard.vue';
 
-// Estados
 const nombre = ref('');
 const apellido = ref('');
 const posicion = ref('');
@@ -11,7 +11,6 @@ const dorsal = ref('');
 const popupVisible = ref(false);
 const popupMessage = ref('');
 
-// Router para redirigir después de la creación
 const router = useRouter();
 
 const showPopup = (message) => {
@@ -19,24 +18,21 @@ const showPopup = (message) => {
   popupVisible.value = true;
   setTimeout(() => {
     popupVisible.value = false;
-  }, 3000); // Cierra el popup después de 3 segundos
+  }, 3000);
 };
 
 const closePopup = () => {
   popupVisible.value = false;
 };
 
-// Función para crear jugador
 const crearJugador = async () => {
   try {
-    const token = localStorage.getItem('authToken'); // Token que se guarda en localStorage
-
+    const token = localStorage.getItem('authToken');
     if (!token) {
-      showPopup("❌ No tienes permiso para crear jugadores.");
+      showPopup("❌ No tens permís per crear jugadors.");
       return;
     }
 
-    // Hacer la solicitud para crear jugador
     const response = await axios.post(
       'https://protactics-api.onrender.com/jugadores/register',
       {
@@ -47,73 +43,120 @@ const crearJugador = async () => {
       },
       {
         headers: {
-          Authorization: `Bearer ${token}`, // Token en la cabecera
+          Authorization: `Bearer ${token}`,
         },
       }
     );
 
     showPopup(response.data.message);
-    router.push('/dashboard'); // Redirigir al dashboard después de crear el jugador
+    router.push('/jugadores');
   } catch (error) {
-    console.error('Error al crear jugador:', error);
-    showPopup(error.response?.data?.error || 'Error en la creación del jugador.');
+    console.error('❌ Error al crear jugador:', error);
+    showPopup(error.response?.data?.error || 'Error en la creació del jugador.');
   }
 };
 </script>
 
 <template>
-  <div class="form-crearJugador">
-    <h2 class="crearJugador-title">Información del jugador</h2>
-    <form @submit.prevent="crearJugador" class="crearJugador-form">
-      <div class="input-group">
-        <label>Nombre</label>
-        <input v-model="nombre" type="text" placeholder="Nombre" required class="input-field" />
-      </div>
-      <div class="input-group">
-        <label>Apellido</label>
-        <input v-model="apellido" type="text" placeholder="Apellido" required class="input-field" />
-      </div>
-      <div class="input-group">
-        <label>Posición</label>
-        <input v-model="posicion" type="text" placeholder="Posición" required class="input-field" />
-      </div>
-      <div class="input-group">
-        <label>Dorsal</label>
-        <input v-model="dorsal" type="number" placeholder="Dorsal" required class="input-field" />
-      </div>
-      <button type="submit" class="submit-btn">Crear Jugador</button>
-    </form>
+  <div class="dashboard">
+    <div class="dashboard-menu">
+      <MenuDashboard />
+    </div>
 
-    <div v-if="popupVisible" class="popup">
-      <div class="popup-content">
-        <p>{{ popupMessage }}</p>
-        <button @click="closePopup" class="popup-close">Cerrar</button>
+    <div class="dashboard-container page-container">
+      <div class="form-card">
+        <h2 class="crearJugador-title">Crear jugador</h2>
+        <h3 class="subtitulo">Informació del jugador</h3>
+
+        <form @submit.prevent="crearJugador" class="crearJugador-form">
+          <div class="input-group">
+            <label>Nom</label>
+            <input v-model="nombre" type="text" placeholder="Nom" required class="input-field" />
+          </div>
+          <div class="input-group">
+            <label>Cognom</label>
+            <input v-model="apellido" type="text" placeholder="Cognom" required class="input-field" />
+          </div>
+          <div class="input-group">
+            <label>Posició</label>
+            <input v-model="posicion" type="text" placeholder="Posició" required class="input-field" />
+          </div>
+          <div class="input-group">
+            <label>Dorsal</label>
+            <input v-model="dorsal" type="number" placeholder="Dorsal" required class="input-field" />
+          </div>
+          <button type="submit" class="submit-btn">Crear Jugador</button>
+        </form>
+      </div>
+
+      <div v-if="popupVisible" class="popup">
+        <div class="popup-content">
+          <p>{{ popupMessage }}</p>
+          <button @click="closePopup" class="popup-close">Tancar</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.form-crearJugador {
-  color: white;
+.dashboard {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  height: 100vh;
+}
+
+.dashboard-menu {
+  width: 250px;
+  height: 100vh;
+  background-color: rgb(36, 36, 36);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.dashboard-container {
+  flex: 1;
+  margin-left: 250px;
+  padding: 40px;
+}
+
+.page-container {
+  background: linear-gradient(to right, #0f172a, #155e75);
+  display: flex;
   align-items: center;
-  margin-top: 10%;
+  justify-content: center;
+  height: 100%;
+  color: white;
+}
+
+.form-card {
+  background-color: #1e293b;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 500px;
 }
 
 .crearJugador-title {
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.subtitulo {
+  font-size: 1.2rem;
+  margin-bottom: 25px;
+  font-weight: 500;
+  color: #e2e8f0;
+  text-align: center;
 }
 
 .crearJugador-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  width: 400px;
-  max-width: 100%;
+  gap: 20px;
 }
 
 .input-group {
@@ -122,31 +165,37 @@ const crearJugador = async () => {
 }
 
 label {
-  color: #2a2a2a;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  margin-bottom: 5px;
 }
 
 .input-field {
-  padding: 10px;
+  padding: 12px;
   font-size: 1rem;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  margin-top: 5px;
-  background-color: #2a2a2a18;
+  border-radius: 8px;
+  border: none;
+  background-color: #334155;
   color: white;
+}
+
+.input-field::placeholder {
+  color: #94a3b8;
 }
 
 .submit-btn {
   padding: 12px;
-  background: linear-gradient(45deg, #4caf50, #0a74da);
+  background: linear-gradient(to right, #22c55e, #3b82f6);
   border: none;
   color: white;
   font-weight: bold;
-  border-radius: 25px;
+  border-radius: 8px;
   cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
 .submit-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
 .popup {
