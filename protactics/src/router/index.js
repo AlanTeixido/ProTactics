@@ -46,7 +46,14 @@ const router = createRouter({
       path: '/jugadores',
       name: 'Jugadores',
       component: () => import('@/views/JugadoresDashboard.vue'),
-    }
+    },
+    // router/index.js o on tinguis definides les rutes
+{
+  path: '/jugadores/editar/:id',
+  name: 'EditarJugador',
+  component: () => import('@/views/EditarJugador.vue')
+}
+
     
   ],
   scrollBehavior(to, from, savedPosition) {

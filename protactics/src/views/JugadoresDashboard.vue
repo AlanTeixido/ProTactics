@@ -11,16 +11,16 @@ const user = ref({
   rol: localStorage.getItem("userRol") || "desconegut",
 });
 
+const jugadorEditando = ref(null);
+const editData = ref({ nombre: '', apellido: '', posicion: '', dorsal: '' });
+
 const esEntrenador = computed(() => user.value.rol === 'entrenador');
 
-// Carrega els jugadors propis
 const cargarJugadores = async () => {
   try {
     const token = localStorage.getItem("authToken");
     const response = await axios.get(`https://protactics-api.onrender.com/jugadores`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     jugadores.value = response.data || [];
@@ -30,15 +30,12 @@ const cargarJugadores = async () => {
 };
 
 const eliminarJugador = async (id) => {
-  if (!id) return alert("ID de jugador no vàlid.");
-  if (!confirm("Segur que vols eliminar aquest jugador?")) return;
-
+  if (!id || !confirm("Segur que vols eliminar aquest jugador?")) return;
   try {
     const token = localStorage.getItem("authToken");
     await axios.delete(`https://protactics-api.onrender.com/jugadores/${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
     jugadores.value = jugadores.value.filter(j => j.jugador_id !== id);
   } catch (error) {
     console.error("❌ Error eliminant jugador:", error);
@@ -46,6 +43,29 @@ const eliminarJugador = async (id) => {
   }
 };
 
+const iniciarEdicion = (jugador) => {
+  jugadorEditando.value = jugador.jugador_id;
+  editData.value = { ...jugador };
+};
+
+const cancelarEdicion = () => {
+  jugadorEditando.value = null;
+  editData.value = { nombre: '', apellido: '', posicion: '', dorsal: '' };
+};
+
+const guardarEdicion = async (id) => {
+  try {
+    const token = localStorage.getItem("authToken");
+    await axios.put(`https://protactics-api.onrender.com/jugadores/${id}`, editData.value, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    jugadorEditando.value = null;
+    await cargarJugadores(); // refresquem
+  } catch (error) {
+    console.error("❌ Error actualitzant jugador:", error);
+    alert("No s'ha pogut actualitzar el jugador.");
+  }
+};
 
 onMounted(cargarJugadores);
 </script>
@@ -60,12 +80,10 @@ onMounted(cargarJugadores);
       <h2 class="titulo">Gestió de jugadors</h2>
       <div class="rol-badge">Accedint com a <strong>{{ user.rol }}</strong></div>
 
-      <!-- Botó per crear jugador -->
       <div class="crear-jugador-box">
         <ButtonCrearJugador />
       </div>
 
-      <!-- Llista de jugadors -->
       <div class="jugadors-llista">
         <h3>Jugadors del teu equip:</h3>
         <div v-if="jugadores.length === 0" class="empty-msg">
@@ -74,12 +92,26 @@ onMounted(cargarJugadores);
 
         <ul class="jugadors">
           <li v-for="j in jugadores" :key="j.jugador_id" class="jugador">
-            <div class="jugador-info">
+            <div v-if="jugadorEditando !== j.jugador_id" class="jugador-info">
               <strong>{{ j.nombre }} {{ j.apellido }}</strong>
               <span>· Posició: {{ j.posicion }}</span>
               <span>· Dorsal: {{ j.dorsal }}</span>
+              <div class="botones">
+                <button class="btn-edit" @click="iniciarEdicion(j)">✏️</button>
+                <button class="btn-delete" @click="eliminarJugador(j.jugador_id)">🗑️</button>
+              </div>
             </div>
-            <button class="btn-delete" @click="eliminarJugador(j.jugador_id)">🗑️</button>
+
+            <div v-else class="jugador-info editando">
+              <input v-model="editData.nombre" placeholder="Nom" />
+              <input v-model="editData.apellido" placeholder="Cognom" />
+              <input v-model="editData.posicion" placeholder="Posició" />
+              <input v-model="editData.dorsal" type="number" placeholder="Dorsal" />
+              <div class="botones">
+                <button class="btn-guardar" @click="guardarEdicion(j.jugador_id)">💾</button>
+                <button class="btn-cancelar" @click="cancelarEdicion()">❌</button>
+              </div>
+            </div>
           </li>
         </ul>
       </div>
@@ -157,30 +189,51 @@ onMounted(cargarJugadores);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.jugador-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.jugador span {
-  display: block;
-  font-size: 0.95rem;
-  color: #cbd5e1;
-  margin-top: 5px;
+.jugador-info.editando {
+  flex-direction: column;
+  gap: 10px;
 }
 
-.btn-delete {
-  background: #dc2626;
+.jugador-info input {
+  background-color: #334155;
   color: white;
+  padding: 8px;
   border: none;
-  padding: 8px 10px;
-  border-radius: 6px;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-delete, .btn-edit, .btn-guardar, .btn-cancelar {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
-.btn-delete:hover {
-  background: #b91c1c;
-}
+.btn-delete { background: #dc2626; color: white; }
+.btn-delete:hover { background: #b91c1c; }
+
+.btn-edit { background: #4b5563; color: white; }
+.btn-edit:hover { background: #374151; }
+
+.btn-guardar { background: #22c55e; color: white; }
+.btn-guardar:hover { background: #16a34a; }
+
+.btn-cancelar { background: #9ca3af; color: black; }
+.btn-cancelar:hover { background: #6b7280; }
 </style>
