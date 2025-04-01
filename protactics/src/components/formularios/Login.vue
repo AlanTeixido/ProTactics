@@ -87,7 +87,7 @@ const login = async () => {
     if (data.token) {
       localStorage.setItem('authToken', data.token);
       localStorage.setItem('username', data.nombre);
-      localStorage.setItem('userEmail', data.correo);
+      localStorage.setItem('userEmail', data.email);
       localStorage.setItem('userId', data.id);
       localStorage.setItem('userRol', data.rol);
 
