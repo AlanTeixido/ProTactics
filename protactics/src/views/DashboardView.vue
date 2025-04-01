@@ -22,6 +22,7 @@ const allOptions = [
   { label: "Jugadors", icon: "🧍", path: "/jugadores", color: "#16a34a", roles: ["entrenador"] },
   { label: "Entrenadors", icon: "🧑‍🏫", path: "/entrenadors", color: "#0ea5e9", roles: ["club"] },
   { label: "Configuració", icon: "⚙️", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
+  { label: "Publicacions", icon: "📰", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
 ];
 
 // Filtra opcions segons el rol de l'usuari
