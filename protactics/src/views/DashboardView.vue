@@ -1,6 +1,6 @@
 <script setup>
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 
 const router = useRouter();
@@ -14,15 +14,22 @@ const goTo = (path) => {
   router.push(path);
 };
 
-const options = [
-  { label: "Entrenaments", icon: "📋", path: "/entrenamientos", color: "#1e3a8a" },
-  { label: "Partits", icon: "⚽", path: "/partits", color: "#1e3a8a" },
-  { label: "Pissarra", icon: "🧠", path: "/pissarra", color: "#facc15" },
-  { label: "Planificador", icon: "📅", path: "/planificador", color: "#facc15" },
-  { label: "Jugadors", icon: "🧍", path: "/jugadores", color: "#16a34a" },
-  { label: "Configuració", icon: "⚙️", path: "/configuracio", color: "#9ca3af" },
+const allOptions = [
+  { label: "Entrenaments", icon: "📋", path: "/entrenamientos", color: "#1e3a8a", roles: ["entrenador"] },
+  { label: "Partits", icon: "⚽", path: "/partits", color: "#1e3a8a", roles: ["entrenador"] },
+  { label: "Pissarra", icon: "🧠", path: "/pissarra", color: "#facc15", roles: ["entrenador"] },
+  { label: "Planificador", icon: "📅", path: "/planificador", color: "#facc15", roles: ["entrenador"] },
+  { label: "Jugadors", icon: "🧍", path: "/jugadores", color: "#16a34a", roles: ["entrenador"] },
+  { label: "Entrenadors", icon: "🧑‍🏫", path: "/entrenadors", color: "#0ea5e9", roles: ["club"] },
+  { label: "Configuració", icon: "⚙️", path: "/configuracio", color: "#9ca3af", roles: ["club", "entrenador"] },
 ];
+
+// Filtra opcions segons el rol de l'usuari
+const options = computed(() => {
+  return allOptions.filter(opt => opt.roles.includes(user.value.rol));
+});
 </script>
+
 
 <template>
   <div class="dashboard">
