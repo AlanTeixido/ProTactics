@@ -63,7 +63,6 @@ onMounted(() => {
 <template>
     <div class="menu">
         <div class="info-menu">
-            <h2>ProTactics</h2>
             <img src="../assets/img/logo.png" class="logo">
         </div>
 
@@ -108,7 +107,9 @@ onMounted(() => {
     /* Ajusta el tamaño del menú */
     height: 100vh;
     /* Ocupa toda la altura de la pantalla */
-    background-color: rgb(160, 160, 160);
+    background-color: #0b0f1a;
+    /*background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));*/
+    filter: brightness(0.9);
 }
 
 .nav-container {

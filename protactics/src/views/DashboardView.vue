@@ -62,7 +62,7 @@ const options = computed(() => {
 .dashboard {
   display: flex;
   height: 100vh;
-  background: linear-gradient(to right, #0f172a, #155e75);
+  background: linear-gradient(to left, #0f172a, #155e75);
   color: white;
 }
 
@@ -132,6 +132,11 @@ const options = computed(() => {
   font-size: 1.05rem;
   font-weight: 600;
   color: white;
+}
+
+h2{
+  text-transform: uppercase;
+  font-size: 300px;
 }
 
 @media (max-width: 768px) {
