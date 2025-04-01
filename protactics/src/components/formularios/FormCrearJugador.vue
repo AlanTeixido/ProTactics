@@ -58,42 +58,41 @@ const crearJugador = async () => {
 </script>
 
 <template>
-  <div class="dashboard">
-    <div class="dashboard-menu">
-      <MenuDashboard />
+  <div class="dashboard-container page-container">
+    <div class="form-card">
+      <h3 class="subtitulo">Información del jugador</h3>
+
+      <form @submit.prevent="crearJugador" class="crearJugador-form">
+        <div class="input-group">
+          <label>Nombre</label>
+          <input v-model="nombre" type="text" placeholder="Nom" required class="input-field" />
+        </div>
+        <div class="input-group">
+          <label>Apellido</label>
+          <input v-model="apellido" type="text" placeholder="Cognom" required class="input-field" />
+        </div>
+        <div class="input-group">
+          <label>Posición</label>
+          <select v-model="posicion" required class="input-field">
+            <option value="" disabled>Selecciona una posició</option>
+            <option value="Portero">Portero</option>
+            <option value="Defensa">Defensa</option>
+            <option value="Mediocentro">Mediocentro</option>
+            <option value="Delantero">Delantero</option>
+          </select>
+        </div>
+        <div class="input-group">
+          <label>Dorsal</label>
+          <input v-model="dorsal" min="1" type="number" placeholder="Dorsal" required class="input-field" />
+        </div>
+        <button type="submit" class="submit-btn">Crear Jugador</button>
+      </form>
     </div>
 
-    <div class="dashboard-container page-container">
-      <div class="form-card">
-        <h2 class="crearJugador-title">Crear jugador</h2>
-        <h3 class="subtitulo">Informació del jugador</h3>
-
-        <form @submit.prevent="crearJugador" class="crearJugador-form">
-          <div class="input-group">
-            <label>Nom</label>
-            <input v-model="nombre" type="text" placeholder="Nom" required class="input-field" />
-          </div>
-          <div class="input-group">
-            <label>Cognom</label>
-            <input v-model="apellido" type="text" placeholder="Cognom" required class="input-field" />
-          </div>
-          <div class="input-group">
-            <label>Posició</label>
-            <input v-model="posicion" type="text" placeholder="Posició" required class="input-field" />
-          </div>
-          <div class="input-group">
-            <label>Dorsal</label>
-            <input v-model="dorsal" type="number" placeholder="Dorsal" required class="input-field" />
-          </div>
-          <button type="submit" class="submit-btn">Crear Jugador</button>
-        </form>
-      </div>
-
-      <div v-if="popupVisible" class="popup">
-        <div class="popup-content">
-          <p>{{ popupMessage }}</p>
-          <button @click="closePopup" class="popup-close">Tancar</button>
-        </div>
+    <div v-if="popupVisible" class="popup">
+      <div class="popup-content">
+        <p>{{ popupMessage }}</p>
+        <button @click="closePopup" class="popup-close">Tancar</button>
       </div>
     </div>
   </div>
@@ -103,31 +102,6 @@ const crearJugador = async () => {
 .dashboard {
   display: flex;
   height: 100vh;
-}
-
-.dashboard-menu {
-  width: 250px;
-  height: 100vh;
-  background-color: rgb(36, 36, 36);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-}
-
-.dashboard-container {
-  flex: 1;
-  margin-left: 250px;
-  padding: 40px;
-}
-
-.page-container {
-  background: linear-gradient(to right, #0f172a, #155e75);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  color: white;
 }
 
 .form-card {

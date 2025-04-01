@@ -13,6 +13,8 @@ const user = ref({
 
 const jugadorEditando = ref(null);
 const editData = ref({ nombre: '', apellido: '', posicion: '', dorsal: '' });
+const popupEliminar = ref(false);
+const jugadorEliminarId = ref(null);
 
 const esEntrenador = computed(() => user.value.rol === 'entrenador');
 
@@ -29,14 +31,16 @@ const cargarJugadores = async () => {
   }
 };
 
-const eliminarJugador = async (id) => {
-  if (!id || !confirm("Segur que vols eliminar aquest jugador?")) return;
+const eliminarJugador = async () => {
+  if (!jugadorEliminarId.value) return;
+
   try {
     const token = localStorage.getItem("authToken");
-    await axios.delete(`https://protactics-api.onrender.com/jugadores/${id}`, {
+    await axios.delete(`https://protactics-api.onrender.com/jugadores/${jugadorEliminarId.value}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-    jugadores.value = jugadores.value.filter(j => j.jugador_id !== id);
+    jugadores.value = jugadores.value.filter(j => j.jugador_id !== jugadorEliminarId.value);
+    popupEliminar.value = false;
   } catch (error) {
     console.error("❌ Error eliminant jugador:", error);
     alert("No s'ha pogut eliminar el jugador.");
@@ -67,6 +71,16 @@ const guardarEdicion = async (id) => {
   }
 };
 
+const confirmarEliminarJugador = (id) => {
+  jugadorEliminarId.value = id;
+  popupEliminar.value = true;
+};
+
+const cancelarEliminar = () => {
+  jugadorEliminarId.value = null;
+  popupEliminar.value = false;
+};
+
 onMounted(cargarJugadores);
 </script>
 
@@ -93,17 +107,10 @@ onMounted(cargarJugadores);
         <ul class="jugadors">
           <li v-for="j in jugadores" :key="j.jugador_id" class="jugador">
             <div v-if="jugadorEditando !== j.jugador_id" class="jugador-info">
-              <div class="camiseta-jugador">
+              <div class="camiseta-jugador" @click="iniciarEdicion(j)">
                 <strong class="nombre">{{ j.nombre }} {{ j.apellido }}</strong>
                 <span class="dorsal">{{ j.dorsal }}</span>
               </div>
-
-              <!--
-              <div class="botones">
-                <button class="btn-edit" @click="iniciarEdicion(j)">✏️</button>
-                <button class="btn-delete" @click="eliminarJugador(j.jugador_id)">🗑️</button>
-              </div>
-              -->
             </div>
 
             <div v-else class="jugador-info editando">
@@ -113,11 +120,22 @@ onMounted(cargarJugadores);
               <input v-model="editData.dorsal" type="number" placeholder="Dorsal" />
               <div class="botones">
                 <button class="btn-guardar" @click="guardarEdicion(j.jugador_id)">💾</button>
-                <button class="btn-cancelar" @click="cancelarEdicion()">❌</button>
+                <button class="btn-cancelar" @click="cancelarEdicion()">X</button>
               </div>
             </div>
           </li>
         </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup para eliminar jugador -->
+  <div v-if="popupEliminar" class="popup-eliminar">
+    <div class="popup-content">
+      <h3>¿Estás seguro de que quieres eliminar al jugador?</h3>
+      <div class="popup-botones">
+        <button @click="eliminarJugador">Sí, eliminar</button>
+        <button @click="cancelarEliminar">Cancelar</button>
       </div>
     </div>
   </div>
@@ -189,8 +207,8 @@ onMounted(cargarJugadores);
 .camiseta-jugador:hover {
   cursor: pointer;
   transform: scale(1.1);
-
 }
+
 .jugador-info {
   display: flex;
   justify-content: space-between;
@@ -247,21 +265,15 @@ onMounted(cargarJugadores);
 }
 
 .btn-guardar {
-  background: #22c55e;
   color: white;
+  background-color: transparent;
 }
 
-.btn-guardar:hover {
-  background: #16a34a;
-}
 
 .btn-cancelar {
-  background: #9ca3af;
-  color: black;
-}
-
-.btn-cancelar:hover {
-  background: #6b7280;
+  background-color: transparent;
+  color: rgb(255, 255, 255);
+  font-weight: 400;
 }
 
 .camiseta-jugador {
@@ -275,14 +287,61 @@ onMounted(cargarJugadores);
   width: 130px;
   height: 100px;
   transition: 0.3s;
-
 }
-.nombre{
+
+.nombre {
   font-size: 108%;
   font-weight: 400;
 }
-.dorsal{
+
+.dorsal {
   font-size: 300%;
   font-weight: 600;
+}
+
+.popup-eliminar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-content {
+  background-color: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.popup-botones button {
+  padding: 8px 15px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup-botones button:first-child {
+  background-color: #dc2626;
+  color: white;
+}
+
+.popup-botones button:first-child:hover {
+  background-color: #b91c1c;
+}
+
+.popup-botones button:last-child {
+  background-color: #4b5563;
+  color: white;
+}
+
+.popup-botones button:last-child:hover {
+  background-color: #374151;
 }
 </style>
