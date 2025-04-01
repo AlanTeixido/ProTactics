@@ -67,7 +67,6 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import Entrenamientos from "@/components/Entrenamientos.vue";
 import MenuDashboard from "@/components/MenuDashboard.vue";
 
 const user = ref({
