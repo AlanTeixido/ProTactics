@@ -38,13 +38,17 @@
     <img src="/src/assets/img/dispositivos.png" alt="" class="fondo-login">
   </div>
 
-  <!-- Popup de mensaje -->
-  <div v-if="popupVisible" class="popup">
-    <div class="popup-content">
-      <p>{{ popupMessage }}</p>
-      <button @click="closePopup" class="popup-close">Cerrar</button>
+<!-- Modal de éxito -->
+<div v-if="popupVisible" class="popup">
+  <div :class="['popup-content', isError ? 'popup-error' : 'popup-success']">
+    <div class="icono-check">
+      {{ isError ? '❌' : '✅' }}
     </div>
+    <p class="popup-text">{{ popupMessage }}</p>
+    <button v-if="isError" @click="closePopup" class="popup-close">Cerrar</button>
   </div>
+</div>
+
 </template>
 
 <script setup>
@@ -63,11 +67,22 @@ const router = useRouter();
 // Popup
 const popupVisible = ref(false);
 const popupMessage = ref('');
+const isError = ref(false); 
 
-const showPopup = (message) => {
+
+const showPopup = (message, error = false) => {
   popupMessage.value = message;
+  isError.value = error;
   popupVisible.value = true;
+
+  if (!error) {
+    setTimeout(() => {
+      popupVisible.value = false;
+      router.push('/dashboard');
+    }, 2500);
+  }
 };
+
 
 const closePopup = () => {
   popupVisible.value = false;
@@ -75,8 +90,6 @@ const closePopup = () => {
 
 const login = async () => {
   try {
-    console.log('Iniciant sessió com a', rolSeleccionado.value, 'amb:', email.value);
-
     const response = await axios.post('https://protactics-api.onrender.com/auth/login', {
       correo: email.value,
       password: password.value
@@ -91,14 +104,16 @@ const login = async () => {
       localStorage.setItem('userId', data.id);
       localStorage.setItem('userRol', data.rol);
 
-      alert(`✅ Sesión iniciada como ${data.rol}`);
-      router.push('/dashboard');
+      showPopup(`✅ Sesión iniciada como ${data.rol}`);
     }
   } catch (error) {
-    console.error('Error en el login:', error);
-    showPopup(error.response?.data?.error || 'Credenciales incorrectas.');
+    console.error('❌ Error iniciant sessió:', error);
+    showPopup('❌ Correo o contraseña incorrectos.', true);
   }
 };
+
+
+
 </script>
 
 <style scoped>
@@ -281,6 +296,70 @@ const login = async () => {
   background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));
   color: white;
 }
+
+.popup {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content.success {
+  background-color: #1e293b;
+  padding: 30px 40px;
+  border-radius: 16px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.icono-check {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+  animation: bounce 0.5s ease;
+}
+
+.popup-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.popup-content.popup-error {
+  background-color: #7f1d1d;
+  padding: 30px 40px;
+  border-radius: 16px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: translateX(-6px); }
+  25% { transform: translateX(6px); }
+  50% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%   { transform: scale(0.8); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
 
 
 </style>
