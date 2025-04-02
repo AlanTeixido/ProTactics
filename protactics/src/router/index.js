@@ -70,7 +70,13 @@ const router = createRouter({
       name: 'crearEquipo',
       component: () => import('../views/CrearEquiposView.vue'),
       meta: { requiresAuth: true }
-    }      
+    },
+    {
+      path: '/equipos',
+      name: 'equipos',
+      component: () => import('../views/DashboardEquipos.vue'),
+      meta: { requiresAuth: true }
+    }         
   ],
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 }; // Scroll al inici de la pàgina al canviar de ruta

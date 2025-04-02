@@ -1,5 +1,5 @@
 <script setup>
-import FormCrearEquipos from '@/components/formularios/FormCrearEquipos.vue';
+import FormCrearEquipos from '@/components/formularios/FormCrearEquipo.vue';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 </script>
 
@@ -12,14 +12,14 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 
     <!-- Contenido principal -->
     <div class="dashboard-content">
-      <h2>Crear Equip</h2>
+      <h2>Crear Equipo</h2>
       <FormCrearEquipos />
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Reset bàsic */
+/* Reset básico */
 * {
   margin: 0;
   padding: 0;
