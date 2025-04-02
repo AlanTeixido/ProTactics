@@ -60,13 +60,17 @@ const router = createRouter({
       props: true
     },
     // router/index.js o on tinguis definides les rutes
-{
-  path: '/jugadores/editar/:id',
-  name: 'EditarJugador',
-  component: () => import('@/views/EditarJugador.vue')
-}
-
-    
+    {
+      path: '/jugadores/editar/:id',
+      name: 'EditarJugador',
+      component: () => import('@/views/EditarJugador.vue')
+    },
+    {
+      path: '/crear-equipo',
+      name: 'crearEquipo',
+      component: () => import('../views/CrearEquiposView.vue'),
+      meta: { requiresAuth: true }
+    }      
   ],
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 }; // Scroll al inici de la pàgina al canviar de ruta

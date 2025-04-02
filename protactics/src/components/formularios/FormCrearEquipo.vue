@@ -1,14 +1,10 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
 const nombre = ref('');
-const apellido = ref('');
-const posicion = ref('');
-const dorsal = ref('');
-const equipoSeleccionado = ref('');
-const equipos = ref([]);
+const categoria = ref('');
 
 const popupVisible = ref(false);
 const popupMessage = ref('');
@@ -27,22 +23,20 @@ const closePopup = () => {
   popupVisible.value = false;
 };
 
-const crearJugador = async () => {
+const crearEquipo = async () => {
   try {
     const token = localStorage.getItem('authToken');
-    if (!token) {
-      showPopup("❌ No tens permís per crear jugadors.");
+    const userRol = localStorage.getItem('userRol');
+    if (!token || userRol !== 'club') {
+      showPopup("❌ No tens permís per crear equips.");
       return;
     }
 
     const response = await axios.post(
-      'https://protactics-api.onrender.com/jugadores/register',
+      'https://protactics-api.onrender.com/equipos',
       {
         nombre: nombre.value,
-        apellido: apellido.value,
-        posicion: posicion.value,
-        dorsal: parseInt(dorsal.value),
-        equipo_id: equipoSeleccionado.value
+        categoria: categoria.value
       },
       {
         headers: {
@@ -52,73 +46,36 @@ const crearJugador = async () => {
     );
 
     showPopup(response.data.message);
-    router.push('/jugadores');
+    router.push('/equipos');
   } catch (error) {
-    console.error('❌ Error al crear jugador:', error);
-    if (error.response?.data?.error?.includes('dorsal')) {
-      showPopup('⚠️ Ja existeix un jugador amb aquest dorsal.');
-    } else {
-      showPopup(error.response?.data?.error || 'Error en la creació del jugador.');
-    }
+    console.error('❌ Error al crear equip:', error);
+    showPopup(error.response?.data?.error || 'Error en la creació de l\'equip.');
   }
 };
-
-const obtenerEquipos = async () => {
-  try {
-    const token = localStorage.getItem('authToken');
-    const response = await axios.get('https://protactics-api.onrender.com/equipos', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
-    equipos.value = response.data;
-  } catch (error) {
-    console.error('❌ Error obtenint equips:', error);
-    showPopup('Error carregant els equips.');
-  }
-};
-
-onMounted(obtenerEquipos);
 </script>
 
 <template>
   <div class="dashboard-container page-container">
     <div class="form-card">
-      <h3 class="subtitulo">Información del jugador</h3>
+      <h3 class="subtitulo">Crear un nou equip</h3>
 
-      <form @submit.prevent="crearJugador" class="crearJugador-form">
+      <form @submit.prevent="crearEquipo" class="crearJugador-form">
         <div class="input-group">
-          <label>Nombre</label>
+          <label>Nom de l'equip</label>
           <input v-model="nombre" type="text" placeholder="Nom" required class="input-field" />
         </div>
         <div class="input-group">
-          <label>Apellido</label>
-          <input v-model="apellido" type="text" placeholder="Cognom" required class="input-field" />
-        </div>
-        <div class="input-group">
-          <label>Posición</label>
-          <select v-model="posicion" required class="input-field">
-            <option value="" disabled>Selecciona una posició</option>
-            <option value="Portero">Portero</option>
-            <option value="Defensa">Defensa</option>
-            <option value="Mediocentro">Mediocentro</option>
-            <option value="Delantero">Delantero</option>
+          <label>Categoria</label>
+          <select v-model="categoria" required class="input-field">
+            <option value="" disabled>Selecciona una categoria</option>
+            <option value="Competició">Competició</option>
+            <option value="Tecnificació">Tecnificació</option>
+            <option value="A">Nivell A</option>
+            <option value="B">Nivell B</option>
+            <option value="C">Nivell C</option>
           </select>
         </div>
-        <div class="input-group">
-          <label>Dorsal</label>
-          <input v-model="dorsal" min="1" type="number" placeholder="Dorsal" required class="input-field" />
-        </div>
-        <div class="input-group">
-          <label>Equipo</label>
-          <select v-model="equipoSeleccionado" required class="input-field">
-            <option value="" disabled>Selecciona un equipo</option>
-            <option v-for="equipo in equipos" :key="equipo.equipo_id" :value="equipo.equipo_id">
-              {{ equipo.nombre }} ({{ equipo.categoria }})
-            </option>
-          </select>
-        </div>
-        <button type="submit" class="submit-btn">Crear Jugador</button>
+        <button type="submit" class="submit-btn">Crear Equip</button>
       </form>
     </div>
 
@@ -132,9 +89,11 @@ onMounted(obtenerEquipos);
 </template>
 
 <style scoped>
-.dashboard {
+.dashboard-container {
   display: flex;
-  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5%;
 }
 
 .form-card {
