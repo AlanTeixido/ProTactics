@@ -66,7 +66,14 @@ const crearJugador = async () => {
 const obtenerEquipos = async () => {
   try {
     const token = localStorage.getItem('authToken');
-    const response = await axios.get('https://protactics-api.onrender.com/equipos', {
+    const rol = localStorage.getItem('userRol');
+
+    const endpoint =
+      rol === 'entrenador'
+        ? 'https://protactics-api.onrender.com/equipos/entrenador'
+        : 'https://protactics-api.onrender.com/equipos';
+
+    const response = await axios.get(endpoint, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -80,6 +87,8 @@ const obtenerEquipos = async () => {
 
 onMounted(obtenerEquipos);
 </script>
+
+
 
 <template>
   <div class="dashboard-container page-container">
@@ -111,12 +120,12 @@ onMounted(obtenerEquipos);
         </div>
         <div class="input-group">
           <label>Equipo</label>
-          <select v-model="equipoSeleccionado" required class="input-field">
+          <select v-model.number="equipoSeleccionado" required class="input-field">
             <option value="" disabled>Selecciona un equipo</option>
             <option v-for="equipo in equipos" :key="equipo.equipo_id" :value="equipo.equipo_id">
               {{ equipo.nombre }} ({{ equipo.categoria }})
             </option>
-          </select>
+          </select>          
         </div>
         <button type="submit" class="submit-btn">Crear Jugador</button>
       </form>
