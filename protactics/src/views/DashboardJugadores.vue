@@ -111,6 +111,7 @@ onMounted(cargarJugadores);
                 <strong class="nombre">{{ j.nombre }} {{ j.apellido }}</strong>
                 <span class="dorsal">{{ j.dorsal }}</span>
               </div>
+              
             </div>
 
             <div v-else class="jugador-info editando">
@@ -119,8 +120,9 @@ onMounted(cargarJugadores);
               <input v-model="editData.posicion" placeholder="Posició" />
               <input v-model="editData.dorsal" type="number" placeholder="Dorsal" />
               <div class="botones">
-                <button class="btn-guardar" @click="guardarEdicion(j.jugador_id)">💾</button>
-                <button class="btn-cancelar" @click="cancelarEdicion()">X</button>
+                <button class="btn-guardar" @click="guardarEdicion(j.jugador_id)"><img src="../assets/img/guardar.png" class="imgAction"></button>
+                <button class="btn-cancelar" @click="cancelarEdicion()"><img src="../assets/img/izquierda.png" class="imgAction"></button>
+                <button class="btn-eliminar" @click="confirmarEliminarJugador"><img src="../assets/img/cruzar.png"></button>
               </div>
             </div>
           </li>
@@ -276,6 +278,17 @@ onMounted(cargarJugadores);
   font-weight: 400;
 }
 
+.btn-eliminar {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-eliminar img {
+  width: 20px;
+  height: 20px;
+}
+
 .camiseta-jugador {
   background-color: #1e293b;
   padding: 20px;
@@ -343,5 +356,10 @@ onMounted(cargarJugadores);
 
 .popup-botones button:last-child:hover {
   background-color: #374151;
+}
+
+.imgAction {
+  width: 20px;
+  height: 20px;
 }
 </style>

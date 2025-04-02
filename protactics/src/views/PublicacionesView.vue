@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import MenuDashboard from '@/components/MenuDashboard.vue';
 
 const publicaciones = ref([]);
 const loading = ref(true);
@@ -21,7 +22,9 @@ onMounted(fetchPublicaciones);
 
 <template>
   <div class="dashboard">
-    <div class="dashboard-menu"></div>
+    <div class="dashboard-menu">
+      <MenuDashboard />
+    </div>
     <div class="dashboard-container">
       <h1 class="titulo">Publicacions</h1>
       <div v-if="loading" class="loading">Cargando...</div>

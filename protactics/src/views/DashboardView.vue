@@ -16,14 +16,12 @@ const goTo = (path) => {
 
 const allOptions = [
   { label: "Entrenaments", icon: "📋", path: "/entrenamientos", color: "#1e3a8a", roles: ["entrenador"] },
-  { label: "Partits", icon: "⚽", path: "/partits", color: "#1e3a8a", roles: ["entrenador"] },
   { label: "Pissarra", icon: "🧠", path: "/pizarra", color: "#facc15", roles: ["entrenador"] },
-  { label: "Planificador", icon: "📅", path: "/planificador", color: "#facc15", roles: ["entrenador"] },
   { label: "Jugadors", icon: "🧍", path: "/jugadores", color: "#16a34a", roles: ["entrenador"] },
   { label: "Entrenadors", icon: "🧑‍🏫", path: "/crearEntrenador", color: "#0ea5e9", roles: ["club"] },
   { label: "Configuració", icon: "⚙️", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
   { label: "Publicacions", icon: "📰", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
-  { label: "Equips", icon: "📘", path: "/crear-equipo", color: "#0ea5e9", roles: ["club"] },
+  { label: "Equips", icon: "📘", path: "/equipos", color: "#0ea5e9", roles: ["club"] },
 
 ];
 

@@ -23,9 +23,8 @@
               <div v-if="equipoEditando !== e.equipo_id" class="equipo-info">
                 <div class="equipo-content" @click="iniciarEdicion(e)">
                   <strong class="nombre">{{ e.nombre }}</strong>
-                  <span class="categoria">{{ e.categoria }}</span>
                 </div>
-                <button class="btn-delete" @click="confirmarEliminarEquipo(e.equipo_id)">🗑️</button>
+                <button class="btn-delete" @click="confirmarEliminarEquipo(e.equipo_id)"><img src="../assets/img/cruzar.png"></button>
               </div>
   
               <div v-else class="equipo-info editando">
@@ -269,8 +268,8 @@
   }
   
   .btn-delete {
-    background-color: #dc2626;
     color: white;
+    background-color: transparent;
     border: none;
     padding: 6px 10px;
     border-radius: 6px;
@@ -278,9 +277,14 @@
     font-size: 0.95rem;
     transition: background-color 0.2s ease;
   }
+
+  .btn-delete img {
+    width: 20px;
+    height: 20px;
+  }
   
   .btn-delete:hover {
-    background-color: #b91c1c;
+  
   }
   
   .popup-eliminar {

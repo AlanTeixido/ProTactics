@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
+import MenuDashboard from '@/components/MenuDashboard.vue';
 
 const route = useRoute();
 const publicacion = ref(null);
@@ -43,7 +44,9 @@ onMounted(fetchPublicacion);
 
 <template>
   <div class="dashboard">
-    <div class="dashboard-menu"></div>
+    <div class="dashboard-menu">
+      <MenuDashboard />
+    </div>
     <div class="dashboard-container">
       <div v-if="loading" class="loading">Cargando...</div>
       <div v-else class="card">
