@@ -4,7 +4,7 @@
       <div v-else>
         <div class="post-card">
           <h1 class="title">{{ publicacion.titulo }}</h1>
-          <p class="author">Por {{ publicacion.entrenador }}</p>
+          <p class="author">{{ publicacion.entrenador }}</p>
           <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="post-image">
           <p class="content">{{ publicacion.contenido }}</p>
           <button @click="toggleLike" class="like-button">
@@ -24,18 +24,23 @@
   const publicacion = ref(null);
   const loading = ref(true);
   const liked = ref(false);
-  
   const fetchPublicacion = async () => {
-    try {
-      const response = await axios.get(`https://protactics-api.onrender.com/publicaciones/${route.params.id}`);
-      publicacion.value = response.data;
+  try {
+    const response = await axios.get(`https://protactics-api.onrender.com/publicaciones?entrenador_id=${route.params.id}`);
+    
+    if (response.data.length > 0) {
+      publicacion.value = response.data[0]; // Toma la primera publicación encontrada
       liked.value = publicacion.value.liked;
-    } catch (error) {
-      console.error('Error obteniendo la publicación', error);
-    } finally {
-      loading.value = false;
+    } else {
+      console.error("No se encontraron publicaciones para este entrenador.");
     }
-  };
+  } catch (error) {
+    console.error('Error obteniendo la publicación', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
   
   const toggleLike = async () => {
     try {
