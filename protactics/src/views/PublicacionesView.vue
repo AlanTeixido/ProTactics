@@ -1,9 +1,32 @@
+<script setup>
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+
+const publicaciones = ref([]);
+const loading = ref(true);
+
+const fetchPublicaciones = async () => {
+  try {
+    const response = await axios.get('https://protactics-api.onrender.com/publicaciones');
+    publicaciones.value = response.data;
+  } catch (error) {
+    console.error('Error cargando publicaciones', error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+onMounted(fetchPublicaciones);
+</script>
+
 <template>
-    <div class="container">
-      <h1 class="title">Publicaciones</h1>
+  <div class="dashboard">
+    <div class="dashboard-menu"></div>
+    <div class="dashboard-container">
+      <h1 class="titulo">Publicacions</h1>
       <div v-if="loading" class="loading">Cargando...</div>
-      <div v-else>
-        <div v-for="publicacion in publicaciones" :key="publicacion.id" class="post-card">
+      <div v-else class="grid">
+        <div v-for="publicacion in publicaciones" :key="publicacion.id" class="card">
           <p class="author">{{ publicacion.entrenador }}</p>
           <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="post-image">
           <h2 class="post-title">
@@ -14,93 +37,89 @@
         </div>
       </div>
     </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  import axios from 'axios';
-  
-  const publicaciones = ref([]);
-  const loading = ref(true);
-  
-  const fetchPublicaciones = async () => {
-    try {
-      const response = await axios.get('https://protactics-api.onrender.com/publicaciones');
-      publicaciones.value = response.data;
-    } catch (error) {
-      console.error('Error cargando publicaciones', error);
-    } finally {
-      loading.value = false;
-    }
-  };
-  
-  onMounted(fetchPublicaciones);
-  </script>
-  
-  <style scoped>
-  .container {
-    max-width: 1024px;
-    margin: 0 auto;
-    padding: 16px;
-  }
-  
-  .title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 16px;
-    color: #333;
-  }
-  
-  .loading {
-    text-align: center;
-    font-size: 18px;
-    color: #555;
-  }
-  
-  .post-card {
-    border: 1px solid #e5e5e5;
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    transition: box-shadow 0.3s ease;
-    cursor: pointer;
-    margin-bottom: 16px;
-  }
-  
-  .post-card:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-  }
-  
-  .author {
-    font-size: 1rem;
-    color: #555;
-    font-weight: 600;
-  }
-  
-  .post-image {
-    width: 100%;
-    height: 192px;
-    object-fit: cover;
-    border-radius: 8px;
-    margin-top: 8px;
-  }
-  
-  .post-title {
-    font-size: 1.125rem;
-    font-weight: bold;
-    margin-top: 8px;
-  }
-  
-  .link {
-    color: #3498db;
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-  
-  .link:hover {
-    color: #2980b9;
-    text-decoration: underline;
-  }
-  </style>
-  
+  </div>
+</template>
+
+<style scoped>
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(to left, #0f172a, #155e75);
+  color: white;
+}
+
+.dashboard-menu {
+  width: 250px;
+  height: 100vh;
+  background-color: rgb(36, 36, 36);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.dashboard-container {
+  flex: 1;
+  margin-left: 250px;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin-top: 5%;
+}
+
+.titulo {
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+.loading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #facc15;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 15px;
+  background: linear-gradient(to right, #0bd1df, #155e75);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  text-align: center;
+}
+
+.author {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #facc15;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.post-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+</style>

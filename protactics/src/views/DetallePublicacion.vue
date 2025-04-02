@@ -1,35 +1,19 @@
-<template>
-    <div class="container">
-      <div v-if="loading" class="loading">Cargando...</div>
-      <div v-else>
-        <div class="post-card">
-          <h1 class="title">{{ publicacion.titulo }}</h1>
-          <p class="author">{{ publicacion.entrenador }}</p>
-          <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="post-image">
-          <p class="content">{{ publicacion.contenido }}</p>
-          <button @click="toggleLike" class="like-button">
-            {{ liked ? 'Quitar Like' : 'Dar Like' }}
-          </button>
-        </div>
-      </div>
-    </div>
-  </template>
-  
-  <script setup>
-  import { ref, onMounted } from 'vue';
-  import { useRoute } from 'vue-router';
-  import axios from 'axios';
-  
-  const route = useRoute();
-  const publicacion = ref(null);
-  const loading = ref(true);
-  const liked = ref(false);
-  const fetchPublicacion = async () => {
+<script setup>
+import { ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+import axios from 'axios';
+
+const route = useRoute();
+const publicacion = ref(null);
+const loading = ref(true);
+const liked = ref(false);
+
+const fetchPublicacion = async () => {
   try {
     const response = await axios.get(`https://protactics-api.onrender.com/publicaciones?entrenador_id=${route.params.id}`);
     
     if (response.data.length > 0) {
-      publicacion.value = response.data[0]; // Toma la primera publicación encontrada
+      publicacion.value = response.data[0];
       liked.value = publicacion.value.liked;
     } else {
       console.error("No se encontraron publicaciones para este entrenador.");
@@ -41,83 +25,125 @@
   }
 };
 
-  
-  const toggleLike = async () => {
-    try {
-      if (liked.value) {
-        await axios.delete(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`);
-      } else {
-        await axios.post(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`);
-      }
-      liked.value = !liked.value;
-    } catch (error) {
-      console.error('Error al dar/quitar like', error);
+const toggleLike = async () => {
+  try {
+    if (liked.value) {
+      await axios.delete(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`);
+    } else {
+      await axios.post(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`);
     }
-  };
-  
-  onMounted(fetchPublicacion);
-  </script>
-  
-  <style scoped>
-  .container {
-    max-width: 768px;
-    margin: 0 auto;
-    padding: 16px;
+    liked.value = !liked.value;
+  } catch (error) {
+    console.error('Error al dar/quitar like', error);
   }
-  
-  .loading {
-    text-align: center;
-    font-size: 18px;
-    color: #555;
-  }
-  
-  .post-card {
-    border: 1px solid #e5e5e5;
-    padding: 24px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  }
-  
-  .title {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .author {
-    font-size: 1rem;
-    color: #555;
-    margin-top: 8px;
-  }
-  
-  .post-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    margin-top: 16px;
-    border-radius: 8px;
-  }
-  
-  .content {
-    font-size: 1rem;
-    color: #333;
-    margin-top: 16px;
-  }
-  
-  .like-button {
-    margin-top: 16px;
-    padding: 10px 20px;
-    background-color: #3498db;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .like-button:hover {
-    background-color: #2980b9;
-  }
-  </style>
-  
+};
+
+onMounted(fetchPublicacion);
+</script>
+
+<template>
+  <div class="dashboard">
+    <div class="dashboard-menu"></div>
+    <div class="dashboard-container">
+      <div v-if="loading" class="loading">Cargando...</div>
+      <div v-else class="card">
+        <h1 class="titulo">{{ publicacion.titulo }}</h1>
+        <p class="author">{{ publicacion.entrenador }}</p>
+        <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="post-image">
+        <p class="content">{{ publicacion.contenido }}</p>
+        <button @click="toggleLike" class="like-button">
+          {{ liked ? 'Quitar Like' : 'Dar Like' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.dashboard {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(to left, #0f172a, #155e75);
+  color: white;
+}
+
+.dashboard-menu {
+  width: 250px;
+  height: 100vh;
+  background-color: rgb(36, 36, 36);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.dashboard-container {
+  flex: 1;
+  margin-left: 250px;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  margin-top: 5%;
+}
+
+.titulo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+}
+
+.loading {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #facc15;
+}
+
+.card {
+  padding: 30px;
+  border-radius: 15px;
+  background: linear-gradient(to right, #0bd1df, #155e75);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  max-width: 600px;
+  width: 100%;
+}
+
+.author {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #facc15;
+}
+
+.post-image {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 15px 0;
+}
+
+.content {
+  font-size: 1rem;
+  color: white;
+  margin: 15px 0;
+}
+
+.like-button {
+  padding: 12px 25px;
+  background-color: #facc15;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+.like-button:hover {
+  background-color: #eab308;
+}
+</style>
