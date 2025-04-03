@@ -81,6 +81,21 @@ const cancelarEliminar = () => {
   popupEliminar.value = false;
 };
 
+const filtroNombre = ref('');
+const filtroPosicion = ref('');
+const filtroDorsal = ref('');
+
+const jugadoresFiltrados = computed(() => {
+  return jugadores.value.filter(j => {
+    const nombreCompleto = `${j.nombre} ${j.apellido}`.toLowerCase();
+    const coincideNombre = nombreCompleto.includes(filtroNombre.value.toLowerCase());
+    const coincidePosicion = filtroPosicion.value === '' || j.posicion === filtroPosicion.value;
+    const coincideDorsal = filtroDorsal.value === '' || j.dorsal?.toString().includes(filtroDorsal.value);
+    return coincideNombre && coincidePosicion && coincideDorsal;
+  });
+});
+
+
 onMounted(cargarJugadores);
 </script>
 
@@ -104,8 +119,21 @@ onMounted(cargarJugadores);
           Todavía no has registrado jugadores.
         </div>
 
+        <div class="filtros-jugadores">
+          <input v-model="filtroNombre" placeholder="Filtrar por nombre o apellido" />
+          <select v-model="filtroPosicion">
+            <option value="">Todas las posiciones</option>
+            <option value="Portero">Portero</option>
+            <option value="Defensa">Defensa</option>
+            <option value="Mediocentro">Mediocentro</option>
+            <option value="Delantero">Delantero</option>
+          </select>
+          <input v-model="filtroDorsal" type="number" placeholder="Filtrar por dorsal" />
+        </div>
+
+        
         <ul class="jugadors">
-          <li v-for="j in jugadores" :key="j.jugador_id" class="jugador">
+          <li v-for="j in jugadoresFiltrados":key="j.jugador_id" class="jugador">
             <div v-if="jugadorEditando !== j.jugador_id" class="jugador-info">
               <div class="camiseta-jugador" @click="iniciarEdicion(j)">
                 <strong class="nombre">{{ j.nombre }} {{ j.apellido }}</strong>
@@ -362,4 +390,22 @@ onMounted(cargarJugadores);
   width: 20px;
   height: 20px;
 }
+
+.filtros-jugadores {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filtros-jugadores input,
+.filtros-jugadores select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  background-color: #334155;
+  color: white;
+  font-size: 0.95rem;
+}
+
 </style>
