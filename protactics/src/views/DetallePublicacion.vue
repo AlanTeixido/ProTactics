@@ -1,10 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 
 const route = useRoute();
+const router = useRouter();
 const publicacion = ref(null);
 const loading = ref(true);
 const liked = ref(false);
@@ -39,6 +40,10 @@ const toggleLike = async () => {
   }
 };
 
+const goBack = () => {
+  router.push('/publicaciones');
+};
+
 onMounted(fetchPublicacion);
 </script>
 
@@ -48,6 +53,7 @@ onMounted(fetchPublicacion);
       <MenuDashboard />
     </div>
     <div class="dashboard-container">
+      <button @click="goBack" class="back-button">&#8592;</button>
       <div v-if="loading" class="loading">Cargando...</div>
       <div v-else class="card">
         <h1 class="titulo">{{ publicacion.titulo }}</h1>
@@ -89,6 +95,24 @@ onMounted(fetchPublicacion);
   align-items: center;
   gap: 40px;
   margin-top: 5%;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  margin-right: 50px;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: white;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.back-button:hover {
+  color: #facc15;
 }
 
 .titulo {
