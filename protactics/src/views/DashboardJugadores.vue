@@ -5,6 +5,7 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonCrearJugador from '@/components/botones/ButtonCrearJugador.vue';
 
 const jugadores = ref([]);
+const equipos = ref([]);
 const user = ref({
   id: localStorage.getItem("userId") || "",
   username: localStorage.getItem("username") || "Usuari",
@@ -12,11 +13,23 @@ const user = ref({
 });
 
 const jugadorEditando = ref(null);
-const editData = ref({ nombre: '', apellido: '', posicion: '', dorsal: '' });
+const editData = ref({ nombre: '', apellido: '', posicion: '', dorsal: '', equipo_id: '' });
 const popupEliminar = ref(false);
 const jugadorEliminarId = ref(null);
 
-const esEntrenador = computed(() => user.value.rol === 'entrenador');
+const filtroNombre = ref('');
+const filtroPosicion = ref('');
+const filtroDorsal = ref('');
+
+const jugadoresFiltrados = computed(() => {
+  return jugadores.value.filter(j => {
+    const nombreCompleto = `${j.nombre} ${j.apellido}`.toLowerCase();
+    const coincideNombre = nombreCompleto.includes(filtroNombre.value.toLowerCase());
+    const coincidePosicion = filtroPosicion.value === '' || j.posicion === filtroPosicion.value;
+    const coincideDorsal = filtroDorsal.value === '' || j.dorsal?.toString().includes(filtroDorsal.value);
+    return coincideNombre && coincidePosicion && coincideDorsal;
+  });
+});
 
 const cargarJugadores = async () => {
   try {
@@ -24,16 +37,35 @@ const cargarJugadores = async () => {
     const response = await axios.get(`https://protactics-api.onrender.com/jugadores`, {
       headers: { Authorization: `Bearer ${token}` },
     });
-
     jugadores.value = response.data || [];
   } catch (error) {
     console.error("Error carregant jugadors:", error);
   }
 };
 
-const eliminarJugador = async () => {
-  if (!jugadorEliminarId.value) return;
+const cargarEquipos = async () => {
+  try {
+    const token = localStorage.getItem("authToken");
+    const rol = user.value.rol;
 
+    const endpoint =
+      rol === 'entrenador'
+        ? 'https://protactics-api.onrender.com/equipos/entrenador'
+        : 'https://protactics-api.onrender.com/equipos';
+
+    const response = await axios.get(endpoint, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    equipos.value = response.data;
+  } catch (error) {
+    console.error("Error carregant equips:", error);
+  }
+};
+
+const eliminarJugador = async () => {
   try {
     const token = localStorage.getItem("authToken");
     await axios.delete(`https://protactics-api.onrender.com/jugadores/${jugadorEliminarId.value}`, {
@@ -54,7 +86,7 @@ const iniciarEdicion = (jugador) => {
 
 const cancelarEdicion = () => {
   jugadorEditando.value = null;
-  editData.value = { nombre: '', apellido: '', posicion: '', dorsal: '' };
+  editData.value = { nombre: '', apellido: '', posicion: '', dorsal: '', equipo_id: '' };
 };
 
 const guardarEdicion = async (id) => {
@@ -64,7 +96,7 @@ const guardarEdicion = async (id) => {
       headers: { Authorization: `Bearer ${token}` },
     });
     jugadorEditando.value = null;
-    await cargarJugadores(); // refresquem
+    await cargarJugadores();
   } catch (error) {
     console.error("❌ Error actualitzant jugador:", error);
     alert("No s'ha pogut actualitzar el jugador.");
@@ -81,22 +113,10 @@ const cancelarEliminar = () => {
   popupEliminar.value = false;
 };
 
-const filtroNombre = ref('');
-const filtroPosicion = ref('');
-const filtroDorsal = ref('');
-
-const jugadoresFiltrados = computed(() => {
-  return jugadores.value.filter(j => {
-    const nombreCompleto = `${j.nombre} ${j.apellido}`.toLowerCase();
-    const coincideNombre = nombreCompleto.includes(filtroNombre.value.toLowerCase());
-    const coincidePosicion = filtroPosicion.value === '' || j.posicion === filtroPosicion.value;
-    const coincideDorsal = filtroDorsal.value === '' || j.dorsal?.toString().includes(filtroDorsal.value);
-    return coincideNombre && coincidePosicion && coincideDorsal;
-  });
+onMounted(() => {
+  cargarJugadores();
+  cargarEquipos();
 });
-
-
-onMounted(cargarJugadores);
 </script>
 
 <template>
@@ -131,26 +151,46 @@ onMounted(cargarJugadores);
           <input v-model="filtroDorsal" type="number" placeholder="Filtrar por dorsal" />
         </div>
 
-        
         <ul class="jugadors">
-          <li v-for="j in jugadoresFiltrados":key="j.jugador_id" class="jugador">
+          <li v-for="j in jugadoresFiltrados" :key="j.jugador_id" class="jugador">
             <div v-if="jugadorEditando !== j.jugador_id" class="jugador-info">
               <div class="camiseta-jugador" @click="iniciarEdicion(j)">
                 <strong class="nombre">{{ j.nombre }} {{ j.apellido }}</strong>
                 <span class="dorsal">{{ j.dorsal }}</span>
               </div>
-              
+              <div class="equipo-nombre">
+                {{ equipos.find(e => e.equipo_id === j.equipo_id)?.nombre || 'Sin equipo' }}
+              </div>
             </div>
 
             <div v-else class="jugador-info editando">
-              <input v-model="editData.nombre" placeholder="Nom" />
-              <input v-model="editData.apellido" placeholder="Cognom" />
-              <input v-model="editData.posicion" placeholder="Posició" />
+              <input v-model="editData.nombre" placeholder="Nombre" />
+              <input v-model="editData.apellido" placeholder="Apellido" />
+              <select v-model="editData.posicion">
+                <option value="">Posición</option>
+                <option value="Portero">Portero</option>
+                <option value="Defensa">Defensa</option>
+                <option value="Mediocentro">Mediocentro</option>
+                <option value="Delantero">Delantero</option>
+              </select>
               <input v-model="editData.dorsal" type="number" placeholder="Dorsal" />
+              <select v-model.number="editData.equipo_id">
+                <option disabled value="">Selecciona equipo</option>
+                <option v-for="equipo in equipos" :key="equipo.equipo_id" :value="equipo.equipo_id">
+                  {{ equipo.nombre }} ({{ equipo.categoria }})
+                </option>
+              </select>
+
               <div class="botones">
-                <button class="btn-guardar" @click="guardarEdicion(j.jugador_id)"><img src="../assets/img/guardar.png" class="imgAction"></button>
-                <button class="btn-cancelar" @click="cancelarEdicion()"><img src="../assets/img/izquierda.png" class="imgAction"></button>
-                <button class="btn-eliminar" @click="confirmarEliminarJugador"><img src="../assets/img/cruzar.png"></button>
+                <button class="btn-guardar" @click="guardarEdicion(j.jugador_id)">
+                  <img src="../assets/img/guardar.png" class="imgAction" />
+                </button>
+                <button class="btn-cancelar" @click="cancelarEdicion()">
+                  <img src="../assets/img/izquierda.png" class="imgAction" />
+                </button>
+                <button class="btn-eliminar" @click="confirmarEliminarJugador(j.jugador_id)">
+                  <img src="../assets/img/cruzar.png" />
+                </button>
               </div>
             </div>
           </li>
@@ -170,6 +210,7 @@ onMounted(cargarJugadores);
     </div>
   </div>
 </template>
+
 
 <style scoped>
 .dashboard {
