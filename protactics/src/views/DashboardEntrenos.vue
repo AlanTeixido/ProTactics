@@ -7,7 +7,7 @@
       <div class="dashboard-container">
         <div class="header-entrenos">
           <h2 class="titulo">Gestión de entrenamientos</h2>
-          <RouterLink to="/entrenos/crear" class="btn-crear-entreno">➕ Crear Entreno</RouterLink>
+          <RouterLink to="/crear-entreno" class="btn-crear-entreno">➕ Crear Entreno</RouterLink>
         </div>
   
         <div v-if="entrenos.length === 0" class="empty-msg">

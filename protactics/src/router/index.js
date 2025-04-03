@@ -87,7 +87,13 @@ const router = createRouter({
       path: '/entrenos',
       name: 'entrenos',
       component: () => import('../views/DashboardEntrenos.vue'),
-    }         
+    },
+    {
+      path: '/crear-entreno',
+      name: 'CrearEntreno',
+      component: () => import('../views/CrearEntreno.vue')
+    }
+    
   ],
   scrollBehavior(to, from, savedPosition) {
     return { top: 0 }; // Scroll al inici de la pàgina al canviar de ruta
