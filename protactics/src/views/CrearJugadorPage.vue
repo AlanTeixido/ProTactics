@@ -1,5 +1,5 @@
 <script setup>
-import FormCrearJugador from '@/components/formularios/FormCrearJugador.vue'; 
+import FormCrearJugador from '@/components/formularios/FormCrearJugador.vue';
 import MenuDashboard from '@/components/MenuDashboard.vue'; 
 </script>
 
@@ -12,20 +12,19 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 
     <!-- Contenido principal -->
     <div class="dashboard-content">
-      <h2>Crear Jugador</h2>
-      <FormCrearJugador />
+      <div class="intro">
+        <h2>Crear Jugador</h2>
+        <p>En el siguiente formulario podrás <span>crear un jugador</span> con las caracteristicas necesarias y se
+          añadirá a la sección de jugadores</p>
+      </div>
+      <div>
+        <FormCrearJugador />
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 /* Contenedor principal */
 .dashboard {
   display: flex;
@@ -47,10 +46,27 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 
 /* Contenido derecho */
 .dashboard-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex: 1;
-  margin-left: 250px; /* Ajuste para evitar que el menú lo tape */
+  margin-left: 250px;
+  /* Ajuste para evitar que el menú lo tape */
   padding: 20px;
   overflow-y: auto;
+}
+
+.intro{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-right: 10%;
+  width: 40%;
+}
+
+span{
+  font-weight: bold;
 }
 
 /* Estilos del grid */
@@ -114,12 +130,12 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 }
 
 h2 {
-    color: rgb(255, 255, 255);
-    text-transform: uppercase;
-    text-align: left;
-    margin-top: 5%;
-    margin-left: 3%;
-  }
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  text-align: left;
+  margin-top: 5%;
+  margin-left: 3%;
+}
 
 /* Responsive */
 @media (max-width: 768px) {

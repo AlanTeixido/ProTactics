@@ -148,7 +148,7 @@ onMounted(() => {
             <option value="Mediocentro">Mediocentro</option>
             <option value="Delantero">Delantero</option>
           </select>
-          <input v-model="filtroDorsal" type="number" placeholder="Filtrar por dorsal" />
+          <input v-model="filtroDorsal" min="0" type="number" placeholder="Filtrar por dorsal" />
         </div>
 
         <ul class="jugadors">
@@ -158,12 +158,12 @@ onMounted(() => {
                 <strong class="nombre">{{ j.nombre }} {{ j.apellido }}</strong>
                 <span class="dorsal">{{ j.dorsal }}</span>
               </div>
-              <div class="equipo-nombre">
+              <!--<div class="equipo-nombre">
                 {{ equipos.find(e => e.equipo_id === j.equipo_id)?.nombre || 'Sin equipo' }}
-              </div>
+              </div>-->
             </div>
 
-            <div v-else class="jugador-info editando">
+            <div v-else class="jugador-info">
               <input v-model="editData.nombre" placeholder="Nombre" />
               <input v-model="editData.apellido" placeholder="Apellido" />
               <select v-model="editData.posicion">
@@ -173,7 +173,7 @@ onMounted(() => {
                 <option value="Mediocentro">Mediocentro</option>
                 <option value="Delantero">Delantero</option>
               </select>
-              <input v-model="editData.dorsal" type="number" placeholder="Dorsal" />
+              <input v-model="editData.dorsal" min="0" type="number" placeholder="Dorsal" />
               <select v-model.number="editData.equipo_id">
                 <option disabled value="">Selecciona equipo</option>
                 <option v-for="equipo in equipos" :key="equipo.equipo_id" :value="equipo.equipo_id">
@@ -284,12 +284,10 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.jugador-info.editando {
   flex-direction: column;
   gap: 10px;
 }
+
 
 .jugador-info input {
   background-color: #334155;
@@ -298,6 +296,15 @@ onMounted(() => {
   border: none;
   border-radius: 5px;
   width: 100%;
+}
+
+.jugador-info select {
+  background-color: #334155;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  width: 107%;
 }
 
 .botones {

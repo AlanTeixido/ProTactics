@@ -89,9 +89,8 @@ onMounted(obtenerEquipos);
 </script>
 
 
-
 <template>
-  <div class="dashboard-container page-container">
+  <div class="dashboard-container">
     <div class="form-card">
       <h3 class="subtitulo">Información del jugador</h3>
 
@@ -141,9 +140,12 @@ onMounted(obtenerEquipos);
 </template>
 
 <style scoped>
-.dashboard {
+
+.dashboard-container {
   display: flex;
-  height: 100vh;
+  justify-content: center; /* Centrado horizontal */
+  align-items: center;     /* Centrado vertical */
+  height: 85vh;           /* Ocupa el 100% de la altura de la ventana */
 }
 
 .form-card {
@@ -151,8 +153,7 @@ onMounted(obtenerEquipos);
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-  width: 100%;
-  max-width: 500px;
+  width: 400px;
 }
 
 .subtitulo {
@@ -167,6 +168,7 @@ onMounted(obtenerEquipos);
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 .input-group {

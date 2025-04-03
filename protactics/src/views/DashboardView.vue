@@ -21,7 +21,6 @@ const allOptions = [
   { label: "Entrenadors", icon: "🧑‍🏫", path: "/crearEntrenador", color: "#0ea5e9", roles: ["club"] },
   { label: "Configuració", icon: "⚙️", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
   { label: "Publicacions", icon: "📰", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
-  { label: "Subir Publicaciones", icon: "P", path: "/subirPublicaciones", color: "#0ea5e9", roles: ["entrenador"] },
   { label: "Equips", icon: "📘", path: "/equipos", color: "#0ea5e9", roles: ["club"] },
 
 ];
@@ -50,7 +49,7 @@ const options = computed(() => {
           class="card"
           @click="goTo(opt.path)"
         >
-          <div class="icon">{{ opt.icon }}</div>
+          <img class="img" :src="`../public/img/${opt.img}`"/>
           <div class="label">{{ opt.label }}</div>
         </div>
       </div>
@@ -136,8 +135,9 @@ span{
   transform: scale(1.05);
 }
 
-.icon {
-  font-size: 2.6rem;
+.img {
+  width: 50px;
+  height: 50px;
   margin-bottom: 10px;
 }
 

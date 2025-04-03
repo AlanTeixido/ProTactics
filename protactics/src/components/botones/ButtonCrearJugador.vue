@@ -2,37 +2,41 @@
 </script>
 
 <template>
-  <!-- RouterLink directe amb classes de botó -->
-  <RouterLink to="/crearJugador" class="button-crear-jugador">
-    <div class="button-content">
-      <span class="plus-sign">+</span>
-      <p>Crear Jugador</p>
-    </div>
-  </RouterLink>
+  <div>
+    <!-- Botón con RouterLink para redirigir a /crear-equipo -->
+    <button class="button-crear-equipo">
+      <RouterLink to="/crearJugador" class="router-link">
+        <div class="button-content">
+          <span class="plus-sign">+</span>
+          <p>Añadir jugador</p>
+        </div>
+      </RouterLink>
+    </button>
+  </div>
 </template>
 
 <style scoped>
-.button-crear-jugador {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
+.button-crear-equipo {
   padding: 10px 20px;
   background: linear-gradient(45deg, #4caf50, #0a74da);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
-  text-decoration: none; /* Eliminar subratllat */
+  transition: 0.3s;
 }
 
-.button-crear-jugador:hover {
-  background-color: #45a049;
+.button-crear-equipo:hover {
+  transform: scale(1.05);
+}
+
+.router-link {
+  text-decoration: none;
+  color: white;
 }
 
 .button-content {
   display: flex;
-  flex-direction: column;
   align-items: center;
 }
 
@@ -41,7 +45,7 @@
   margin-right: 10px;
 }
 
-.button-crear-jugador p {
+.button-crear-equipo p {
   font-size: 1rem;
 }
 </style>
