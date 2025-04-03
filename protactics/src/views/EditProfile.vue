@@ -1,206 +1,143 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import axios from "axios";
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
 const router = useRouter();
-const errorMessage = ref("");
-const successMessage = ref("");
+const errorMessage = ref('');
+const successMessage = ref('');
 
-// Datos del usuario
 const user = ref({
-  id: localStorage.getItem("userId") || "",
-  username: "",
-  email: "",
-  profileImage: "",
-  followingCount: 0, // Variable per a la quantitat de seguidors
+  id: localStorage.getItem('userId') || '',
+  nombre: '',
+  correo: '',
+  ubicacion: '', // solo para club
+  equipo: '',     // solo para entrenador
+  rol: localStorage.getItem('userRol') || '',
 });
 
-// Contraseñas
 const passwords = ref({
-  oldPassword: "",
-  newPassword: "",
-  confirmPassword: "",
+  oldPassword: '',
+  newPassword: '',
+  confirmPassword: '',
 });
 
-// Imagen de perfil
-const selectedFile = ref(null);
-
-// 🔹 Cargar datos del usuario
 const loadUserData = async () => {
-  if (!user.value.id) return;
-
+  if (!user.value.id || !user.value.rol) return;
   try {
-    const authToken = localStorage.getItem("authToken");
+    const token = localStorage.getItem('authToken');
+    const endpoint =
+      user.value.rol === 'entrenador'
+        ? `https://protactics-api.onrender.com/entrenadores/${user.value.id}`
+        : `https://protactics-api.onrender.com/clubs/${user.value.id}`;
 
-    // Obtenim les dades generals de l'usuari
-    const response = await axios.get(
-      `https://protactics-api.onrender.com/usuarios/${user.value.id}`,
-      {
-        headers: { Authorization: `Bearer ${authToken}` },
-      }
-    );
+    const { data } = await axios.get(endpoint, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
-    user.value.username = response.data.nombre_usuario || "Usuario";
-    user.value.email = response.data.correo || "";
-    user.value.profileImage = response.data.profile_image || "default.png";
-
-    // Ara obtenim el nombre d'usuaris que segueixes
-    const followingResponse = await axios.get(
-      `https://protactics-api.onrender.com/seguimientos/${user.value.id}/seguidos`,
-      {
-        headers: { Authorization: `Bearer ${authToken}` },
-      }
-    );
-    user.value.followingCount = followingResponse.data.length; // Actualitzem el compte de seguidors
+    user.value.nombre = data.nombre || '';
+    user.value.correo = data.correo || '';
+    if (user.value.rol === 'club') user.value.ubicacion = data.ubicacion || '';
+    if (user.value.rol === 'entrenador') user.value.equipo = data.equipo || '';
   } catch (error) {
-    console.error("⚠️ Error cargando datos:", error);
+    console.error('⚠️ Error cargando datos:', error);
   }
 };
 
-// 🔹 Guardar datos generales
 const saveProfile = async () => {
-  if (!user.value.username.trim() || !user.value.email.trim()) {
-    errorMessage.value = "❌ Todos los campos son obligatorios.";
+  if (!user.value.nombre.trim() || !user.value.correo.trim()) {
+    errorMessage.value = '❌ Todos los campos son obligatorios.';
     return;
   }
 
   try {
-    const authToken = localStorage.getItem("authToken");
+    const token = localStorage.getItem('authToken');
+    const endpoint =
+      user.value.rol === 'entrenador'
+        ? `https://protactics-api.onrender.com/entrenadores/${user.value.id}`
+        : `https://protactics-api.onrender.com/clubs/${user.value.id}`;
 
-    await axios.put(
-      `https://protactics-api.onrender.com/usuarios/${user.value.id}`,
-      {
-        nombre_usuario: user.value.username,
-        correo: user.value.email,
-      },
-      { headers: { Authorization: `Bearer ${authToken}` } }
-    );
+    const payload = {
+      nombre: user.value.nombre,
+      correo: user.value.correo,
+    };
+    if (user.value.rol === 'club') payload.ubicacion = user.value.ubicacion;
+    if (user.value.rol === 'entrenador') payload.equipo = user.value.equipo;
 
-    successMessage.value = "✅ Perfil actualizado correctamente!";
-    setTimeout(() => router.push("/perfil"), 1500);
+    await axios.put(endpoint, payload, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    successMessage.value = '✅ Perfil actualizado correctamente!';
+    setTimeout(() => router.push('/perfil'), 1500);
   } catch (error) {
-    errorMessage.value = "❌ No se pudo actualizar el perfil.";
+    errorMessage.value = '❌ No se pudo actualizar el perfil.';
   }
 };
 
-// 🔹 Cambiar contraseña
 const changePassword = async () => {
-  if (
-    !passwords.value.oldPassword ||
-    !passwords.value.newPassword ||
-    !passwords.value.confirmPassword
-  ) {
-    errorMessage.value = "❌ Todos los campos son obligatorios.";
+  const { oldPassword, newPassword, confirmPassword } = passwords.value;
+  if (!oldPassword || !newPassword || !confirmPassword) {
+    errorMessage.value = '❌ Todos los campos son obligatorios.';
     return;
   }
-
-  if (passwords.value.newPassword !== passwords.value.confirmPassword) {
-    errorMessage.value = "❌ Las nuevas contraseñas no coinciden.";
+  if (newPassword !== confirmPassword) {
+    errorMessage.value = '❌ Las nuevas contraseñas no coinciden.';
     return;
   }
 
   try {
-    const authToken = localStorage.getItem("authToken");
+    const token = localStorage.getItem('authToken');
+    const endpoint =
+      user.value.rol === 'entrenador'
+        ? `https://protactics-api.onrender.com/entrenadores/${user.value.id}/password`
+        : `https://protactics-api.onrender.com/clubs/${user.value.id}/password`;
 
     await axios.put(
-      `https://protactics-api.onrender.com/password`,  // ✅ RUTA CORRECTA
+      endpoint,
       {
-        contrasena_actual: passwords.value.oldPassword,
-        contrasena_nova: passwords.value.newPassword,
+        contrasena_actual: oldPassword,
+        contrasena_nova: newPassword,
       },
-      { headers: { Authorization: `Bearer ${authToken}` } }
+      { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    successMessage.value = "✅ Contraseña actualizada!";
-    passwords.value.oldPassword = "";
-    passwords.value.newPassword = "";
-    passwords.value.confirmPassword = "";
-
-    setTimeout(() => router.push("/perfil"), 1500);
+    successMessage.value = '✅ Contraseña actualizada!';
+    passwords.value = { oldPassword: '', newPassword: '', confirmPassword: '' };
+    setTimeout(() => router.push('/perfil'), 1500);
   } catch (error) {
-    errorMessage.value = error.response?.data?.error || "❌ Error cambiando la contraseña.";
+    errorMessage.value = error.response?.data?.error || '❌ Error cambiando la contraseña.';
   }
 };
 
-// 🔹 Cambiar foto de perfil
-const uploadProfilePicture = async () => {
-  if (!selectedFile.value) {
-    errorMessage.value = "❌ Selecciona una imagen.";
-    return;
-  }
-
-  const formData = new FormData();
-  formData.append("profileImage", selectedFile.value);
-
-  try {
-    const authToken = localStorage.getItem("authToken");
-
-    const response = await axios.post(
-      `https://protactics-api.onrender.com/usuarios/${user.value.id}/profile-picture`,
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
-    successMessage.value = "✅ Foto de perfil actualizada!";
-    user.value.profileImage = response.data.profileImage;
-    setTimeout(loadUserData, 1500);
-  } catch (error) {
-    errorMessage.value = "❌ Error cambiando la foto de perfil.";
-  }
-};
-
-// 🔄 Función para recargar la página
-const reloadPage = () => {
-  setTimeout(() => {
-    location.reload();
-  }, 1500);
-};
-
-// Cargar datos al montar la página
 onMounted(loadUserData);
 </script>
 
 <template>
   <div class="profile-container">
-    <div class="profile-image-section">
-      <img src="../assets/img/futbol.jpg" class="profile-image" />
-
-      <!-- Esta es la parte de cambio de imagen -->
-      <label class="file-label" for="file-input">
-        Cambiar Imagen
-      </label>
-      <input id="file-input" type="file" ref="fileInput" @change="(event) => selectedFile.value = event.target.files[0]"
-        class="file-input" style="display: none;" />
-
-      <button @click="uploadProfilePicture" class="upload-btn">
-        Actualizar Imagen
-      </button>
-    </div>
-
     <div class="profile-edit-section">
       <div v-if="errorMessage" class="error-msg">{{ errorMessage }}</div>
       <div v-if="successMessage" class="success-msg">{{ successMessage }}</div>
 
       <div class="input-group">
         <div class="input-row">
-          <label for="username">Usuario</label>
-          <input id="username" v-model="user.username" type="text" placeholder="Usuario" />
+          <label for="nombre">Nombre</label>
+          <input id="nombre" v-model="user.nombre" type="text" placeholder="Nombre completo" />
         </div>
 
         <div class="input-row">
-          <label for="email">Correo Electrónico</label>
-          <input id="email" v-model="user.email" type="email" placeholder="Correo electrónico" />
+          <label for="correo">Correo Electrónico</label>
+          <input id="correo" v-model="user.correo" type="email" placeholder="Correo electrónico" />
         </div>
 
-        <div class="input-row">
-          <label>Sigues a: </label>
-          <span>{{ user.followingCount }} personas</span> <!-- Mostrem la quantitat de persones que segueixes -->
+        <div v-if="user.rol === 'club'" class="input-row">
+          <label for="ubicacion">Ubicación</label>
+          <input id="ubicacion" v-model="user.ubicacion" type="text" placeholder="Ubicación del club" />
+        </div>
+
+        <div v-if="user.rol === 'entrenador'" class="input-row">
+          <label for="equipo">Equipo</label>
+          <input id="equipo" v-model="user.equipo" type="text" placeholder="Equipo asignado" />
         </div>
 
         <button @click="saveProfile" class="save-btn">Guardar Cambios</button>
@@ -208,160 +145,158 @@ onMounted(loadUserData);
         <div class="password-container">
           <div class="input-row">
             <label for="oldPassword">Contraseña actual</label>
-            <input id="oldPassword" v-model="passwords.oldPassword" type="password" placeholder="Contraseña actual" />
+            <input id="oldPassword" v-model="passwords.oldPassword" type="password" />
           </div>
           <div class="input-row">
             <label for="newPassword">Nueva contraseña</label>
-            <input id="newPassword" v-model="passwords.newPassword" type="password" placeholder="Nueva contraseña" />
+            <input id="newPassword" v-model="passwords.newPassword" type="password" />
           </div>
           <div class="input-row">
             <label for="confirmPassword">Confirmar nueva contraseña</label>
-            <input id="confirmPassword" v-model="passwords.confirmPassword" type="password" placeholder="Confirmar nueva contraseña" />
+            <input id="confirmPassword" v-model="passwords.confirmPassword" type="password" />
           </div>
         </div>
 
         <button @click="changePassword" class="save-btn">Actualizar Contraseña</button>
-        <button @click="router.push('/perfil')" class="cancel-btn">
-          Cancelar
-        </button>
+        <button @click="router.push('/perfil')" class="cancel-btn">Cancelar</button>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-/* Estils per al perfil */
-.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #f3f3f3;
-  padding-top: 5%;
-  padding-bottom: 5%;
-}
+  <style scoped>
+  /* Estils per al perfil */
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f3f3;
+    padding-top: 5%;
+    padding-bottom: 5%;
+  }
 
-.profile-edit-section {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 30px;
-  width: 50%;
-}
+  .profile-edit-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+    width: 50%;
+  }
 
-.profile-image-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-}
+  .profile-image-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
 
-.profile-image {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-}
+  .profile-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 
-.input-group {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
 
-.password-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-top: 5%;
-}
+  .password-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 5%;
+  }
 
-.input-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  .input-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-label {
-  font-weight: 450;
-  color: rgb(73, 73, 73);
-  width: 40%;
-}
+  label {
+    font-weight: 450;
+    color: rgb(73, 73, 73);
+    width: 40%;
+  }
 
-input {
-  padding: 10px;
-  border: none;
-  border-bottom: 1px solid rgba(73, 73, 73, 0.267);
-  background-color: transparent;
-  color: #8b8b8b;
-  font-size: 1rem;
-  width: 55%;
-}
+  input {
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid rgba(73, 73, 73, 0.267);
+    background-color: transparent;
+    color: #8b8b8b;
+    font-size: 1rem;
+    width: 55%;
+  }
 
-input:focus {
-  outline: none;
-  border-bottom: 2px solid rgb(73, 73, 73);
-}
+  input:focus {
+    outline: none;
+    border-bottom: 2px solid rgb(73, 73, 73);
+  }
 
-button {
-  padding: 15px;
-  border-radius: 8px;
-  background: #333;
-  color: rgb(73, 73, 73);
-  font-size: 1rem;
-  cursor: pointer;
-  font-weight: bold;
-  border: none;
-  transition: background-color 0.3s ease;
-}
+  button {
+    padding: 15px;
+    border-radius: 8px;
+    background: #333;
+    color: rgb(73, 73, 73);
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s ease;
+  }
 
-button:hover {
-  background: #55555534;
-}
+  button:hover {
+    background: #55555534;
+  }
 
-.cancel-btn {
-  background: transparent;
-  border: 2px red solid;
-  margin-top: 20px;
-  color: red;
-}
-.cancel-btn:hover {
-  background: rgba(255, 0, 0, 0.288);
-}
+  .cancel-btn {
+    background: transparent;
+    border: 2px red solid;
+    margin-top: 20px;
+    color: red;
+  }
+  .cancel-btn:hover {
+    background: rgba(255, 0, 0, 0.288);
+  }
 
-.save-btn {
-  background: transparent;
-  border: 2px rgb(73, 73, 73) solid;
-  margin-top: 20px;
-}
+  .save-btn {
+    background: transparent;
+    border: 2px rgb(73, 73, 73) solid;
+    margin-top: 20px;
+  }
 
-.error-msg {
-  color: red;
-  font-size: 0.9rem;
-  text-align: center;
-}
+  .error-msg {
+    color: red;
+    font-size: 0.9rem;
+    text-align: center;
+  }
 
-.success-msg {
-  color: green;
-  font-size: 0.9rem;
-  text-align: center;
-}
+  .success-msg {
+    color: green;
+    font-size: 0.9rem;
+    text-align: center;
+  }
 
-.file-input {
-  background-color: transparent;
-  border: none;
-  display: none;
-}
+  .file-input {
+    background-color: transparent;
+    border: none;
+    display: none;
+  }
 
-.upload-btn {
-  padding: 10px;
-  border-radius: 8px;
-  background-color: transparent;
-  color: rgb(73, 73, 73);
-  border: 2px solid rgb(73, 73, 73);
-  font-weight: bold;
-  margin-top: 10px;
-  cursor: pointer;
-}
+  .upload-btn {
+    padding: 10px;
+    border-radius: 8px;
+    background-color: transparent;
+    color: rgb(73, 73, 73);
+    border: 2px solid rgb(73, 73, 73);
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+  }
 
-</style>
+  </style>
