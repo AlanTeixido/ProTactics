@@ -1,10 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 
 const publicaciones = ref([]);
 const loading = ref(true);
+const searchQuery = ref('');
+const selectedFilter = ref('');
 
 const fetchPublicaciones = async () => {
   try {
@@ -17,6 +19,22 @@ const fetchPublicaciones = async () => {
   }
 };
 
+const filteredPublicaciones = computed(() => {
+  let filtered = publicaciones.value.filter(pub =>
+    pub.titulo.toLowerCase().includes(searchQuery.value.toLowerCase())
+  );
+
+  if (selectedFilter.value === 'titulo') {
+    filtered.sort((a, b) => a.titulo.localeCompare(b.titulo));
+  } else if (selectedFilter.value === 'entrenador') {
+    filtered.sort((a, b) => a.entrenador.localeCompare(b.entrenador));
+  } else if (selectedFilter.value === 'fecha') {
+    filtered.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+  }
+
+  return filtered;
+});
+
 onMounted(fetchPublicaciones);
 </script>
 
@@ -26,10 +44,21 @@ onMounted(fetchPublicaciones);
       <MenuDashboard />
     </div>
     <div class="dashboard-container">
-      <h1 class="titulo">Publicacions</h1>
+      <h1 class="titulo">Publicaciones</h1>
+      
+      <div class="search-filter-container">
+        <input v-model="searchQuery" placeholder="Buscar por título..." class="search-input" />
+        <select v-model="selectedFilter" class="filter-select">
+          <option value="">Sin filtro</option>
+          <option value="titulo">Ordenar por Título</option>
+          <option value="entrenador">Ordenar por Entrenador</option>
+          <option value="fecha">Más Reciente</option>
+        </select>
+      </div>
+
       <div v-if="loading" class="loading">Cargando...</div>
       <div v-else class="grid">
-        <div v-for="publicacion in publicaciones" :key="publicacion.id" class="card">
+        <div v-for="publicacion in filteredPublicaciones" :key="publicacion.id" class="card">
           <p class="author">{{ publicacion.entrenador }}</p>
           <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="post-image">
           <h2 class="post-title">
@@ -68,8 +97,27 @@ onMounted(fetchPublicaciones);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
   margin-top: 5%;
+}
+
+.search-filter-container {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  width: 250px;
+}
+
+.filter-select {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
 }
 
 .titulo {
