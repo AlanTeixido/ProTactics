@@ -32,8 +32,23 @@
 
             <div v-else class="equipo-info editando">
               <input v-model="editData.nombre" placeholder="Nom de l'equip" />
-              <input v-model="editData.categoria" placeholder="Categoria" />
-              <div class="botones">
+              <select v-model="editData.categoria" class="select-categoria">
+                <option disabled value="">Selecciona una categoría</option>
+                <option value="Prebenjamín">Prebenjamín</option>
+                <option value="Benjamín">Benjamín</option>
+                <option value="Alevín">Alevín</option>
+                <option value="Infantil">Infantil</option>
+                <option value="Cadete">Cadete</option>
+                <option value="Juvenil">Juvenil</option>
+                <option value="Amateur">Amateur</option>
+                <option value="Senior">Senior</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Veteranos">Veteranos</option>
+                <option value="Fútbol Sala">Fútbol Sala</option>
+                <option value="Tecnificación">Tecnificación</option>
+                <option value="Competición">Competición</option>
+              </select>              
+                <div class="botones">
                 <button class="btn-guardar" @click="guardarEdicion(e.equipo_id)">💾</button>
                 <button class="btn-cancelar" @click="cancelarEdicion()">X</button>
               </div>
@@ -361,6 +376,16 @@ input {
   background-color: #334155;
   color: white;
   font-size: 0.95rem;
+}
+
+.select-categoria {
+  background-color: #334155;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  font-size: 0.95rem;
+  width: 100%;
 }
 
 
