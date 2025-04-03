@@ -10,14 +10,12 @@
 
       <ButtonCrearEquipo />
 
-      <div class="filtros-equipos">
+      <div class="equipos-lista">
+        <h3>Equipos del club:</h3>
+        <div class="filtros-equipos">
         <input v-model="filtroNombre" placeholder="Filtrar por nombre" />
         <input v-model="filtroCategoria" placeholder="Filtrar por categoría" />
       </div>
-      
-
-      <div class="equipos-lista">
-        <h3>Equipos del club:</h3>
         <div v-if="equipos.length === 0" class="empty-msg">Todavía no hay equipos creados.</div>
 
         <div class="equips-grid">
@@ -49,8 +47,8 @@
                 <option value="Competición">Competición</option>
               </select>              
                 <div class="botones">
-                <button class="btn-guardar" @click="guardarEdicion(e.equipo_id)">💾</button>
-                <button class="btn-cancelar" @click="cancelarEdicion()">X</button>
+                <button class="btn-guardar" @click="guardarEdicion(e.equipo_id)"><img src="../assets/img/guardar.png" class="imgOptions"></button>
+                <button class="btn-cancelar" @click="cancelarEdicion()"><img src="../assets/img/izquierda.png" class="imgOptions"></button>
               </div>
             </div>
           </div>
@@ -190,6 +188,7 @@ onMounted(cargarEquipos);
 .titulo {
   font-size: 2.5rem;
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 .rol-badge {
@@ -202,6 +201,7 @@ onMounted(cargarEquipos);
 }
 
 .equipos-lista h3 {
+  margin-top: 4%;
   font-size: 1.4rem;
   margin-bottom: 15px;
 }
@@ -288,13 +288,11 @@ input {
 }
 
 .btn-guardar {
-  background-color: #22c55e;
-  color: white;
+  background-color: transparent;
 }
 
 .btn-cancelar {
-  background-color: #ef4444;
-  color: white;
+  background-color: transparent;
 }
 
 .btn-delete {
@@ -313,7 +311,10 @@ input {
   height: 20px;
 }
 
-.btn-delete:hover {}
+.imgOptions {
+  width: 20px;
+  height: 20px;
+}
 
 .popup-eliminar {
   position: fixed;
@@ -370,6 +371,7 @@ input {
 }
 
 .filtros-equipos input {
+  width: 20%;
   padding: 10px;
   border-radius: 8px;
   border: none;
@@ -387,7 +389,4 @@ input {
   font-size: 0.95rem;
   width: 100%;
 }
-
-
-
 </style>

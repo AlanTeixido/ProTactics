@@ -22,7 +22,7 @@
   justify-content: center;
   align-items: center;
   padding: 10px 20px;
-  background-color: #4CAF50;
+  background: linear-gradient(45deg, #4caf50, #0a74da);
   color: white;
   border: none;
   border-radius: 5px;

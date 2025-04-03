@@ -17,20 +17,17 @@
 
 <style scoped>
 .button-crear-equipo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding: 10px 20px;
-  background-color: #3b82f6; /* Azul */
+  background: linear-gradient(45deg, #4caf50, #0a74da);
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: 0.3s;
 }
 
 .button-crear-equipo:hover {
-  background-color: #2563eb;
+  transform: scale(1.05);
 }
 
 .router-link {

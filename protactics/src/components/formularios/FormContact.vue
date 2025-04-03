@@ -178,7 +178,7 @@
     border-radius: 30px;
     cursor: pointer;
     font-weight: bold;
-    background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));
+    background: linear-gradient(45deg, #4caf50, #0a74da);
     transition: 0.3s;
     text-transform: uppercase;
   }

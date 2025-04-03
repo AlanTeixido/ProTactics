@@ -195,13 +195,15 @@ label {
 
 .submit-btn {
   padding: 12px;
-  background: linear-gradient(to right, #22c55e, #3b82f6);
+  background: linear-gradient(45deg, #4caf50, #0a74da);
   border: none;
   color: white;
   font-weight: bold;
   border-radius: 8px;
   cursor: pointer;
   transition: transform 0.2s ease;
+  text-transform: uppercase;
+  font-size: 1rem;
 }
 
 .submit-btn:hover {

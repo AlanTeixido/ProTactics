@@ -12,7 +12,7 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 
     <!-- Contenido principal -->
     <div class="dashboard-content">
-      <h2>Crear Equipo</h2>
+      <h2>Añadir equipo</h2>
       <FormCrearEquipos />
     </div>
   </div>
