@@ -15,14 +15,14 @@ const goTo = (path) => {
 };
 
 const allOptions = [
-  { label: "Entrenaments", icon: "📋", path: "/entrenos", color: "#1e3a8a", roles: ["entrenador"] },
-  { label: "Pissarra", icon: "🧠", path: "/pizarra", color: "#facc15", roles: ["entrenador"] },
-  { label: "Jugadors", icon: "🧍", path: "/jugadores", color: "#16a34a", roles: ["entrenador"] },
-  { label: "Entrenadors", icon: "🧑‍🏫", path: "/crearEntrenador", color: "#0ea5e9", roles: ["club"] },
-  { label: "Configuració", icon: "⚙️", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
-  { label: "Publicacions", icon: "📰", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
-  { label: "Equips", icon: "📘", path: "/equipos", color: "#0ea5e9", roles: ["club"] },
-
+  { label: "Entrenamientos", icon: "cono.png", path: "/entrenos", color: "#1e3a8a", roles: ["entrenador"] },
+  { label: "Pizarra", icon: "campo.png", path: "/pizarra", color: "#facc15", roles: ["entrenador"] },
+  { label: "Jugadores", icon: "jugador.png", path: "/jugadores", color: "#16a34a", roles: ["entrenador"] },
+  { label: "Entrenadores", icon: "🧑‍🏫", path: "/crearEntrenador", color: "#0ea5e9", roles: ["club"] },
+  { label: "Configuración", icon: "ajuste.png", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
+  { label: "Publicaciones", icon: "logo.png", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
+  { label: "Equipos", icon: "camiseta.png", path: "/equipos", color: "#0ea5e9", roles: ["club"] },
+  { label: "Subir publicaciones", icon: "📘", path: "/subirPublicaciones", color: "#0ea5e9", roles: ["entrenador"] },
 ];
 
 // Filtra opcions segons el rol de l'usuari
@@ -39,8 +39,8 @@ const options = computed(() => {
     </div>
 
     <div class="dashboard-container">
-      <h2 class="titulo">Benvingut <span>{{ user.username }}</span></h2>
-      <div class="rol-badge">Accedint com a <strong>{{ user.rol }}</strong></div>
+      <h2 class="titulo">Bienvenido <span>{{ user.username }}</span></h2>
+      <div class="rol-badge">Accediendo como <strong>{{ user.rol }}</strong></div>
 
       <div class="grid">
         <div
@@ -49,7 +49,7 @@ const options = computed(() => {
           class="card"
           @click="goTo(opt.path)"
         >
-          <img class="img" :src="`../public/img/${opt.img}`"/>
+          <img :src="`../../public/img/${opt.icon}`" class="img">
           <div class="label">{{ opt.label }}</div>
         </div>
       </div>
