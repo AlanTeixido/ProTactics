@@ -76,6 +76,11 @@ const router = createRouter({
       name: 'equipos',
       component: () => import('../views/DashboardEquipos.vue'),
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/entrenos',
+      name: 'entrenos',
+      component: () => import('../views/DashboardEntrenos.vue'),
     }         
   ],
   scrollBehavior(to, from, savedPosition) {
