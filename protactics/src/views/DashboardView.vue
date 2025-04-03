@@ -21,6 +21,7 @@ const allOptions = [
   { label: "Entrenadors", icon: "🧑‍🏫", path: "/crearEntrenador", color: "#0ea5e9", roles: ["club"] },
   { label: "Configuració", icon: "⚙️", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
   { label: "Publicacions", icon: "📰", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
+  { label: "Subir Publicaciones", icon: "P", path: "/subirPublicaciones", color: "#0ea5e9", roles: ["entrenador"] },
   { label: "Equips", icon: "📘", path: "/equipos", color: "#0ea5e9", roles: ["club"] },
 
 ];

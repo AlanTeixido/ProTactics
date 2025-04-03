@@ -12,13 +12,12 @@ const liked = ref(false);
 
 const fetchPublicacion = async () => {
   try {
-    const response = await axios.get(`https://protactics-api.onrender.com/publicaciones?entrenador_id=${route.params.id}`);
-    
-    if (response.data.length > 0) {
-      publicacion.value = response.data[0];
+    const response = await axios.get(`https://protactics-api.onrender.com/publicaciones/${route.params.id}`);
+    if (response.data) {
+      publicacion.value = response.data;
       liked.value = publicacion.value.liked;
     } else {
-      console.error("No se encontraron publicaciones para este entrenador.");
+      console.error("No se encontró la publicación.");
     }
   } catch (error) {
     console.error('Error obteniendo la publicación', error);
@@ -57,9 +56,14 @@ onMounted(fetchPublicacion);
       <div v-if="loading" class="loading">Cargando...</div>
       <div v-else class="card">
         <h1 class="titulo">{{ publicacion.titulo }}</h1>
-        <p class="author">{{ publicacion.entrenador }}</p>
+        <p class="author">Entrenador: {{ publicacion.entrenador_id }}</p> <!-- Muestra ID del entrenador -->
         <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="post-image">
-        <p class="content">{{ publicacion.contenido }}</p>
+        <p class="content">{{ publicacion.descripcion }}</p> <!-- Aquí puedes mostrar más detalles -->
+        <p><strong>Categoría:</strong> {{ publicacion.categoria }}</p>
+        <p><strong>Campo:</strong> {{ publicacion.campo }}</p>
+        <p><strong>Fecha de Entrenamiento:</strong> {{ publicacion.fecha_entrenamiento }}</p>
+        <p><strong>Duración:</strong> {{ publicacion.duracion_repeticion }}</p>
+        <p><strong>Repeticiones:</strong> {{ publicacion.repeticiones }}</p>
         <button @click="toggleLike" class="like-button">
           {{ liked ? 'Quitar Like' : 'Dar Like' }}
         </button>

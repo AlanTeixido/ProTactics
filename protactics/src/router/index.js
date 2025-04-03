@@ -59,6 +59,12 @@ const router = createRouter({
       component: () => import('../views/DetallePublicacion.vue'),
       props: true
     },
+    {
+      path: '/subirPublicaciones',
+      name: 'subir-publicacion',
+      component: () => import('../views/subirPublicacion.vue'),
+      props: true
+    },
     // router/index.js o on tinguis definides les rutes
     {
       path: '/jugadores/editar/:id',
