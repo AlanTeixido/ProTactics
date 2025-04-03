@@ -227,6 +227,8 @@
 - **Proofhub:** Adri
 - **Pizarra Implementar Imagenes** Alex
 
+---
+
 ## **Fecha:** 27/03/2025  
 **Alumnos:** Alex, Adri i Alan
 
@@ -234,3 +236,47 @@
 - **Reedefinir Projecte:** Alan, Adri i Alex 
 - **Reestructuració Backend:** Alan, Adri i Alex 
 
+---
+
+## **Fecha:** 28/03/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Reedefinir Projecte:** Alan, Adri i Alex 
+- **Reestructuració Backend:** Alan, Adri i Alex 
+
+---
+
+## **Fecha:** 31/03/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Creacio Nova Estructura:** Alex, Alan i Adri
+
+---
+
+## **Fecha:** 1/04/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Reestructuracio Pagines:** Alan, Adri i Alex 
+
+---
+
+## **Fecha:** 2/04/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Vista per Club:** Alan, Adri i Alex 
+- **Vista per Entrenadors:** Alan, Adri i Alex 
+
+---
+
+## **Fecha:** 3/04/2025  
+**Alumnos:** Alex, Adri i Alan
+
+### **Tareas:**  
+- **Pagina Equips:** Alan, Adri i Alex 
+- **:** Alan, Adri i Alex 
+- **Dashboard** Alan, Adri i Alex
+- **Pagines Publicacions:** Alex 
