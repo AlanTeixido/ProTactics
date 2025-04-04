@@ -1,6 +1,7 @@
 <template>
   <div class="crear-entreno">
     <div class="formulario-container">
+      <ButtonAtras />
       <h2 class="titulo">Crear nuevo entrenamiento</h2>
 
       <!-- PRIMER PASO: NOMBRE Y EQUIPO -->
@@ -99,6 +100,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
 const titulo = ref('');
 const descripcion = ref('');

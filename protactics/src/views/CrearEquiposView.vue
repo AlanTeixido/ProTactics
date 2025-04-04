@@ -1,6 +1,7 @@
 <script setup>
 import FormCrearEquipos from '@/components/formularios/FormCrearEquipo.vue';
 import MenuDashboard from '@/components/MenuDashboard.vue';
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 </script>
 
 <template>
@@ -12,6 +13,7 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 
     <!-- Contenido principal -->
     <div class="dashboard-content">
+      <ButtonAtras />
       <h2>Añadir equipo</h2>
       <FormCrearEquipos />
     </div>

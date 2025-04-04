@@ -1,4 +1,5 @@
 <script setup>
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 import FormCrearJugador from '@/components/formularios/FormCrearJugador.vue';
 import MenuDashboard from '@/components/MenuDashboard.vue'; 
 </script>
@@ -12,6 +13,7 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 
     <!-- Contenido principal -->
     <div class="dashboard-content">
+      <ButtonAtras />
       <div class="intro">
         <h2>Crear Jugador</h2>
         <p>En el siguiente formulario podrás <span>crear un jugador</span> con las caracteristicas necesarias y se

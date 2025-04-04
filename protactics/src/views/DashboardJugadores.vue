@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonCrearJugador from '@/components/botones/ButtonCrearJugador.vue';
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
 const jugadores = ref([]);
 const equipos = ref([]);
@@ -126,6 +127,7 @@ onMounted(() => {
     </div>
 
     <div class="dashboard-container">
+      <ButtonAtras />
       <h2 class="titulo">Gestión de jugadores</h2>
       <div class="rol-badge">Accediendo como <strong>{{ user.rol }}</strong></div>
 

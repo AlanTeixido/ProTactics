@@ -5,6 +5,7 @@
     </div>
 
     <div class="dashboard-container">
+      <ButtonAtras />
       <h2 class="titulo">Gestión de equipos</h2>
       <div class="rol-badge">Accediendo como <strong>{{ user.rol }}</strong></div>
 
@@ -73,6 +74,7 @@ import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonCrearEquipo from '@/components/botones/ButtonCrearEquipo.vue';
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
 const equipos = ref([]);
 const user = ref({

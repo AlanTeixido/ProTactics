@@ -1,10 +1,11 @@
 
 <script setup>
 import axios from "axios";
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import MenuDashboard from "@/components/MenuDashboard.vue";
 import Draggable from "@/components/Draggable.vue";
+import ButtonAtras from "@/components/botones/ButtonAtras.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -125,6 +126,7 @@ const getDetallesEspecificos = () => {
     </div>
 
     <div class="container">
+      <ButtonAtras />
       <form @submit.prevent="enviarFormulario" class="form">
         <h1 class="title">Entrenamiento de {{ nombreDeporte }}</h1>
 

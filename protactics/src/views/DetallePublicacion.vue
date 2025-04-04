@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
-
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 const route = useRoute();
 const router = useRouter();
 const publicacion = ref(null);
@@ -52,6 +52,7 @@ onMounted(fetchPublicacion);
       <MenuDashboard />
     </div>
     <div class="dashboard-container">
+      <ButtonAtras />
       <button @click="goBack" class="back-button">&#8592;</button>
       <div v-if="loading" class="loading">Cargando...</div>
       <div v-else class="card">

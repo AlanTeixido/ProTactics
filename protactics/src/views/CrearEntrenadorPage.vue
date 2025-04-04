@@ -1,6 +1,7 @@
 <script setup>
 import FormCrearEntrenador from '@/components/formularios/FormCrearEntrenador.vue';
 import MenuDashboard from '@/components/MenuDashboard.vue';
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
 
 </script>
@@ -13,6 +14,7 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 
     <!-- Contenido principal -->
     <div class="dashboard-content">
+      <ButtonAtras />
         <h2>Crear Entrenador</h2>
       <FormCrearEntrenador />
     </div>

@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
 const publicaciones = ref([]);
 const loading = ref(true);
@@ -44,6 +45,7 @@ onMounted(fetchPublicaciones);
       <MenuDashboard />
     </div>
     <div class="dashboard-container">
+      <ButtonAtras />
       <h1 class="titulo">Publicaciones</h1>
       
       <div class="search-filter-container">

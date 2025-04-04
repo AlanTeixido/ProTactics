@@ -1,5 +1,6 @@
 <template>
   <div class="entrenamientos-container">
+    <ButtonAtras />
     <div class="menu-container">
       <MenuDashboard />
     </div>
@@ -13,6 +14,7 @@
 
 <script setup>
 import MenuDashboard from "@/components/MenuDashboard.vue";
+import ButtonAtras from "@/components/botones/ButtonAtras.vue";
 </script>
 
 <style scoped>
