@@ -5,6 +5,7 @@
     </div>
 
     <div class="dashboard-container">
+      <ButtonAtras />
       <div class="header-entrenos">
         <h2 class="titulo">Gestión de entrenamientos</h2>
         <RouterLink to="/crear-entreno" class="btn-crear-entreno">➕ Crear Entreno</RouterLink>
@@ -39,6 +40,7 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import { RouterLink } from 'vue-router';
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
 const entrenos = ref([]);
 
