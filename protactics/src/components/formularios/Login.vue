@@ -42,7 +42,7 @@
 <div v-if="popupVisible" class="popup">
   <div :class="['popup-content', isError ? 'popup-error' : 'popup-success']">
     <div class="icono-check">
-      {{ isError ? '❌' : '✅' }}
+      <img src="../../assets/img/logo.png" class="logo-check">
     </div>
     <p class="popup-text">{{ popupMessage }}</p>
     <button v-if="isError" @click="closePopup" class="popup-close">Cerrar</button>
@@ -211,6 +211,7 @@ const login = async () => {
   background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));
   /* Degradado de azul a verde */
   transition: 0.3s;
+  text-transform: uppercase;
 }
 
 .submit-btn:hover {
@@ -318,8 +319,9 @@ const login = async () => {
   animation: fadeIn 0.3s ease-out;
 }
 
-.icono-check {
-  font-size: 2.5rem;
+.logo-check {
+  width: 40px;
+  height: 40px;
   margin-bottom: 10px;
   animation: bounce 0.5s ease;
 }
