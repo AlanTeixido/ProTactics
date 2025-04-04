@@ -29,6 +29,10 @@
             <p><strong>Valoración:</strong> {{ entreno.valoracion || 'No disponible' }}</p>
             <img v-if="entreno.imagen_url" :src="entreno.imagen_url" alt="Imagen del entrenamiento" class="entreno-imagen" />
           </div>
+          <div class="entreno-actions">
+            <button @click="iniciarEdicion(entreno)" class="btn-editar">Editar</button>
+            <button @click="confirmarEliminarEntrenamiento(entreno.entrenamiento_id)" class="btn-eliminar">Eliminar</button>
+          </div>
         </li>
       </ul>
     </div>
@@ -54,6 +58,43 @@ const cargarEntrenamientos = async () => {
     entrenos.value = response.data || [];
   } catch (error) {
     console.error('❌ Error cargando entrenamientos:', error);
+  }
+};
+
+// Función para eliminar un entrenamiento
+const eliminarEntrenamiento = async (entrenamiento_id) => {
+  try {
+    const token = localStorage.getItem('authToken');
+    await axios.delete(`https://protactics-api.onrender.com/entrenamientos/${entrenamiento_id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    entrenos.value = entrenos.value.filter(entreno => entreno.entrenamiento_id !== entrenamiento_id);
+  } catch (error) {
+    console.error('❌ Error eliminando el entrenamiento:', error);
+  }
+};
+
+// Función para editar un entrenamiento
+const editarEntrenamiento = async (entrenamiento_id, data) => {
+  try {
+    const token = localStorage.getItem('authToken');
+    await axios.put(`https://protactics-api.onrender.com/entrenamientos/${entrenamiento_id}`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    cargarEntrenamientos();
+  } catch (error) {
+    console.error('❌ Error actualizando el entrenamiento:', error);
+  }
+};
+
+const iniciarEdicion = (entreno) => {
+  // Aquí puedes iniciar un proceso de edición, ya sea mostrando un formulario o redirigiendo a una página de edición
+  alert(`Editar entrenamiento: ${entreno.titulo}`);
+};
+
+const confirmarEliminarEntrenamiento = (entrenamiento_id) => {
+  if (confirm("¿Estás seguro de que deseas eliminar este entrenamiento?")) {
+    eliminarEntrenamiento(entrenamiento_id);
   }
 };
 
@@ -165,5 +206,38 @@ onMounted(cargarEntrenamientos);
 
 .entreno-info p strong {
   color: rgb(0, 132, 194); /* Azul */
+}
+
+.entreno-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-editar,
+.btn-eliminar {
+  background-color: transparent;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.btn-editar {
+  background-color: rgb(4, 196, 68); /* Verde */
+  color: white;
+}
+
+.btn-editar:hover {
+  background-color: rgb(0, 132, 194); /* Azul */
+}
+
+.btn-eliminar {
+  background-color: rgb(220, 38, 38); /* Rojo */
+  color: white;
+}
+
+.btn-eliminar:hover {
+  background-color: rgb(185, 28, 28); /* Rojo oscuro */
 }
 </style>
