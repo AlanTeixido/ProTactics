@@ -1,24 +1,21 @@
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 
 const router = useRouter();
-const isLoggedIn = ref(false); // Estado reactivo
-const isDropdownOpen = ref(false);
-
+const isLoggedIn = ref(false);
+const userRole = ref(null);
 const userPic = ref('https://via.placeholder.com/100');
 
-// 🔹 Función para actualizar el estado del usuario
 const checkAuthStatus = () => {
     isLoggedIn.value = !!localStorage.getItem('authToken');
+    userRole.value = localStorage.getItem('userRol'); // CORRECCIÓN AQUÍ
 };
 
-// 🔹 Cargar imagen de perfil si está logueado
 const fetchProfilePic = async () => {
     const userId = localStorage.getItem('userId');
     if (!userId) return;
-
     try {
         const response = await axios.get(`https://protactics-api.onrender.com/usuarios/${userId}`);
         if (response.data.foto_url) {
@@ -30,33 +27,44 @@ const fetchProfilePic = async () => {
     }
 };
 
-// 🔹 Función para cerrar sesión
 const logout = () => {
     localStorage.clear();
     isLoggedIn.value = false;
+    userRole.value = null;
     userPic.value = 'https://via.placeholder.com/100';
     router.push('/');
-
-    // Forzar una recarga de la página para limpiar cualquier estado persistente
-    setTimeout(() => {
-        window.location.reload();
-    }, 500);
+    setTimeout(() => window.location.reload(), 500);
 };
 
-// 🔹 Manejo del dropdown
-const toggleDropdown = () => {
-    isDropdownOpen.value = !isDropdownOpen.value;
-};
-
-// 🔹 Detectar cambios en localStorage y actualizar estado
-watch(isLoggedIn, (newValue) => {
-    if (newValue) fetchProfilePic();
-});
-
-// 🔹 Comprobar estado de autenticación al montar el componente
 onMounted(() => {
     checkAuthStatus();
     if (isLoggedIn.value) fetchProfilePic();
+});
+
+const menuItems = computed(() => {
+    if (!isLoggedIn.value) {
+        return [
+            { path: '/', label: 'INICIO' },
+            { path: '/contact', label: 'CONTACTO' },
+            { path: '/about', label: 'SOBRE NOSOTROS' }
+        ];
+    } else if (userRole.value === 'club') {
+        return [
+            { path: '/dashboard-club', label: 'DASHBOARD' },
+            { path: '/equipos', label: 'EQUIPOS' },
+            { path: '/entrenadores', label: 'ENTRENADORES' },
+            { path: '/publicaciones', label: 'PUBLICACIONES' },
+            { path: '/perfil-club', label: 'PERFIL' }
+        ];
+    } else if (userRole.value === 'entrenador') {
+        return [
+            { path: '/dashboard', label: 'DASHBOARD' },
+            { path: '/mis-entrenamientos', label: 'MIS ENTRENAMIENTOS' },
+            { path: '/perfil-entrenador', label: 'PERFIL' },
+            { path: '/publicaciones', label: 'PUBLICACIONES' }
+        ];
+    }
+    return [];
 });
 </script>
 
@@ -68,31 +76,21 @@ onMounted(() => {
 
         <nav class="nav-container">
             <div class="nav-item">
-                <RouterLink v-if="!isLoggedIn" to="/" class="nav-link">INICIO</RouterLink>
-                <RouterLink v-if="isLoggedIn" to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
-                <RouterLink v-if="isLoggedIn" to="/mis-entrenamientos" class="nav-link">ENTRENAMIENTOS</RouterLink>
-                <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
-                <RouterLink v-if="!isLoggedIn" to="/contact" class="nav-link">CONTACTO</RouterLink>
-                
-                <RouterLink v-if="!isLoggedIn" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink>
+                <RouterLink v-for="item in menuItems" :key="item.path" :to="item.path" class="nav-link">
+                    {{ item.label }}
+                </RouterLink>
             </div>
         </nav>
 
-        <!--<div>
-            <RouterLink :to="`/deportes`"><button class="newTraining">+</button></RouterLink>
-        </div>-->
-
         <div class="log-regist">
             <div v-if="isLoggedIn" class="user-info">
-                <RouterLink to="/perfil" class="profile-pic-link">
-                    <!--<img class="profile-pic" :src="userPic" alt="Foto de perfil" />-->
-                    <img src="../assets/img/futbol.jpg" class="logo-perfil">
+                <RouterLink :to="userRole === 'club' ? '/perfil-club' : '/perfil-entrenador'" class="profile-pic-link">
+                    <img :src="userPic" class="logo-perfil">
                 </RouterLink>
-
                 <img @click="logout" src="../assets/img/logout.png" class="logout-logo">
             </div>
 
-            <div v-if="!isLoggedIn" class="login-register">
+            <div v-else class="login-register">
                 <RouterLink to="/login">
                     <img src="../assets/img/enter.png" class="login-register-btn">
                 </RouterLink>
@@ -100,15 +98,12 @@ onMounted(() => {
         </div>
     </div>
 </template>
-<style scoped>
 
+<style scoped>
 .menu {
     width: 250px;
-    /* Ajusta el tamaño del menú */
     height: 100vh;
-    /* Ocupa toda la altura de la pantalla */
     background-color: #0b0f1a;
-    /*background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));*/
     filter: brightness(0.9);
 }
 
@@ -134,7 +129,6 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     margin: 15%;
-
 }
 
 .nav-link {
@@ -146,18 +140,12 @@ onMounted(() => {
 }
 
 .nav-link:hover {
-  transform: scale(1.1);
-  font-weight: bolder;
-  color: transparent;
-  background-image: linear-gradient(to right, #0098e5, #00a86b);
-  background-clip: text;
-  -webkit-background-clip: text;
-}
-
-.log-regist {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    transform: scale(1.1);
+    font-weight: bolder;
+    color: transparent;
+    background-image: linear-gradient(to right, #0098e5, #00a86b);
+    background-clip: text;
+    -webkit-background-clip: text;
 }
 
 .user-info {
@@ -184,23 +172,5 @@ onMounted(() => {
     width: 35px;
     height: 35px;
     border-radius: 50px;
-}
-
-.newTraining{
-    padding: 10px;
-    padding-left: 7%;
-    padding-right: 7%;
-    border-radius: 50%;
-    border: 2px white solid;
-    background-color: transparent;
-    color: white;
-    margin-top: 10%;
-    margin-left: 15%;
-    transition: 0.5s;
-    font-size: 150%;
-}
-
-.newTraining:hover{
-    transform: scale(1.1);
 }
 </style>
