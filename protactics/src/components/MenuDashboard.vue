@@ -10,7 +10,7 @@ const userPic = ref('https://via.placeholder.com/100');
 
 const checkAuthStatus = () => {
     isLoggedIn.value = !!localStorage.getItem('authToken');
-    userRole.value = localStorage.getItem('userRol'); // CORRECCIÓN AQUÍ
+    userRole.value = localStorage.getItem('userRol'); 
 };
 
 const fetchProfilePic = async () => {
