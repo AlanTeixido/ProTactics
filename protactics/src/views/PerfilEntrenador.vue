@@ -9,7 +9,7 @@
         <h2 class="titulo">Perfil del Entrenador</h2>
         <div class="rol-badge">Accediendo como <strong>Entrenador</strong></div>
   
-        <div class="info-card">
+        <div class="info-card" v-if="!editando">
           <div class="info-row">
             <span class="label">Nombre:</span>
             <span class="value">{{ entrenador.nombre }}</span>
@@ -19,12 +19,59 @@
             <span class="value">{{ entrenador.correo }}</span>
           </div>
           <div class="info-row">
+            <span class="label">Teléfono:</span>
+            <span class="value">{{ entrenador.telefono || 'No especificado' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="label">Notas adicionales:</span>
+            <span class="value">{{ entrenador.notas || 'Ninguna' }}</span>
+          </div>
+          <div class="info-row">
             <span class="label">Equipo asignado:</span>
             <span class="value">{{ entrenador.equipo || 'No asignado' }}</span>
           </div>
           <div class="info-row">
             <span class="label">Fecha de registro:</span>
             <span class="value">{{ new Date(entrenador.creado_en).toLocaleDateString() }}</span>
+          </div>
+  
+          <button class="btn-editar" @click="empezarEdicion">Editar perfil</button>
+        </div>
+  
+        <div v-else class="info-card editar">
+          <div class="input-group">
+            <label>Nombre:</label>
+            <input v-model="entrenadorEdit.nombre" />
+          </div>
+  
+          <div class="input-group">
+            <label>Correo electrónico:</label>
+            <input v-model="entrenadorEdit.correo" type="email" />
+          </div>
+  
+          <div class="input-group">
+            <label>Nueva contraseña (opcional):</label>
+            <input v-model="entrenadorEdit.password" type="password" />
+          </div>
+  
+          <div class="input-group">
+            <label>Teléfono:</label>
+            <input v-model="entrenadorEdit.telefono" type="tel" placeholder="Ej: 612345678" />
+          </div>
+  
+          <div class="input-group">
+            <label>Foto de perfil (URL):</label>
+            <input v-model="entrenadorEdit.foto_url" type="url" placeholder="https://..." />
+          </div>
+  
+          <div class="input-group">
+            <label>Notas adicionales:</label>
+            <textarea v-model="entrenadorEdit.notas" rows="3"></textarea>
+          </div>
+  
+          <div class="botones">
+            <button @click="guardarCambios">Guardar cambios</button>
+            <button @click="cancelarEdicion">Cancelar</button>
           </div>
         </div>
       </div>
@@ -38,15 +85,47 @@
   import ButtonAtras from '@/components/botones/ButtonAtras.vue';
   
   const entrenador = ref({});
+  const entrenadorEdit = ref({});
+  const editando = ref(false);
   
-  onMounted(async () => {
-    const entrenadorId = localStorage.getItem("userId");
-    const token = localStorage.getItem("authToken");
-    const response = await axios.get(`https://protactics-api.onrender.com/entrenadores/${entrenadorId}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    entrenador.value = response.data;
-  });
+  const entrenadorId = localStorage.getItem("userId");
+  const token = localStorage.getItem("authToken");
+  
+  const cargarEntrenador = async () => {
+    try {
+      const res = await axios.get(`https://protactics-api.onrender.com/entrenadores/${entrenadorId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      entrenador.value = res.data;
+    } catch (error) {
+      console.error('Error al obtener perfil:', error);
+    }
+  };
+  
+  const empezarEdicion = () => {
+    entrenadorEdit.value = { ...entrenador.value };
+    editando.value = true;
+  };
+  
+  const cancelarEdicion = () => {
+    editando.value = false;
+  };
+  
+  const guardarCambios = async () => {
+    try {
+      await axios.put(`https://protactics-api.onrender.com/entrenadores/${entrenadorId}`, entrenadorEdit.value, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      entrenador.value = { ...entrenadorEdit.value };
+      editando.value = false;
+      alert('✅ Perfil actualizado correctamente.');
+    } catch (error) {
+      console.error('Error al actualizar perfil:', error);
+      alert('❌ Hubo un problema al actualizar el perfil.');
+    }
+  };
+  
+  onMounted(cargarEntrenador);
   </script>
   
   <style scoped>
@@ -95,6 +174,7 @@
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    position: relative;
   }
   
   .info-row {
@@ -111,6 +191,44 @@
   
   .value {
     color: #e2e8f0;
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .input-group input {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background-color: #334155;
+    color: white;
+  }
+  
+  .botones {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .btn-editar, .botones button {
+    background-color: #0ea5e9;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .botones button:nth-child(2) {
+    background-color: #ef4444;
+  }
+  
+  .btn-editar:hover, .botones button:hover {
+    opacity: 0.9;
   }
   </style>
   
