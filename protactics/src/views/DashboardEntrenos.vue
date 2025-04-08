@@ -8,7 +8,7 @@
       <ButtonAtras />
       <div class="dashboard-header">
         <h2 class="titulo">Gestión de entrenamientos</h2>
-        <RouterLink to="/crear-entreno" class="btn-crear-entreno">➕ Crear Entreno</RouterLink>
+        <RouterLink to="/crear-entreno" class="btn-crear-entreno">+</RouterLink>
       </div>
 
       <div class="dashboard-stats">
@@ -134,9 +134,8 @@ onMounted(cargarEntrenamientos);
 .dashboard {
   display: flex;
   height: 100vh;
-  background: #0f172a; /* Fondo original oscuro */
+  background: linear-gradient(to left, #0f172a, #155e75);
   color: white;
-  font-family: 'Segoe UI', sans-serif;
 }
 
 .dashboard-menu {
@@ -158,26 +157,30 @@ onMounted(cargarEntrenamientos);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 2%;
 }
 
 .titulo {
   font-size: 2.4rem;
-  color: rgb(4, 196, 68); /* Verde neón */
+  color: rgb(255, 255, 255);
   font-weight: bold;
 }
 
 .btn-crear-entreno {
-  background-color: rgb(4, 196, 68);
+  background: linear-gradient(45deg, #4caf50, #0a74da);
   color: white;
   padding: 10px 20px;
-  border-radius: 10px;
+  border-radius: 50%;
   text-decoration: none;
-  font-weight: 600;
-  transition: background 0.3s;
+  font-weight: bold;
+  font-size: 200%;
+  transition: 0.3s;
+  margin-right: 10%;
 }
 
 .btn-crear-entreno:hover {
   background-color: #0e7490;
+  transform: scale(1.1);
 }
 
 .dashboard-stats {

@@ -50,7 +50,7 @@ const menuItems = computed(() => {
         ];
     } else if (userRole.value === 'club') {
         return [
-            { path: '/dashboard-club', label: 'DASHBOARD' },
+            { path: '/dashboard', label: 'DASHBOARD' },
             { path: '/equipos', label: 'EQUIPOS' },
             { path: '/entrenadores', label: 'ENTRENADORES' },
             { path: '/publicaciones', label: 'PUBLICACIONES' },
