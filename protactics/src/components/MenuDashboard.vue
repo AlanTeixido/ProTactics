@@ -59,7 +59,7 @@ const menuItems = computed(() => {
     } else if (userRole.value === 'entrenador') {
         return [
             { path: '/dashboard', label: 'DASHBOARD' },
-            { path: '/mis-entrenamientos', label: 'MIS ENTRENAMIENTOS' },
+            { path: '/entrenos', label: 'ENTRENAMIENTOS' },
             { path: '/perfil-entrenador', label: 'PERFIL' },
             { path: '/publicaciones', label: 'PUBLICACIONES' }
         ];
