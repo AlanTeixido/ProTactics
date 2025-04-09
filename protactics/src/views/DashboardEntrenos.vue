@@ -34,13 +34,23 @@
         </div>
       </div>
       
-
-      <div v-if="entrenos.length === 0" class="empty-msg">
-        Todavía no has creado entrenamientos.
+      <div v-if="filteredEntrenos.length === 0" class="empty-msg">
+        No hay entrenamientos que coincidan con la búsqueda.
       </div>
 
+
+      <div class="search-filter-container">
+        <input v-model="searchQuery" placeholder="Buscar por título..." class="search-input" />
+        <select v-model="selectedFilter" class="filter-select">
+          <option value="">Sin filtro</option>
+          <option value="asc">Fecha Ascendente</option>
+          <option value="desc">Fecha Descendente</option>
+          <option value="categoria">Por Categoría</option>
+        </select>
+      </div> 
+
       <ul class="entrenos-lista">
-        <li v-for="entreno in entrenos" :key="entreno.entrenamiento_id" class="entreno-card">
+        <li v-for="entreno in filteredEntrenos" :key="entreno.entrenamiento_id" class="entreno-card">
           <img v-if="entreno.imagen_url" :src="entreno.imagen_url" alt="Imagen" class="entreno-imagen"/>
           <div class="entreno-info">
             <h3 class="entreno-titulo">{{ entreno.titulo }}</h3>
@@ -73,8 +83,9 @@ import { RouterLink } from 'vue-router';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 import ProgressCircle from '@/components/ProgressCircle.vue';
 
-
 const entrenos = ref([]);
+const searchQuery = ref("");
+const selectedFilter = ref("");
 
 const cargarEntrenamientos = async () => {
   try {
@@ -88,44 +99,23 @@ const cargarEntrenamientos = async () => {
   }
 };
 
-const eliminarEntrenamiento = async (id) => {
-  try {
-    const token = localStorage.getItem('authToken');
-    await axios.delete(`https://protactics-api.onrender.com/entrenamientos/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    entrenos.value = entrenos.value.filter(entreno => entreno.entrenamiento_id !== id);
-  } catch (error) {
-    console.error('❌ Error eliminando el entrenamiento:', error);
+const filteredEntrenos = computed(() => {
+  let result = [...entrenos.value];
+
+  if (searchQuery.value) {
+    result = result.filter(entreno => entreno.titulo.toLowerCase().includes(searchQuery.value.toLowerCase()));
   }
-};
 
-const iniciarEdicion = (entreno) => {
-  alert(`Editar entrenamiento: ${entreno.titulo}`);
-};
-
-const confirmarEliminarEntrenamiento = (id) => {
-  if (confirm("¿Eliminar este entrenamiento?")) {
-    eliminarEntrenamiento(id);
+  if (selectedFilter.value === "asc") {
+    result.sort((a, b) => new Date(a.creado_en) - new Date(b.creado_en));
+  } else if (selectedFilter.value === "desc") {
+    result.sort((a, b) => new Date(b.creado_en) - new Date(a.creado_en));
+  } else if (selectedFilter.value === "categoria") {
+    result.sort((a, b) => a.categoria.localeCompare(b.categoria));
   }
-};
 
-const duracionMedia = computed(() => {
-  if (!entrenos.value.length) return '0 min';
-  const total = entrenos.value.reduce((acc, e) => acc + (e.duracion_repeticion?.minutes ?? 0), 0);
-  return `${Math.round(total / entrenos.value.length)} min`;
+  return result;
 });
-
-const totalRepeticiones = computed(() => {
-  return entrenos.value.reduce((acc, e) => acc + (e.repeticiones ?? 0), 0);
-});
-
-const duracionMediaValor = computed(() => {
-  if (!entrenos.value.length) return 0;
-  const total = entrenos.value.reduce((acc, e) => acc + (e.duracion_repeticion?.minutes ?? 0), 0);
-  return Math.round(total / entrenos.value.length);
-});
-
 
 onMounted(cargarEntrenamientos);
 </script>
@@ -315,5 +305,46 @@ onMounted(cargarEntrenamientos);
 .btn-eliminar:hover {
   background-color: #dc2626;
 }
+
+.search-filter-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin: 20px 0;
+  padding: 10px;
+  background-color: #1e293b;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+  flex: 1;
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #334155;
+  color: white;
+}
+
+.search-input::placeholder {
+  color: #94a3b8;
+}
+
+.filter-select {
+  padding: 10px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #334155;
+  color: white;
+  cursor: pointer;
+}
+
+.filter-select:hover {
+  background-color: #475569;
+}
+
 
 </style>
