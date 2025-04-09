@@ -4,9 +4,11 @@ import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
+
 const route = useRoute();
 const router = useRouter();
-const publicacion = ref(null);
+
+const publicacionData = ref(null); // <- cambiado a publicacionData para evitar conflictos
 const loading = ref(true);
 const liked = ref(false);
 
@@ -14,13 +16,13 @@ const fetchPublicacion = async () => {
   try {
     const response = await axios.get(`https://protactics-api.onrender.com/publicaciones/${route.params.id}`);
     if (response.data) {
-      publicacion.value = response.data;
-      liked.value = publicacion.value.liked;
+      publicacionData.value = response.data;
+      liked.value = response.data.liked || false;
     } else {
-      console.error("No se encontró la publicación.");
+      console.error("❌ Publicación no encontrada.");
     }
   } catch (error) {
-    console.error('Error obteniendo la publicación', error);
+    console.error('❌ Error obteniendo la publicación:', error);
   } finally {
     loading.value = false;
   }
@@ -28,14 +30,21 @@ const fetchPublicacion = async () => {
 
 const toggleLike = async () => {
   try {
+    const token = localStorage.getItem('authToken');
+    if (!token) return;
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` }
+    };
+
     if (liked.value) {
-      await axios.delete(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`);
+      await axios.delete(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`, config);
     } else {
-      await axios.post(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`);
+      await axios.post(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`, {}, config);
     }
     liked.value = !liked.value;
   } catch (error) {
-    console.error('Error al dar/quitar like', error);
+    console.error('❌ Error al dar/quitar like:', error);
   }
 };
 
@@ -51,24 +60,35 @@ onMounted(fetchPublicacion);
     <div class="dashboard-menu">
       <MenuDashboard />
     </div>
+
     <div class="dashboard-container">
       <ButtonAtras />
       <button @click="goBack" class="back-button">&#8592;</button>
-      <div v-if="loading" class="loading">Cargando...</div>
-      <div v-else class="card">
-        <h1 class="titulo">{{ publicacion.titulo }}</h1>
-        <p class="author">Entrenador: {{ publicacion.entrenador_id }}</p> <!-- Muestra ID del entrenador -->
-        <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="post-image">
-        <p class="content">{{ publicacion.descripcion }}</p> <!-- Aquí puedes mostrar más detalles -->
-        <p><strong>Categoría:</strong> {{ publicacion.categoria }}</p>
-        <p><strong>Campo:</strong> {{ publicacion.campo }}</p>
-        <p><strong>Fecha de Entrenamiento:</strong> {{ publicacion.fecha_entrenamiento }}</p>
-        <p><strong>Duración:</strong> {{ publicacion.duracion_repeticion }}</p>
-        <p><strong>Repeticiones:</strong> {{ publicacion.repeticiones }}</p>
+
+      <div v-if="loading" class="loading">Cargando publicación...</div>
+
+      <div v-else-if="publicacionData" class="card">
+        <h1 class="titulo">{{ publicacionData.titulo }}</h1>
+        <p class="author">Entrenador: {{ publicacionData.entrenador || 'Desconocido' }}</p>
+        <img
+          :src="publicacionData.imagen_url || '/default.png'"
+          alt="Imagen"
+          class="post-image"
+          @error="$event.target.src = '/default.png'"
+        />
+        <p class="content">{{ publicacionData.contenido }}</p>
+        <p><strong>Categoría:</strong> {{ publicacionData.categoria }}</p>
+        <p><strong>Campo:</strong> {{ publicacionData.campo }}</p>
+        <p><strong>Fecha de Entrenamiento:</strong> {{ publicacionData.fecha_entrenamiento }}</p>
+        <p><strong>Duración:</strong> {{ publicacionData.duracion_repeticion }}</p>
+        <p><strong>Repeticiones:</strong> {{ publicacionData.repeticiones }}</p>
+
         <button @click="toggleLike" class="like-button">
           {{ liked ? 'Quitar Like' : 'Dar Like' }}
         </button>
       </div>
+
+      <div v-else class="loading">❌ Publicación no encontrada.</div>
     </div>
   </div>
 </template>
@@ -105,7 +125,6 @@ onMounted(fetchPublicacion);
 
 .back-button {
   position: absolute;
-  margin-right: 50px;
   top: 20px;
   right: 20px;
   background: none;
