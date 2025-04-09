@@ -91,6 +91,11 @@ const router = createRouter({
       component: () => import('../views/CrearEntreno.vue'),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/entrenadores',
+      name: 'entrenadores',
+      component: () => import('../views/DashboardEntrenadores.vue'),
+    },
 
     // ✅ Rutas simplificadas y claras para perfiles
     {
