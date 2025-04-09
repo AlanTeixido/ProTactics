@@ -119,7 +119,7 @@ const crearEntrenador = async () => {
 }
 
 label {
-  color: #2a2a2a;
+  color: #cfcfcf;
 }
 
 input {

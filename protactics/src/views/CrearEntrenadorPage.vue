@@ -32,7 +32,7 @@ import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 .dashboard {
   display: flex;
   height: 100vh;
-  background-color: #f3f3f3;
+  background: linear-gradient(to right, #0f172a, #155e75);
 }
 
 /* Menú a la izquierda fijo */
@@ -116,7 +116,7 @@ import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 }
 
 h2 {
-    color: rgb(73, 73, 73);
+    color: rgb(255, 255, 255);
     text-transform: uppercase;
     text-align: left;
     margin-top: 5%;
