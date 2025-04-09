@@ -18,7 +18,7 @@ const allOptions = [
   { label: "Entrenamientos", icon: "cono.png", path: "/entrenos", color: "#1e3a8a", roles: ["entrenador"] },
   { label: "Pizarra", icon: "campo.png", path: "/pizarra", color: "#facc15", roles: ["entrenador"] },
   { label: "Jugadores", icon: "jugador.png", path: "/jugadores", color: "#16a34a", roles: ["entrenador"] },
-  { label: "Entrenadores", icon: "entrenadores.png", path: "/crearEntrenador", color: "#0ea5e9", roles: ["club"] },
+  { label: "Entrenadores", icon: "entrenadores.png", path: "/entrenadores", color: "#0ea5e9", roles: ["club"] },
   { label: "Configuración", icon: "ajuste.png", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
   { label: "Publicaciones", icon: "periodico.png", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
   { label: "Equipos", icon: "pelota.png", path: "/equipos", color: "#0ea5e9", roles: ["club"] },
