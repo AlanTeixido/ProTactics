@@ -38,17 +38,24 @@ const objetos = ref(8);
 // Lista reactiva de objetos
 const items = ref([]);
 
-// Función para generar la lista de objetos
-const generarObjetos = () => {
-  items.value = Array.from({ length: objetos.value }, (_, index) => ({
-    id: index,
-    x: 50 + index * 120, // Posición inicial horizontal
-    y: 600, // Altura ajustada
+const generarObjetosDesdeJugadores = () => {
+  const jugadores = JSON.parse(localStorage.getItem('jugadoresPizarra')) || [];
+
+  items.value = jugadores.map((jugadorId, index) => ({
+    id: jugadorId,
+    x: 50 + index * 80,
+    y: 600,
     isDragging: false,
     offsetX: 0,
-    offsetY: 0
+    offsetY: 0,
   }));
 };
+
+onMounted(() => {
+  generarObjetosDesdeJugadores();
+});
+
+
 
 // Inicializamos la lista de objetos al cargar
 generarObjetos();
