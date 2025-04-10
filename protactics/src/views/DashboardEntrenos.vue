@@ -19,7 +19,7 @@
             </ProgressCircle>
           </div>
           <div class="circle-label">Entrenamientos</div>
-        </div>        
+        </div>
         <div class="stat-circle">
           <ProgressCircle :value="parseInt(duracionMediaValor)" :max="60" color="#00f2c3">
             {{ duracionMediaValor }}m
@@ -33,7 +33,7 @@
           <p>Repeticiones</p>
         </div>
       </div>
-      
+
       <div v-if="filteredEntrenos.length === 0" class="empty-msg">
         No hay entrenamientos que coincidan con la búsqueda.
       </div>
@@ -46,36 +46,51 @@
           <option value="desc">Fecha Descendente</option>
           <option value="categoria">Por Categoría</option>
         </select>
-      </div> 
+      </div>
 
       <ul class="entrenos-lista">
-        <li v-for="entreno in filteredEntrenos" :key="entreno.entrenamiento_id" class="entreno-card">
-          <img v-if="entreno.imagen_url" :src="entreno.imagen_url" alt="Imagen" class="entreno-imagen"/>
+        <li v-for="entreno in filteredEntrenos" :key="entreno.entrenamiento_id" class="entreno-card"
+          @click="mostrarDetalle(entreno)">
           <div class="entreno-info">
             <h3 class="entreno-titulo">{{ entreno.titulo }}</h3>
             <p>{{ entreno.descripcion }}</p>
-            <div class="entreno-datos">
-              <span><strong>Categoría:</strong> {{ entreno.categoria || 'No definida' }}</span>
-              <span><strong>Campo:</strong> {{ entreno.campo }}</span>
-              <span><strong>Fecha:</strong> {{ new Date(entreno.fecha_entrenamiento).toLocaleDateString() }}</span>
-              <span><strong>Duración:</strong>
-                {{
-                  typeof entreno.duracion_repeticion === 'object' && entreno.duracion_repeticion !== null
-                    ? entreno.duracion_repeticion.minutes
-                    : entreno.duracion_repeticion
-                }} min
-              </span>
-              <span><strong>Repeticiones:</strong> {{ entreno.repeticiones }}</span>
-              <span><strong>Descanso:</strong> {{ entreno.descanso }} min</span>
-              <span><strong>Valoración:</strong> {{ entreno.valoracion || 'N/A' }}</span>
-            </div>
-            <div class="entreno-actions">
-              <button @click="iniciarEdicion(entreno)" class="btn-editar">Editar</button>
-              <button @click="confirmarEliminarEntrenamiento(entreno.entrenamiento_id)" class="btn-eliminar">Eliminar</button>
-            </div>
           </div>
         </li>
       </ul>
+    </div>
+  </div>
+
+  <!-- Popup de detalles -->
+  <div v-if="entrenoSeleccionado" class="popup-overlay" @click="cerrarPopup">
+    <div class="popup-content" @click.stop>
+      <h3>{{ entrenoSeleccionado.titulo }}</h3>
+      <p>{{ entrenoSeleccionado.descripcion }}</p>
+      <div class="entreno-datos">
+        <div>
+          <span><strong>Categoría:</strong> {{ entrenoSeleccionado.categoria || 'No definida' }}</span>
+          <span><strong>Campo:</strong> {{ entrenoSeleccionado.campo }}</span>
+
+        </div>
+        <div>
+          <span><strong>Fecha:</strong> {{ new Date(entrenoSeleccionado.fecha_entrenamiento).toLocaleDateString()
+          }}</span>
+          <span><strong>Duración:</strong>
+            {{
+              typeof entrenoSeleccionado.duracion_repeticion === 'object' && entrenoSeleccionado.duracion_repeticion !==
+                null
+                ? entrenoSeleccionado.duracion_repeticion.minutes
+                : entrenoSeleccionado.duracion_repeticion
+            }} min
+          </span>
+        </div>
+
+        <div>
+          <span><strong>Repeticiones:</strong> {{ entrenoSeleccionado.repeticiones }}</span>
+          <span><strong>Descanso:</strong> {{ entrenoSeleccionado.descanso }} min</span>
+
+        </div>
+      </div>
+      <button @click="cerrarPopup" class="btn-cerrar-popup"><img src="../assets/img/cruzar.png"></button>
     </div>
   </div>
 </template>
@@ -91,6 +106,17 @@ import ProgressCircle from '@/components/ProgressCircle.vue';
 const entrenos = ref([]);
 const searchQuery = ref("");
 const selectedFilter = ref("");
+const entrenoSeleccionado = ref(null);
+
+// Función para mostrar el detalle del entrenamiento
+const mostrarDetalle = (entreno) => {
+  entrenoSeleccionado.value = entreno;
+};
+
+// Función para cerrar el popup
+const cerrarPopup = () => {
+  entrenoSeleccionado.value = null;
+};
 
 const duracionMediaValor = computed(() => {
   if (!entrenos.value.length) return 0;
@@ -137,31 +163,8 @@ const filteredEntrenos = computed(() => {
   return result;
 });
 
-const iniciarEdicion = (entreno) => {
-  console.log('Editar entreno:', entreno);
-  // Redirigir o mostrar formulario d'edició
-};
-
-const confirmarEliminarEntrenamiento = async (id) => {
-  const confirmar = confirm('¿Estás seguro de eliminar este entrenamiento?');
-  if (!confirmar) return;
-
-  try {
-    const token = localStorage.getItem('authToken');
-    await axios.delete(`https://protactics-api.onrender.com/entrenamientos/${id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-    entrenos.value = entrenos.value.filter(e => e.entrenamiento_id !== id);
-    alert('✅ Entrenamiento eliminado correctamente');
-  } catch (error) {
-    console.error('❌ Error eliminando entrenamiento:', error);
-    alert('Error eliminando entrenamiento');
-  }
-};
-
 onMounted(cargarEntrenamientos);
 </script>
-
 
 <style scoped>
 .dashboard {
@@ -228,20 +231,17 @@ onMounted(cargarEntrenamientos);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  background-color: #1e293b;
-  border-radius: 16px;
+  justify-content: center;
   padding: 20px;
   width: 160px;
   height: 180px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
   color: white;
   text-align: center;
-  overflow: hidden;
+
 }
 
 .circle-container {
-  width: 100%;
+  width: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -255,14 +255,11 @@ onMounted(cargarEntrenamientos);
   color: white;
 }
 
-
-
 .stat-circle p {
   margin: 0;
   font-size: 1rem;
   font-weight: 500;
 }
-
 
 .stat-circle:hover {
   transform: scale(1.05);
@@ -275,26 +272,24 @@ onMounted(cargarEntrenamientos);
 
 .entrenos-lista {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  padding: 5%;
 }
 
 .entreno-card {
+  width: 100%;
+  height: 200px;
   background-color: #1e293b;
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   transition: 0.3s;
+  cursor: pointer;
 }
 
 .entreno-card:hover {
   transform: scale(1.03);
-}
-
-.entreno-imagen {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
 }
 
 .entreno-info {
@@ -305,48 +300,20 @@ onMounted(cargarEntrenamientos);
   font-size: 1.6rem;
   font-weight: bold;
   margin-bottom: 8px;
-  color: rgb(4, 196, 68);
+  color: rgb(255, 255, 255);
 }
 
 .entreno-datos {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 0.95rem;
-  color: #e2e8f0;
-  margin-top: 10px;
+  justify-content: center;
+  padding: 2%;
 }
 
-.entreno-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-}
 
-.btn-editar,
-.btn-eliminar {
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-weight: 500;
-  cursor: pointer;
-  border: none;
-  color: white;
-}
-
-.btn-editar {
-  background-color: #10b981;
-}
-
-.btn-editar:hover {
-  background-color: #059669;
-}
-
-.btn-eliminar {
-  background-color: #ef4444;
-}
-
-.btn-eliminar:hover {
-  background-color: #dc2626;
+.popup-content h3,
+.popup-content p {
+  font-size: 1.4rem;
+  text-align: center;
 }
 
 .search-filter-container {
@@ -355,9 +322,7 @@ onMounted(cargarEntrenamientos);
   gap: 15px;
   margin: 20px 0;
   padding: 10px;
-  background-color: #1e293b;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .search-input {
@@ -389,5 +354,41 @@ onMounted(cargarEntrenamientos);
   background-color: #475569;
 }
 
+/* Estilos para el popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
 
+.popup-content {
+  background-color: #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  color: white;
+  text-align: left;
+}
+
+.btn-cerrar-popup {
+  background-color: transparent;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-cerrar-popup img {
+  width: 25px;
+  height: 25px;
+}
 </style>

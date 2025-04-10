@@ -1,6 +1,6 @@
 <template>
     <div class="circle-wrapper">
-      <canvas ref="canvas" class="progress-canvas"></canvas>
+      <canvas ref="canvas" class="progress-canvas" style="width: 50px; height: 50px;"></canvas>
       <div class="circle-text">
         <slot />
       </div>
@@ -30,12 +30,12 @@
       data: {
         datasets: [{
           data: [props.value, props.max - props.value],
-          backgroundColor: [props.color, '#1e293b'],
+          backgroundColor: [props.color, '#ffffff'],
           borderWidth: 0
         }]
       },
       options: {
-        cutout: '70%',
+        cutout: '90%',
         responsive: false,
         maintainAspectRatio: false,
         plugins: {
@@ -60,8 +60,8 @@
   }
   
   .progress-canvas {
-    width: 100px;
-    height: 100px;
+    width: 5px;
+    height: 5px;
     display: block;
   }
   
