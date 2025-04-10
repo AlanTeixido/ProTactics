@@ -9,7 +9,7 @@ const router = createRouter({
     { path: '/contact', name: 'contact', component: () => import('../views/ContactView.vue') },
     { path: '/login', name: 'login', component: Login },
     { path: '/register', name: 'register', component: Register },
-    { path: '/pizarra', name: 'pizarra', component: () => import('../views/PizarraView.vue') },
+    { path: '/pizarra/:deporte', name: 'Pizarra', component: () => import('../views/PizarraView.vue') },
     { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue') },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 

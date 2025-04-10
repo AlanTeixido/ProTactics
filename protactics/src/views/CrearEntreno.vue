@@ -96,12 +96,13 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const titulo = ref('');
 const descripcion = ref('');
 const categoria = ref('');
@@ -119,6 +120,7 @@ const equipoSeleccionado = ref('');
 const jugadores = ref([]);
 const jugadoresSeleccionados = ref([]);
 
+// 🔹 Obtener equipos del entrenador
 const obtenerEquipos = async () => {
   const token = localStorage.getItem('authToken');
   const res = await axios.get('https://protactics-api.onrender.com/equipos/entrenador', {
@@ -127,6 +129,7 @@ const obtenerEquipos = async () => {
   equipos.value = res.data || [];
 };
 
+// 🔹 Obtener jugadores según el equipo seleccionado
 const obtenerJugadoresDelEquipo = async (equipoId) => {
   const token = localStorage.getItem('authToken');
   const res = await axios.get(`https://protactics-api.onrender.com/jugadores/equipo/${equipoId}`, {
@@ -135,12 +138,14 @@ const obtenerJugadoresDelEquipo = async (equipoId) => {
   jugadores.value = res.data || [];
 };
 
+// 🔹 Ver cambios al seleccionar equipo
 watch(equipoSeleccionado, (nuevoEquipoId) => {
   jugadoresSeleccionados.value = [];
   if (nuevoEquipoId) obtenerJugadoresDelEquipo(nuevoEquipoId);
   else jugadores.value = [];
 });
 
+// 🔹 Selección de jugadores
 const toggleSeleccionJugador = (id) => {
   if (jugadoresSeleccionados.value.includes(id)) {
     jugadoresSeleccionados.value = jugadoresSeleccionados.value.filter(j => j !== id);
@@ -151,59 +156,79 @@ const toggleSeleccionJugador = (id) => {
 
 const estaSeleccionado = (id) => jugadoresSeleccionados.value.includes(id);
 
+// 🔹 Crear entrenamiento
 const crearEntrenamiento = async () => {
-  if (!titulo.value || !equipoSeleccionado.value || jugadoresSeleccionados.value.length === 0) {
-    alert('Por favor, completa todos los campos y selecciona al menos un jugador.');
+  if (
+    !titulo.value ||
+    !equipoSeleccionado.value ||
+    jugadoresSeleccionados.value.length === 0 ||
+    !categoria.value
+  ) {
+    alert('Por favor, completa todos los campos obligatorios.');
     return;
   }
 
   try {
     const token = localStorage.getItem('authToken');
-    const response = await axios.post('https://protactics-api.onrender.com/entrenamientos', {
-      titulo: titulo.value,
-      descripcion: descripcion.value,
-      categoria: categoria.value,
-      campo: campo.value,
-      fecha_entrenamiento: fecha_entrenamiento.value,
-      duracion_repeticion: { minutes: duracion_repeticion.value }, // ✅ Aquí cambia el formato
-      repeticiones: repeticiones.value,
-      descanso: descanso.value,
-      valoracion: valoracion.value,
-      imagen_url: imagen_url.value,
-      notas: notas.value,
-      jugadores: jugadoresSeleccionados.value,
-    }, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await axios.post(
+      'https://protactics-api.onrender.com/entrenamientos',
+      {
+        titulo: titulo.value,
+        descripcion: descripcion.value,
+        categoria: categoria.value,
+        campo: campo.value,
+        fecha_entrenamiento: fecha_entrenamiento.value,
+        duracion_repeticion: { minutes: duracion_repeticion.value },
+        repeticiones: repeticiones.value,
+        descanso: descanso.value,
+        valoracion: valoracion.value,
+        imagen_url: imagen_url.value,
+        notas: notas.value,
+        jugadores: jugadoresSeleccionados.value,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
     alert('✅ Entrenamiento creado correctamente');
 
-    // Limpieza de campos después de crear el entrenamiento
-    titulo.value = '';
-    descripcion.value = '';
-    categoria.value = '';
-    campo.value = '';
-    fecha_entrenamiento.value = '';
-    duracion_repeticion.value = 0;
-    repeticiones.value = 1;
-    descanso.value = 0;
-    valoracion.value = 0;
-    imagen_url.value = '';
-    notas.value = '';
-    equipoSeleccionado.value = '';
-    jugadoresSeleccionados.value = [];
-    jugadores.value = [];
+    // 🔸 Guardar info en localStorage y redirigir a la pizarra
+    const deporte = categoria.value.trim().toLowerCase() || 'futbol';
+    const jugadoresSeleccionadosData = jugadores.value.filter(j => jugadoresSeleccionados.value.includes(j.jugador_id));
+localStorage.setItem('jugadoresPizarra', JSON.stringify(jugadoresSeleccionadosData));
+    localStorage.setItem('deporteSeleccionado', deporte);
+    router.push(`/pizarra/${deporte}`);
 
+    // 🧹 Limpiar campos
+    setTimeout(() => {
+      titulo.value = '';
+      descripcion.value = '';
+      categoria.value = '';
+      campo.value = '';
+      fecha_entrenamiento.value = '';
+      duracion_repeticion.value = 0;
+      repeticiones.value = 1;
+      descanso.value = 0;
+      valoracion.value = 0;
+      imagen_url.value = '';
+      notas.value = '';
+      equipoSeleccionado.value = '';
+      jugadoresSeleccionados.value = [];
+      jugadores.value = [];
+    }, 500);
   } catch (error) {
     console.error('❌ Error creando entrenamiento:', error);
     alert('Ocurrió un error al crear el entrenamiento.');
   }
 };
 
+// 🔹 Cargar equipos al montar
 onMounted(() => {
   obtenerEquipos();
 });
 </script>
+
     
     <style scoped>
     .crear-entreno {

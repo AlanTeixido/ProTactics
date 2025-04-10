@@ -1,13 +1,11 @@
 <script setup>
-import { defineProps, ref, computed } from 'vue';
+import { defineProps, ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-
 
 // Capturamos el deporte desde la URL
 const route = useRoute();
 const deporteSeleccionado = route.params.deporte;
 console.log("Deporte seleccionado:", deporteSeleccionado);
-
 
 // Mapeo de imágenes según el deporte
 import futbol from "../assets/img/deportes/pistaFutbol.png";
@@ -22,27 +20,19 @@ const imagenesDeporte = {
   padel,
 };
 
-
-// Computed para obtener la imagen correcta
-// Obtener la imagen correspondiente
 const imagenDeFondo = computed(() => imagenesDeporte[props.deporte] || futbol);
 
-
-
-// Variable reactiva para bloquear/desbloquear el movimiento
 const isCaptured = ref(false);
-
-// Variable reactiva para la cantidad de objetos
-const objetos = ref(8);
-
-// Lista reactiva de objetos
 const items = ref([]);
 
 const generarObjetosDesdeJugadores = () => {
   const jugadores = JSON.parse(localStorage.getItem('jugadoresPizarra')) || [];
 
-  items.value = jugadores.map((jugadorId, index) => ({
-    id: jugadorId,
+  items.value = jugadores.map((jugador, index) => ({
+    id: jugador.jugador_id,
+    nombre: jugador.nombre,
+    dorsal: jugador.dorsal,
+    posicion: jugador.posicion,
     x: 50 + index * 80,
     y: 600,
     isDragging: false,
@@ -55,81 +45,47 @@ onMounted(() => {
   generarObjetosDesdeJugadores();
 });
 
-
-
-// Inicializamos la lista de objetos al cargar
-generarObjetos();
-
-// Función para iniciar el arrastre
 const startDrag = (event, item) => {
-  if (isCaptured.value) return; // Si está capturado, no se puede mover
+  if (isCaptured.value) return;
 
   item.isDragging = true;
   item.offsetX = event.clientX - item.x;
   item.offsetY = event.clientY - item.y;
 
-  // Se añaden eventos para mover y soltar el objeto
   window.addEventListener('mousemove', (e) => onDrag(e, item));
   window.addEventListener('mouseup', () => stopDrag(item));
 };
 
-// Función que actualiza la posición del objeto mientras se arrastra
 const onDrag = (event, item) => {
   if (!item.isDragging) return;
   item.x = event.clientX - item.offsetX;
   item.y = event.clientY - item.offsetY;
 };
 
-// Función para soltar el objeto y remover los eventos
 const stopDrag = (item) => {
   item.isDragging = false;
   window.removeEventListener('mousemove', (e) => onDrag(e, item));
   window.removeEventListener('mouseup', () => stopDrag(item));
 };
 
-// Alternar entre capturar/liberar los objetos
 const capturarObjetos = () => {
   isCaptured.value = !isCaptured.value;
-};
-
-// Función para añadir un nuevo objeto
-const añadirFichas = () => {
-  if (!isCaptured.value) {
-    objetos.value += 1;
-    generarObjetos(); // Regeneramos la lista de objetos con el nuevo número
-  }
-};
-
-// Función para eliminar un objeto
-const eleiminarFichas = () => {
-  if (!isCaptured.value && objetos.value > 1) {
-    objetos.value -= 1;
-    generarObjetos(); // Regeneramos la lista de objetos con el nuevo número
-  }
 };
 </script>
 
 <template>
   <div class="contenedor">
     <div>
-      <!-- Botón Capturar -->
       <button class="capture-btn" @click="capturarObjetos">
         {{ isCaptured ? 'Editar' : 'Capturar' }}
       </button>
-      <!-- Botón Objetos Nuevos -->
-      <div class="objects-btn">
-        <button @click="añadirFichas" :disabled="isCaptured">+</button>
-        <button @click="eleiminarFichas" :disabled="isCaptured">-</button>
-      </div>
     </div>
 
     <div class="container">
-      <!-- Campo con imagen de fondo según el deporte seleccionado -->
       <div class="campo-deporte" :style="{ backgroundImage: `url(${imagenDeFondo})` }">
-        <!-- Objetos Draggeables -->
-        <div v-for="item in items" :key="item.id" class="fichas" :class="{ disabled: isCaptured }"
+        <div v-for="item in items" :key="item.id" class="fichas" :class="[item.posicion, { disabled: isCaptured }]"
           :style="{ left: item.x + 'px', top: item.y + 'px' }" @mousedown="(event) => startDrag(event, item)">
-          {{ item.id }}
+          #{{ item.dorsal }}
         </div>
       </div>
     </div>
@@ -137,7 +93,6 @@ const eleiminarFichas = () => {
 </template>
 
 <style scoped>
-/* Contenedor principal */
 .contenedor {
   width: 100%;
   height: 100%;
@@ -148,7 +103,6 @@ const eleiminarFichas = () => {
   gap: 20px;
 }
 
-/* Botones */
 button {
   padding: 10px 15px;
   font-size: 16px;
@@ -156,10 +110,9 @@ button {
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition:  0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
-/* Botón Capturar */
 .capture-btn {
   background-color: #ff6b6b;
   color: white;
@@ -169,28 +122,6 @@ button {
   background-color: #e63946;
 }
 
-/* Botones de añadir/eliminar objetos */
-.objects-btn {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.objects-btn button {
-  background-color: #4c6ef5;
-  color: white;
-}
-
-.objects-btn button:hover {
-  background-color: #364fc7;
-}
-
-.objects-btn button:disabled {
-  background-color: #b0b3b8;
-  cursor: not-allowed;
-}
-
-/* Contenedor del campo */
 .container {
   display: flex;
   align-items: center;
@@ -201,10 +132,8 @@ button {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   margin-bottom: 5%;
-
 }
 
-/* Imagen de fondo */
 .campo-deporte {
   width: 100%;
   height: 100%;
@@ -212,10 +141,8 @@ button {
   background-position: center;
   position: relative;
   border-radius: 12px;
-  
 }
 
-/* Fichas Draggeables */
 .fichas {
   width: 30px;
   height: 30px;
@@ -242,4 +169,14 @@ button {
   opacity: 0.5;
 }
 
+/* Ejemplo de color por posición */
+.delantero {
+  background-color: #f43f5e;
+}
+.defensa {
+  background-color: #3b82f6;
+}
+.portero {
+  background-color: #22c55e;
+}
 </style>
