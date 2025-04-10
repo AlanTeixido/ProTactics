@@ -2,12 +2,10 @@
 import { defineProps, ref, computed, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 
-// Capturamos el deporte desde la URL
 const route = useRoute();
 const deporteSeleccionado = route.params.deporte;
 console.log("Deporte seleccionado:", deporteSeleccionado);
 
-// Mapeo de imágenes según el deporte
 import futbol from "../assets/img/deportes/pistaFutbol.png";
 import baloncesto from "../assets/img/deportes/pistaBaloncesto.jpg";
 import padel from "../assets/img/deportes/pistaPadel.png";
@@ -24,6 +22,7 @@ const imagenDeFondo = computed(() => imagenesDeporte[props.deporte] || futbol);
 
 const isCaptured = ref(false);
 const items = ref([]);
+let nextId = 1000;
 
 const generarObjetosDesdeJugadores = () => {
   const jugadores = JSON.parse(localStorage.getItem('jugadoresPizarra')) || [];
@@ -33,12 +32,27 @@ const generarObjetosDesdeJugadores = () => {
     nombre: jugador.nombre,
     dorsal: jugador.dorsal,
     posicion: jugador.posicion,
+    tipo: 'jugador',
     x: 50 + index * 80,
     y: 600,
     isDragging: false,
     offsetX: 0,
     offsetY: 0,
   }));
+};
+
+const addObject = (tipo) => {
+  const nuevo = {
+    id: nextId++,
+    tipo,
+    nombre: tipo.charAt(0).toUpperCase() + tipo.slice(1),
+    x: 100,
+    y: 100,
+    isDragging: false,
+    offsetX: 0,
+    offsetY: 0,
+  };
+  items.value.push(nuevo);
 };
 
 onMounted(() => {
@@ -75,7 +89,9 @@ const capturarObjetos = () => {
 
 <template>
   <div class="contenedor">
-    <div>
+    <div class="menu-bottom">
+      <button @click="() => addObject('pelota')">⚽ Pelota</button>
+      <button @click="() => addObject('cono')">🔺 Cono</button>
       <button class="capture-btn" @click="capturarObjetos">
         {{ isCaptured ? 'Editar' : 'Capturar' }}
       </button>
@@ -83,9 +99,29 @@ const capturarObjetos = () => {
 
     <div class="container">
       <div class="campo-deporte" :style="{ backgroundImage: `url(${imagenDeFondo})` }">
-        <div v-for="item in items" :key="item.id" class="fichas" :class="[item.posicion, { disabled: isCaptured }]"
-          :style="{ left: item.x + 'px', top: item.y + 'px' }" @mousedown="(event) => startDrag(event, item)">
-          #{{ item.dorsal }}
+        <div
+          v-for="item in items"
+          :key="item.id"
+          class="fichas-wrapper"
+          :style="{ left: item.x + 'px', top: item.y + 'px' }"
+        >
+          <div
+            class="fichas"
+            :class="[item.posicion || item.tipo, { disabled: isCaptured }]"
+            @mousedown="(event) => startDrag(event, item)"
+            :title="item.nombre"
+          >
+            <template v-if="item.tipo === 'jugador'">
+              #{{ item.dorsal }}
+            </template>
+            <template v-else-if="item.tipo === 'pelota'">
+              ⚽
+            </template>
+            <template v-else-if="item.tipo === 'cono'">
+              🔺
+            </template>
+          </div>
+          <div class="nombre-jugador">{{ item.nombre }}</div>
         </div>
       </div>
     </div>
@@ -101,6 +137,12 @@ const capturarObjetos = () => {
   align-items: center;
   justify-content: center;
   gap: 20px;
+}
+
+.menu-bottom {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 button {
@@ -143,6 +185,13 @@ button {
   border-radius: 12px;
 }
 
+.fichas-wrapper {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .fichas {
   width: 30px;
   height: 30px;
@@ -153,7 +202,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: absolute;
   border-radius: 50%;
   cursor: grab;
   user-select: none;
@@ -167,6 +215,14 @@ button {
 .fichas.disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.nombre-jugador {
+  margin-top: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 /* Ejemplo de color por posición */
