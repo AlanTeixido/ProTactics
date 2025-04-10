@@ -3,27 +3,36 @@ import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 
-// Estado para almacenar los entrenamientos del entrenador
+// Estado de los entrenamientos
 const entrenamientos = ref([]);
-// Estado para controlar la carga
 const loading = ref(true);
+const error = ref(null);
+const publicando = ref(null); // Controla el botón de cada entrenamiento
+
 // Obtener el ID del entrenador desde localStorage
 const entrenadorId = localStorage.getItem('userId');
 
+if (!entrenadorId) {
+  error.value = "Error: No se encontró el ID del usuario.";
+}
+
 // Función para obtener los entrenamientos del entrenador
 const fetchEntrenamientos = async () => {
+  if (!entrenadorId) return;
+
   try {
-    const response = await axios.get(`https://protactics-api.onrender.com/entrenamientos?entrenador_id=${entrenadorId}`);
+    const response = await axios.get(`https://protactics-api.onrender.com/entrenamientos/${entrenadorId}`);
     entrenamientos.value = response.data;
-  } catch (error) {
-    console.error('Error al obtener entrenamientos', error);
+  } catch (err) {
+    error.value = "Error al obtener entrenamientos.";
+    console.error('Error al obtener entrenamientos', err);
   } finally {
     loading.value = false;
   }
 };
 
-// Función para publicar un entrenamiento
-const publicarEntrenamiento = async (entrenamientoId) => {
+// Función para crear una nueva publicación a partir de un entrenamiento
+const publicarComoPublicacion = async (entrenamientoId) => {
   const entrenamiento = entrenamientos.value.find(ent => ent.entrenamiento_id === entrenamientoId);
 
   if (!entrenamiento) {
@@ -31,9 +40,10 @@ const publicarEntrenamiento = async (entrenamientoId) => {
     return;
   }
 
+  publicando.value = entrenamientoId; // Marcar el botón como "Publicando..."
+
   const publicacionData = {
     entrenador_id: entrenadorId,
-    entrenamiento_id: entrenamientoId,
     titulo: entrenamiento.titulo,
     descripcion: entrenamiento.descripcion,
     categoria: entrenamiento.categoria,
@@ -50,11 +60,11 @@ const publicarEntrenamiento = async (entrenamientoId) => {
 
   try {
     const response = await axios.post('https://protactics-api.onrender.com/publicaciones', publicacionData);
-    console.log('Entrenamiento publicado exitosamente:', response.data);
-    // Opcional: Mostrar un mensaje de éxito o actualizar la lista de publicaciones
-  } catch (error) {
-    console.error('Error al publicar el entrenamiento', error);
-    // Opcional: Mostrar un mensaje de error al usuario
+    console.log('Entrenamiento publicado como publicación:', response.data);
+  } catch (err) {
+    console.error('Error al publicar entrenamiento como publicación', err);
+  } finally {
+    publicando.value = null; // Resetear el estado del botón
   }
 };
 
@@ -69,13 +79,20 @@ onMounted(fetchEntrenamientos);
     </div>
     <div class="dashboard-container">
       <h1 class="titulo">Mis Entrenamientos</h1>
+      
+      <p v-if="error" class="error">{{ error }}</p>
       <div v-if="loading" class="loading">Cargando entrenamientos...</div>
+
       <div v-else class="grid">
         <div v-for="entrenamiento in entrenamientos" :key="entrenamiento.entrenamiento_id" class="card">
           <h2 class="entrenamiento-titulo">{{ entrenamiento.titulo }}</h2>
           <p class="entrenamiento-descripcion">{{ entrenamiento.descripcion }}</p>
-          <button @click="publicarEntrenamiento(entrenamiento.entrenamiento_id)" class="publicar-button">
-            Publicar
+          <button 
+            @click="publicarComoPublicacion(entrenamiento.entrenamiento_id)" 
+            :disabled="publicando === entrenamiento.entrenamiento_id" 
+            class="publicar-button"
+          >
+            {{ publicando === entrenamiento.entrenamiento_id ? 'Publicando...' : 'Publicar' }}
           </button>
         </div>
       </div>
@@ -117,6 +134,11 @@ onMounted(fetchEntrenamientos);
   font-weight: bold;
   color: white;
   text-transform: uppercase;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
 }
 
 .loading {
@@ -166,5 +188,10 @@ onMounted(fetchEntrenamientos);
 
 .publicar-button:hover {
   background-color: #eab308;
+}
+
+.publicar-button:disabled {
+  background-color: #888;
+  cursor: not-allowed;
 }
 </style>
