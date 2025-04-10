@@ -1,100 +1,94 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import MenuDashboard from '@/components/MenuDashboard.vue';
+import { useRoute } from 'vue-router'; // Importamos useRoute para acceder a los parámetros de la ruta
 
-// Estado de los entrenamientos
 const entrenamientos = ref([]);
 const loading = ref(true);
-const error = ref(null);
-const publicando = ref(null); // Controla el botón de cada entrenamiento
+const token = localStorage.getItem('authToken'); // Obtener token de autenticación
 
-// Obtener el ID del entrenador desde localStorage
-const entrenadorId = localStorage.getItem('userId');
+// Usamos useRoute para acceder a los parámetros de la ruta
+const route = useRoute();
+const entrenadorId = route.params.entrenador_id; // Cambiar 'id' por 'entrenador_id'
 
-if (!entrenadorId) {
-  error.value = "Error: No se encontró el ID del usuario.";
-}
+console.log("ID del entrenador desde la URL:", entrenadorId); // Depura para ver el ID del entrenador
 
-// Función para obtener los entrenamientos del entrenador
+// Función para obtener los entrenamientos del entrenador logueado
 const fetchEntrenamientos = async () => {
-  if (!entrenadorId) return;
+  if (!entrenadorId) {
+    console.error("No se encontró el ID del entrenador");
+    return;
+  }
 
   try {
-    const response = await axios.get(`https://protactics-api.onrender.com/entrenamientos/${entrenadorId}`);
+    // Suponemos que el backend proporciona un endpoint para obtener los entrenamientos según el ID del entrenador
+    const response = await axios.get(`https://protactics-api.onrender.com/entrenamientos?entrenador_id=${entrenadorId}`);
     entrenamientos.value = response.data;
-  } catch (err) {
-    error.value = "Error al obtener entrenamientos.";
-    console.error('Error al obtener entrenamientos', err);
+  } catch (error) {
+    console.error('Error cargando entrenamientos', error);
   } finally {
     loading.value = false;
   }
 };
 
-// Función para crear una nueva publicación a partir de un entrenamiento
-const publicarComoPublicacion = async (entrenamientoId) => {
-  const entrenamiento = entrenamientos.value.find(ent => ent.entrenamiento_id === entrenamientoId);
-
-  if (!entrenamiento) {
-    console.error('Entrenamiento no encontrado');
+// Función para publicar un entrenamiento
+const publicarEntrenamiento = async (entrenamiento) => {
+  if (!token) {
+    alert('No estás autenticado');
     return;
   }
 
-  publicando.value = entrenamientoId; // Marcar el botón como "Publicando..."
-
   const publicacionData = {
-    entrenador_id: entrenadorId,
     titulo: entrenamiento.titulo,
-    descripcion: entrenamiento.descripcion,
-    categoria: entrenamiento.categoria,
-    campo: entrenamiento.campo,
-    fecha_entrenamiento: entrenamiento.fecha_entrenamiento,
-    duracion_repeticion: entrenamiento.duracion_repeticion,
-    repeticiones: entrenamiento.repeticiones,
-    total_duracion: entrenamiento.total_duracion,
-    descanso: entrenamiento.descanso,
-    valoracion: entrenamiento.valoracion,
+    contenido: entrenamiento.descripcion,
     imagen_url: entrenamiento.imagen_url,
-    notas_adicionales: entrenamiento.notas_adicionales
+    entrenamiento_id: entrenamiento.entrenamiento_id,
   };
 
   try {
-    const response = await axios.post('https://protactics-api.onrender.com/publicaciones', publicacionData);
-    console.log('Entrenamiento publicado como publicación:', response.data);
-  } catch (err) {
-    console.error('Error al publicar entrenamiento como publicación', err);
-  } finally {
-    publicando.value = null; // Resetear el estado del botón
+    await axios.post('https://protactics-api.onrender.com/publicaciones', publicacionData, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Pasar token en el encabezado de la solicitud
+      }
+    });
+
+    alert('Entrenamiento publicado correctamente');
+  } catch (error) {
+    console.error('Error al publicar el entrenamiento', error);
+    alert('Error al publicar');
   }
 };
 
-// Obtener los entrenamientos cuando el componente se monta
-onMounted(fetchEntrenamientos);
+// Cargar entrenamientos cuando el componente se monta
+onMounted(() => {
+  fetchEntrenamientos();
+});
 </script>
 
 <template>
   <div class="dashboard">
-    <div class="dashboard-menu">
-      <MenuDashboard />
-    </div>
     <div class="dashboard-container">
-      <h1 class="titulo">Mis Entrenamientos</h1>
+      <h1>Subir Publicación</h1>
       
-      <p v-if="error" class="error">{{ error }}</p>
-      <div v-if="loading" class="loading">Cargando entrenamientos...</div>
-
-      <div v-else class="grid">
-        <div v-for="entrenamiento in entrenamientos" :key="entrenamiento.entrenamiento_id" class="card">
-          <h2 class="entrenamiento-titulo">{{ entrenamiento.titulo }}</h2>
-          <p class="entrenamiento-descripcion">{{ entrenamiento.descripcion }}</p>
-          <button 
-            @click="publicarComoPublicacion(entrenamiento.entrenamiento_id)" 
-            :disabled="publicando === entrenamiento.entrenamiento_id" 
-            class="publicar-button"
-          >
-            {{ publicando === entrenamiento.entrenamiento_id ? 'Publicando...' : 'Publicar' }}
-          </button>
-        </div>
+      <div v-if="loading" class="loading">Cargando...</div>
+      
+      <div v-else>
+        <h2>Selecciona un entrenamiento para publicar</h2>
+        
+        <div v-if="entrenamientos.length === 0">No tienes entrenamientos disponibles.</div>
+        
+        <ul>
+          <li v-for="entrenamiento in entrenamientos" :key="entrenamiento.entrenamiento_id" class="entrenamiento-item">
+            <div>
+              <strong>{{ entrenamiento.titulo }}</strong> - {{ entrenamiento.descripcion }}
+              <button 
+                class="add-button" 
+                @click="publicarEntrenamiento(entrenamiento)">
+                <span>+</span> Publicar
+              </button>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -108,16 +102,6 @@ onMounted(fetchEntrenamientos);
   color: white;
 }
 
-.dashboard-menu {
-  width: 250px;
-  height: 100vh;
-  background-color: rgb(36, 36, 36);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-}
-
 .dashboard-container {
   flex: 1;
   margin-left: 250px;
@@ -125,20 +109,8 @@ onMounted(fetchEntrenamientos);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 20px;
   margin-top: 5%;
-}
-
-.titulo {
-  font-size: 3rem;
-  font-weight: bold;
-  color: white;
-  text-transform: uppercase;
-}
-
-.error {
-  color: red;
-  font-weight: bold;
 }
 
 .loading {
@@ -147,51 +119,56 @@ onMounted(fetchEntrenamientos);
   color: #facc15;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 30px;
-  width: 100%;
-  max-width: 900px;
+.entrenamiento-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #1a202c;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.card {
-  padding: 20px;
-  border-radius: 15px;
-  background: linear-gradient(to right, #0bd1df, #155e75);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-  text-align: center;
-}
-
-.entrenamiento-titulo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-}
-
-.entrenamiento-descripcion {
-  font-size: 1rem;
-  color: #f1f5f9;
-  margin: 10px 0;
-}
-
-.publicar-button {
-  padding: 10px 20px;
+.add-button {
   background-color: #facc15;
   color: black;
   border: none;
   border-radius: 8px;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
   font-weight: bold;
+  transition: background-color 0.3s ease;
 }
 
-.publicar-button:hover {
+.add-button:hover {
   background-color: #eab308;
 }
 
-.publicar-button:disabled {
-  background-color: #888;
-  cursor: not-allowed;
+h2 {
+  font-size: 2rem;
+  color: white;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  background: #2d3748;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+li strong {
+  font-size: 1.2rem;
+  color: #facc15;
 }
 </style>
