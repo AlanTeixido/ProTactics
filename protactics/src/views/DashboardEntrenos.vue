@@ -38,7 +38,6 @@
         No hay entrenamientos que coincidan con la búsqueda.
       </div>
 
-
       <div class="search-filter-container">
         <input v-model="searchQuery" placeholder="Buscar por título..." class="search-input" />
         <select v-model="selectedFilter" class="filter-select">
@@ -59,7 +58,13 @@
               <span><strong>Categoría:</strong> {{ entreno.categoria || 'No definida' }}</span>
               <span><strong>Campo:</strong> {{ entreno.campo }}</span>
               <span><strong>Fecha:</strong> {{ new Date(entreno.fecha_entrenamiento).toLocaleDateString() }}</span>
-              <span><strong>Duración:</strong> {{ entreno.duracion_repeticion.minutes ?? entreno.duracion_repeticion }} min</span>
+              <span><strong>Duración:</strong>
+                {{
+                  typeof entreno.duracion_repeticion === 'object' && entreno.duracion_repeticion !== null
+                    ? entreno.duracion_repeticion.minutes
+                    : entreno.duracion_repeticion
+                }} min
+              </span>
               <span><strong>Repeticiones:</strong> {{ entreno.repeticiones }}</span>
               <span><strong>Descanso:</strong> {{ entreno.descanso }} min</span>
               <span><strong>Valoración:</strong> {{ entreno.valoracion || 'N/A' }}</span>
@@ -86,6 +91,21 @@ import ProgressCircle from '@/components/ProgressCircle.vue';
 const entrenos = ref([]);
 const searchQuery = ref("");
 const selectedFilter = ref("");
+
+const duracionMediaValor = computed(() => {
+  if (!entrenos.value.length) return 0;
+  const total = entrenos.value.reduce((sum, e) => {
+    const minutos = typeof e.duracion_repeticion === 'object' && e.duracion_repeticion !== null
+      ? e.duracion_repeticion.minutes
+      : parseInt(e.duracion_repeticion);
+    return sum + (isNaN(minutos) ? 0 : minutos);
+  }, 0);
+  return Math.round(total / entrenos.value.length);
+});
+
+const totalRepeticiones = computed(() => {
+  return entrenos.value.reduce((sum, e) => sum + (e.repeticiones || 0), 0);
+});
 
 const cargarEntrenamientos = async () => {
   try {
@@ -117,8 +137,31 @@ const filteredEntrenos = computed(() => {
   return result;
 });
 
+const iniciarEdicion = (entreno) => {
+  console.log('Editar entreno:', entreno);
+  // Redirigir o mostrar formulario d'edició
+};
+
+const confirmarEliminarEntrenamiento = async (id) => {
+  const confirmar = confirm('¿Estás seguro de eliminar este entrenamiento?');
+  if (!confirmar) return;
+
+  try {
+    const token = localStorage.getItem('authToken');
+    await axios.delete(`https://protactics-api.onrender.com/entrenamientos/${id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    entrenos.value = entrenos.value.filter(e => e.entrenamiento_id !== id);
+    alert('✅ Entrenamiento eliminado correctamente');
+  } catch (error) {
+    console.error('❌ Error eliminando entrenamiento:', error);
+    alert('Error eliminando entrenamiento');
+  }
+};
+
 onMounted(cargarEntrenamientos);
 </script>
+
 
 <style scoped>
 .dashboard {
