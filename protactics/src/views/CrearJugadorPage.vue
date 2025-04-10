@@ -13,7 +13,10 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 
     <!-- Contenido principal -->
     <div class="dashboard-content">
-      <ButtonAtras />
+      <div class="back">
+        <ButtonAtras />
+      </div>
+      
       <div class="intro">
         <h2>Crear Jugador</h2>
         <p>En el siguiente formulario podrás <span>crear un jugador</span> con las caracteristicas necesarias y se
@@ -137,6 +140,11 @@ h2 {
   text-align: left;
   margin-top: 5%;
   margin-left: 3%;
+}
+
+.back {
+  margin-top: -50%;
+  margin-left: -10%;
 }
 
 /* Responsive */
