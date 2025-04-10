@@ -55,8 +55,32 @@ const addObject = (tipo) => {
   items.value.push(nuevo);
 };
 
+const eliminarObjeto = (id) => {
+  items.value = items.value.filter(item => item.id !== id);
+};
+
+const editarNombre = (item) => {
+  if (item.tipo !== 'jugador') {
+    const nuevo = prompt("Editar nombre del objeto:", item.nombre);
+    if (nuevo !== null) item.nombre = nuevo;
+  }
+};
+
+const guardarPizarra = () => {
+  localStorage.setItem('pizarraObjetos', JSON.stringify(items.value));
+};
+
+const cargarPizarra = () => {
+  const data = localStorage.getItem('pizarraObjetos');
+  if (data) {
+    items.value = JSON.parse(data);
+    nextId = Math.max(...items.value.map(i => i.id), nextId) + 1;
+  }
+};
+
 onMounted(() => {
   generarObjetosDesdeJugadores();
+  cargarPizarra();
 });
 
 const startDrag = (event, item) => {
@@ -92,6 +116,8 @@ const capturarObjetos = () => {
     <div class="menu-bottom">
       <button @click="() => addObject('pelota')">⚽ Pelota</button>
       <button @click="() => addObject('cono')">🔺 Cono</button>
+      <button @click="guardarPizarra">💾 Guardar</button>
+      <button @click="() => (items = [])">🧹 Reset</button>
       <button class="capture-btn" @click="capturarObjetos">
         {{ isCaptured ? 'Editar' : 'Capturar' }}
       </button>
@@ -109,6 +135,8 @@ const capturarObjetos = () => {
             class="fichas"
             :class="[item.posicion || item.tipo, { disabled: isCaptured }]"
             @mousedown="(event) => startDrag(event, item)"
+            @contextmenu.prevent="eliminarObjeto(item.id)"
+            @dblclick="() => editarNombre(item)"
             :title="item.nombre"
           >
             <template v-if="item.tipo === 'jugador'">
@@ -143,6 +171,7 @@ const capturarObjetos = () => {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
+  flex-wrap: wrap;
 }
 
 button {
@@ -222,10 +251,9 @@ button {
   font-size: 12px;
   font-weight: 500;
   color: #fff;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
-/* Ejemplo de color por posición */
 .delantero {
   background-color: #f43f5e;
 }
