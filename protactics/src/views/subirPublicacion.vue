@@ -1,37 +1,34 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-import { useRoute } from 'vue-router'; // Importamos useRoute para acceder a los parámetros de la ruta
 
 const entrenamientos = ref([]);
 const loading = ref(true);
-const token = localStorage.getItem('authToken'); // Obtener token de autenticación
+const token = localStorage.getItem('authToken');
 
-// Usamos useRoute para acceder a los parámetros de la ruta
-const route = useRoute();
-const entrenadorId = route.params.entrenador_id; // Cambiar 'id' por 'entrenador_id'
-
-console.log("ID del entrenador desde la URL:", entrenadorId); // Depura para ver el ID del entrenador
-
-// Función para obtener los entrenamientos del entrenador logueado
+// Obtener entrenamientos del entrenador autenticado
 const fetchEntrenamientos = async () => {
-  if (!entrenadorId) {
-    console.error("No se encontró el ID del entrenador");
+  if (!token) {
+    console.error("No estás autenticado.");
     return;
   }
 
   try {
-    // Suponemos que el backend proporciona un endpoint para obtener los entrenamientos según el ID del entrenador
-    const response = await axios.get(`https://protactics-api.onrender.com/entrenamientos?entrenador_id=${entrenadorId}`);
+    const response = await axios.get('https://protactics-api.onrender.com/entrenamientos', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+
     entrenamientos.value = response.data;
   } catch (error) {
-    console.error('Error cargando entrenamientos', error);
+    console.error('Error cargando entrenamientos:', error);
   } finally {
     loading.value = false;
   }
 };
 
-// Función para publicar un entrenamiento
+// Publicar entrenamiento como publicación
 const publicarEntrenamiento = async (entrenamiento) => {
   if (!token) {
     alert('No estás autenticado');
@@ -48,18 +45,18 @@ const publicarEntrenamiento = async (entrenamiento) => {
   try {
     await axios.post('https://protactics-api.onrender.com/publicaciones', publicacionData, {
       headers: {
-        Authorization: `Bearer ${token}`, // Pasar token en el encabezado de la solicitud
+        Authorization: `Bearer ${token}`,
       }
     });
 
-    alert('Entrenamiento publicado correctamente');
+    alert('Entrenamiento publicado correctamente ✅');
   } catch (error) {
     console.error('Error al publicar el entrenamiento', error);
-    alert('Error al publicar');
+    alert('Error al publicar ❌');
   }
 };
 
-// Cargar entrenamientos cuando el componente se monta
+// Cargar entrenamientos al montar componente
 onMounted(() => {
   fetchEntrenamientos();
 });
@@ -69,21 +66,21 @@ onMounted(() => {
   <div class="dashboard">
     <div class="dashboard-container">
       <h1>Subir Publicación</h1>
-      
-      <div v-if="loading" class="loading">Cargando...</div>
-      
+
+      <div v-if="loading" class="loading">Cargando entrenamientos...</div>
+
       <div v-else>
         <h2>Selecciona un entrenamiento para publicar</h2>
-        
-        <div v-if="entrenamientos.length === 0">No tienes entrenamientos disponibles.</div>
-        
+
+        <div v-if="entrenamientos.length === 0">
+          No tienes entrenamientos disponibles.
+        </div>
+
         <ul>
           <li v-for="entrenamiento in entrenamientos" :key="entrenamiento.entrenamiento_id" class="entrenamiento-item">
             <div>
               <strong>{{ entrenamiento.titulo }}</strong> - {{ entrenamiento.descripcion }}
-              <button 
-                class="add-button" 
-                @click="publicarEntrenamiento(entrenamiento)">
+              <button class="add-button" @click="publicarEntrenamiento(entrenamiento)">
                 <span>+</span> Publicar
               </button>
             </div>
