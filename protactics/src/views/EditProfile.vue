@@ -163,140 +163,109 @@ onMounted(loadUserData);
     </div>
   </div>
 </template>
+<style scoped>
+body {
+  margin: 0;
+}
 
-  <style scoped>
-  /* Estils per al perfil */
-  .profile-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #f3f3f3;
-    padding-top: 5%;
-    padding-bottom: 5%;
-  }
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0; /* 💡 margen arriba y abajo */
+  min-height: 100vh;
+  background: linear-gradient(to right, #0f172a, #155e75);
+  color: white;
+}
 
-  .profile-edit-section {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 30px;
-    width: 50%;
-  }
+.profile-edit-section {
+  background-color: #1e293b;
+  padding: 40px 50px;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  width: 600px;
+}
 
-  .profile-image-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-  }
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
 
-  .profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+.input-row {
+  display: flex;
+  flex-direction: column;
+}
 
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-  }
+label {
+  font-weight: 500;
+  color: #cbd5e1;
+  margin-bottom: 8px;
+}
 
-  .password-container {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-top: 5%;
-  }
+input {
+  padding: 12px;
+  border-radius: 8px;
+  background-color: #0f172a;
+  border: 1px solid #334155;
+  color: #e2e8f0;
+  font-size: 1rem;
+}
 
-  .input-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+input:focus {
+  outline: none;
+  border-color: #22d3ee;
+}
 
-  label {
-    font-weight: 450;
-    color: rgb(73, 73, 73);
-    width: 40%;
-  }
+button {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: white;
+}
 
-  input {
-    padding: 10px;
-    border: none;
-    border-bottom: 1px solid rgba(73, 73, 73, 0.267);
-    background-color: transparent;
-    color: #8b8b8b;
-    font-size: 1rem;
-    width: 55%;
-  }
+.save-btn {
+  background-color: transparent;
+  border: 2px solid #22d3ee;
+}
 
-  input:focus {
-    outline: none;
-    border-bottom: 2px solid rgb(73, 73, 73);
-  }
+.save-btn:hover {
+  background-color: #22d3ee22;
+}
 
-  button {
-    padding: 15px;
-    border-radius: 8px;
-    background: #333;
-    color: rgb(73, 73, 73);
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: bold;
-    border: none;
-    transition: background-color 0.3s ease;
-  }
+.cancel-btn {
+  background-color: transparent;
+  border: 2px solid #ef4444;
+  color: #ef4444;
+}
 
-  button:hover {
-    background: #55555534;
-  }
+.cancel-btn:hover {
+  background-color: #ef444422;
+}
 
-  .cancel-btn {
-    background: transparent;
-    border: 2px red solid;
-    margin-top: 20px;
-    color: red;
-  }
-  .cancel-btn:hover {
-    background: rgba(255, 0, 0, 0.288);
-  }
+.error-msg,
+.success-msg {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
+}
 
-  .save-btn {
-    background: transparent;
-    border: 2px rgb(73, 73, 73) solid;
-    margin-top: 20px;
-  }
+.error-msg {
+  color: #f87171;
+}
 
-  .error-msg {
-    color: red;
-    font-size: 0.9rem;
-    text-align: center;
-  }
+.success-msg {
+  color: #4ade80;
+}
 
-  .success-msg {
-    color: green;
-    font-size: 0.9rem;
-    text-align: center;
-  }
+.password-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 30px;
+}
+</style>
 
-  .file-input {
-    background-color: transparent;
-    border: none;
-    display: none;
-  }
-
-  .upload-btn {
-    padding: 10px;
-    border-radius: 8px;
-    background-color: transparent;
-    color: rgb(73, 73, 73);
-    border: 2px solid rgb(73, 73, 73);
-    font-weight: bold;
-    margin-top: 10px;
-    cursor: pointer;
-  }
-
-  </style>
