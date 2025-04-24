@@ -6,10 +6,12 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 const entrenamientos = ref([]);
 const loading = ref(true);
 const token = localStorage.getItem('authToken');
+const errorMessage = ref(null);  // Variable para mensajes de error
 
 // Obtener entrenamientos del entrenador autenticado
 const fetchEntrenamientos = async () => {
   if (!token) {
+    errorMessage.value = "No estás autenticado.";
     console.error("No estás autenticado.");
     return;
   }
@@ -23,6 +25,7 @@ const fetchEntrenamientos = async () => {
 
     entrenamientos.value = response.data;
   } catch (error) {
+    errorMessage.value = "Error cargando entrenamientos.";
     console.error('Error cargando entrenamientos:', error);
   } finally {
     loading.value = false;
@@ -51,7 +54,9 @@ const publicarEntrenamiento = async (entrenamiento) => {
     });
 
     alert('Entrenamiento publicado correctamente ✅');
+    // Opcional: Podrías actualizar la lista de publicaciones o entrenamientos aquí si es necesario.
   } catch (error) {
+    errorMessage.value = "Error al publicar el entrenamiento.";
     console.error('Error al publicar el entrenamiento', error);
     alert('Error al publicar ❌');
   }
@@ -72,6 +77,8 @@ onMounted(() => {
       <h1>Subir Publicación</h1>
 
       <div v-if="loading" class="loading">Cargando entrenamientos...</div>
+
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div> <!-- Mostrar mensaje de error -->
 
       <div v-else>
         <h2>Selecciona un entrenamiento para publicar</h2>
@@ -127,6 +134,12 @@ onMounted(() => {
   font-size: 1.5rem;
   font-weight: bold;
   color: #facc15;
+}
+
+.error-message {
+  font-size: 1.2rem;
+  color: red;
+  margin-bottom: 20px;
 }
 
 .entrenamiento-item {
