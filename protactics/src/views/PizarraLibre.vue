@@ -9,6 +9,8 @@
       <button @click="guardarPizarra">💾 Guardar</button>
       <button @click="() => (items = [])">🧹 Reset</button>
       <button @click="deshacer">↩️ Deshacer</button>
+      <button @click="toggleDibujo">🖌️ Dibujo</button>
+      <button @click="clearCanvas">🧽 Borrar dibujo</button>
       <button class="capture-btn" @click="capturarObjetos">
         {{ isCaptured ? 'Editar' : 'Capturar' }}
       </button>
@@ -16,6 +18,7 @@
 
     <div class="container">
       <div class="campo-libre" :style="{ backgroundImage: `url(${futbol})` }">
+        <canvas ref="canvasRef" class="canvas-dibujo" />
         <div
           v-for="item in items"
           :key="item.id"
@@ -48,7 +51,11 @@ import futbol from "@/assets/img/deportes/pistaFutbol.png";
 const isCaptured = ref(false);
 const items = ref([]);
 const historial = ref([]);
+const canvasRef = ref(null);
 let nextId = 1000;
+
+const isDrawing = ref(false);
+let ctx = null;
 
 const addObject = (tipo) => {
   historial.value.push(JSON.stringify(items.value));
@@ -96,7 +103,47 @@ const deshacer = () => {
 
 onMounted(() => {
   cargarPizarra();
+  const canvas = canvasRef.value;
+  ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+
+  canvas.addEventListener('mousedown', startDraw);
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', endDraw);
+  canvas.addEventListener('mouseleave', endDraw);
 });
+
+const toggleDibujo = () => {
+  canvasRef.value.style.pointerEvents =
+    canvasRef.value.style.pointerEvents === 'none' ? 'auto' : 'none';
+};
+
+const startDraw = (e) => {
+  if (canvasRef.value.style.pointerEvents === 'none') return;
+  isDrawing.value = true;
+  ctx.strokeStyle = '#000';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(e.offsetX, e.offsetY);
+};
+
+const draw = (e) => {
+  if (!isDrawing.value) return;
+  ctx.lineTo(e.offsetX, e.offsetY);
+  ctx.stroke();
+};
+
+const endDraw = () => {
+  if (isDrawing.value) {
+    ctx.closePath();
+    isDrawing.value = false;
+  }
+};
+
+const clearCanvas = () => {
+  ctx.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height);
+};
 
 const startDrag = (event, item) => {
   if (isCaptured.value) return;
@@ -204,6 +251,7 @@ button:hover {
   overflow: hidden;
   margin-top: 90px;
   margin-bottom: 5%;
+  position: relative;
 }
 
 .campo-libre {
@@ -218,11 +266,22 @@ button:hover {
   box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
 
+.canvas-dibujo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
 .fichas-wrapper {
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 10;
 }
 
 .fichas {
