@@ -14,9 +14,7 @@ const fetchEntrenamientos = async () => {
     errorMessage.value = "No estás autenticado.";
     console.error("No estás autenticado.");
     return;
-  }
-
-  try {
+  } try {
     const response = await axios.get('https://protactics-api.onrender.com/entrenamientos', {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -31,8 +29,6 @@ const fetchEntrenamientos = async () => {
     loading.value = false;
   }
 };
-
-// Publicar entrenamiento como publicación
 const publicarEntrenamiento = async (entrenamiento) => {
   if (!token) {
     alert('No estás autenticado');
@@ -46,6 +42,9 @@ const publicarEntrenamiento = async (entrenamiento) => {
     entrenamiento_id: entrenamiento.entrenamiento_id,
   };
 
+  // Verificar los datos antes de enviarlos
+  console.log('Datos que se enviarán:', publicacionData);
+
   try {
     await axios.post('https://protactics-api.onrender.com/publicaciones', publicacionData, {
       headers: {
@@ -54,13 +53,13 @@ const publicarEntrenamiento = async (entrenamiento) => {
     });
 
     alert('Entrenamiento publicado correctamente ✅');
-    // Opcional: Podrías actualizar la lista de publicaciones o entrenamientos aquí si es necesario.
   } catch (error) {
     errorMessage.value = "Error al publicar el entrenamiento.";
     console.error('Error al publicar el entrenamiento', error);
     alert('Error al publicar ❌');
   }
 };
+
 
 // Cargar entrenamientos al montar componente
 onMounted(() => {
