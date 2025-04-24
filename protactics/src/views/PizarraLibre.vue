@@ -11,6 +11,9 @@
       <button @click="deshacer">↩️ Deshacer</button>
       <button @click="toggleDibujo">🖌️ Dibujo</button>
       <button @click="clearCanvas">🧽 Borrar dibujo</button>
+      <input type="color" v-model="colorDibujo" class="color-picker" />
+      <input type="range" min="1" max="10" v-model="grosorDibujo" class="slider" />
+      <button @click="guardarComoImagen">📸 Guardar imagen</button>
       <button class="capture-btn" @click="capturarObjetos">
         {{ isCaptured ? 'Editar' : 'Capturar' }}
       </button>
@@ -46,6 +49,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { RouterLink } from 'vue-router';
+import html2canvas from 'html2canvas';
 import futbol from "@/assets/img/deportes/pistaFutbol.png";
 
 const isCaptured = ref(false);
@@ -56,6 +60,9 @@ let nextId = 1000;
 
 const isDrawing = ref(false);
 let ctx = null;
+
+const colorDibujo = ref('#000000');
+const grosorDibujo = ref(3);
 
 const addObject = (tipo) => {
   historial.value.push(JSON.stringify(items.value));
@@ -101,6 +108,16 @@ const deshacer = () => {
   }
 };
 
+const guardarComoImagen = () => {
+  const container = document.querySelector('.campo-libre');
+  html2canvas(container).then((canvas) => {
+    const link = document.createElement('a');
+    link.download = 'pizarra.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+};
+
 onMounted(() => {
   cargarPizarra();
   const canvas = canvasRef.value;
@@ -122,8 +139,8 @@ const toggleDibujo = () => {
 const startDraw = (e) => {
   if (canvasRef.value.style.pointerEvents === 'none') return;
   isDrawing.value = true;
-  ctx.strokeStyle = '#000';
-  ctx.lineWidth = 3;
+  ctx.strokeStyle = colorDibujo.value;
+  ctx.lineWidth = grosorDibujo.value;
   ctx.beginPath();
   ctx.moveTo(e.offsetX, e.offsetY);
 };

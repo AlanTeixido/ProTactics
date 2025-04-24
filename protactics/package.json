@@ -15,6 +15,7 @@
     "axios": "^1.8.4",
     "chart.js": "^4.4.8",
     "chartjs": "^0.3.24",
+    "html2canvas": "^1.4.1",
     "vue": "^3.5.13",
     "vue-chartjs": "^5.3.2",
     "vue-router": "^4.5.0"
