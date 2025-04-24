@@ -169,7 +169,7 @@ onMounted(cargarEntrenamientos);
 <style scoped>
 .dashboard {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to left, #0f172a, #155e75);
   color: white;
 }

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import MenuDashboard from '@/components/MenuDashboard.vue';
 
 const entrenamientos = ref([]);
 const loading = ref(true);
@@ -63,6 +64,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <div class="dashboard-menu">
+    <MenuDashboard />
+  </div>
   <div class="dashboard">
     <div class="dashboard-container">
       <h1>Subir Publicación</h1>
@@ -94,9 +98,18 @@ onMounted(() => {
 <style scoped>
 .dashboard {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to left, #0f172a, #155e75);
   color: white;
+}
+
+.dashboard-menu {
+  width: 250px;
+  background-color: #1f2937;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
 }
 
 .dashboard-container {
