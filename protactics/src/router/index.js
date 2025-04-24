@@ -37,6 +37,11 @@ const router = createRouter({
       component: () => import('../views/CrearEntrenadorPage.vue'),
       meta: { requiresAuth: true }
     },
+    {
+      path: '/pizarra-libre',
+      name: 'PizarraLibre',
+      component: () => import('@/views/PizarraLibre.vue')
+    },    
     { 
       path: '/crearJugador', 
       name: 'crearJugador', 

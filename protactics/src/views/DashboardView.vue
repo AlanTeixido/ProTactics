@@ -16,7 +16,7 @@ const goTo = (path) => {
 
 const allOptions = [
   { label: "Entrenamientos", icon: "cono.png", path: "/entrenos", color: "#1e3a8a", roles: ["entrenador"] },
-  { label: "Pizarra", icon: "campo.png", path: "/pizarra", color: "#facc15", roles: ["entrenador"] },
+  { label: "Pizarra", icon: "campo.png", path: "/pizarra-libre", color: "#facc15", roles: ["entrenador"] },
   { label: "Jugadores", icon: "jugador.png", path: "/jugadores", color: "#16a34a", roles: ["entrenador"] },
   { label: "Entrenadores", icon: "entrenadores.png", path: "/entrenadores", color: "#0ea5e9", roles: ["club"] },
   { label: "Configuración", icon: "ajuste.png", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
