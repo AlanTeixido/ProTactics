@@ -12,7 +12,7 @@
     </div>
 
     <div class="container">
-      <div class="campo-libre" :style="{ backgroundImage: `url('/src/assets/img/campoBase.png')`, backgroundSize: 'cover', backgroundPosition: 'center' }">
+      <div class="campo-libre" :style="{ backgroundImage: `url(${futbol})` }">
         <div
           v-for="item in items"
           :key="item.id"
@@ -39,6 +39,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import futbol from "@/assets/img/deportes/pistaFutbol.png";
 
 const isCaptured = ref(false);
 const items = ref([]);
