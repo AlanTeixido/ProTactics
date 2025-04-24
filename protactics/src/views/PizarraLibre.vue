@@ -1,11 +1,14 @@
 // PizarraLibre.vue
 <template>
+  <RouterLink to="/dashboard" class="volver">🔙 Volver</RouterLink>
+
   <div class="contenedor">
     <div class="menu-bottom">
       <button @click="() => addObject('pelota')">⚽ Pelota</button>
       <button @click="() => addObject('cono')">🔺 Cono</button>
       <button @click="guardarPizarra">💾 Guardar</button>
       <button @click="() => (items = [])">🧹 Reset</button>
+      <button @click="deshacer">↩️ Deshacer</button>
       <button class="capture-btn" @click="capturarObjetos">
         {{ isCaptured ? 'Editar' : 'Capturar' }}
       </button>
@@ -39,19 +42,22 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { RouterLink } from 'vue-router';
 import futbol from "@/assets/img/deportes/pistaFutbol.png";
 
 const isCaptured = ref(false);
 const items = ref([]);
+const historial = ref([]);
 let nextId = 1000;
 
 const addObject = (tipo) => {
+  historial.value.push(JSON.stringify(items.value));
   const nuevo = {
     id: nextId++,
     tipo,
     nombre: tipo.charAt(0).toUpperCase() + tipo.slice(1),
-    x: 100,
-    y: 100,
+    x: window.innerWidth / 2 - 15,
+    y: window.innerHeight / 2 - 15,
     isDragging: false,
     offsetX: 0,
     offsetY: 0,
@@ -60,6 +66,7 @@ const addObject = (tipo) => {
 };
 
 const eliminarObjeto = (id) => {
+  historial.value.push(JSON.stringify(items.value));
   items.value = items.value.filter(item => item.id !== id);
 };
 
@@ -77,6 +84,13 @@ const cargarPizarra = () => {
   if (data) {
     items.value = JSON.parse(data);
     nextId = Math.max(...items.value.map(i => i.id), nextId) + 1;
+  }
+};
+
+const deshacer = () => {
+  const anterior = historial.value.pop();
+  if (anterior) {
+    items.value = JSON.parse(anterior);
   }
 };
 
@@ -113,6 +127,20 @@ const capturarObjetos = () => {
 </script>
 
 <style scoped>
+.volver {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  font-weight: bold;
+  z-index: 999;
+}
+
 .contenedor {
   width: 100%;
   height: 100%;
@@ -124,9 +152,15 @@ const capturarObjetos = () => {
 }
 
 .menu-bottom {
+  position: fixed;
+  top: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  z-index: 1000;
   display: flex;
   gap: 10px;
-  margin-bottom: 10px;
   flex-wrap: wrap;
 }
 
@@ -134,19 +168,29 @@ button {
   padding: 10px 15px;
   font-size: 16px;
   font-weight: 500;
-  border: none;
+  border: 2px solid #007bff;
   border-radius: 8px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+  background-color: #ffffff;
+  color: #007bff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+button:hover {
+  background-color: #007bff;
+  color: white;
 }
 
 .capture-btn {
   background-color: #ff6b6b;
   color: white;
+  border: 2px solid #ff6b6b;
 }
 
 .capture-btn:hover {
   background-color: #e63946;
+  border-color: #e63946;
 }
 
 .container {
@@ -158,6 +202,7 @@ button {
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  margin-top: 90px;
   margin-bottom: 5%;
 }
 
@@ -169,6 +214,8 @@ button {
   border-radius: 12px;
   background-size: cover;
   background-position: center;
+  border: 4px solid white;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
 
 .fichas-wrapper {
