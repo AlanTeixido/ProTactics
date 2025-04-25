@@ -41,6 +41,11 @@ const router = createRouter({
       path: '/pizarra-libre',
       name: 'PizarraLibre',
       component: () => import('@/views/PizarraLibre.vue')
+    },  
+    {
+      path: '/chatbot',
+      name: 'Chatbot',
+      component: () => import('../components/ChatBot.vue')
     },    
     { 
       path: '/crearJugador', 
