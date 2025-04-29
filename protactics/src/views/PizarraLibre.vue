@@ -4,6 +4,10 @@
   <div class="contenedor">
     <!-- MENÚ LATERAL DERECHO -->
     <div class="menu-lateral">
+      <div class="info-menu">
+        <RouterLink :to="`/dashboard`"><img src="../assets/img/logo.png" class="logo"></RouterLink>
+      </div>
+
       <button @click="() => addObject('pelota')"><img src="../assets/img/pelota.png" class="item-menu"></button>
       <button @click="() => addObject('cono')"><img src="../assets/img/cono.png" class="item-menu"></button>
       <button @click="guardarPizarra"><img src="../assets/img/boton-guardar.png" class="item-menu"></button>
@@ -13,8 +17,9 @@
       <button @click="clearCanvas"><img src="../assets/img/goma.png" class="item-menu"></button>
       <input type="color" v-model="colorDibujo" class="color-picker" />
       <input type="range" min="1" max="10" v-model="grosorDibujo" class="slider" />
-      <button @click="guardarComoImagen">📸 Guardar imagen</button>
+      <button @click="guardarComoImagen"><img src="../assets/img/descargar.png" class="item-menu"></button>
       <button class="capture-btn" @click="capturarObjetos">
+        <img src="../assets/img/pausa.png" class="item-menu">
         {{ isCaptured ? 'Editar' : 'Capturar' }}
       </button>
     </div>
@@ -249,17 +254,6 @@ button:hover {
   color: white;
 }
 
-.capture-btn {
-  background-color: transparent;
-  color: white;
-  border: 2px solid #ff6b6b;
-}
-
-.capture-btn:hover {
-  background-color: #e63946;
-  border-color: #e63946;
-}
-
 .container {
   flex: 1;
   height: 100%;
@@ -329,5 +323,24 @@ button:hover {
   width: 40px;
   height: 40px;
   margin-bottom: 10px;
+}
+
+.slider {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.info-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px rgba(255, 255, 255, 0.178) solid;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 30px;
+}
+
+.info-menu img {
+    width: 35px;
 }
 </style>

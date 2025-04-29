@@ -305,10 +305,17 @@ onMounted(cargarEntrenamientos);
 
 .entreno-datos {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   padding: 2%;
+  gap: 15px; /* Añade espacio entre grupos */
 }
 
+.entreno-datos div {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px 0;
+}
 
 .popup-content h3,
 .popup-content p {
