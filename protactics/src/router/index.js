@@ -13,13 +13,6 @@ const router = createRouter({
     { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue') },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 
-    // Rutas específicas de entrenamientos
-    { 
-      path: '/entrenamiento/:nombre', 
-      name: 'crear-entrenamiento', 
-      component: () => import('../views/CrearEntrenamiento.vue') 
-    },
-
     // 🔒 Rutas protegidas (requieren autenticación)
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },
     { path: '/perfil', name: 'perfil', component: () => import('../views/PerfilView.vue'), meta: { requiresAuth: true } },

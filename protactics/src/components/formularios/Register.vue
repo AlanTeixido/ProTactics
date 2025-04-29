@@ -11,7 +11,9 @@
 
     <div class="form-register">
       <h2 class="register-title">Registro de Club</h2>
-      <p class="register-subtitle">Crea el perfil oficial de tu club y comienza a gestionar entrenadores, jugadores y entrenamientos.</p>
+      <p class="register-subtitle">
+        Crea el perfil oficial de tu club y comienza a gestionar entrenadores, jugadores y entrenamientos.
+      </p>
 
       <form @submit.prevent="register" class="register-form">
         <div class="input-group">
@@ -38,10 +40,17 @@
       </p>
     </div>
 
-    <img src="/src/assets/img/dispositivos.png" alt="Fondo visual" class="fondo-register" />
+    <img src="/src/assets/img/fondoLogReg.jpg" alt="Fondo visual" class="fondo-register" />
+
+    <!-- POPUP -->
+    <div v-if="showPopup" class="popup">
+      <div class="popup-content" :style="{ border: popupSuccess ? '2px solid #0f0' : '2px solid #f00' }">
+        <p>{{ popupMessage }}</p>
+        <button class="popup-close" @click="closePopup">Cerrar</button>
+      </div>
+    </div>
   </div>
 </template>
-
 
 <script setup>
 import { ref } from 'vue';
@@ -54,9 +63,21 @@ const password = ref('');
 const confirmPassword = ref('');
 const router = useRouter();
 
+// Popup reactive state
+const showPopup = ref(false);
+const popupMessage = ref('');
+const popupSuccess = ref(true);
+
+const closePopup = () => {
+  showPopup.value = false;
+};
+
 const register = async () => {
   if (password.value !== confirmPassword.value) {
-    return alert('❌ Las contraseñas no coinciden');
+    popupMessage.value = '❌ Las contraseñas no coinciden';
+    popupSuccess.value = false;
+    showPopup.value = true;
+    return;
   }
 
   try {
@@ -66,15 +87,20 @@ const register = async () => {
       password: password.value
     });
 
-    alert('✅ Registro de club exitoso');
-    router.push('/login');
+    popupMessage.value = '✅ Registro de club exitoso';
+    popupSuccess.value = true;
+    showPopup.value = true;
+
+    setTimeout(() => {
+      router.push('/login');
+    }, 2000);
   } catch (error) {
-    console.error('Error al registrar club:', error);
-    alert(error.response?.data?.error || 'Error en el registro');
+    popupMessage.value = error.response?.data?.error || 'Error en el registro';
+    popupSuccess.value = false;
+    showPopup.value = true;
   }
 };
 </script>
-
 
 <style scoped>
 .fondo-register {
@@ -184,7 +210,6 @@ const register = async () => {
   color: #ccc;
 }
 
-/* Estilos para el popup (si es necesario) */
 .popup {
   display: flex;
   position: fixed;
@@ -195,6 +220,7 @@ const register = async () => {
   background-color: rgba(0, 0, 0, 0.5);
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
 .popup-content {
@@ -203,17 +229,18 @@ const register = async () => {
   border-radius: 15px;
   text-align: center;
   color: white;
+  max-width: 400px;
 }
 
 .popup-close {
   margin-top: 8%;
-  padding: 10px;
+  padding: 10px 20px;
   cursor: pointer;
   background: transparent;
   color: white;
   border: 2px white solid;
   border-radius: 5px;
-  box-shadow: 15px rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
   transition: 0.3s;
 }
 
@@ -235,5 +262,4 @@ const register = async () => {
   margin-bottom: 6px;
   padding-left: 4px;
 }
-
 </style>
