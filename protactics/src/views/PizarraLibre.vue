@@ -1,16 +1,16 @@
-// PizarraLibre.vue
 <template>
-  <RouterLink to="/dashboard" class="volver">🔙 Volver</RouterLink>
+  <RouterLink to="/dashboard" class="volver"><img src="../assets/img/izquierda.png" alt=""></RouterLink>
 
   <div class="contenedor">
-    <div class="menu-bottom">
-      <button @click="() => addObject('pelota')">⚽ Pelota</button>
-      <button @click="() => addObject('cono')">🔺 Cono</button>
-      <button @click="guardarPizarra">💾 Guardar</button>
-      <button @click="() => (items = [])">🧹 Reset</button>
-      <button @click="deshacer">↩️ Deshacer</button>
-      <button @click="toggleDibujo">🖌️ Dibujo</button>
-      <button @click="clearCanvas">🧽 Borrar dibujo</button>
+    <!-- MENÚ LATERAL DERECHO -->
+    <div class="menu-lateral">
+      <button @click="() => addObject('pelota')"><img src="../assets/img/pelota.png" class="item-menu"></button>
+      <button @click="() => addObject('cono')"><img src="../assets/img/cono.png" class="item-menu"></button>
+      <button @click="guardarPizarra"><img src="../assets/img/boton-guardar.png" class="item-menu"></button>
+      <button @click="() => (items = [])"><img src="../assets/img/basura.png" class="item-menu"></button>
+      <button @click="deshacer"><img src="../assets/img/deshacer.png" class="item-menu"></button>
+      <button @click="toggleDibujo"><img src="../assets/img/lapiz.png" class="item-menu"></button>
+      <button @click="clearCanvas"><img src="../assets/img/goma.png" class="item-menu"></button>
       <input type="color" v-model="colorDibujo" class="color-picker" />
       <input type="range" min="1" max="10" v-model="grosorDibujo" class="slider" />
       <button @click="guardarComoImagen">📸 Guardar imagen</button>
@@ -19,6 +19,7 @@
       </button>
     </div>
 
+    <!-- PIZARRA IZQUIERDA -->
     <div class="container">
       <div class="campo-libre" :style="{ backgroundImage: `url(${futbol})` }">
         <canvas ref="canvasRef" class="canvas-dibujo" />
@@ -195,7 +196,7 @@ const capturarObjetos = () => {
   position: fixed;
   top: 20px;
   left: 20px;
-  background: white;
+  background: transparent;
   padding: 8px 12px;
   border-radius: 8px;
   text-decoration: none;
@@ -204,50 +205,52 @@ const capturarObjetos = () => {
   font-weight: bold;
   z-index: 999;
 }
+.volver img {
+  width: 40px;
+  height: 40px;
+}
 
 .contenedor {
-  width: 100%;
-  height: 100%;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.menu-lateral {
+  width: 110px;
+  background-color: rgb(0, 0, 0);
+  padding: 20px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
+  gap: 12px;
+  z-index: 1001;
 }
 
-.menu-bottom {
-  position: fixed;
-  top: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 10px 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  z-index: 1000;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
+.menu-lateral button,
+.menu-lateral input {
+  width: 100%;
 }
 
 button {
-  padding: 10px 15px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 14px;
   font-weight: 500;
-  border: 2px solid #007bff;
-  border-radius: 8px;
+  border: none;
+  border-radius: 6px;
   cursor: pointer;
+  background-color: transparent;
   transition: 0.3s ease-in-out;
-  background-color: #ffffff;
-  color: #007bff;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 button:hover {
-  background-color: #007bff;
+  transform: scale(1.05);
   color: white;
 }
 
 .capture-btn {
-  background-color: #ff6b6b;
+  background-color: transparent;
   color: white;
   border: 2px solid #ff6b6b;
 }
@@ -258,16 +261,8 @@ button:hover {
 }
 
 .container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 70%;
-  height: 800px;
-  border-radius: 12px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  margin-top: 90px;
-  margin-bottom: 5%;
+  flex: 1;
+  height: 100%;
   position: relative;
 }
 
@@ -276,11 +271,8 @@ button:hover {
   height: 100%;
   background-color: #eaeaea;
   position: relative;
-  border-radius: 12px;
   background-size: cover;
   background-position: center;
-  border: 4px solid white;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
 }
 
 .canvas-dibujo {
@@ -302,9 +294,8 @@ button:hover {
 }
 
 .fichas {
-  width: 30px;
-  height: 30px;
-  background-color: #2d98da;
+  width: 40px;
+  height: 40px;
   color: white;
   font-size: 14px;
   font-weight: 550;
@@ -332,5 +323,11 @@ button:hover {
   font-weight: 500;
   color: #333;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.item-menu {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
 }
 </style>

@@ -54,7 +54,7 @@ const menuItems = computed(() => {
             { path: '/equipos', label: 'EQUIPOS' },
             { path: '/entrenadores', label: 'ENTRENADORES' },
             { path: '/publicaciones', label: 'PUBLICACIONES' },
-            { path: '/perfil-club', label: 'PERFIL' }
+            { path: '/editar', label: 'PERFIL' }
         ];
     } else if (userRole.value === 'entrenador') {
         return [

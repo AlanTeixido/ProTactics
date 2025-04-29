@@ -40,7 +40,7 @@
       </p>
     </div>
 
-    <img src="/src/assets/img/fondoLogReg.jpg" alt="Fondo visual" class="fondo-register" />
+    <img src="/src/assets/img/fondoLogReg.jpg" class="fondo-register" />
 
     <!-- POPUP -->
     <div v-if="showPopup" class="popup">
@@ -108,6 +108,7 @@ const register = async () => {
   filter: opacity(10%);
   z-index: -1;
   bottom: 2%;
+  object-fit: cover;
 }
 
 .separator {
@@ -125,6 +126,7 @@ const register = async () => {
   height: 100vh;
   gap: 5%;
   color: white;
+  overflow: hidden;
 }
 
 .intro-register {

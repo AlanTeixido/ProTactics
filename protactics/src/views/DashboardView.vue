@@ -19,10 +19,10 @@ const allOptions = [
   { label: "Pizarra", icon: "campo.png", path: "/pizarra-libre", color: "#facc15", roles: ["entrenador"] },
   { label: "Jugadores", icon: "jugador.png", path: "/jugadores", color: "#16a34a", roles: ["entrenador"] },
   { label: "Entrenadores", icon: "entrenadores.png", path: "/entrenadores", color: "#0ea5e9", roles: ["club"] },
-  { label: "Configuración", icon: "ajuste.png", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
-  { label: "Publicaciones", icon: "periodico.png", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
   { label: "Equipos", icon: "pelota.png", path: "/equipos", color: "#0ea5e9", roles: ["club"] },
+  { label: "Publicaciones", icon: "periodico.png", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
   { label: "Subir publicaciones", icon: "mas.png", path: "/subirPublicaciones", color: "#0ea5e9", roles: ["entrenador"] },
+  { label: "Perfil", icon: "ajuste.png", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
 ];
 
 // Filtra opcions segons el rol de l'usuari
@@ -114,7 +114,7 @@ span{
 /* Targetes */
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   width: 100%;
   max-width: 900px;

@@ -158,7 +158,7 @@ onMounted(loadUserData);
         </div>
 
         <button @click="changePassword" class="save-btn">Actualizar Contraseña</button>
-        <button @click="router.push('/perfil')" class="cancel-btn">Cancelar</button>
+        <button @click="router.push('/dashboard')" class="cancel-btn">Cancelar</button>
       </div>
     </div>
   </div>

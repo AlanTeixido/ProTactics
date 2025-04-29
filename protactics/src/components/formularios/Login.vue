@@ -35,7 +35,7 @@
         ¿No tienes cuenta? <RouterLink to="/register" class="link">Regístrate</RouterLink>
       </p>
     </div>
-    <img src="/src/assets/img/dispositivos.png" alt="" class="fondo-login">
+    <img src="/src/assets/img/fondoLogReg.jpg" class="fondo-register" />
   </div>
 
 <!-- Modal de éxito -->
@@ -117,11 +117,12 @@ const login = async () => {
 </script>
 
 <style scoped>
-.fondo-login {
+.fondo-register {
   position: absolute;
   filter: opacity(10%);
   z-index: -1;
   bottom: 2%;
+  object-fit: cover;
 }
 
 .separator {
@@ -145,6 +146,7 @@ const login = async () => {
   gap: 5%;
   /* Espaciado entre los elementos */
   color: white;
+  overflow: hidden;
 }
 
 .intro-login {
