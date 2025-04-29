@@ -1,54 +1,91 @@
 <template>
-  <div class="chatbot-container">
-    <div class="chat-window">
-      <div v-for="(message, index) in messages" :key="index" class="message">
-        <div v-if="message.role === 'user'" class="user-message">{{ message.content }}</div>
-        <div v-if="message.role === 'assistant'" class="bot-message">{{ message.content }}</div>
+  <div id="chatbot-container">
+    <!-- Chatbot visible -->
+    <div v-if="isOpen" id="chatbot" class="chatbot-window">
+      <div id="chatbot-header">
+        <span>ChatBot</span>
+        <button @click="closeChatbot" id="close-chatbot">X</button>
+      </div>
+
+      <div id="chatbox">
+        <!-- Campo de búsqueda -->
+        <input 
+          type="text" 
+          id="search-input" 
+          v-model="searchQuery" 
+          placeholder="Busca una pregunta..."
+        />
+
+        <!-- Lista de preguntas -->
+        <div v-if="!selectedResponse" id="questions-scroll">
+          <div 
+            v-for="(question, index) in filteredQuestions" 
+            :key="index" 
+            class="question" 
+            @click="askQuestion(question)"
+          >
+            {{ question.pregunta }}
+          </div>
+
+          <div v-if="filteredQuestions.length === 0" class="no-results">
+            No se encontraron preguntas.
+          </div>
+        </div>
+
+        <!-- Respuesta -->
+        <div v-else id="chat-response">
+          <div class="response">{{ selectedResponse }}</div>
+          <button class="back-button" @click="resetChat">Volver</button>
+        </div>
       </div>
     </div>
-    <input 
-      v-model="userInput" 
-      @keydown.enter="sendMessage" 
-      placeholder="Escribe tu mensaje..." 
-      class="chat-input"
-    />
+
+    <!-- Botón flotante -->
+    <button @click="openChatbot" id="open-chatbot" v-if="!isOpen">Abrir ChatBot</button>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      userInput: "", // Entrada del usuario
-      messages: [], // Lista de mensajes del chat
+      isOpen: false,
+      searchQuery: "",
+      selectedResponse: null,
+      questions: [],
     };
   },
+  computed: {
+    filteredQuestions() {
+      return this.questions.filter((q) =>
+        q.pregunta.toLowerCase().includes(this.searchQuery.toLowerCase())
+      );
+    },
+  },
   methods: {
-    async sendMessage() {
-      if (this.userInput.trim() === "") return; // No enviar si está vacío
-
-      const userMessage = {
-        role: "user",
-        content: this.userInput,
-      };
-
-      this.messages.push(userMessage); // Añadir el mensaje del usuario al chat
-      this.userInput = ""; // Limpiar la entrada
-
+    openChatbot() {
+      this.isOpen = true;
+      this.fetchQuestions();
+    },
+    closeChatbot() {
+      this.isOpen = false;
+      this.resetChat();
+    },
+    resetChat() {
+      this.searchQuery = "";
+      this.selectedResponse = null;
+    },
+    askQuestion(question) {
+      this.selectedResponse = question.respuesta;
+    },
+    async fetchQuestions() {
       try {
-        const response = await this.$axios.post("http://localhost:3000/api/chatbot/chat", {
-          message: userMessage.content,
-        });
-
-        // Respuesta del bot
-        const botMessage = {
-          role: "assistant",
-          content: response.data.reply,
-        };
-
-        this.messages.push(botMessage); // Añadir la respuesta del bot
-      } catch (error) {
-        console.error("Error al obtener respuesta del chatbot:", error);
+        const res = await axios.get("http://localhost:3000/api/chatbot/preguntas");
+        this.questions = res.data;
+      } catch (err) {
+        console.error("Error al obtener preguntas:", err);
       }
     },
   },
@@ -56,67 +93,125 @@ export default {
 </script>
 
 <style scoped>
-.chatbot-container {
+#chatbot-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+#chatbot {
+  width: 320px;
+  height: 290px;
+  background-color: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: 400px;
-  margin: auto;
-  background-color: white;
-  border-radius: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  animation: slideIn 0.5s ease-out;
+  overflow: hidden;
 }
 
-.chat-window {
-  max-height: 400px;
-  overflow-y: auto;
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-}
-
-.message {
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: flex-start;
-}
-
-.user-message {
-  background-color: #25d366; /* Verde de WhatsApp */
+#chatbot-header {
+  background-color: #22d3ee;
+  padding: 10px 16px;
   color: white;
-  padding: 8px;
-  border-radius: 8px;
-  max-width: 70%;
-  align-self: flex-end;
-  word-wrap: break-word;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.bot-message {
-  background-color: #ece5dd; /* Gris de WhatsApp */
-  color: #333;
-  padding: 8px;
-  border-radius: 8px;
-  max-width: 70%;
-  word-wrap: break-word;
+#close-chatbot {
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: white;
+  cursor: pointer;
 }
 
-.chat-input {
-  width: 100%;
+#chatbox {
   padding: 10px;
-  border-radius: 8px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+#search-input {
+  width: 90%;
+  padding: 6px 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
   border: 1px solid #ccc;
+}
+
+#questions-scroll {
+  max-height: 150px; /* 3 preguntas aprox */
+  overflow-y: auto;
+  border-top: 1px solid #eee;
+  padding-top: 5px;
+}
+
+.question {
+  background-color: #91e3ee;
+  padding: 8px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.question:hover {
+  background-color: #91eeb5;
+}
+
+.no-results {
+  color: #999;
+  font-style: italic;
   margin-top: 10px;
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+#chat-response {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.response {
+  background-color: #1e293b;
+  color: white;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.back-button {
+  background-color: #22d3ee;
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+#open-chatbot {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #22d3ee;
+  border: none;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
 }
 </style>
