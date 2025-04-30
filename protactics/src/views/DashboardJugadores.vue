@@ -4,6 +4,7 @@ import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonCrearJugador from '@/components/botones/ButtonCrearJugador.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
+import ButtonCrearJugadorCSV from '@/components/botones/ButtonCrearJugadorCSV.vue';
 
 const jugadores = ref([]);
 const equipos = ref([]);
@@ -133,6 +134,7 @@ onMounted(() => {
 
       <div class="crear-jugador-box">
         <ButtonCrearJugador />
+        <ButtonCrearJugadorCSV />
       </div>
 
       <div class="jugadors-llista">
@@ -457,5 +459,4 @@ onMounted(() => {
   color: white;
   font-size: 0.95rem;
 }
-
 </style>
