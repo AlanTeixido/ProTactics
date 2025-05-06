@@ -8,7 +8,7 @@
       <ButtonAtras />
       <div class="dashboard-header">
         <h2 class="titulo">Gestión de entrenamientos</h2>
-        <RouterLink to="/crear-entreno" class="btn-crear-entreno">+</RouterLink>
+        <RouterLink to="/crear-entreno" class="btn-crear-entreno"><img src="../assets/img/new.png" class="btn-new"></RouterLink>
       </div>
 
       <div class="dashboard-stats">
@@ -202,22 +202,6 @@ onMounted(cargarEntrenamientos);
   font-weight: bold;
 }
 
-.btn-crear-entreno {
-  background: linear-gradient(45deg, #4caf50, #0a74da);
-  color: white;
-  padding: 10px 20px;
-  border-radius: 50%;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 200%;
-  transition: 0.3s;
-  margin-right: 10%;
-}
-
-.btn-crear-entreno:hover {
-  background-color: #0e7490;
-  transform: scale(1.1);
-}
 
 .dashboard-stats {
   display: flex;
@@ -309,12 +293,14 @@ onMounted(cargarEntrenamientos);
   justify-content: center;
   padding: 2%;
   gap: 15px; /* Añade espacio entre grupos */
+  margin-top: 5%;
 }
 
 .entreno-datos div {
   display: flex;
   justify-content: space-around;
   padding: 5px 0;
+
 }
 
 .popup-content h3,
@@ -397,5 +383,17 @@ onMounted(cargarEntrenamientos);
 .btn-cerrar-popup img {
   width: 25px;
   height: 25px;
+}
+
+.btn-new{
+  width: 100px;
+  height: 100px;
+  background: transparent;
+  padding-right: 15px;
+  transition: 0.3s;
+}
+
+.btn-new:hover{
+  transform: scale(1.1);
 }
 </style>
