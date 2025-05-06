@@ -169,15 +169,10 @@ const register = async () => {
   padding: 12px;
   font-size: 1rem;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   background-color: #2a2a2a;
   color: white;
   transition: 0.3s;
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: #0098e5;
 }
 
 .submit-btn {
@@ -192,6 +187,7 @@ const register = async () => {
   font-weight: bold;
   background: linear-gradient(45deg, rgb(4, 196, 68), rgb(0, 132, 194));
   transition: 0.3s;
+  text-transform: uppercase;
 }
 
 .submit-btn:hover {

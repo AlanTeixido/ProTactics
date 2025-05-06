@@ -111,9 +111,6 @@ const login = async () => {
     showPopup('❌ Correo o contraseña incorrectos.', true);
   }
 };
-
-
-
 </script>
 
 <style scoped>
@@ -189,15 +186,10 @@ const login = async () => {
   padding: 12px;
   font-size: 1rem;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   background-color: #2a2a2a;
   color: white;
   transition: 0.3s;
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: #0098e5;
 }
 
 .submit-btn {
