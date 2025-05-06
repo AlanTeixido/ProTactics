@@ -5,9 +5,7 @@ import axios from 'axios';
 const file = ref(null);
 const statusMessage = ref('');
 const showDropArea = ref(false);
-
-// Referencia directa al input para activarlo desde código
-const fileInput = ref(null);
+const fileInput = ref(null); // Referencia directa al input para activarlo desde código
 
 const handleFileUpload = (event) => {
   file.value = event.target.files[0];
@@ -31,10 +29,6 @@ const triggerFileInput = () => {
   fileInput.value.click(); // Simula clic sobre el input oculto
 };
 
-
-const token = localStorage.getItem('token'); // Recuperar el token del localStorage
-console.log("TK",token);
-
 const uploadCSV = async () => {
   if (!file.value) {
     statusMessage.value = 'Por favor, selecciona o arrastra un archivo CSV.';
@@ -42,24 +36,23 @@ const uploadCSV = async () => {
   }
 
   const formData = new FormData();
-  formData.append('csv', file.value); // OJO: el nombre debe coincidir con `upload.single('csv')`
+  formData.append('csv', file.value); // El nombre debe coincidir con `upload.single('csv')`
 
-  // Recuperar el token del localStorage (asegúrate de que el token se almacene allí al iniciar sesión)
-  const token = localStorage.getItem('token'); // Si usas otro almacenamiento, ajusta esto
+  const token = localStorage.getItem('authToken'); // ⚠️ Corrección aquí
 
   if (!token) {
-    statusMessage.value = '❌ No se encontró el token de autenticación.';
+    statusMessage.value = '❌ No estás autenticado. Inicia sesión nuevamente.';
     return;
   }
 
   try {
     const response = await axios.post(
-      'http://localhost:3000/jugadores/upload-csv', // asegúrate que coincide con el backend
+      'http://localhost:3000/jugadores/upload-csv',
       formData,
       {
         headers: { 
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}` // Incluir el token en los headers
+          'Authorization': `Bearer ${token}` // ✔️ Token corregido
         }
       }
     );
@@ -80,7 +73,6 @@ const uploadCSV = async () => {
       </div>
     </button>
 
-    <!-- Drop area + input visible al hacer clic en el botón -->
     <div v-if="showDropArea" class="drop-area" @click="triggerFileInput" @drop="handleDrop" @dragover.prevent>
       <p>Arrastra el archivo CSV aquí o haz clic para seleccionarlo</p>
       <input
