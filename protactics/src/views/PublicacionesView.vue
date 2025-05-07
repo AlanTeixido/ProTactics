@@ -45,7 +45,9 @@ onMounted(fetchPublicaciones);
       <MenuDashboard />
     </div>
     <div class="dashboard-container">
-      <ButtonAtras />
+      <div class="btn-back">
+        <ButtonAtras />
+      </div>
       <h1 class="titulo">Publicaciones</h1>
       
       <div class="search-filter-container">
@@ -174,5 +176,11 @@ onMounted(fetchPublicaciones);
 .link {
   text-decoration: none;
   color: white;
+}
+
+.btn-back {
+  position: absolute;
+  top: 30px;
+  left: 300px;
 }
 </style>

@@ -11,7 +11,7 @@
         <RouterLink to="/crear-entreno" class="btn-crear-entreno"><img src="../assets/img/new.png" class="btn-new"></RouterLink>
       </div>
 
-      <div class="dashboard-stats">
+      <!-- <div class="dashboard-stats">
         <div class="stat-circle">
           <div class="circle-container">
             <ProgressCircle :value="entrenos.length" :max="10" color="#00c6ff">
@@ -32,7 +32,7 @@
           </ProgressCircle>
           <p>Repeticiones</p>
         </div>
-      </div>
+      </div> -->
 
       <div v-if="filteredEntrenos.length === 0" class="empty-msg">
         No hay entrenamientos que coincidan con la búsqueda.
@@ -101,7 +101,6 @@ import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import { RouterLink } from 'vue-router';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
-import ProgressCircle from '@/components/ProgressCircle.vue';
 
 const entrenos = ref([]);
 const searchQuery = ref("");
@@ -141,7 +140,7 @@ const cargarEntrenamientos = async () => {
     });
     entrenos.value = response.data || [];
   } catch (error) {
-    console.error('❌ Error cargando entrenamientos:', error);
+    console.error('Error cargando entrenamientos:', error);
   }
 };
 
@@ -221,7 +220,7 @@ onMounted(cargarEntrenamientos);
   height: 180px;
   color: white;
   text-align: center;
-
+  transition: 0.3s;
 }
 
 .circle-container {
@@ -389,7 +388,7 @@ onMounted(cargarEntrenamientos);
   width: 100px;
   height: 100px;
   background: transparent;
-  padding-right: 15px;
+  margin-right: 15px;
   transition: 0.3s;
 }
 

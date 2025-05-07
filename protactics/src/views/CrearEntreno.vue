@@ -17,6 +17,7 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
         <ButtonAtras />
       </div>
       <div>
+        <h1>CREAR ENTRENO</h1>
         <FormCrearEntreno />
       </div>
     </div>
@@ -49,8 +50,6 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
   justify-content: center;
   align-items: center;
   flex: 1;
-  margin-left: 250px;
-  /* Ajuste para evitar que el menú lo tape */
   padding: 20px;
   overflow-y: auto;
 }
@@ -137,8 +136,10 @@ h2 {
 }
 
 .back {
-  margin-top: -50%;
-  margin-left: -10%;
+  position: absolute;
+  top: 30px;
+  left: 300px;
+  z-index: 10;
 }
 
 /* Responsive */

@@ -104,11 +104,11 @@ const login = async () => {
       localStorage.setItem('userId', data.id);
       localStorage.setItem('userRol', data.rol);
 
-      showPopup(`✅ Sesión iniciada como ${data.rol}`);
+      showPopup(`Sesión iniciada como ${data.rol}`);
     }
   } catch (error) {
-    console.error('❌ Error iniciant sessió:', error);
-    showPopup('❌ Correo o contraseña incorrectos.', true);
+    console.error('Error iniciant sessió:', error);
+    showPopup('Correo o contraseña incorrectos.', true);
   }
 };
 </script>
@@ -236,7 +236,7 @@ const login = async () => {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   justify-content: center;
   align-items: center;
 }
