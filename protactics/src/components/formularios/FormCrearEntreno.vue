@@ -220,7 +220,7 @@
   });
   </script>
   
-  <script setup>
+  <style setup>
 
   .formulario-container {
     width: 100%;
@@ -338,3 +338,4 @@
     background-color: #0ea472;
   }
 
+  </style>
