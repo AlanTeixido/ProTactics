@@ -22,7 +22,7 @@ const allOptions = [
   { label: "Equipos", icon: "pelota.png", path: "/equipos", color: "#0ea5e9", roles: ["club"] },
   { label: "Publicaciones", icon: "periodico.png", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
   { label: "Subir publicaciones", icon: "mas.png", path: "/subirPublicaciones", color: "#0ea5e9", roles: ["entrenador"] },
-  { label: "Perfil", icon: "ajuste.png", path: "/editar", color: "#9ca3af", roles: ["club", "entrenador"] },
+  { label: "Perfil", icon: "ajuste.png", path: "/perfil-entrenador", color: "#9ca3af", roles: ["club", "entrenador"] },
 ];
 
 // Filtra opcions segons el rol de l'usuari
@@ -43,12 +43,7 @@ const options = computed(() => {
       <div class="rol-badge">Accediendo como <strong>{{ user.rol }}</strong></div>
 
       <div class="grid">
-        <div
-          v-for="(opt, i) in options"
-          :key="i"
-          class="card"
-          @click="goTo(opt.path)"
-        >
+        <div v-for="(opt, i) in options" :key="i" class="card" @click="goTo(opt.path)">
           <img :src="`../../public/img/${opt.icon}`" class="img">
           <div class="label">{{ opt.label }}</div>
         </div>
@@ -97,7 +92,7 @@ const options = computed(() => {
   line-height: 40%;
 }
 
-span{
+span {
   font-size: 35%;
   font-weight: bold;
 
