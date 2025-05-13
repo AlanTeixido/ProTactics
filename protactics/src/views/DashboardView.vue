@@ -22,7 +22,8 @@ const allOptions = [
   { label: "Equipos", icon: "pelota.png", path: "/equipos", color: "#0ea5e9", roles: ["club"] },
   { label: "Publicaciones", icon: "periodico.png", path: "/publicaciones", color: "#9ca3af", roles: ["club", "entrenador"] },
   { label: "Subir publicaciones", icon: "mas.png", path: "/subirPublicaciones", color: "#0ea5e9", roles: ["entrenador"] },
-  { label: "Perfil", icon: "ajuste.png", path: "/perfil-entrenador", color: "#9ca3af", roles: ["club", "entrenador"] },
+  { label: "Perfil", icon: "ajuste.png", path: "/perfil-entrenador", color: "#9ca3af", roles: ["entrenador"] },
+  { label: "Club", icon: "ajuste.png", path: "/perfil-club", color: "#9ca3af", roles: ["club"] },
 ];
 
 // Filtra opcions segons el rol de l'usuari
