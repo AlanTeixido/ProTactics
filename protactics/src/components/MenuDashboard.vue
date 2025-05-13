@@ -10,7 +10,7 @@ const userPic = ref('https://via.placeholder.com/100');
 
 const checkAuthStatus = () => {
     isLoggedIn.value = !!localStorage.getItem('authToken');
-    userRole.value = localStorage.getItem('userRol'); 
+    userRole.value = localStorage.getItem('userRol');
 };
 
 const fetchProfilePic = async () => {
@@ -54,7 +54,7 @@ const menuItems = computed(() => {
             { path: '/equipos', label: 'EQUIPOS' },
             { path: '/entrenadores', label: 'ENTRENADORES' },
             { path: '/publicaciones', label: 'PUBLICACIONES' },
-            { path: '/editar', label: 'PERFIL' }
+            { path: '/perfil-club', label: 'CLUB' }
         ];
     } else if (userRole.value === 'entrenador') {
         return [

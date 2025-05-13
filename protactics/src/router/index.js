@@ -17,15 +17,15 @@ const router = createRouter({
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },
     { path: '/deportes', name: 'deportes', component: () => import('../views/DeportesView.vue'), meta: { requiresAuth: true } },
     { path: '/mis-entrenamientos', name: 'mis-entrenamientos', component: () => import('../views/EntrenamientosView.vue'), meta: { requiresAuth: true } },
-    { 
-      path: '/editar-entrenamiento/:id', 
-      name: 'editar-entrenamiento', 
-      component: () => import('../views/EditarEntrenamiento.vue'), 
-      meta: { requiresAuth: true } 
+    {
+      path: '/editar-entrenamiento/:id',
+      name: 'editar-entrenamiento',
+      component: () => import('../views/EditarEntrenamiento.vue'),
+      meta: { requiresAuth: true }
     },
-    { 
-      path: '/crearEntrenador', 
-      name: 'crearEntrenador', 
+    {
+      path: '/crearEntrenador',
+      name: 'crearEntrenador',
       component: () => import('../views/CrearEntrenadorPage.vue'),
       meta: { requiresAuth: true }
     },
@@ -33,15 +33,15 @@ const router = createRouter({
       path: '/pizarra-libre',
       name: 'PizarraLibre',
       component: () => import('@/views/PizarraLibre.vue')
-    },  
+    },
     {
       path: '/chatbot',
       name: 'Chatbot',
       component: () => import('../components/ChatBot.vue')
-    },    
-    { 
-      path: '/crearJugador', 
-      name: 'crearJugador', 
+    },
+    {
+      path: '/crearJugador',
+      name: 'crearJugador',
       component: () => import('../views/CrearJugadorPage.vue'),
       meta: { requiresAuth: true }
     },
