@@ -11,27 +11,27 @@
   
         <div class="info-card" v-if="!editando">
           <div class="info-row">
-            <span class="label">Nombre:</span>
+            <span class="label">Nombre</span>
             <span class="value">{{ entrenador.nombre }}</span>
           </div>
           <div class="info-row">
-            <span class="label">Correo electrónico:</span>
+            <span class="label">Correo electrónico</span>
             <span class="value">{{ entrenador.correo }}</span>
           </div>
           <div class="info-row">
-            <span class="label">Teléfono:</span>
+            <span class="label">Teléfono</span>
             <span class="value">{{ entrenador.telefono || 'No especificado' }}</span>
           </div>
           <div class="info-row">
-            <span class="label">Notas adicionales:</span>
+            <span class="label">Notas adicionales</span>
             <span class="value">{{ entrenador.notas || 'Ninguna' }}</span>
           </div>
           <div class="info-row">
-            <span class="label">Equipo asignado:</span>
+            <span class="label">Equipo asignado</span>
             <span class="value">{{ entrenador.equipo || 'No asignado' }}</span>
           </div>
           <div class="info-row">
-            <span class="label">Fecha de registro:</span>
+            <span class="label">Fecha de registro</span>
             <span class="value">{{ new Date(entrenador.creado_en).toLocaleDateString() }}</span>
           </div>
   
@@ -40,32 +40,32 @@
   
         <div v-else class="info-card editar">
           <div class="input-group">
-            <label>Nombre:</label>
+            <label>Nombre</label>
             <input v-model="entrenadorEdit.nombre" />
           </div>
   
           <div class="input-group">
-            <label>Correo electrónico:</label>
+            <label>Correo electrónico</label>
             <input v-model="entrenadorEdit.correo" type="email" />
           </div>
   
           <div class="input-group">
-            <label>Nueva contraseña (opcional):</label>
+            <label>Nueva contraseña (opcional)</label>
             <input v-model="entrenadorEdit.password" type="password" />
           </div>
   
           <div class="input-group">
-            <label>Teléfono:</label>
+            <label>Teléfono</label>
             <input v-model="entrenadorEdit.telefono" type="tel" placeholder="Ej: 612345678" />
           </div>
   
           <div class="input-group">
-            <label>Foto de perfil (URL):</label>
+            <label>Foto de perfil (URL)</label>
             <input v-model="entrenadorEdit.foto_url" type="url" placeholder="https://..." />
           </div>
   
           <div class="input-group">
-            <label>Notas adicionales:</label>
+            <label>Notas</label>
             <textarea v-model="entrenadorEdit.notas" rows="3"></textarea>
           </div>
   
@@ -170,23 +170,22 @@
   }
   
   .info-card {
-    background-color: #1e293b;
-    padding: 30px;
+    padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     position: relative;
   }
   
   .info-row {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #334155;
+    padding: 20px ;
+    border-bottom: 1px solid #ffffff5d;
   }
   
   .label {
     font-weight: bold;
     color: #94a3b8;
+    text-transform: uppercase;
   }
   
   .value {
@@ -198,6 +197,7 @@
     flex-direction: column;
     gap: 10px;
     margin-bottom: 15px;
+    text-transform: uppercase;
   }
   
   .input-group input {
@@ -214,13 +214,15 @@
   }
   
   .btn-editar, .botones button {
-    background-color: #0ea5e9;
     border: none;
     padding: 10px 15px;
     border-radius: 8px;
     color: white;
     cursor: pointer;
     transition: background-color 0.2s;
+    margin-top: 2%;
+    text-transform: uppercase;
+    background: linear-gradient(45deg, #4caf50, #0a74da);
   }
   
   .botones button:nth-child(2) {
@@ -229,6 +231,14 @@
   
   .btn-editar:hover, .botones button:hover {
     opacity: 0.9;
+  }
+
+  textarea {
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    background-color: #334155;
+    color: white;
   }
   </style>
   

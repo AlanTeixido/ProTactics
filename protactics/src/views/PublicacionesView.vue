@@ -112,16 +112,25 @@ onMounted(fetchPublicaciones);
 }
 
 .search-input {
+  flex: 1;
   padding: 10px;
-  border-radius: 5px;
+  font-size: 1rem;
   border: none;
-  width: 250px;
+  border-radius: 5px;
+  outline: none;
+  background-color: #334155;
+  color: white;
 }
 
 .filter-select {
+  flex: 1;
   padding: 10px;
-  border-radius: 5px;
+  font-size: 1rem;
   border: none;
+  border-radius: 5px;
+  outline: none;
+  background-color: #334155;
+  color: white;
 }
 
 .titulo {

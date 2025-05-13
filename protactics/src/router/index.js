@@ -66,7 +66,7 @@ const router = createRouter({
     {
       path: '/subirPublicaciones',
       name: 'subir-publicacion',
-      component: () => import('../views/subirPublicacion.vue'),
+      component: () => import('../views/SubirPublicacion.vue'),
       meta: { requiresAuth: true }
     },
     {

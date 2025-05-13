@@ -62,20 +62,18 @@ onMounted(fetchPublicacion);
     </div>
 
     <div class="dashboard-container">
-      <ButtonAtras />
-      <button @click="goBack" class="back-button">&#8592;</button>
-
+      <ButtonAtras class="back-btn"/>
       <div v-if="loading" class="loading">Cargando publicación...</div>
 
       <div v-else-if="publicacionData" class="card">
         <h1 class="titulo">{{ publicacionData.titulo }}</h1>
         <p class="author">Entrenador: {{ publicacionData.entrenador || 'Desconocido' }}</p>
-        <img
+        <!--<img
           :src="publicacionData.imagen_url || '/default.png'"
           alt="Imagen"
           class="post-image"
           @error="$event.target.src = '/default.png'"
-        />
+        />-->
         <p class="content">{{ publicacionData.contenido }}</p>
         <p><strong>Categoría:</strong> {{ publicacionData.categoria }}</p>
         <p><strong>Campo:</strong> {{ publicacionData.campo }}</p>
@@ -83,9 +81,9 @@ onMounted(fetchPublicacion);
         <p><strong>Duración:</strong> {{ publicacionData.duracion_repeticion }}</p>
         <p><strong>Repeticiones:</strong> {{ publicacionData.repeticiones }}</p>
 
-        <button @click="toggleLike" class="like-button">
+        <!--<button @click="toggleLike" class="like-button">
           {{ liked ? 'Quitar Like' : 'Dar Like' }}
-        </button>
+        </button>-->
       </div>
 
       <div v-else class="loading">❌ Publicación no encontrada.</div>
@@ -158,7 +156,7 @@ onMounted(fetchPublicacion);
   border-radius: 15px;
   background: linear-gradient(to right, #0bd1df, #155e75);
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-  text-align: center;
+  text-align: left;
   max-width: 600px;
   width: 100%;
 }
@@ -183,18 +181,16 @@ onMounted(fetchPublicacion);
   margin: 15px 0;
 }
 
-.like-button {
-  padding: 12px 25px;
-  background-color: #facc15;
-  color: black;
+.back-button {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  background: none;
   border: none;
-  border-radius: 8px;
+  font-size: 1.5rem;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-weight: bold;
 }
 
-.like-button:hover {
-  background-color: #eab308;
-}
+
 </style>

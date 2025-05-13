@@ -68,7 +68,6 @@ const uploadCSV = async () => {
   <div>
     <button class="button-subir-csv" @click="showUploadArea">
       <div class="button-content">
-        <span class="upload-icon">📁</span>
         <p>Subir Jugadores CSV</p>
       </div>
     </button>

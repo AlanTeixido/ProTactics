@@ -73,7 +73,10 @@ onMounted(() => {
   </div>
   <div class="dashboard">
     <div class="dashboard-container">
-      <h1>Subir Publicación</h1>
+
+      <ButtonAtras class="btn-back" />
+      
+      <h1 class="titulo">Subir Publicación</h1>
 
       <div v-if="loading" class="loading">Cargando entrenamientos...</div>
 
@@ -171,7 +174,8 @@ h2 {
   color: white;
 }
 
-h1 {
+.titulo {
+  text-transform: uppercase;
   font-size: 3rem;
   font-weight: bold;
   color: white;
@@ -193,4 +197,5 @@ li strong {
   font-size: 1.2rem;
   color: #facc15;
 }
+
 </style>

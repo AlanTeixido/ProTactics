@@ -132,10 +132,9 @@ onMounted(() => {
       <h2 class="titulo">Gestión de jugadores</h2>
       <div class="rol-badge">Accediendo como <strong>{{ user.rol }}</strong></div>
 
-      <div class="crear-jugador-box">
-        <ButtonCrearJugador />
-        <ButtonCrearJugadorCSV />
-      </div>
+      <ButtonCrearJugador />
+      <ButtonCrearJugadorCSV />
+
 
       <div class="jugadors-llista">
         <h3>Jugadores de tu equipo:</h3>
@@ -244,8 +243,9 @@ onMounted(() => {
 }
 
 .titulo {
-  font-size: 2.4rem;
-  font-weight: 600;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 .rol-badge {
@@ -258,9 +258,11 @@ onMounted(() => {
 }
 
 .crear-jugador-box {
-  margin-top: 10px;
+  margin-top: 15px;
+  ;
   margin-bottom: 30px;
   width: fit-content;
+  gap: 20px;
 }
 
 .jugadors-llista h3 {

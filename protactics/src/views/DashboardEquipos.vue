@@ -203,7 +203,7 @@ onMounted(cargarEquipos);
 }
 
 .equipos-lista h3 {
-  margin-top: 4%;
+  margin-top: 1%;
   font-size: 1.4rem;
   margin-bottom: 15px;
 }

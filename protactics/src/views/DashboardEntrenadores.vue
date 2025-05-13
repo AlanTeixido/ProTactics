@@ -416,4 +416,8 @@ input {
 .entrenador-info.editando input{
   margin: 2px;
 }
+
+.entrenadores-lista{
+  margin-top: 1%;
+}
 </style>

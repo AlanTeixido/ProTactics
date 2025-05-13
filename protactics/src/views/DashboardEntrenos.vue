@@ -210,6 +210,7 @@ onMounted(cargarEntrenamientos);
   font-size: 2.4rem;
   color: rgb(255, 255, 255);
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 
@@ -219,44 +220,6 @@ onMounted(cargarEntrenamientos);
   margin: 30px 0;
   justify-content: start;
   flex-wrap: wrap;
-}
-
-.stat-circle {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  width: 160px;
-  height: 180px;
-  color: white;
-  text-align: center;
-  transition: 0.3s;
-}
-
-.circle-container {
-  width: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.circle-label {
-  margin-top: 12px;
-  font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
-  color: white;
-}
-
-.stat-circle p {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 500;
-}
-
-.stat-circle:hover {
-  transform: scale(1.05);
 }
 
 .empty-msg {
@@ -325,8 +288,8 @@ onMounted(cargarEntrenamientos);
   align-items: center;
   gap: 15px;
   margin: 20px 0;
-  padding: 10px;
   border-radius: 10px;
+  width: 40%;
 }
 
 .search-input {
@@ -400,7 +363,7 @@ onMounted(cargarEntrenamientos);
   width: 100px;
   height: 100px;
   background: transparent;
-  margin-right: 15px;
+  margin-right: 70px;
   transition: 0.3s;
 }
 
