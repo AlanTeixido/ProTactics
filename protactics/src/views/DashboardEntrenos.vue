@@ -8,7 +8,8 @@
       <ButtonAtras />
       <div class="dashboard-header">
         <h2 class="titulo">Gestión de entrenamientos</h2>
-        <RouterLink to="/crear-entreno" class="btn-crear-entreno"><img src="../assets/img/new.png" class="btn-new"></RouterLink>
+        <RouterLink to="/crear-entreno" class="btn-crear-entreno"><img src="../assets/img/new.png" class="btn-new">
+        </RouterLink>
       </div>
 
       <!-- <div class="dashboard-stats">
@@ -36,6 +37,12 @@
 
       <div v-if="filteredEntrenos.length === 0" class="empty-msg">
         No hay entrenamientos que coincidan con la búsqueda.
+      </div>
+
+      <div>
+        <RouterLink to="/todos-entrenos" class="btn-ver-todos">
+          Ver todos los entrenamientos
+        </RouterLink>
       </div>
 
       <div class="search-filter-container">
@@ -147,10 +154,12 @@ const cargarEntrenamientos = async () => {
 const filteredEntrenos = computed(() => {
   let result = [...entrenos.value];
 
+  // Filtro por búsqueda
   if (searchQuery.value) {
     result = result.filter(entreno => entreno.titulo.toLowerCase().includes(searchQuery.value.toLowerCase()));
   }
 
+  // Filtro por fecha
   if (selectedFilter.value === "asc") {
     result.sort((a, b) => new Date(a.creado_en) - new Date(b.creado_en));
   } else if (selectedFilter.value === "desc") {
@@ -159,8 +168,10 @@ const filteredEntrenos = computed(() => {
     result.sort((a, b) => a.categoria.localeCompare(b.categoria));
   }
 
-  return result;
+  // Limitar a 5 entrenamientos
+  return result.slice(0, 5);
 });
+
 
 onMounted(cargarEntrenamientos);
 </script>
@@ -291,7 +302,8 @@ onMounted(cargarEntrenamientos);
   flex-direction: column;
   justify-content: center;
   padding: 2%;
-  gap: 15px; /* Añade espacio entre grupos */
+  gap: 15px;
+  /* Añade espacio entre grupos */
   margin-top: 5%;
 }
 
@@ -384,7 +396,7 @@ onMounted(cargarEntrenamientos);
   height: 25px;
 }
 
-.btn-new{
+.btn-new {
   width: 100px;
   height: 100px;
   background: transparent;
@@ -392,7 +404,29 @@ onMounted(cargarEntrenamientos);
   transition: 0.3s;
 }
 
-.btn-new:hover{
+.btn-new:hover {
   transform: scale(1.1);
+}
+
+.btn-ver-todos {
+  font-size: 16px;
+  color: #ffffff;
+  /* Color del texto */
+  background: linear-gradient(45deg, #334155, #446491);
+  /* Fondo degradado */
+  text-decoration: none;
+  /* Sin subrayado */
+  padding: 10px 15px;
+  border-radius: 5px;
+  display: inline-block;
+  transition: all 0.3s ease;
+  /* Transición para los cambios de estilo */
+}
+
+.btn-ver-todos:hover {
+  background: linear-gradient(45deg, #46566d, #4e76af);
+  /* Cambio de gradiente al hacer hover */
+  color: #ffffff;
+  /* Color del texto al pasar el ratón */
 }
 </style>

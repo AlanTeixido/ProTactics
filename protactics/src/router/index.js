@@ -88,6 +88,12 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
+      path: '/todos-entrenos',
+      name: 'todosentrenos',
+      component: () => import('../views/TodosEntrenamientosView.vue'),
+      meta: { requiresAuth: true }
+    },
+    {
       path: '/crear-entreno',
       name: 'CrearEntreno',
       component: () => import('../views/CrearEntreno.vue'),
