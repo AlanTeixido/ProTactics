@@ -98,14 +98,21 @@ const login = async () => {
     const data = response.data;
 
     if (data.token) {
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('username', data.nombre);
-      localStorage.setItem('userEmail', data.email);
-      localStorage.setItem('userId', data.id);
-      localStorage.setItem('userRol', data.rol);
+  localStorage.setItem('authToken', data.token);
+  localStorage.setItem('username', data.nombre);
+  localStorage.setItem('userEmail', data.email);
+  localStorage.setItem('userRol', data.rol);
 
-      showPopup(`Sesión iniciada como ${data.rol}`);
-    }
+  // Guarda segons el rol
+  if (data.rol === 'club') {
+    localStorage.setItem('clubId', data.id);       // 👈 canvi
+  } else if (data.rol === 'entrenador') {
+    localStorage.setItem('entrenadorId', data.id); // 👈 canvi
+  }
+
+  showPopup(`Sesión iniciada como ${data.rol}`);
+}
+
   } catch (error) {
     console.error('Error iniciant sessió:', error);
     showPopup('Correo o contraseña incorrectos.', true);
