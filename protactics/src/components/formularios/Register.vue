@@ -105,9 +105,12 @@ const register = async () => {
 <style scoped>
 .fondo-register {
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   filter: opacity(10%);
   z-index: -1;
-  bottom: 2%;
   object-fit: cover;
 }
 
@@ -259,5 +262,59 @@ const register = async () => {
   color: #aaa;
   margin-bottom: 6px;
   padding-left: 4px;
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    height: auto;
+  }
+
+  .intro-register {
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .intro-register h1 {
+    font-size: 3rem;
+  }
+
+  .intro-register img {
+    width: 80px;
+    margin: 0 auto 10px;
+  }
+
+  .form-register {
+    margin-right: 0;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .separator {
+    display: none;
+  }
+
+    .fondo-register {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: opacity(10%);
+  z-index: -1;
+}
+
+  .register-subtitle {
+    font-size: 0.95rem;
+    padding: 0 10px;
+  }
+
+  .popup-content {
+    width: 90%;
+    padding: 20px;
+  }
 }
 </style>

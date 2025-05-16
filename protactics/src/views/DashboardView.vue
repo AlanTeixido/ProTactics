@@ -59,18 +59,20 @@ const options = computed(() => {
   height: 100vh;
   background: linear-gradient(to left, #0f172a, #155e75);
   color: white;
+  overflow: hidden;
 }
 
+/* Menú lateral fijo */
 .dashboard-menu {
   width: 250px;
   height: 100vh;
-  background-color: rgb(36, 36, 36);
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
 }
 
+/* Contenedor principal */
 .dashboard-container {
   flex: 1;
   margin-left: 250px;
@@ -80,25 +82,29 @@ const options = computed(() => {
   align-items: center;
   gap: 40px;
   margin-top: 5%;
+  overflow-y: auto;
 }
 
-/* Títol i rol */
+/* Título */
 .titulo {
-  width: 40%;
+  width: 100%;
+  max-width: 700px;
   text-transform: uppercase;
-  font-size: 600%;
+  font-size: 4rem;
   font-weight: 300;
   color: #fff;
   text-align: center;
-  line-height: 40%;
+  line-height: 1.1;
 }
 
 span {
-  font-size: 35%;
+  display: block;
+  font-size: 1.5rem;
   font-weight: bold;
-
+  margin-top: 10px;
 }
 
+/* Rol badge */
 .rol-badge {
   background-color: #ffffff22;
   padding: 8px 18px;
@@ -107,7 +113,7 @@ span {
   color: #e2e8f0;
 }
 
-/* Targetes */
+/* Grid de tarjetas */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -122,7 +128,6 @@ span {
   text-align: center;
   cursor: pointer;
   background: linear-gradient(to right, #0bd1df, #155e75);
-  background-color: #0da7bb;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
 }
@@ -144,16 +149,72 @@ span {
   text-transform: uppercase;
 }
 
-
+/* Responsive */
+@media (max-width: 1024px) {
+  .titulo {
+    font-size: 3rem;
+  }
+}
 
 @media (max-width: 768px) {
+  .dashboard {
+    flex-direction: row;
+  }
+
   .dashboard-container {
-    margin-left: 0;
     padding: 30px 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 40px;
   }
 
   .grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+  }
+
+  .titulo {
+    font-size: 2rem;
+  }
+
+  span {
+    font-size: 1rem;
+  }
+
+  .img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .label {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 20px 15px;
+  }
+
+  .titulo {
+    font-size: 1.6rem;
+  }
+
+  span {
+    font-size: 0.9rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 25px 15px;
+  }
+
+  .label {
+    font-size: 0.85rem;
   }
 }
 </style>
+
+

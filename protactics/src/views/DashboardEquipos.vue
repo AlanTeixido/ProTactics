@@ -391,4 +391,116 @@ input {
   font-size: 0.95rem;
   width: 100%;
 }
+
+@media (max-width: 1024px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .dashboard-container {
+    padding: 40px 25px;
+  }
+
+  .titulo {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .rol-badge {
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .filtros-equipos {
+    width: 100%;
+  }
+
+  .filtros-equipos input {
+    width: 48%;
+  }
+
+  .equips-grid {
+    grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 30px 20px;
+    margin-top: 10%;
+    margin-left: 10px;
+    margin-right: 25px;
+  }
+
+  .equips-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    gap: 15px;
+    margin-right: 20px;
+  }
+
+  .equipo-card {
+    width: 100%;
+    max-width: 100%;
+    
+  }
+
+  .filtros-equipos {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filtros-equipos input {
+    width: 100%;
+  }
+
+  .popup-content {
+    width: 90%;
+  }
+
+  .titulo {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 20px 15px;
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+
+  .equipo-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .btn-delete {
+    margin-top: 8px;
+  }
+
+  .btn-delete img,
+  .imgOptions {
+    width: 18px;
+    height: 18px;
+  }
+
+  .popup-botones {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .popup-botones button {
+    width: 100%;
+  }
+}
+
 </style>

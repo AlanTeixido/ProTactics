@@ -79,7 +79,7 @@ onMounted(fetchPublicaciones);
 <style scoped>
 .dashboard {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to left, #0f172a, #155e75);
   color: white;
 }
@@ -148,11 +148,11 @@ onMounted(fetchPublicaciones);
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 30px;
   width: 100%;
-  max-width: 900px;
 }
+
 
 .card {
   padding: 20px;
@@ -192,4 +192,108 @@ onMounted(fetchPublicaciones);
   top: 30px;
   left: 300px;
 }
+
+@media (max-width: 1024px) {
+  .dashboard {
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .dashboard-container {
+    padding: 40px 25px;
+    align-items: flex-start;
+  }
+
+  .btn-back {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-bottom: 20px;
+  }
+
+  .search-filter-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .titulo {
+    font-size: 2.2rem;
+    text-align: center;
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(45%, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 30px 20px;
+    align-items: center;
+     margin-top: 10%;
+    margin-left: 10px;
+    margin-right: 25px;
+  }
+
+  .search-filter-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .titulo {
+    font-size: 2rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+  }
+
+  .card {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .post-title {
+    font-size: 1.3rem;
+  }
+
+  .post-image {
+    max-height: 180px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 20px 15px;
+  }
+
+  .titulo {
+    font-size: 1.7rem;
+  }
+
+  .post-title {
+    font-size: 1.1rem;
+  }
+
+  .author {
+    font-size: 0.95rem;
+  }
+
+  .grid {
+    gap: 20px;
+  }
+
+  .btn-back {
+    margin-bottom: 15px;
+  }
+}
+
 </style>

@@ -154,14 +154,13 @@ onMounted(cargarEntrenadores);
 <style scoped>
 .dashboard {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to right, #0f172a, #155e75);
   color: white;
 }
 
 .dashboard-menu {
   width: 250px;
-  background-color: #1f2937;
   position: fixed;
   top: 0;
   left: 0;
@@ -420,4 +419,118 @@ input {
 .entrenadores-lista{
   margin-top: 1%;
 }
+
+@media (max-width: 1024px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .dashboard-container {
+    padding: 40px 25px;
+  }
+
+  .titulo {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .rol-badge {
+    margin: 0 auto;
+  }
+
+  .filtros-entrenadores {
+    width: 100%;
+  }
+
+  .entrenadores-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .entrenador-card {
+    width: 45%;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 30px 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 40px;
+  }
+
+  .entrenadores-grid {
+    gap: 15px;
+  }
+
+  .entrenador-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .filtros-entrenadores {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filtros-entrenadores input {
+    width: 100%;
+  }
+
+  .popup-content {
+    width: 90%;
+  }
+
+  .titulo {
+    font-size: 1.8rem;
+  }
+
+  .rol-badge {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 20px 15px;
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+
+  .entrenador-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .btn-delete {
+    margin-top: 8px;
+  }
+
+  .btn-delete img,
+  .imgOptions {
+    width: 18px;
+    height: 18px;
+  }
+
+  .popup-botones {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .popup-botones button {
+    width: 100%;
+  }
+}
+
 </style>

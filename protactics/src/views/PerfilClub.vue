@@ -17,19 +17,19 @@
         />
 
         <div class="info-row">
-          <span class="label">Nombre:</span>
+          <span class="label">Nombre</span>
           <span class="value">{{ club.nombre || 'No especificado' }}</span>
         </div>
         <div class="info-row">
-          <span class="label">Correo:</span>
+          <span class="label">Correo</span>
           <span class="value">{{ club.correo || 'No especificado' }}</span>
         </div>
         <div class="info-row">
-          <span class="label">Ubicación:</span>
+          <span class="label">Ubicación</span>
           <span class="value">{{ club.ubicacion || 'No especificada' }}</span>
         </div>
         <div class="info-row">
-          <span class="label">Fecha de registro:</span>
+          <span class="label">Fecha de registro</span>
           <span class="value">
             {{
               club.creado_en
@@ -48,22 +48,22 @@
 
       <div v-else class="info-card editar">
         <div class="input-group">
-          <label>Nombre:</label>
+          <label>Nombre</label>
           <input v-model="clubEdit.nombre" />
         </div>
 
         <div class="input-group">
-          <label>Correo electrónico:</label>
+          <label>Correo electrónico</label>
           <input v-model="clubEdit.correo" type="email" />
         </div>
 
         <div class="input-group">
-          <label>Ubicación:</label>
+          <label>Ubicación</label>
           <input v-model="clubEdit.ubicacion" type="text" />
         </div>
 
         <div class="input-group">
-          <label>Foto de perfil (URL):</label>
+          <label>Foto de perfil (URL)</label>
           <input v-model="clubEdit.foto_url" type="url" />
         </div>
 
@@ -189,10 +189,8 @@ onMounted(cargarClub);
 }
 
 .info-card {
-  background-color: #1e293b;
   padding: 30px;
   border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   position: relative;
 }
 
@@ -200,7 +198,7 @@ onMounted(cargarClub);
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid white;
 }
 
 .label {
@@ -230,6 +228,7 @@ onMounted(cargarClub);
 .botones {
   display: flex;
   gap: 15px;
+  
 }
 
 .btn-editar,
@@ -241,6 +240,7 @@ onMounted(cargarClub);
   color: white;
   cursor: pointer;
   transition: background-color 0.2s;
+  margin-top: 20px;
 }
 
 .botones button:nth-child(2) {
@@ -257,7 +257,97 @@ onMounted(cargarClub);
   height: 100px;
   object-fit: cover;
   border-radius: 50%;
-  border: 3px solid #22d3ee;
   margin: 0 auto 20px;
 }
+
+@media (max-width: 1024px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .dashboard-container {
+    padding: 40px 25px;
+  }
+
+  .info-card {
+    padding: 25px;
+  }
+
+  .titulo {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .botones {
+    flex-direction: column;
+  }
+
+  .btn-editar,
+  .botones button {
+    width: 100%;
+  }
+
+  .profile-img {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 30px 20px;
+    gap: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 40px;
+  }
+
+  .titulo {
+    font-size: 1.8rem;
+  }
+
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .input-group input {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 20px 15px;
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+
+  .info-card {
+    padding: 20px;
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+
+  .value {
+    font-size: 0.95rem;
+  }
+
+  .profile-img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
 </style>

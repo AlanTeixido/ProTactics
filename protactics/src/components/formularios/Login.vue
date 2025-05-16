@@ -123,9 +123,12 @@ const login = async () => {
 <style scoped>
 .fondo-register {
   position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   filter: opacity(10%);
   z-index: -1;
-  bottom: 2%;
   object-fit: cover;
 }
 
@@ -351,7 +354,6 @@ const login = async () => {
 }
 
 
-
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -363,6 +365,77 @@ const login = async () => {
   100% { transform: scale(1); }
 }
 
+@media screen and (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    padding: 20px;
+    height: auto;
+    gap: 30px;
+    margin-top: 15%;
+  }
 
+  .intro-login {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .intro-login h1 {
+    font-size: 3rem;
+    margin-top: 10px;
+  }
+
+  .intro-login img {
+    width: 120px;
+    margin-right: 0;
+  }
+
+  .separator {
+    display: none;
+  }
+
+  .form-login {
+    width: 100%;
+    margin: 0;
+  }
+
+  .input-group {
+    margin-top: 10px;
+  }
+
+  .input-field {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .submit-btn {
+    padding: 12px;
+    font-size: 0.95rem;
+  }
+
+  .login-role-toggle {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .popup-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .popup-close {
+    padding: 8px 16px;
+  }
+
+  .fondo-register {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: opacity(10%);
+  z-index: -1;
+}
+}
 
 </style>
