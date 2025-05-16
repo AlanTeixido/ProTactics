@@ -2,69 +2,97 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import MenuDashboard from '@/components/MenuDashboard.vue';
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
 const entrenamientos = ref([]);
+const publicaciones = ref([]);
 const loading = ref(true);
 const token = localStorage.getItem('authToken');
-const errorMessage = ref(null);  // Variable para mensajes de error
+const errorMessage = ref(null);
 
-// Obtener entrenamientos del entrenador autenticado
+const popupVisible = ref(false);
+const popupMessage = ref('');
+const isError = ref(false);
+
+const showPopup = (message, error = false) => {
+  popupMessage.value = message;
+  isError.value = error;
+  popupVisible.value = true;
+
+  if (!error) {
+    setTimeout(() => {
+      popupVisible.value = false;
+    }, 2500);
+  }
+};
+
+const closePopup = () => {
+  popupVisible.value = false;
+};
+
 const fetchEntrenamientos = async () => {
   if (!token) {
-    errorMessage.value = "No estás autenticado.";
-    console.error("No estás autenticado.");
+    errorMessage.value = "❌ No estás autenticado.";
     return;
-  } try {
-    const response = await axios.get('https://protactics-api.onrender.com/entrenamientos', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
-    });
+  }
 
-    entrenamientos.value = response.data;
-  } catch (error) {
-    errorMessage.value = "Error cargando entrenamientos.";
-    console.error('Error cargando entrenamientos:', error);
+  try {
+    const [resEntrenos, resPubs] = await Promise.all([
+      axios.get('https://protactics-api.onrender.com/entrenamientos', {
+        headers: { Authorization: `Bearer ${token}` }
+      }),
+      axios.get('https://protactics-api.onrender.com/publicaciones', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+    ]);
+
+    entrenamientos.value = resEntrenos.data;
+    publicaciones.value = resPubs.data;
+  } catch (err) {
+    errorMessage.value = "❌ Error cargando datos.";
+    console.error("❌ Error de carga:", err);
   } finally {
     loading.value = false;
   }
 };
+
+const estaPublicado = (entrenamiento_id) => {
+  return publicaciones.value.some(pub => pub.entrenamiento_id === entrenamiento_id);
+};
+
 const publicarEntrenamiento = async (entrenamiento) => {
   if (!token) {
-    alert('No estás autenticado');
+    showPopup('❌ No estás autenticado', true);
+    return;
+  }
+
+  if (estaPublicado(entrenamiento.entrenamiento_id)) {
+    showPopup('⚠️ Este entrenamiento ya está publicado', true);
     return;
   }
 
   const publicacionData = {
     titulo: entrenamiento.titulo,
-    contenido: entrenamiento.descripcion,
-    imagen_url: entrenamiento.imagen_url,
+    contenido: entrenamiento.descripcion || '',
+    imagen_url: entrenamiento.imagen_url?.trim() || null,
     entrenamiento_id: entrenamiento.entrenamiento_id,
   };
 
-  // Verificar los datos antes de enviarlos
-  console.log('Datos que se enviarán:', publicacionData);
-
   try {
-    await axios.post('https://protactics-api.onrender.com/publicaciones', publicacionData, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      }
+    const res = await axios.post('https://protactics-api.onrender.com/publicaciones', publicacionData, {
+      headers: { Authorization: `Bearer ${token}` }
     });
 
-    alert('Entrenamiento publicado correctamente ✅');
+    showPopup('✅ Entrenamiento publicado correctamente');
+    publicaciones.value.push(res.data);
   } catch (error) {
-    errorMessage.value = "Error al publicar el entrenamiento.";
-    console.error('Error al publicar el entrenamiento', error);
-    alert('Error al publicar ❌');
+    errorMessage.value = "❌ Error al publicar el entrenamiento.";
+    console.error('❌ Error al publicar:', error.response?.data || error);
+    showPopup('❌ No se pudo publicar el entrenamiento.', true);
   }
 };
 
-
-// Cargar entrenamientos al montar componente
-onMounted(() => {
-  fetchEntrenamientos();
-});
+onMounted(fetchEntrenamientos);
 </script>
 
 <template>
@@ -73,14 +101,12 @@ onMounted(() => {
   </div>
   <div class="dashboard">
     <div class="dashboard-container">
-
       <ButtonAtras class="btn-back" />
-      
+
       <h1 class="titulo">Subir Publicación</h1>
 
       <div v-if="loading" class="loading">Cargando entrenamientos...</div>
-
-      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div> <!-- Mostrar mensaje de error -->
+      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
 
       <div v-else>
         <h2>Selecciona un entrenamiento para publicar</h2>
@@ -90,11 +116,21 @@ onMounted(() => {
         </div>
 
         <ul>
-          <li v-for="entrenamiento in entrenamientos" :key="entrenamiento.entrenamiento_id" class="entrenamiento-item">
+          <li
+            v-for="entrenamiento in entrenamientos"
+            :key="entrenamiento.entrenamiento_id"
+            class="entrenamiento-item"
+          >
             <div>
               <strong>{{ entrenamiento.titulo }}</strong> - {{ entrenamiento.descripcion }}
-              <button class="add-button" @click="publicarEntrenamiento(entrenamiento)">
-                <span>+</span> Publicar
+
+              <button
+                class="add-button"
+                :disabled="estaPublicado(entrenamiento.entrenamiento_id)"
+                @click="publicarEntrenamiento(entrenamiento)"
+              >
+                <span v-if="!estaPublicado(entrenamiento.entrenamiento_id)">+</span>
+                {{ estaPublicado(entrenamiento.entrenamiento_id) ? 'Publicado' : 'Publicar' }}
               </button>
             </div>
           </li>
@@ -102,8 +138,17 @@ onMounted(() => {
       </div>
     </div>
   </div>
-</template>
 
+  <div v-if="popupVisible" class="popup">
+    <div :class="['popup-content', isError ? 'popup-error' : 'popup-success']">
+      <div class="icono-check">
+        <img src="/src/assets/img/logo.png" class="logo-check" />
+      </div>
+      <p class="popup-text">{{ popupMessage }}</p>
+      <button v-if="isError" @click="closePopup" class="popup-close">Cerrar</button>
+    </div>
+  </div>
+</template>
 <style scoped>
 .dashboard {
   display: flex;
@@ -152,6 +197,8 @@ onMounted(() => {
   background: #1a202c;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 800px;
 }
 
 .add-button {
@@ -167,6 +214,12 @@ onMounted(() => {
 
 .add-button:hover {
   background-color: #eab308;
+}
+
+.add-button:disabled {
+  background-color: gray;
+  color: #ccc;
+  cursor: not-allowed;
 }
 
 h2 {
@@ -196,6 +249,90 @@ li {
 li strong {
   font-size: 1.2rem;
   color: #facc15;
+}
+
+/* 🔔 Popup modal */
+.popup {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.popup-content {
+  background-color: #1e293b;
+  padding: 30px 40px;
+  border-radius: 16px;
+  text-align: center;
+  color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  animation: fadeIn 0.3s ease-out;
+}
+
+.popup-success {
+  background-color: #1e293b;
+}
+
+.popup-error {
+  background-color: #7f1d1d;
+  animation: shake 0.4s ease-in-out;
+}
+
+.popup-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.logo-check {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 10px;
+  animation: bounce 0.5s ease;
+}
+
+.popup-close {
+  margin-top: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.popup-close:hover {
+  transform: scale(1.1);
+}
+
+/* 🎬 Animacions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(-6px); }
+  25% { transform: translateX(6px); }
+  50% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes bounce {
+  0%   { transform: scale(0.8); }
+  50%  { transform: scale(1.1); }
+  100% { transform: scale(1); }
 }
 
 </style>
