@@ -2,6 +2,7 @@
     <div class="dashboard-container page-container">
       <div class="form-card">  
         <form @submit.prevent="crearEquipo" class="crearEquipo-form">
+          <h2>Información del equipo</h2>
           <div class="input-group">
             <label>Nombre del equipo</label>
             <input v-model="nombre" type="text" placeholder="Nombre" required class="input-field" />
@@ -17,12 +18,9 @@
               <option value="Cadete">Cadete</option>
               <option value="Juvenil">Juvenil</option>
               <option value="Amateur">Amateur</option>
-              <option value="Senior">Senior</option>
+              <option value="Senior">1er Equipo</option>
               <option value="Femenino">Femenino</option>
               <option value="Veteranos">Veteranos</option>
-              <option value="Fútbol Sala">Fútbol Sala</option>
-              <option value="Tecnificación">Tecnificación</option>
-              <option value="Competición">Competición</option>
             </select>
           </div>
           <button type="submit" class="submit-btn" :disabled="isLoading">
@@ -120,10 +118,8 @@
   }
   
   .form-card {
-    background-color: #1e293b;
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
     width: 100%;
     max-width: 500px;
   }
