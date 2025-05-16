@@ -152,7 +152,7 @@ const menuItems = computed(() => {
 
 .hamburger div {
   width: 25px;
-  height: 3px;
+  height: 1px;
   background-color: white;
   margin: 4px 0;
   transition: 0.4s;
@@ -221,6 +221,7 @@ const menuItems = computed(() => {
   align-items: center;
   border-top: 1px rgba(255, 255, 255, 0.178) solid;
   padding: 5%;
+  margin-left: 17%;
 }
 
 .logout-logo {

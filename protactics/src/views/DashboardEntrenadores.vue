@@ -423,6 +423,7 @@ input {
 @media (max-width: 1024px) {
   .dashboard {
     flex-direction: column;
+    
   }
 
   .dashboard-menu {
@@ -463,8 +464,9 @@ input {
   .dashboard-container {
     padding: 30px 20px;
     margin-left: 10px;
-    margin-right: 10px;
+    margin-right: 20px;
     margin-top: 40px;
+    min-height: 100%;
   }
 
   .entrenadores-grid {
@@ -501,6 +503,7 @@ input {
 @media (max-width: 480px) {
   .dashboard-container {
     padding: 20px 15px;
+    min-height: 100%;
   }
 
   .titulo {

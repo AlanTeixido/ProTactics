@@ -98,19 +98,29 @@ const crearEntrenador = async () => {
 
 <style scoped>
 .crear-entrenador-container {
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10%;
+  height: 85vh;
+  padding: 20px;
 }
 
 .form-create {
+  padding: 40px;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 400px;
+
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  width: 400px; /* Ancho fijo para el formulario */
-  max-width: 100%; /* Asegura que no se desborde en pantallas pequeñas */
+  gap: 20px;
+  color: white;
+}
+
+.form-create h2 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
 }
 
 .input-group {
@@ -119,40 +129,42 @@ const crearEntrenador = async () => {
 }
 
 label {
-  color: #cfcfcf;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  margin-bottom: 5px;
 }
 
 input {
-  padding: 15px;
+  padding: 12px;
   font-size: 1rem;
-  border-radius: 50px;
-  border: 2px solid #eeeeee;
-  margin-top: 8px;
-  background-color: #2a2a2a18;
+  border-radius: 8px;
+  border: none;
+  background-color: #334155;
   color: white;
 }
 
-input:focus {
-  border-color: white; /* Cambia el borde a blanco cuando el campo está enfocado */
-  outline: none; /* Elimina el borde predeterminado del navegador */
+input::placeholder {
+  color: #94a3b8;
 }
+
 .submit-btn {
-  padding: 15px;
+  padding: 12px;
   background: linear-gradient(45deg, #4caf50, #0a74da);
   border: none;
   color: white;
   font-weight: bold;
-  border-radius: 25px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
-  font-size: 20px;
+  transition: transform 0.2s ease;
   text-transform: uppercase;
+  font-size: 0.9rem;
 }
 
 .submit-btn:hover {
-  transform: scale(1.05);
+  transform: scale(1.03);
 }
 
+/* Popup styles */
 .popup {
   position: fixed;
   top: 0;
@@ -163,23 +175,28 @@ input:focus {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
 .popup-content {
-  background-color: #333;
-  padding: 20px;
-  border-radius: 10px;
+  background-color: #1e293b;
+  padding: 25px 30px;
+  border-radius: 12px;
   text-align: center;
   color: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .popup-close {
   margin-top: 15px;
-  padding: 8px;
+  padding: 10px 20px;
   cursor: pointer;
-  background-color: #f44336;
+  background-color: #ef4444;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
+  font-weight: bold;
 }
+
 </style>
+

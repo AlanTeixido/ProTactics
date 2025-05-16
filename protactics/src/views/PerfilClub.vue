@@ -198,7 +198,7 @@ onMounted(cargarClub);
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
-  border-bottom: 1px solid white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.226);
 }
 
 .label {

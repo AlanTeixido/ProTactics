@@ -1,12 +1,11 @@
 <script setup>
-import FormCrearEntrenador from '@/components/formularios/FormCrearEntrenador.vue';
-import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
-
-
+import FormCrearEntrenador from '@/components/formularios/FormCrearEntrenador.vue';
+import MenuDashboard from '@/components/MenuDashboard.vue'; 
 </script>
+
 <template>
-    <div class="dashboard">
+  <div class="dashboard">
     <!-- Menú fijo a la izquierda -->
     <div class="dashboard-menu">
       <MenuDashboard />
@@ -14,20 +13,23 @@ import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
     <!-- Contenido principal -->
     <div class="dashboard-content">
-      <ButtonAtras />
+      <div class="back">
+        <ButtonAtras />
+      </div>
+      
+      <div class="intro">
         <h2>Crear Entrenador</h2>
-      <FormCrearEntrenador />
+        <p>En el siguiente formulario podrás <span>crear un entrenador</span> con las caracteristicas necesarias y se
+          añadirá a la sección de entrenadores del club</p>
+      </div>
+      <div>
+        <FormCrearEntrenador />
+      </div>
     </div>
   </div>
 </template>
-<style scoped>
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
+<style scoped>
 /* Contenedor principal */
 .dashboard {
   display: flex;
@@ -49,10 +51,27 @@ import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
 /* Contenido derecho */
 .dashboard-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex: 1;
-  margin-left: 250px; /* Ajuste para evitar que el menú lo tape */
+  margin-left: 250px;
+  /* Ajuste para evitar que el menú lo tape */
   padding: 20px;
   overflow-y: auto;
+}
+
+.intro{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-right: 10%;
+  width: 40%;
+}
+
+span{
+  font-weight: bold;
 }
 
 /* Estilos del grid */
@@ -116,12 +135,17 @@ import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 }
 
 h2 {
-    color: rgb(255, 255, 255);
-    text-transform: uppercase;
-    text-align: left;
-    margin-top: 5%;
-    margin-left: 3%;
-  }
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  text-align: left;
+  margin-top: 5%;
+  margin-left: 3%;
+}
+
+.back {
+  margin-top: -50%;
+  margin-left: -10%;
+}
 
 /* Responsive */
 @media (max-width: 768px) {
