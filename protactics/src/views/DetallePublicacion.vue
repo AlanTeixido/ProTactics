@@ -8,7 +8,7 @@ import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 const route = useRoute();
 const router = useRouter();
 
-const publicacionData = ref(null); // <- cambiado a publicacionData para evitar conflictos
+const publicacionData = ref(null);
 const loading = ref(true);
 const liked = ref(false);
 
@@ -28,28 +28,17 @@ const fetchPublicacion = async () => {
   }
 };
 
-const toggleLike = async () => {
-  try {
-    const token = localStorage.getItem('authToken');
-    if (!token) return;
-
-    const config = {
-      headers: { Authorization: `Bearer ${token}` }
-    };
-
-    if (liked.value) {
-      await axios.delete(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`, config);
-    } else {
-      await axios.post(`https://protactics-api.onrender.com/publicaciones/${route.params.id}/like`, {}, config);
-    }
-    liked.value = !liked.value;
-  } catch (error) {
-    console.error('❌ Error al dar/quitar like:', error);
-  }
+const formatInterval = (interval) => {
+  if (!interval || typeof interval !== 'object') return '-';
+  const hours = interval.hours || 0;
+  const mins = interval.minutes || 0;
+  const secs = interval.seconds || 0;
+  return `${String(hours).padStart(2, '0')}:${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
 };
 
-const goBack = () => {
-  router.push('/publicaciones');
+const formatDate = (iso) => {
+  if (!iso) return '-';
+  return iso.split('T')[0];
 };
 
 onMounted(fetchPublicacion);
@@ -62,28 +51,32 @@ onMounted(fetchPublicacion);
     </div>
 
     <div class="dashboard-container">
-      <ButtonAtras class="back-btn"/>
+      <ButtonAtras class="btn-back" />
+
       <div v-if="loading" class="loading">Cargando publicación...</div>
 
       <div v-else-if="publicacionData" class="card">
         <h1 class="titulo">{{ publicacionData.titulo }}</h1>
         <p class="author">Entrenador: {{ publicacionData.entrenador || 'Desconocido' }}</p>
-        <!--<img
+
+<!--<img
           :src="publicacionData.imagen_url || '/default.png'"
           alt="Imagen"
           class="post-image"
           @error="$event.target.src = '/default.png'"
-        />-->
-        <p class="content">{{ publicacionData.contenido }}</p>
-        <p><strong>Categoría:</strong> {{ publicacionData.categoria }}</p>
-        <p><strong>Campo:</strong> {{ publicacionData.campo }}</p>
-        <p><strong>Fecha de Entrenamiento:</strong> {{ publicacionData.fecha_entrenamiento }}</p>
-        <p><strong>Duración:</strong> {{ publicacionData.duracion_repeticion }}</p>
-        <p><strong>Repeticiones:</strong> {{ publicacionData.repeticiones }}</p>
+        />-->
 
-        <!--<button @click="toggleLike" class="like-button">
-          {{ liked ? 'Quitar Like' : 'Dar Like' }}
-        </button>-->
+        <p class="content">{{ publicacionData.contenido }}</p>
+        <div class="info-block">
+          <p><strong>Categoría:</strong> {{ publicacionData.categoria || '-' }}</p>
+          <p><strong>Campo:</strong> {{ publicacionData.campo || '-' }}</p>
+          <p><strong>Fecha de Entrenamiento:</strong> {{ formatDate(publicacionData.fecha_entrenamiento) }}</p>
+          <p><strong>Duración Total:</strong> {{ formatInterval(publicacionData.total_duracion) }}</p>
+          <p><strong>Repetición:</strong> {{ formatInterval(publicacionData.duracion_repeticion) }}</p>
+          <p><strong>Repeticiones:</strong> {{ publicacionData.repeticiones || '-' }}</p>
+          <p><strong>Descanso:</strong> {{ publicacionData.descanso || '-' }} min</p>
+          <p><strong>Notas:</strong> {{ publicacionData.notas_adicionales || '-' }}</p>
+        </div>
       </div>
 
       <div v-else class="loading">❌ Publicación no encontrada.</div>
@@ -94,15 +87,14 @@ onMounted(fetchPublicacion);
 <style scoped>
 .dashboard {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to left, #0f172a, #155e75);
   color: white;
 }
 
 .dashboard-menu {
   width: 250px;
-  height: 100vh;
-  background-color: rgb(36, 36, 36);
+  background-color: #1f2937;
   position: fixed;
   top: 0;
   left: 0;
@@ -116,33 +108,8 @@ onMounted(fetchPublicacion);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 40px;
+  gap: 30px;
   margin-top: 5%;
-  position: relative;
-}
-
-.back-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: white;
-  cursor: pointer;
-  transition: color 0.3s ease;
-}
-
-.back-button:hover {
-  color: #facc15;
-}
-
-.titulo {
-  font-size: 2.5rem;
-  font-weight: bold;
-  text-align: center;
-  color: white;
-  text-transform: uppercase;
 }
 
 .loading {
@@ -159,17 +126,27 @@ onMounted(fetchPublicacion);
   text-align: left;
   max-width: 600px;
   width: 100%;
+  color: white;
+}
+
+.titulo {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .author {
   font-size: 1rem;
   font-weight: bold;
   color: #facc15;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .post-image {
   width: 100%;
-  max-height: 300px;
+  max-height: 250px;
   object-fit: cover;
   border-radius: 10px;
   margin: 15px 0;
@@ -177,20 +154,34 @@ onMounted(fetchPublicacion);
 
 .content {
   font-size: 1rem;
-  color: white;
   margin: 15px 0;
 }
 
-.back-button {
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: white;
-  cursor: pointer;
+.info-block p {
+  font-size: 1rem;
+  margin: 4px 0;
 }
 
+.btn-back {
+  position: absolute;
+  top: 30px;
+  left: 300px;
+}
 
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 30px 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .btn-back {
+    position: relative;
+    left: 0;
+    top: 0;
+    margin-bottom: 20px;
+  }
+  .titulo {
+    font-size: 2rem;
+  }
+}
 </style>

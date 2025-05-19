@@ -74,14 +74,26 @@ const publicarEntrenamiento = async (entrenamiento) => {
   const publicacionData = {
     titulo: entrenamiento.titulo,
     contenido: entrenamiento.descripcion || '',
-    imagen_url: entrenamiento.imagen_url?.trim() || null,
+    imagen_url: entrenamiento.imagen_url?.trim() || 'default.png',
     entrenamiento_id: entrenamiento.entrenamiento_id,
+    categoria: entrenamiento.categoria || '',
+    campo: entrenamiento.campo || '',
+    fecha_entrenamiento: entrenamiento.fecha_entrenamiento,
+    duracion_repeticion: entrenamiento.duracion_repeticion,
+    repeticiones: entrenamiento.repeticiones,
+    total_duracion: entrenamiento.total_duracion,
+    descanso: entrenamiento.descanso,
+    notas_adicionales: entrenamiento.notas || ''
   };
 
   try {
-    const res = await axios.post('https://protactics-api.onrender.com/publicaciones', publicacionData, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const res = await axios.post(
+      'https://protactics-api.onrender.com/publicaciones/desde-entrenamiento',
+      publicacionData,
+      {
+        headers: { Authorization: `Bearer ${token}` }
+      }
+    );
 
     showPopup('✅ Entrenamiento publicado correctamente');
     publicaciones.value.push(res.data);
@@ -91,6 +103,8 @@ const publicarEntrenamiento = async (entrenamiento) => {
     showPopup('❌ No se pudo publicar el entrenamiento.', true);
   }
 };
+
+
 
 onMounted(fetchEntrenamientos);
 </script>

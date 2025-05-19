@@ -29,10 +29,6 @@
           <span class="value">{{ entrenador.notas || 'Ninguna' }}</span>
         </div>
         <div class="info-row">
-          <span class="label">Equipo asignado:</span>
-          <span class="value">{{ entrenador.equipo || 'No asignado' }}</span>
-        </div>
-        <div class="info-row">
           <span class="label">Fecha de registro:</span>
           <span class="value">
             {{
@@ -104,23 +100,25 @@ const entrenadorEdit = ref({});
 const editando = ref(false);
 
 const token = localStorage.getItem('authToken');
-const entrenadorId = localStorage.getItem('entrenadorId');
 const rol = localStorage.getItem('userRol');
+let entrenadorId = null;
 
-if (rol !== 'entrenador' || !entrenadorId) {
+if (rol !== 'entrenador' || !token) {
   router.push('/login');
 }
 
 const cargarEntrenador = async () => {
   try {
-    const res = await axios.get(`https://protactics-api.onrender.com/entrenadores/${entrenadorId}`, {
+    const res = await axios.get(`https://protactics-api.onrender.com/entrenadores/me`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     entrenador.value = res.data;
+    entrenadorId = res.data.entrenador_id;
   } catch (error) {
     console.error('❌ Error al cargar perfil del entrenador:', error);
   }
 };
+
 
 const empezarEdicion = () => {
   entrenadorEdit.value = { ...entrenador.value };

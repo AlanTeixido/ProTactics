@@ -18,9 +18,15 @@
       </div>
 
       <div class="input-group">
-        <label for="equipo">Equipo del entrenador</label>
-        <input v-model="equipo" type="text" id="equipo" placeholder="Ej: Primer equipo" required />
+        <label for="equipo">Equipo del entrenador (opcional)</label>
+        <select v-model="selectedEquipoId" id="equipo">
+          <option value="">-- Selecciona un equipo --</option>
+          <option v-for="equipo in equipos" :key="equipo.equipo_id" :value="equipo.nombre">
+            {{ equipo.nombre }}
+          </option>
+        </select>
       </div>
+      
 
       <button type="submit" class="submit-btn">Crear Entrenador</button>
     </form>
@@ -35,19 +41,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 
-// Estados
 const nombre = ref('');
 const correo = ref('');
 const password = ref('');
-const equipo = ref('');
+const selectedEquipoId = ref(''); // nou
+const equipos = ref([]); // nova llista
+
 const popupVisible = ref(false);
 const popupMessage = ref('');
-
-// Router para redirigir después de la creación
 const router = useRouter();
 
 const showPopup = (message) => {
@@ -55,11 +60,23 @@ const showPopup = (message) => {
   popupVisible.value = true;
   setTimeout(() => {
     popupVisible.value = false;
-  }, 3000); // Cierra el popup después de 3 segundos
+  }, 3000);
 };
 
 const closePopup = () => {
   popupVisible.value = false;
+};
+
+const carregarEquips = async () => {
+  try {
+    const token = localStorage.getItem('authToken');
+    const res = await axios.get('https://protactics-api.onrender.com/equipos/mis-equipos', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    equipos.value = res.data;
+  } catch (error) {
+    console.error('❌ Error carregant equips:', error);
+  }
 };
 
 const crearEntrenador = async () => {
@@ -71,15 +88,16 @@ const crearEntrenador = async () => {
       return;
     }
 
+    const payload = {
+      nombre: nombre.value,
+      correo: correo.value,
+      password: password.value,
+      equipo: selectedEquipoId.value || null // pot ser null si no seleccionen res
+    };
+
     const response = await axios.post(
       'https://protactics-api.onrender.com/entrenadores/register',
-      {
-        nombre: nombre.value,
-        correo: correo.value,
-        password: password.value,
-        equipo: equipo.value,
-        club_id: localStorage.getItem('userId') // Este es el id del club del cual se está creando el entrenador
-      },
+      payload,
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -88,13 +106,16 @@ const crearEntrenador = async () => {
     );
 
     showPopup(response.data.message);
-    router.push('/dashboard'); // Redirigir al dashboard después de crear el entrenador
+    router.push('/dashboard');
   } catch (error) {
     console.error('Error al crear entrenador:', error);
     showPopup(error.response?.data?.error || 'Error en la creació de l\'entrenador.');
   }
 };
+
+onMounted(carregarEquips);
 </script>
+
 
 <style scoped>
 .crear-entrenador-container {
@@ -196,6 +217,19 @@ input::placeholder {
   border: none;
   border-radius: 6px;
   font-weight: bold;
+}
+
+select {
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  background-color: #334155;
+  color: white;
+}
+
+select option {
+  background-color: #1e293b;
 }
 
 </style>

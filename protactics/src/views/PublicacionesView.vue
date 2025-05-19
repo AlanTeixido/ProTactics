@@ -28,9 +28,9 @@ const filteredPublicaciones = computed(() => {
   if (selectedFilter.value === 'titulo') {
     filtered.sort((a, b) => a.titulo.localeCompare(b.titulo));
   } else if (selectedFilter.value === 'entrenador') {
-    filtered.sort((a, b) => a.entrenador_id.localeCompare(b.entrenador_id)); // Usamos el ID del entrenador
+    filtered.sort((a, b) => a.entrenador.localeCompare(b.entrenador));
   } else if (selectedFilter.value === 'fecha') {
-    filtered.sort((a, b) => new Date(b.fecha_entrenamiento) - new Date(a.fecha_entrenamiento)); // Fechas de entrenamiento
+    filtered.sort((a, b) => new Date(b.fecha_entrenamiento) - new Date(a.fecha_entrenamiento));
   }
 
   return filtered;
@@ -38,6 +38,7 @@ const filteredPublicaciones = computed(() => {
 
 onMounted(fetchPublicaciones);
 </script>
+
 
 <template>
   <div class="dashboard">
@@ -49,7 +50,7 @@ onMounted(fetchPublicaciones);
         <ButtonAtras />
       </div>
       <h1 class="titulo">Publicaciones</h1>
-      
+
       <div class="search-filter-container">
         <input v-model="searchQuery" placeholder="Buscar por título..." class="search-input" />
         <select v-model="selectedFilter" class="filter-select">
@@ -63,8 +64,12 @@ onMounted(fetchPublicaciones);
       <div v-if="loading" class="loading">Cargando...</div>
       <div v-else class="grid">
         <div v-for="publicacion in filteredPublicaciones" :key="publicacion.publicacion_id" class="card">
-          <p class="author">Entrenador: {{ publicacion.entrenador_id }}</p> <!-- Mostramos el ID del entrenador, puedes obtener el nombre si tienes la relación -->
-          <img :src="publicacion.imagen_url || '/default.png'" alt="Imagen" class="post-image">
+          <p class="author">Entrenador: {{ publicacion.entrenador }}</p>
+          <img
+            :src="`/uploads/${publicacion.imagen_url || 'default.png'}`"
+            alt="Imagen"
+            class="post-image"
+          />
           <h2 class="post-title">
             <RouterLink :to="`/publicaciones/${publicacion.publicacion_id}`" class="link">
               {{ publicacion.titulo }}
