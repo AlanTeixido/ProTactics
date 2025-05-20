@@ -16,7 +16,6 @@ const router = createRouter({
     // 🔒 Rutas protegidas (requieren autenticación)
     { path: '/dashboard', name: 'dashboard', component: () => import('../views/DashboardView.vue'), meta: { requiresAuth: true } },
     { path: '/deportes', name: 'deportes', component: () => import('../views/DeportesView.vue'), meta: { requiresAuth: true } },
-    { path: '/mis-entrenamientos', name: 'mis-entrenamientos', component: () => import('../views/EntrenamientosView.vue'), meta: { requiresAuth: true } },
     {
       path: '/editar-entrenamiento/:id',
       name: 'editar-entrenamiento',

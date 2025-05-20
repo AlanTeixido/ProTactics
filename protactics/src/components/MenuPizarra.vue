@@ -58,8 +58,8 @@ onMounted(() => {
       <div class="nav-item">
         <RouterLink v-if="!isLoggedIn" to="/" class="nav-link">INICIO</RouterLink>
         <RouterLink v-if="isLoggedIn" to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
-        <RouterLink v-if="isLoggedIn" to="/mis-entrenamientos" class="nav-link">ENTRENAMIENTOS</RouterLink>
-        <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
+        <RouterLink v-if="isLoggedIn" to="/entrenos" class="nav-link">ENTRENAMIENTOS</RouterLink>
+        <RouterLink v-if="isLoggedIn" to="/perfil-entrenador" class="nav-link">PERFIL</RouterLink>
         <RouterLink v-if="!isLoggedIn" to="/contact" class="nav-link">CONTACTO</RouterLink>
         <RouterLink v-if="!isLoggedIn" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink>
       </div>

@@ -138,7 +138,7 @@ const deshacer = () => {
 };
 
 const guardarComoImagen = () => {
-  const container = document.querySelector('.campo-deporte');
+  const container = document.querySelector('.campo-libre');
   html2canvas(container).then((canvas) => {
     const link = document.createElement('a');
     link.download = 'pizarra.png';
