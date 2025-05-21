@@ -65,8 +65,11 @@ const menuItems = computed(() => {
         return [
             { path: '/dashboard', label: 'DASHBOARD' },
             { path: '/entrenos', label: 'ENTRENAMIENTOS' },
-            { path: '/perfil-entrenador', label: 'PERFIL' },
+            { path: '/pizarra-libre', label: 'PIZARRA' },
+            { path: '/jugadores', label: 'JUGADORES' },
             { path: '/publicaciones', label: 'PUBLICACIONES' },
+            { path: '/subirPublicaciones', label: 'SUBIR PUBLICACIONES' },
+            { path: '/perfil-entrenador', label: 'PERFIL' },
         ];
     }
     return [];

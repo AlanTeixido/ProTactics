@@ -10,6 +10,13 @@
 
       <button @click="() => addObject('pelota')"><img src="../assets/img/pelota.png" class="item-menu"></button>
       <button @click="() => addObject('cono')"><img src="../assets/img/cono.png" class="item-menu"></button>
+    
+      <!-- NUEVO: Jugador personalizado -->
+      <input type="color" v-model="colorJugador" class="color-picker" title="Color jugador personalizado" />
+      <button @click="addJugadorColorPersonalizado">
+        <img src="../assets/img/jugador-de-futbol.png" class="item-menu" alt="Jugador personalizado">
+      </button>
+
       <button @click="guardarPizarra"><img src="../assets/img/boton-guardar.png" class="item-menu"></button>
       <button @click="() => (items = [])"><img src="../assets/img/basura.png" class="item-menu"></button>
       <button @click="deshacer"><img src="../assets/img/deshacer.png" class="item-menu"></button>
@@ -44,8 +51,18 @@
           >
             <template v-if="item.tipo === 'pelota'">⚽</template>
             <template v-else-if="item.tipo === 'cono'">🔺</template>
+            <template v-else-if="item.tipo === 'jugador'">
+              <div
+                :style="{
+                  backgroundColor: item.color || '#ff8000',
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '50%',
+                }"
+              ></div>
+            </template>
           </div>
-          <div class="nombre-jugador">{{ item.nombre }}</div>
+          <div class="nombre-jugador"></div>
         </div>
       </div>
     </div>
@@ -69,6 +86,7 @@ let ctx = null;
 
 const colorDibujo = ref('#000000');
 const grosorDibujo = ref(3);
+const colorJugador = ref('#ff8000'); // Jugador personalizado
 
 const addObject = (tipo) => {
   historial.value.push(JSON.stringify(items.value));
@@ -78,6 +96,23 @@ const addObject = (tipo) => {
     nombre: tipo.charAt(0).toUpperCase() + tipo.slice(1),
     x: window.innerWidth / 2 - 15,
     y: window.innerHeight / 2 - 15,
+    isDragging: false,
+    offsetX: 0,
+    offsetY: 0,
+  };
+  if (tipo === 'jugador') nuevo.color = '#ff8000'; // Default naranja
+  items.value.push(nuevo);
+};
+
+const addJugadorColorPersonalizado = () => {
+  historial.value.push(JSON.stringify(items.value));
+  const nuevo = {
+    id: nextId++,
+    tipo: 'jugador',
+    nombre: 'Jugador',
+    x: window.innerWidth / 2 - 15,
+    y: window.innerHeight / 2 - 15,
+    color: colorJugador.value,
     isDragging: false,
     offsetX: 0,
     offsetY: 0,
@@ -290,8 +325,7 @@ button:hover {
 .fichas {
   width: 40px;
   height: 40px;
-  color: white;
-  font-size: 14px;
+  font-size: 30px;
   font-weight: 550;
   display: flex;
   align-items: center;
@@ -300,6 +334,7 @@ button:hover {
   cursor: grab;
   user-select: none;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: transparent;
 }
 
 .fichas:active {
@@ -314,14 +349,14 @@ button:hover {
 .nombre-jugador {
   margin-top: 5px;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 800;
   color: #333;
   text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
 }
 
 .item-menu {
-  width: 40px;
-  height: 40px;
+  width: 25px;
+  height: 25px;
   margin-bottom: 10px;
 }
 
@@ -331,16 +366,16 @@ button:hover {
 }
 
 .info-menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-bottom: 1px rgba(255, 255, 255, 0.178) solid;
-    margin-left: 5%;
-    margin-right: 5%;
-    padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px rgba(255, 255, 255, 0.178) solid;
+  margin-left: 5%;
+  margin-right: 5%;
+  padding: 30px;
 }
 
 .info-menu img {
-    width: 35px;
+  width: 35px;
 }
 </style>

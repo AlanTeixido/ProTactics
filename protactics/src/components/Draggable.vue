@@ -342,8 +342,8 @@ button:hover {
 }
 
 .item-menu {
-  width: 40px;
-  height: 40px;
+  width: 10px;
+  height: 10px;
   margin-bottom: 10px;
 }
 

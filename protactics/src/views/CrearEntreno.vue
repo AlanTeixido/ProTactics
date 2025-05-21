@@ -28,15 +28,15 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 /* Contenedor principal */
 .dashboard {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to right, #0f172a, #155e75);
+  width: 100%;
 }
 
 /* Menú a la izquierda fijo */
 .dashboard-menu {
   width: 250px;
   height: 100vh;
-  background-color: #1e1e1e;
   color: white;
   position: fixed;
   left: 0;
@@ -46,12 +46,14 @@ import MenuDashboard from '@/components/MenuDashboard.vue';
 
 /* Contenido derecho */
 .dashboard-content {
+  margin-left: 250px;
+  margin-top: 5%;
+  padding: 40px;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  flex: 1;
-  padding: 20px;
-  overflow-y: auto;
+  gap: 20px;
+  width: 100%;
 }
 
 .intro{
