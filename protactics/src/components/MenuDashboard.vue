@@ -67,7 +67,6 @@ const menuItems = computed(() => {
             { path: '/entrenos', label: 'ENTRENAMIENTOS' },
             { path: '/perfil-entrenador', label: 'PERFIL' },
             { path: '/publicaciones', label: 'PUBLICACIONES' },
-            { path: '/chatbot', label: 'AYUDA' }
         ];
     }
     return [];
