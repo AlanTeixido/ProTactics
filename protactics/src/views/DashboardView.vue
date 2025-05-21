@@ -81,7 +81,6 @@ const options = computed(() => {
   flex-direction: column;
   align-items: center;
   gap: 40px;
-  margin-top: 5%;
   overflow-y: auto;
 }
 
