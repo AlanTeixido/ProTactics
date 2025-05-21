@@ -5,7 +5,7 @@ import axios from 'axios';
 const file = ref(null);
 const statusMessage = ref('');
 const showDropArea = ref(false);
-const fileInput = ref(null); // Referencia directa al input para activarlo desde código
+const fileInput = ref(null);
 
 const handleFileUpload = (event) => {
   file.value = event.target.files[0];
@@ -26,7 +26,7 @@ const showUploadArea = () => {
 };
 
 const triggerFileInput = () => {
-  fileInput.value.click(); // Simula clic sobre el input oculto
+  fileInput.value.click();
 };
 
 const uploadCSV = async () => {
@@ -36,9 +36,9 @@ const uploadCSV = async () => {
   }
 
   const formData = new FormData();
-  formData.append('csv', file.value); // El nombre debe coincidir con `upload.single('csv')`
+  formData.append('csv', file.value);
 
-  const token = localStorage.getItem('authToken'); // ⚠️ Corrección aquí
+  const token = localStorage.getItem('authToken');
 
   if (!token) {
     statusMessage.value = '❌ No estás autenticado. Inicia sesión nuevamente.';
@@ -47,13 +47,13 @@ const uploadCSV = async () => {
 
   try {
     const response = await axios.post(
-      'http://localhost:3000/jugadores/upload-csv',
+      'https://protactics-api.onrender.com/jugadores/upload-csv', // ✅ Producción
       formData,
       {
-        headers: { 
+        headers: {
           'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}` // ✔️ Token corregido
-        }
+          'Authorization': `Bearer ${token}`,
+        },
       }
     );
 

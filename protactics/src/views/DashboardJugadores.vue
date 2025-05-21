@@ -277,9 +277,12 @@ onMounted(() => {
 
 .jugadors {
   list-style: none;
-  display: flex;
-  gap: 45px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 25px;
+  padding: 0;
 }
+
 
 .camiseta-jugador:hover {
   cursor: pointer;
