@@ -179,24 +179,29 @@ onMounted(cargarEntrenamientos);
 <style scoped>
 .dashboard {
   display: flex;
+  flex-direction: row;
   min-height: 100vh;
   background: linear-gradient(to left, #0f172a, #155e75);
   color: white;
+  overflow-x: hidden; /* Evita desbordamiento */
 }
 
 .dashboard-menu {
   width: 250px;
   background-color: #1f2937;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
+  z-index: 1000;
 }
 
 .dashboard-container {
   flex: 1;
   margin-left: 250px;
   padding: 40px;
+  transition: margin 0.3s ease;
 }
 
 .dashboard-header {
@@ -284,7 +289,7 @@ onMounted(cargarEntrenamientos);
 }
 
 .search-filter-container {
-  display: flex;
+  display: block;
   align-items: center;
   gap: 15px;
   margin: 20px 0;
@@ -315,6 +320,7 @@ onMounted(cargarEntrenamientos);
   background-color: #334155;
   color: white;
   cursor: pointer;
+  margin-top: 5%;
 }
 
 .filter-select:hover {
@@ -392,4 +398,128 @@ onMounted(cargarEntrenamientos);
   color: #ffffff;
   /* Color del texto al pasar el ratón */
 }
+
+@media (max-width: 1024px) {
+  .dashboard {
+    flex-direction: column;
+    
+  }
+
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .dashboard-container {
+    padding: 40px 25px;
+  }
+
+  .titulo {
+    font-size: 2rem;
+  }
+
+  .rol-badge {
+    margin: 0 auto;
+  }
+
+  .filtros-entrenadores {
+    width: 100%;
+  }
+
+  .entrenadores-grid {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .entrenador-card {
+    width: 45%;
+    max-width: 300px;
+  }
+
+  .entreno-info{
+    font-size: 90%;
+  }
+
+  .entreno-titulo{
+    font-size: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 30px 20px;
+    margin-left: 10px;
+    margin-right: 20px;
+    margin-top: 40px;
+    min-height: 100%;
+  }
+
+  .entrenadores-grid {
+    gap: 15px;
+  }
+
+  .entrenador-card {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .filtros-entrenadores {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .filtros-entrenadores input {
+    width: 100%;
+  }
+
+  .popup-content {
+    width: 90%;
+  }
+
+  .titulo {
+    font-size: 1.8rem;
+  }
+
+  .rol-badge {
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 20px 15px;
+
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+
+  .entrenador-info {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .btn-delete {
+    margin-top: 8px;
+  }
+
+  .btn-delete img,
+  .imgOptions {
+    width: 18px;
+    height: 18px;
+  }
+
+  .popup-botones {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .popup-botones button {
+    width: 100%;
+  }
+}
+
 </style>

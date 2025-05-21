@@ -162,15 +162,16 @@ onMounted(cargarEntrenador);
   min-height: 100vh;
   background: linear-gradient(to right, #0f172a, #155e75);
   color: white;
+  flex-direction: row;
 }
 
 .dashboard-menu {
   width: 250px;
-  background-color: #1f2937;
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
+  background-color: #0f172a;
 }
 
 .dashboard-container {
@@ -186,6 +187,7 @@ onMounted(cargarEntrenador);
   font-size: 2.5rem;
   font-weight: bold;
   text-transform: uppercase;
+  text-align: center;
 }
 
 .rol-badge {
@@ -195,6 +197,7 @@ onMounted(cargarEntrenador);
   font-size: 0.95rem;
   width: fit-content;
   color: #e2e8f0;
+  margin: 0 auto;
 }
 
 .info-card {
@@ -203,11 +206,16 @@ onMounted(cargarEntrenador);
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   position: relative;
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .info-row {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
   padding: 10px 0;
   border-bottom: 1px solid #334155;
 }
@@ -235,11 +243,15 @@ onMounted(cargarEntrenador);
   border: none;
   background-color: #334155;
   color: white;
+  width: 100%;
 }
 
 .botones {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 15px;
+  margin-top: 20px;
 }
 
 .btn-editar,
@@ -269,5 +281,99 @@ onMounted(cargarEntrenador);
   border-radius: 50%;
   border: 3px solid #22d3ee;
   margin: 0 auto 20px;
+  display: block;
 }
+
+@media (max-width: 1024px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .dashboard-container {
+    padding: 40px 25px;
+    margin-right: 40px;
+  }
+
+  .info-card {
+    padding: 25px;
+  }
+
+  .titulo {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .botones {
+    flex-direction: column;
+  }
+
+  .btn-editar,
+  .botones button {
+    width: 100%;
+  }
+
+  .profile-img {
+    width: 90px;
+    height: 90px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 30px 20px;
+    gap: 25px;
+    margin-left: 10px;
+    margin-right: 40px;
+    margin-top: 40px;
+  }
+
+  .titulo {
+    font-size: 1.8rem;
+  }
+
+  .info-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  .input-group input {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 20px 15px;
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+  }
+
+  .info-card {
+    padding: 20px;
+  }
+
+  .label {
+    font-size: 0.95rem;
+  }
+
+  .value {
+    font-size: 0.95rem;
+  }
+
+  .profile-img {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+
 </style>

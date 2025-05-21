@@ -57,7 +57,7 @@ onMounted(fetchPublicacion);
 
       <div v-else-if="publicacionData" class="card">
         <h1 class="titulo">{{ publicacionData.titulo }}</h1>
-        <p class="author">Entrenador: {{ publicacionData.entrenador || 'Desconocido' }}</p>
+        <p class="author">{{ publicacionData.entrenador || 'Desconocido' }}</p>
 
 <!--<img
           :src="publicacionData.imagen_url || '/default.png'"

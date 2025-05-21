@@ -218,7 +218,7 @@ onMounted(() => {
 <style scoped>
 .dashboard {
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to right, #0f172a, #155e75);
   color: white;
 }
@@ -226,7 +226,6 @@ onMounted(() => {
 .dashboard-menu {
   width: 250px;
   height: 100vh;
-  background-color: rgb(36, 36, 36);
   position: fixed;
   top: 0;
   left: 0;
@@ -464,4 +463,108 @@ onMounted(() => {
   color: white;
   font-size: 0.95rem;
 }
+
+/* Tablets - pantallas medianas (entre 768px y 1024px) */
+@media (max-width: 1024px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .dashboard-container {
+    padding: 30px 20px;
+  }
+
+  .filtros-jugadores {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .jugadors {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .jugador-info {
+    max-width: 320px;
+  }
+
+  .camiseta-jugador {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+
+/* Móviles - pantallas pequeñas (menos de 768px) */
+@media (max-width: 768px) {
+  .dashboard-container {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 5%;
+  }
+
+  .titulo {
+    font-size: 1.6rem;
+    text-align: center;
+  }
+
+  .rol-badge {
+    margin: 0 auto;
+    font-size: 0.85rem;
+  }
+
+  .filtros-jugadores {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .filtros-jugadores input,
+  .filtros-jugadores select {
+    width: 100%;
+  }
+
+  .jugadors {
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+  }
+
+  .camiseta-jugador {
+    width: 90%;
+    max-width: 280px;
+  }
+
+  .jugador-info input,
+  .jugador-info select {
+    width: 100%;
+  }
+
+  .dashboard-container {
+    padding: 20px;
+  }
+
+  .popup-content {
+    width: 90%;
+  }
+
+  .botones {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-guardar,
+  .btn-cancelar,
+  .btn-eliminar {
+    flex: 1 1 auto;
+    margin: 5px;
+  }
+}
+
 </style>

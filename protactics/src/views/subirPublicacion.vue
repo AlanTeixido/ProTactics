@@ -173,7 +173,6 @@ onMounted(fetchEntrenamientos);
 
 .dashboard-menu {
   width: 250px;
-  background-color: #1f2937;
   position: fixed;
   top: 0;
   left: 0;
@@ -239,6 +238,7 @@ onMounted(fetchEntrenamientos);
 h2 {
   font-size: 2rem;
   color: white;
+  margin-bottom: 5%;
 }
 
 .titulo {
@@ -349,4 +349,79 @@ li strong {
   100% { transform: scale(1); }
 }
 
+/* 📱 Tablets (≤1024px) */
+@media (max-width: 1024px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+
+  .dashboard-container {
+    padding: 40px 20px;
+  }
+
+  .entrenamiento-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-button {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
+/* 📱 Móviles (≤768px) */
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    text-align: center;
+  }
+
+  .dashboard-container {
+    margin-left: 10px;
+    margin-right: 20px;
+    padding: 30px 15px;
+  }
+
+  .entrenamiento-item {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+  }
+
+  .add-button {
+    width: 100%;
+    font-size: 1rem;
+    padding: 10px;
+  }
+
+  ul {
+    padding: 0;
+  }
+
+  li {
+    padding: 10px;
+  }
+
+  .popup-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .popup-close {
+    width: 100%;
+    margin-top: 15px;
+  }
+}
 </style>

@@ -64,7 +64,7 @@ onMounted(fetchPublicaciones);
       <div v-if="loading" class="loading">Cargando...</div>
       <div v-else class="grid">
         <div v-for="publicacion in filteredPublicaciones" :key="publicacion.publicacion_id" class="card">
-          <p class="author">Entrenador: {{ publicacion.entrenador }}</p>
+          <p class="author">{{ publicacion.entrenador }}</p>
           <img
             :src="`/uploads/${publicacion.imagen_url || 'default.png'}`"
             alt="Imagen"
@@ -201,7 +201,6 @@ onMounted(fetchPublicaciones);
 @media (max-width: 1024px) {
   .dashboard {
     flex-direction: column;
-    min-height: 100%;
   }
 
   .dashboard-menu {
@@ -243,7 +242,7 @@ onMounted(fetchPublicaciones);
   .dashboard-container {
     padding: 30px 20px;
     align-items: center;
-     margin-top: 10%;
+    margin-top: 10%;
     margin-left: 10px;
     margin-right: 25px;
   }
