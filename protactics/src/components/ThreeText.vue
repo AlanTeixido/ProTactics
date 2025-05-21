@@ -64,7 +64,7 @@ span {
   gap: 5%;
   padding: 5% 10%;
   margin-top: 5%;
-  margin-bottom: 5%;
+ 
 }
 
 .three-text h2 {

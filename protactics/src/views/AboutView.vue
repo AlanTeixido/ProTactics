@@ -2,27 +2,12 @@
     <HeaderSection />
     <div class="container">
       <h1 class="main-title">ACERCA DE PROTACTICS</h1>
-      <div class="carousel">
-        <div v-for="(slide, index) in slides" :key="index" class="carousel-slide" :class="{ active: index === currentSlide }">
-          <img :src="slide.image" :alt="slide.alt" class="carousel-image" />
-          <div class="carousel-text">{{ slide.text }}</div>
-        </div>
-        <button class="carousel-btn prev" @click="prevSlide">&#10094;</button>
-        <button class="carousel-btn next" @click="nextSlide">&#10095;</button>
-      </div>
-      
+     
       <div class="intro-banner">
         <p class="intro-text">Optimiza tu entrenamiento y alcanza tu máximo rendimiento con nuestra plataforma innovadora.</p>
-        <button class="cta-button">Empieza Ahora</button>
+        <RouterLink :to="`/login`"><button class="cta-button">Empieza Ahora</button></RouterLink>
       </div>
       
-      <div class="mission-section">
-        <h2 class="sub-title">Nuestra Visión</h2>
-        <p class="mission-text">
-          ProTactics busca revolucionar la forma en que los entrenadores y deportistas organizan y mejoran sus entrenamientos, brindando herramientas digitales avanzadas y un entorno colaborativo.
-        </p>
-      </div>
-
       <div class="mission-section">
         <h2 class="sub-title">Nuestra Visión</h2>
         <p class="mission-text">
@@ -253,4 +238,12 @@
     border-radius: 50%;
     margin-bottom: 15px;
   }
+
+  .intro-banner,
+   .mission-section,
+   .features-section,
+   .team-section {
+    margin-bottom: 5%;
+  }
+
   </style>

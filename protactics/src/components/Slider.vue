@@ -2,9 +2,9 @@
   <section>
       <p class="title"><span>Crea personaliza</span> i <span>comparte</span> tus entrenamientos</p>
       <div class="slider">
-        <img src="../assets/img/deportes/slider/atletismo.jpg" alt="ateltismo">
-        <img src="../assets/img/deportes/slider/ciclismo.jpg" alt="ciclismo">
-        <img src="../assets/img/deportes/slider/vestuario.jpg" alt="vestuario">
+        <img src="../assets/img/deportes/slider/damm.jpg">
+        <img src="../assets/img/deportes/slider/vestuario.jpg">
+        <img src="../assets/img/deportes/slider/ciudadespanyol.jpg">
       </div>
   </section>
 </template>

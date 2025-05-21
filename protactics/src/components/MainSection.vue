@@ -1,7 +1,7 @@
 <template>
   <section class="main-section">
     <div class="section">
-      <img class="estadistica" src="../assets/img/dispositivos.png" alt="Dispositivos">
+      <img class="estadistica" src="../assets/img/Fondo.png">
       <div class="text">
         <h1>Crea y personaliza tus entrenamientos</h1>
         <p class="main-paragraph">
@@ -45,6 +45,7 @@
 .main-section h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
+  text-align: center;
 }
 .main-section p {
   font-size: 1.2rem;
@@ -52,12 +53,25 @@
 }
 
 .estadistica{
-  width: 75%;
+  width: 85%;
   margin-left: 8%; 
   transition: 1s;
+  margin-top: 15%;
 }
 .estadistica:hover{
   transform: scale(1.1);
+}
+
+.main-paragraph {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.secondary-paragraph {
+  text-align: center;
+  font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
 /* Responsiveness */
