@@ -113,7 +113,7 @@ const menuItems = computed(() => {
             class="profile-pic-link"
             @click="showMobileMenu = false"
           >
-            <img :src="userPic" class="logo-perfil" />
+            <img src="../assets/img/usuario.png" class="logo-perfil" />
           </RouterLink>
           <img @click="logout" src="../assets/img/logout.png" class="logout-logo" />
         </div>
