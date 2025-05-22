@@ -64,7 +64,7 @@ onMounted(() => {
         <RouterLink v-if="!isLoggedIn" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink>
       </div>
       <div v-if="isLoggedIn" class="avatar" @click="toggleDropdown">
-        <img :src="userPic" alt="Foto perfil" class="avatar-img" />
+        <img src="../assets/img/usuario.png" alt="Foto perfil" class="avatar-img" />
         <div v-if="isDropdownOpen" class="dropdown">
           <button class="dropdown-item" @click="logout">Cerrar sesión</button>
         </div>
@@ -75,21 +75,20 @@ onMounted(() => {
 
 <style scoped>
 .menu {
-  margin-top: 2%;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f8f9fa;
+  background-color: #000000;
   padding: 10px;
-  border-radius: 50px;
 }
 
 .nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90%;
+  width: 95%;
+ 
 }
 
 .nav-item {
@@ -99,14 +98,19 @@ onMounted(() => {
 
 .nav-link {
   text-decoration: none;
-  color: #343a40;
+  color: #ffffff;
   font-weight: 500;
-  font-size: 1.2rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #007bff;
-  transition: color 0.3s ease;
+  transform: scale(1.1);
+  font-weight: bolder;
+  color: transparent;
+  background-image: linear-gradient(to right, #0098e5, #00a86b);
+  background-clip: text;
+  -webkit-background-clip: text;
 }
 
 .avatar {
@@ -115,11 +119,10 @@ onMounted(() => {
 }
 
 .avatar-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  border-radius: 50px;
   object-fit: cover;
-  border: 2px solid #007bff;
 }
 
 .dropdown {
@@ -142,9 +145,10 @@ onMounted(() => {
   cursor: pointer;
   font-size: 0.9rem;
   color: #333;
+  transition: 0.3s;
 }
 
 .dropdown-item:hover {
-  background-color: #f1f1f1;
+  background-color: #9b0101;
 }
 </style>

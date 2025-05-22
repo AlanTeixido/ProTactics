@@ -8,7 +8,7 @@
 
       <button @click="() => addObject('pelota')"><img src="../assets/img/pelota.png" class="item-menu" /></button>
       <button @click="() => addObject('cono')"><img src="../assets/img/cono.png" class="item-menu" /></button>
-      <button @click="guardarPizarra"><img src="../assets/img/boton-guardar.png" class="item-menu" /></button>
+      <RouterLink :to="`/entrenos`"><button @click="guardarPizarra"><img src="../assets/img/boton-guardar.png" class="item-menu" /></button></RouterLink>
       <button @click="() => (items = [])"><img src="../assets/img/basura.png" class="item-menu" /></button>
       <button @click="deshacer"><img src="../assets/img/deshacer.png" class="item-menu" /></button>
       <button @click="toggleDibujo"><img src="../assets/img/lapiz.png" class="item-menu" /></button>
@@ -313,7 +313,7 @@ button:hover {
   width: 40px;
   height: 40px;
   color: white;
-  font-size: 14px;
+  font-size: 25px;
   font-weight: 550;
   display: flex;
   align-items: center;
@@ -336,14 +336,15 @@ button:hover {
 .nombre-jugador {
   margin-top: 5px;
   font-size: 12px;
-  font-weight: 500;
-  color: #333;
-  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.6);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #ffffff;
+  
 }
 
 .item-menu {
-  width: 10px;
-  height: 10px;
+  width: 25px;
+  height: 25px;
   margin-bottom: 10px;
 }
 

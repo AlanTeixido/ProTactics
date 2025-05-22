@@ -65,11 +65,6 @@ onMounted(fetchPublicaciones);
       <div v-else class="grid">
         <div v-for="publicacion in filteredPublicaciones" :key="publicacion.publicacion_id" class="card">
           <p class="author">{{ publicacion.entrenador }}</p>
-          <img
-            :src="`/uploads/${publicacion.imagen_url || 'default.png'}`"
-            alt="Imagen"
-            class="post-image"
-          />
           <h2 class="post-title">
             <RouterLink :to="`/publicaciones/${publicacion.publicacion_id}`" class="link">
               {{ publicacion.titulo }}

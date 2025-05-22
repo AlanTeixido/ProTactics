@@ -41,12 +41,14 @@
 
           <div class="input-group">
             <label for="categoria">Categoría</label>
-            <input v-model="categoria" id="categoria" type="text" placeholder="Ej. Técnica" />
-          </div>
-
-          <div class="input-group">
-            <label for="campo">Campo</label>
-            <input v-model="campo" id="campo" type="text" placeholder="Ej. Campo 1" />
+            <select v-model="categoria" id="categoria">
+              <option disabled value="">-- Selecciona una categoría --</option>
+              <option value="tecnica">ABP</option>
+              <option value="fisica">Física</option>
+              <option value="tactica">Táctica</option>
+              <option value="psicologica">Finalización</option>
+              <option value="psicologica">Posesión</option>
+            </select>
           </div>
 
           <div class="input-group">
