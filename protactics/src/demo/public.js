@@ -6,8 +6,8 @@ import { clearDemoData, clearSession } from '@/session';
 // Accounts the "Entrar com a ... (demo)" buttons log into. The id is what
 // matters: it keeps working even if the visitor edits the account's e-mail.
 export const DEMO_ACCOUNTS = {
-  club: { id: 4, correo: 'secretaria@maresmeatletic.example' },
-  entrenador: { id: 11, correo: 'jordi.puigvert@maresmeatletic.example' },
+  club: { id: 4, correo: 'secretaria@cema.example' },
+  entrenador: { id: 11, correo: 'jpuigvert@cema.example' },
 };
 
 // In demo mode, browser-only data (tactics boards) is namespaced with the demo

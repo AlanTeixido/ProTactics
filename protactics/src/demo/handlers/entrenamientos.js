@@ -24,6 +24,11 @@ function applyFields(target, body) {
   TEXT_FIELDS.forEach((key) => {
     if (key in body) target[key] = body[key] === '' ? null : body[key] ?? null;
   });
+  // <input type="date"> sends YYYY-MM-DD; store it at noon UTC so the day
+  // never shifts when the views format it in the visitor's time zone.
+  if (/^\d{4}-\d{2}-\d{2}$/.test(target.fecha_entrenamiento || '')) {
+    target.fecha_entrenamiento = `${target.fecha_entrenamiento}T12:00:00.000Z`;
+  }
   NUMBER_FIELDS.forEach((key) => {
     if (key in body) target[key] = toNumberOrNull(body[key]);
   });

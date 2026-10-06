@@ -3,7 +3,7 @@
 import { DEMO_ACCOUNTS } from './public';
 
 // Bump when the shape of the seed changes: stored demo data is re-seeded.
-export const SEED_VERSION = 3;
+export const SEED_VERSION = 1;
 
 const CLUB_ID = DEMO_ACCOUNTS.club.id;
 const JORDI = DEMO_ACCOUNTS.entrenador.id;
@@ -30,7 +30,8 @@ export function createSeed(now = new Date()) {
     d.setHours(hour, minute, 0, 0);
     return d.toISOString();
   };
-  const day = (days) => at(days, 12).slice(0, 10);
+  // Dates at noon UTC render as the same calendar day in every time zone.
+  const day = (days) => `${at(days, 12).slice(0, 10)}T12:00:00.000Z`;
 
   const clubs = [
     {
@@ -50,10 +51,10 @@ export function createSeed(now = new Date()) {
   const entrenadores = [
     coach(JORDI, 'Jordi Puigvert Casals', DEMO_ACCOUNTS.entrenador.correo, 'Cadet A',
       'UEFA B. Responsable de la metodología de fútbol 11 del club.', at(-388, 18, 32)),
-    coach(MARTA, 'Marta Soler Ribas', 'marta.soler@maresmeatletic.example', 'Infantil B',
+    coach(MARTA, 'Marta Soler Ribas', 'msoler@cema.example', 'Infantil B',
       'Coordinadora de fútbol formativo. Preparadora física titulada.', at(-301, 17, 5)),
-    coach(ALEX, 'Àlex Ferrer Molina', 'alex.ferrer@maresmeatletic.example', 'Aleví A',
-      'Primer año en el club. Viene de la escuela del CF Premià.', at(-57, 19, 48)),
+    coach(ALEX, 'Àlex Ferrer Molina', 'aferrer@cema.example', 'Aleví A',
+      'Primer año en el club. Viene de entrenar fútbol sala en categorías formativas.', at(-57, 19, 48)),
   ];
 
   const equipos = [
@@ -219,16 +220,16 @@ export function createSeed(now = new Date()) {
     301: [
       boardPlayer(101, 92, 338),
       boardPlayer(102, 236, 168),
-      boardPlayer(103, 236, 512),
+      boardPlayer(103, 236, 492),
       boardPlayer(104, 371, 344),
       boardPlayer(105, 512, 214),
       boardPlayer(106, 688, 322),
-      boardPlayer(107, 634, 548),
+      boardPlayer(107, 634, 518),
       boardObject(1000, 'pelota', 146, 362),
-      boardObject(1001, 'cono', 318, 96),
-      boardObject(1002, 'cono', 318, 614),
-      boardObject(1003, 'cono', 604, 96),
-      boardObject(1004, 'cono', 604, 614),
+      boardObject(1001, 'cono', 318, 84),
+      boardObject(1002, 'cono', 318, 566),
+      boardObject(1003, 'cono', 604, 84),
+      boardObject(1004, 'cono', 604, 566),
     ],
   };
 
