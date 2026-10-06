@@ -29,11 +29,26 @@
         <div class="input-group">
           <input v-model="password" type="password" placeholder="Contraseña" required class="input-field" />
         </div>
-        <button type="submit" class="submit-btn">Iniciar sesión</button>
+        <button type="submit" class="submit-btn" :disabled="enviando">Iniciar sesión</button>
       </form>
       <p class="register-link">
         ¿No tienes cuenta? <RouterLink to="/register" class="link">Regístrate</RouterLink>
       </p>
+
+      <div v-if="DEMO_MODE" class="demo-access">
+        <div class="demo-buttons">
+          <button type="button" class="demo-btn" :disabled="enviando" @click="loginDemo('club')">
+            Entrar com a club (demo)
+          </button>
+          <button type="button" class="demo-btn" :disabled="enviando" @click="loginDemo('entrenador')">
+            Entrar com a entrenador (demo)
+          </button>
+        </div>
+        <p class="demo-note">
+          Demo: les dades es guarden al teu navegador.
+          <button type="button" class="demo-reset" @click="restablirDemo">Restablir demo</button>
+        </p>
+      </div>
     </div>
     <img src="/src/assets/img/fondoLogReg.jpg" class="fondo-register" />
   </div>
@@ -54,13 +69,15 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
-import { API_URL } from '@/config';
+import { API_URL, DEMO_MODE } from '@/config';
+import { DEMO_ACCOUNTS, resetDemo } from '@/demo/public';
 import { useRouter } from 'vue-router';
 
 // States
 const email = ref('');
 const password = ref('');
 const rolSeleccionado = ref('club');
+const enviando = ref(false);
 
 // Router per navegar després del login
 const router = useRouter();
@@ -89,22 +106,28 @@ const closePopup = () => {
   popupVisible.value = false;
 };
 
-const login = async () => {
+const iniciarSesion = async (extra = {}) => {
+  if (enviando.value) return;
+  enviando.value = true;
   try {
     const response = await axios.post(`${API_URL}/auth/login`, {
       correo: email.value,
-      password: password.value
+      password: password.value,
+      ...extra
     });
 
     const data = response.data;
 
     if (data.token) {
   localStorage.setItem('authToken', data.token);
+  localStorage.setItem('userId', data.id);
   localStorage.setItem('username', data.nombre);
-  localStorage.setItem('userEmail', data.email);
+  localStorage.setItem('userEmail', data.email || email.value);
   localStorage.setItem('userRol', data.rol);
 
   // Guarda segons el rol
+  localStorage.removeItem('clubId');
+  localStorage.removeItem('entrenadorId');
   if (data.rol === 'club') {
     localStorage.setItem('clubId', data.id);       // 👈 canvi
   } else if (data.rol === 'entrenador') {
@@ -117,6 +140,24 @@ const login = async () => {
   } catch (error) {
     console.error('Error iniciant sessió:', error);
     showPopup('Correo o contraseña incorrectos.', true);
+  } finally {
+    enviando.value = false;
+  }
+};
+
+const login = () => iniciarSesion();
+
+// Demo: entra amb un dels comptes de mostra (qualsevol contrasenya és vàlida).
+const loginDemo = (rol) => {
+  rolSeleccionado.value = rol;
+  email.value = DEMO_ACCOUNTS[rol].correo;
+  password.value = 'demo';
+  iniciarSesion({ demo: rol });
+};
+
+const restablirDemo = () => {
+  if (window.confirm('Vols restablir la demo? Es perdran els canvis fets en aquest navegador.')) {
+    resetDemo();
   }
 };
 </script>
@@ -234,6 +275,68 @@ const login = async () => {
 }
 
 .register-link .link:hover {
+  color: #ccc;
+}
+
+.submit-btn:disabled,
+.demo-btn:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+/* Accés de demostració */
+.demo-access {
+  margin-top: 28px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.demo-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.demo-btn {
+  flex: 1 1 200px;
+  padding: 12px 16px;
+  border-radius: 30px;
+  border: 2px solid rgb(4, 196, 68);
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.demo-btn:hover:not(:disabled) {
+  background: rgba(4, 196, 68, 0.15);
+  transform: scale(1.03);
+}
+
+.demo-note {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #ccc;
+  text-align: center;
+}
+
+.demo-reset {
+  padding: 0;
+  border: none;
+  background: none;
+  color: #0098e5;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.demo-reset:hover {
   color: #ccc;
 }
 

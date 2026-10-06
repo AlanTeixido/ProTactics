@@ -55,6 +55,7 @@
 import { defineProps, ref, computed, onMounted } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
 import html2canvas from 'html2canvas';
+import { scopedStorageKey } from '@/demo/public';
 
 import futbol from "../assets/img/deportes/pistaFutbol.png";
 import baloncesto from "../assets/img/deportes/pistaBaloncesto.jpg";
@@ -121,11 +122,11 @@ const editarNombre = (item) => {
 };
 
 const guardarPizarra = () => {
-  localStorage.setItem(`pizarra-${entrenamientoId}`, JSON.stringify(items.value));
+  localStorage.setItem(scopedStorageKey(`pizarra-${entrenamientoId}`), JSON.stringify(items.value));
 };
 
 const cargarPizarra = () => {
-  const data = localStorage.getItem(`pizarra-${entrenamientoId}`);
+  const data = localStorage.getItem(scopedStorageKey(`pizarra-${entrenamientoId}`));
   if (data) {
     items.value = JSON.parse(data);
     nextId = Math.max(...items.value.map(i => i.id), nextId) + 1;

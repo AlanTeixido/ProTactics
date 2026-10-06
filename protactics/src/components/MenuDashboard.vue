@@ -2,7 +2,15 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
-import { API_URL } from '@/config';
+import { API_URL, DEMO_MODE } from '@/config';
+import { clearSession } from '@/session';
+import { resetDemo } from '@/demo/public';
+
+const restablirDemo = () => {
+    if (window.confirm('Vols restablir la demo? Es perdran els canvis fets en aquest navegador.')) {
+        resetDemo();
+    }
+};
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -34,7 +42,7 @@ const fetchProfilePic = async () => {
 };
 
 const logout = () => {
-    localStorage.clear();
+    clearSession();
     isLoggedIn.value = false;
     userRole.value = null;
     userPic.value = 'https://via.placeholder.com/100';
@@ -124,6 +132,11 @@ const menuItems = computed(() => {
             <img src="../assets/img/enter.png" class="login-register-btn" />
           </RouterLink>
         </div>
+      </div>
+
+      <div v-if="DEMO_MODE" class="demo-footer">
+        <span>Demo · dades al navegador</span>
+        <button type="button" class="demo-reset" @click="restablirDemo">Restablir demo</button>
       </div>
     </div>
   </div>
@@ -241,6 +254,33 @@ const menuItems = computed(() => {
   width: 35px;
   height: 35px;
   border-radius: 50px;
+}
+
+.demo-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.demo-reset {
+  padding: 0;
+  border: none;
+  background: none;
+  color: #38bdf8;
+  font-size: 12px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.demo-reset:hover {
+  color: white;
 }
 
 </style>

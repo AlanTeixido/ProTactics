@@ -56,6 +56,7 @@ import { ref, watch, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { API_URL } from '@/config';
+import { clearSession } from '@/session';
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -83,7 +84,7 @@ const fetchProfilePic = async () => {
 };
 
 const logout = () => {
-  localStorage.clear();
+  clearSession();
   isLoggedIn.value = false;
   userPic.value = 'https://via.placeholder.com/100';
   router.push('/');
