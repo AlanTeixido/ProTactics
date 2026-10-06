@@ -134,7 +134,7 @@ onMounted(() => {
       <div class="rol-badge">Accediendo como <strong>{{ user.rol }}</strong></div>
 
       <ButtonCrearJugador />
-      <ButtonCrearJugadorCSV />
+      <ButtonCrearJugadorCSV @subido="cargarJugadores" />
 
 
       <div class="jugadors-llista">

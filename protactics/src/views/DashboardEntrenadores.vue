@@ -392,6 +392,7 @@ input {
 
 .entrenadores-grid{
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
   margin-top: 3%;
 }
@@ -401,7 +402,7 @@ input {
   padding: 20px;
   border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
-  width: 20%;
+  min-width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;

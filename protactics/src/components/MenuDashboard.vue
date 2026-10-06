@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { API_URL, DEMO_MODE } from '@/config';
 import { clearSession } from '@/session';
+import { fallbackAvatar, mediaUrl } from '@/utils/media';
 import { resetDemo } from '@/demo/public';
 
 const restablirDemo = () => {
@@ -15,7 +16,7 @@ const restablirDemo = () => {
 const router = useRouter();
 const isLoggedIn = ref(false);
 const userRole = ref(null);
-const userPic = ref('https://via.placeholder.com/100');
+const userPic = ref(fallbackAvatar);
 const showMobileMenu = ref(false);
 
 const toggleMobileMenu = () => {
@@ -33,7 +34,7 @@ const fetchProfilePic = async () => {
     try {
         const response = await axios.get(`${API_URL}/usuarios/${userId}`);
         if (response.data.foto_url) {
-            userPic.value = `${API_URL}${response.data.foto_url}`;
+            userPic.value = mediaUrl(response.data.foto_url);
             localStorage.setItem('fotoUrl', userPic.value);
         }
     } catch (error) {
@@ -45,7 +46,7 @@ const logout = () => {
     clearSession();
     isLoggedIn.value = false;
     userRole.value = null;
-    userPic.value = 'https://via.placeholder.com/100';
+    userPic.value = fallbackAvatar;
     router.push('/');
     setTimeout(() => window.location.reload(), 500);
 };
@@ -122,7 +123,7 @@ const menuItems = computed(() => {
             class="profile-pic-link"
             @click="showMobileMenu = false"
           >
-            <img src="../assets/img/usuario.png" class="logo-perfil" />
+            <img :src="userPic" class="logo-perfil" alt="Foto de perfil" @error="userPic = fallbackAvatar" />
           </RouterLink>
           <img @click="logout" src="../assets/img/logout.png" class="logout-logo" />
         </div>
@@ -154,6 +155,14 @@ const menuItems = computed(() => {
   left: 0;
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
+  /* Columna: el bloc d'usuari queda sempre a la part de baix i visible. */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.log-regist {
+  margin-top: auto;
 }
 
 .hamburger {
@@ -230,7 +239,7 @@ const menuItems = computed(() => {
 }
 
 .user-info {
-  margin-top: 100%;
+  margin-top: 0;
   width: 55%;
   display: flex;
   justify-content: center;
@@ -257,10 +266,7 @@ const menuItems = computed(() => {
 }
 
 .demo-footer {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 18px;
+  padding: 4px 0 16px;
   display: flex;
   flex-direction: column;
   align-items: center;

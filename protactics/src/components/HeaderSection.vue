@@ -57,12 +57,13 @@ import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { API_URL } from '@/config';
 import { clearSession } from '@/session';
+import { fallbackAvatar, mediaUrl } from '@/utils/media';
 
 const router = useRouter();
 const isLoggedIn = ref(false);
 const isDropdownOpen = ref(false);
 const isMenuOpen = ref(false);
-const userPic = ref('https://via.placeholder.com/100');
+const userPic = ref(fallbackAvatar);
 
 const checkAuthStatus = () => {
   isLoggedIn.value = !!localStorage.getItem('authToken');
@@ -75,7 +76,7 @@ const fetchProfilePic = async () => {
   try {
     const response = await axios.get(`${API_URL}/usuarios/${userId}`);
     if (response.data.foto_url) {
-      userPic.value = `${API_URL}${response.data.foto_url}`;
+      userPic.value = mediaUrl(response.data.foto_url);
       localStorage.setItem('fotoUrl', userPic.value);
     }
   } catch (error) {
@@ -86,7 +87,7 @@ const fetchProfilePic = async () => {
 const logout = () => {
   clearSession();
   isLoggedIn.value = false;
-  userPic.value = 'https://via.placeholder.com/100';
+  userPic.value = fallbackAvatar;
   router.push('/');
   setTimeout(() => {
     window.location.reload();

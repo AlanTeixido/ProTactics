@@ -97,6 +97,7 @@
 
         </div>
       </div>
+      <AccionesEntreno :entreno="entrenoSeleccionado" @eliminado="quitarEntrenamiento" />
       <button @click="cerrarPopup" class="btn-cerrar-popup"><img src="../assets/img/cruzar.png"></button>
     </div>
   </div>
@@ -109,6 +110,7 @@ import { API_URL } from '@/config';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import { RouterLink } from 'vue-router';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
+import AccionesEntreno from '@/components/botones/AccionesEntreno.vue';
 
 const entrenos = ref([]);
 const searchQuery = ref("");
@@ -123,6 +125,11 @@ const mostrarDetalle = (entreno) => {
 // Función para cerrar el popup
 const cerrarPopup = () => {
   entrenoSeleccionado.value = null;
+};
+
+const quitarEntrenamiento = (id) => {
+  entrenos.value = entrenos.value.filter(e => e.entrenamiento_id !== id);
+  cerrarPopup();
 };
 
 const duracionMediaValor = computed(() => {

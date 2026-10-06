@@ -43,11 +43,11 @@
             <label for="categoria">Categoría</label>
             <select v-model="categoria" id="categoria">
               <option disabled value="">-- Selecciona una categoría --</option>
-              <option value="tecnica">ABP</option>
+              <option value="abp">ABP</option>
               <option value="fisica">Física</option>
               <option value="tactica">Táctica</option>
-              <option value="psicologica">Finalización</option>
-              <option value="psicologica">Posesión</option>
+              <option value="finalizacion">Finalización</option>
+              <option value="posesion">Posesión</option>
             </select>
           </div>
 
@@ -120,6 +120,17 @@ const valoracion = ref(0);
 const imagen_url = ref('');
 const notas = ref('');
 
+const mostrarPopup = ref(false);
+const mensajePopup = ref('');
+
+const mostrarMensaje = (mensaje) => {
+  mensajePopup.value = mensaje;
+  mostrarPopup.value = true;
+  setTimeout(() => {
+    mostrarPopup.value = false;
+  }, 3000); // El popup desaparece tras 3 segundos
+};
+
 const equipos = ref([]);
 const equipoSeleccionado = ref('');
 const jugadores = ref([]);
@@ -191,24 +202,17 @@ const crearEntrenamiento = async () => {
       }
     );
 
-    const mostrarPopup = ref(false);
-    const mensajePopup = ref('');
-
-    const mostrarMensaje = (mensaje) => {
-      mensajePopup.value = mensaje;
-      mostrarPopup.value = true;
-      setTimeout(() => {
-        mostrarPopup.value = false;
-      }, 3000); // El popup desaparece tras 3 segundos
-    };
-
     mostrarMensaje('✅ Entrenamiento creado correctamente');
 
-    const deporte = categoria.value.trim().toLowerCase() || 'futbol';
+    const deporte = 'futbol';
     const jugadoresSeleccionadosData = jugadores.value.filter(j => jugadoresSeleccionados.value.includes(j.jugador_id));
     localStorage.setItem('jugadoresPizarra', JSON.stringify(jugadoresSeleccionadosData));
     localStorage.setItem('deporteSeleccionado', deporte);
-    router.push(`/pizarra/${deporte}`);
+    // La pizarra es desa per entrenament (pizarra-<id>), així es pot tornar a obrir.
+    router.push({
+      path: `/pizarra/${deporte}`,
+      query: { entrenamiento_id: response.data?.entrenamiento?.entrenamiento_id },
+    });
 
     setTimeout(() => {
       titulo.value = '';

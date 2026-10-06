@@ -10,7 +10,7 @@
       <div class="rol-badge">Accediendo como <strong>Entrenador</strong></div>
 
       <div class="info-card" v-if="!editando">
-        <img class="profile-img" :src="entrenador.foto_url || '/img/default-profile.png'" alt="Foto del entrenador" />
+        <img class="profile-img" :src="mediaUrl(entrenador.foto_url)" @error="$event.target.src = fallbackAvatar" alt="Foto del entrenador" />
 
         <div class="info-row">
           <span class="label">Nombre:</span>
@@ -90,6 +90,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { API_URL } from '@/config';
+import { fallbackAvatar, mediaUrl } from '@/utils/media';
 import { useRouter } from 'vue-router';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';

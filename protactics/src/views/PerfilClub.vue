@@ -12,7 +12,8 @@
       <div class="info-card" v-if="!editando">
         <img
           class="profile-img"
-          :src="club.foto_url || '/img/default-profile.png'"
+          :src="mediaUrl(club.foto_url)"
+          @error="$event.target.src = fallbackAvatar"
           alt="Foto del club"
         />
 
@@ -44,6 +45,7 @@
         </div>
 
         <button class="btn-editar" @click="empezarEdicion">Editar perfil</button>
+        <RouterLink to="/editar" class="link-password">Cambiar contraseña</RouterLink>
       </div>
 
       <div v-else class="info-card editar">
@@ -80,6 +82,7 @@
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
 import { API_URL } from '@/config';
+import { fallbackAvatar, mediaUrl } from '@/utils/media';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 import { useRouter } from 'vue-router';
@@ -251,6 +254,14 @@ onMounted(cargarClub);
 .btn-editar:hover,
 .botones button:hover {
   opacity: 0.9;
+}
+
+.link-password {
+  display: block;
+  margin-top: 14px;
+  color: #7dd3fc;
+  font-size: 0.9rem;
+  text-align: center;
 }
 
 .profile-img {

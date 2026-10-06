@@ -12,7 +12,10 @@ const selectedFilter = ref('');
 
 const fetchPublicaciones = async () => {
   try {
-    const response = await axios.get(`${API_URL}/publicaciones`);
+    // El token és opcional: amb ell la resposta indica si ja li has donat like.
+    const response = await axios.get(`${API_URL}/publicaciones`, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` }
+    });
     publicaciones.value = response.data;
   } catch (error) {
     console.error('Error cargando publicaciones', error);
@@ -71,6 +74,9 @@ onMounted(fetchPublicaciones);
               {{ publicacion.titulo }}
             </RouterLink>
           </h2>
+          <p v-if="publicacion.likes !== undefined" class="likes" :class="{ liked: publicacion.liked }">
+            {{ publicacion.liked ? '♥' : '♡' }} {{ publicacion.likes }}
+          </p>
         </div>
       </div>
     </div>
@@ -186,6 +192,16 @@ onMounted(fetchPublicaciones);
 .link {
   text-decoration: none;
   color: white;
+}
+
+.likes {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #e2e8f0;
+}
+
+.likes.liked {
+  color: #fecaca;
 }
 
 .btn-back {

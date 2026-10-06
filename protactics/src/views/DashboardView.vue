@@ -4,6 +4,8 @@ import { ref, computed } from 'vue';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 
 const router = useRouter();
+// Icons live in public/img; BASE_URL keeps them working under /ProTactics/.
+const publicBase = import.meta.env.BASE_URL;
 
 const user = ref({
   username: localStorage.getItem("username") || "Usuari",
@@ -45,7 +47,7 @@ const options = computed(() => {
 
       <div class="grid">
         <div v-for="(opt, i) in options" :key="i" class="card" @click="goTo(opt.path)">
-          <img :src="`../../public/img/${opt.icon}`" class="img">
+          <img :src="`${publicBase}img/${opt.icon}`" class="img">
           <div class="label">{{ opt.label }}</div>
         </div>
       </div>

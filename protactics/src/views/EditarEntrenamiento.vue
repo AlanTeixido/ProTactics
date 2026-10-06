@@ -1,116 +1,88 @@
 <template>
-  <div class="editar-container">
-    <h2>Editar Entrenamiento</h2>
-
-    <div v-if="loading" class="loading-text">
-      <Loader/>
+  <div class="dashboard">
+    <div class="dashboard-menu">
+      <MenuDashboard />
     </div>
 
-    <form v-else @submit.prevent="guardarCambios">
-      <div class="input-row">
-        <label>Título:</label>
-        <input v-model="entrenamiento.titulo" required />
+    <div class="dashboard-content">
+      <ButtonAtras />
+      <h2 class="titulo">Editar entrenamiento</h2>
+
+      <Loader v-if="loading" />
+
+      <div v-else-if="!entrenamiento" class="estado">
+        No se ha encontrado el entrenamiento.
+        <RouterLink to="/entrenos" class="link">Volver a entrenamientos</RouterLink>
       </div>
 
-      <div class="input-row">
-        <label>Deporte:</label>
-        <select v-model="entrenamiento.tipo_deporte" @change="cargarDetalles">
-          <option value="running">Running</option>
-          <option value="ciclismo">Ciclismo</option>
-          <option value="piscina">Natación</option>
-          <option value="futbol">Fútbol</option>
-          <option value="padel">Pádel</option>
-          <option value="gimnasio">Gimnasio</option>
-        </select>
-      </div>
-
-      <div class="input-row">
-        <label>Duración (minutos):</label>
-        <input v-model="entrenamiento.duracion.minutes" type="number" required />
-      </div>
-
-      <div class="input-row">
-        <label>Distancia (km):</label>
-        <input v-model="entrenamiento.distancia" type="number" />
-      </div>
-
-      <div class="input-row">
-        <label>Calorías Quemadas:</label>
-        <input v-model="entrenamiento.calorias_quemadas" type="number" />
-      </div>
-
-      <div class="input-row">
-        <label>Inicio:</label>
-        <input v-model="entrenamiento.inicio" type="datetime-local" required />
-      </div>
-
-      <div class="input-row">
-        <label>Fin:</label>
-        <input v-model="entrenamiento.fin" type="datetime-local" />
-      </div>
-
-      <div class="input-row">
-        <label>Visibilidad:</label>
-        <select v-model="entrenamiento.visibilidad">
-          <option value="publico">Público</option>
-          <option value="privado">Privado</option>
-        </select>
-      </div>
-
-      <!-- 🔹 Detalles específicos por deporte -->
-
-      <template v-if="entrenamiento.tipo_deporte === 'piscina'">
-        <div class="input-row">
-          <label>Número de Piscinas:</label>
-          <input v-model="detalles.num_piscinas" type="number" />
-        </div>
-        <div class="input-row">
-          <label>Tamaño Piscina:</label>
-          <input v-model="detalles.tamano_piscina" type="text" />
+      <form v-else class="formulario" @submit.prevent="guardarCambios">
+        <div class="input-group">
+          <label for="titulo">Nombre del entrenamiento</label>
+          <input id="titulo" v-model="entrenamiento.titulo" type="text" required />
         </div>
 
-        <div class="input-row">
-          <label>Estilo:</label>
-          <input v-model="detalles.estilo" type="text" />
-        </div>
-      </template>
-
-      <template v-if="entrenamiento.tipo_deporte === 'futbol'">
-        <div class="input-row">
-          <label>Posición:</label>
-          <input v-model="detalles.posicion" type="text" />
+        <div class="input-group">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" v-model="entrenamiento.descripcion" rows="3"></textarea>
         </div>
 
-        <div class="input-row">
-          <label>Goles:</label>
-          <input v-model="detalles.goles" type="number" />
-        </div>
-        <div class="input-row">
-          <label>Asistencias:</label>
-          <input v-model="detalles.asistencias" type="number" />
-        </div>
-      </template>
-
-      <template v-if="entrenamiento.tipo_deporte === 'ciclismo'">
-        <div class="input-row">
-          <label>Potencia Media (W):</label>
-          <input v-model="detalles.potencia_media" type="number" />
-        </div>
-
-        <div class="input-row">
-          <label>Cadencia (rpm):</label>
-          <input v-model="detalles.cadencia" type="number" />
+        <div class="input-group doble">
+          <div>
+            <label for="categoria">Categoría</label>
+            <select id="categoria" v-model="entrenamiento.categoria">
+              <option value="abp">ABP</option>
+              <option value="fisica">Física</option>
+              <option value="tactica">Táctica</option>
+              <option value="finalizacion">Finalización</option>
+              <option value="posesion">Posesión</option>
+            </select>
+          </div>
+          <div>
+            <label for="fecha">Fecha</label>
+            <input id="fecha" v-model="entrenamiento.fecha_entrenamiento" type="date" />
+          </div>
         </div>
 
-        <div class="input-row">
-          <label>Velocidad Máxima (km/h):</label>
-          <input v-model="detalles.velocidad_maxima" type="number" />
+        <div class="input-group">
+          <label for="campo">Campo</label>
+          <input id="campo" v-model="entrenamiento.campo" type="text" />
         </div>
-      </template>
 
-      <button type="submit" @click="guardarCambios">Guardar Cambios</button>
-      <button type="button" @click="router.push('/mis-entrenamientos')" class="back-btn">Volver</button>
-    </form>
+        <div class="input-group doble">
+          <div>
+            <label for="duracion">Duración (min)</label>
+            <input id="duracion" v-model.number="duracion" type="number" min="1" />
+          </div>
+          <div>
+            <label for="repeticiones">Repeticiones</label>
+            <input id="repeticiones" v-model.number="entrenamiento.repeticiones" type="number" min="1" />
+          </div>
+        </div>
+
+        <div class="input-group doble">
+          <div>
+            <label for="descanso">Descanso (min)</label>
+            <input id="descanso" v-model.number="entrenamiento.descanso" type="number" min="0" />
+          </div>
+          <div>
+            <label for="valoracion">Valoración (0-5)</label>
+            <input id="valoracion" v-model.number="entrenamiento.valoracion" type="number" min="0" max="5" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="notas">Notas</label>
+          <textarea id="notas" v-model="entrenamiento.notas" rows="2"></textarea>
+        </div>
+
+        <p v-if="error" class="error-msg">{{ error }}</p>
+
+        <div class="botones">
+          <button type="button" class="back-btn" @click="router.push('/entrenos')">Cancelar</button>
+          <button type="submit" :disabled="guardando">{{ guardando ? 'Guardando...' : 'Guardar cambios' }}</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -118,64 +90,57 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import { API_URL } from '@/config';
-import { useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter, RouterLink } from "vue-router";
 import Loader from "../components/Loader.vue";
+import MenuDashboard from '@/components/MenuDashboard.vue';
+import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
 const route = useRoute();
 const router = useRouter();
-const entrenamiento = ref({});
-const detalles = ref({});
+const entrenamiento = ref(null);
+const duracion = ref(null);
 const loading = ref(true);
+const guardando = ref(false);
+const error = ref('');
 const entrenamientoId = route.params.id;
 
-// Carga los detalles específicos del deporte
+const authHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem("authToken")}` });
+
+// La API no té GET /entrenamientos/:id: es busca dins la llista de l'entrenador.
 const cargarEntrenamiento = async () => {
   try {
-    const authToken = localStorage.getItem("authToken"); // 🔥 Obtén el token
-
-    if (!authToken) {
-      alert("⚠️ No hay token de autenticación. Por favor, inicia sesión nuevamente.");
-      router.push("/login");
-      return;
+    const { data } = await axios.get(`${API_URL}/entrenamientos`, { headers: authHeaders() });
+    const encontrado = data.find((e) => String(e.entrenamiento_id) === String(entrenamientoId));
+    if (encontrado) {
+      entrenamiento.value = {
+        ...encontrado,
+        fecha_entrenamiento: encontrado.fecha_entrenamiento ? String(encontrado.fecha_entrenamiento).slice(0, 10) : '',
+      };
+      const d = encontrado.duracion_repeticion;
+      duracion.value = d && typeof d === 'object' ? (d.hours || 0) * 60 + (d.minutes || 0) : d;
     }
-
-    // 🛠️ PETICIÓ GET AMB TOKEN
-    const response = await axios.get(
-      `${API_URL}/entrenamientos/user/${localStorage.getItem("userId")}`,
-      {
-        headers: {
-          Authorization: `Bearer ${authToken}`, // 🔥 Afegeix el token aquí
-        },
-      }
-    );
-
-    // 🔍 Busca l'entrenament per ID dins la llista
-    entrenamiento.value = response.data.find((e) => e.id == entrenamientoId) || {};
-
-    // Asegura que los detalles existen
-    entrenamiento.value.detalles = entrenamiento.value.detalles || {};
-  } catch (error) {
-    console.error("❌ Error obteniendo entrenamiento:", error);
-    alert("⚠️ No se pudo cargar el entrenamiento.");
-    router.push("/mis-entrenamientos"); // Redirigir si no existe
+  } catch (e) {
+    console.error("❌ Error obteniendo entrenamiento:", e);
   } finally {
     loading.value = false;
   }
 };
 
-// 🔹 Guardar cambios en el entrenamiento
 const guardarCambios = async () => {
+  guardando.value = true;
+  error.value = '';
   try {
-    const data = {
-      ...entrenamiento.value,
-      detalles: detalles.value,
-    };
-    await axios.put(`${API_URL}/entrenamientos/${entrenamientoId}`, data);
-    alert("✅ Entrenamiento actualizado correctamente!");
-    router.push("/mis-entrenamientos");
-  } catch (error) {
-    console.error("❌ Error guardando cambios:", error);
-    alert("❌ Error guardando cambios.");
+    const { titulo, descripcion, categoria, campo, fecha_entrenamiento, repeticiones, descanso, valoracion, imagen_url, notas } = entrenamiento.value;
+    await axios.put(`${API_URL}/entrenamientos/${entrenamientoId}`, {
+      titulo, descripcion, categoria, campo, fecha_entrenamiento, repeticiones, descanso, valoracion, imagen_url, notas,
+      duracion_repeticion: { minutes: duracion.value || 0 },
+    }, { headers: authHeaders() });
+    router.push("/entrenos");
+  } catch (e) {
+    console.error("❌ Error guardando cambios:", e);
+    error.value = e.response?.data?.error || "No se pudieron guardar los cambios.";
+  } finally {
+    guardando.value = false;
   }
 };
 
@@ -183,109 +148,141 @@ onMounted(cargarEntrenamiento);
 </script>
 
 <style scoped>
-/* Estilos para la edición de entrenamiento */
-.editar-container {
+.dashboard {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #f3f3f3;
-  padding-top: 5%;
-  padding-bottom: 5%;
+  min-height: 100vh;
+  background: linear-gradient(to right, #0f172a, #155e75);
+  color: white;
 }
 
-h2 {
-  color: rgb(73, 73, 73);
+.dashboard-menu {
+  width: 250px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.dashboard-content {
+  flex: 1;
+  margin-left: 250px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.titulo {
+  font-size: 2.4rem;
   font-weight: bold;
-  margin-bottom: 20px;
   text-transform: uppercase;
 }
 
-form {
-  margin-top: 5%;
-  width: 35%;
+.estado {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
+  color: #cbd5e1;
 }
 
-.input-row {
+.link {
+  color: #7dd3fc;
+}
+
+.formulario {
+  width: 100%;
+  max-width: 720px;
+  background-color: #0f172a;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.input-group {
+  margin-bottom: 20px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+}
+
+.input-group.doble {
+  flex-direction: row;
+  gap: 20px;
+}
+
+.input-group.doble > div {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 label {
-  font-weight: 450;
-  color: rgb(73, 73, 73);
-  width: 40%;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #e2e8f0;
 }
 
 input,
-select {
-  padding: 10px;
-  border: none;
-  border-bottom: 1px solid rgba(73, 73, 73, 0.267);
-  background-color: transparent;
-  color: #8b8b8b;
-  font-size: 1rem;
-  width: 55%;
-}
-
-input:focus,
-select:focus {
-  outline: none;
-  border-bottom: 2px solid rgb(73, 73, 73);
-}
-
-button {
+select,
+textarea {
   padding: 10px;
   border-radius: 8px;
-  background-color: transparent;
-  color: rgb(73, 73, 73);
-  border: 2px solid rgb(73, 73, 73);
+  background-color: #334155;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.botones {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.botones button {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
   font-weight: bold;
-  margin-top: 10px;
+  font-size: 1rem;
   cursor: pointer;
+  background-color: #10b981;
+  color: #0f172a;
 }
 
-.back-btn {
+.botones button:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.botones .back-btn {
   background: transparent;
-  border: 2px red solid;
-  margin-top: 20px;
-  color: red;
-}
-
-.back-btn:hover {
-  background: rgba(255, 0, 0, 0.288);
+  border: 2px solid #ef4444;
+  color: #fca5a5;
 }
 
 .error-msg {
-  color: red;
-  font-size: 0.9rem;
-  text-align: center;
+  color: #fca5a5;
 }
 
-.success-msg {
-  color: green;
-  font-size: 0.9rem;
-  text-align: center;
-}
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
 
-/* Específicos por deporte */
-input[type="number"],
-input[type="datetime-local"],
-select {
-  width: 100%;
-}
+  .dashboard-menu {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
 
-input[type="text"] {
-  width: 100%;
-}
+  .dashboard-content {
+    margin-left: 0;
+    padding: 30px 20px;
+  }
 
-input[type="number"]:focus,
-input[type="text"]:focus {
-  outline: none;
-  border-bottom: 2px solid rgb(73, 73, 73);
+  .input-group.doble {
+    flex-direction: column;
+  }
 }
 </style>

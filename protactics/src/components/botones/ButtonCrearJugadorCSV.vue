@@ -3,6 +3,8 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { API_URL } from '@/config';
 
+const emit = defineEmits(['subido']);
+
 const file = ref(null);
 const statusMessage = ref('');
 const showDropArea = ref(false);
@@ -59,6 +61,7 @@ const uploadCSV = async () => {
     );
 
     statusMessage.value = `✅ CSV procesado. Creados: ${response.data.jugadors_creats}, Duplicados: ${response.data.duplicats}`;
+    emit('subido', response.data);
   } catch (error) {
     statusMessage.value = `❌ Error al subir: ${error.response?.data?.error || error.message}`;
   }

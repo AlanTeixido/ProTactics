@@ -52,13 +52,14 @@
                 <div>
                     <span><strong>Fecha:</strong> {{ new
                         Date(entrenoSeleccionado.fecha_entrenamiento).toLocaleDateString() }}</span>
-                    <span><strong>Duración:</strong> {{ entrenoSeleccionado.duracion_repeticion }} min</span>
+                    <span><strong>Duración:</strong> {{ minutos(entrenoSeleccionado.duracion_repeticion) }} min</span>
                 </div>
                 <div>
                     <span><strong>Repeticiones:</strong> {{ entrenoSeleccionado.repeticiones }}</span>
                     <span><strong>Descanso:</strong> {{ entrenoSeleccionado.descanso }} min</span>
                 </div>
             </div>
+            <AccionesEntreno :entreno="entrenoSeleccionado" @eliminado="quitarEntrenamiento" />
             <button @click="cerrarPopup" class="btn-cerrar-popup"><img src="../assets/img/cruzar.png"></button>
         </div>
     </div>
@@ -71,6 +72,7 @@ import { API_URL } from '@/config';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import { RouterLink } from 'vue-router';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
+import AccionesEntreno from '@/components/botones/AccionesEntreno.vue';
 
 const entrenos = ref([]);
 const searchQuery = ref("");
@@ -85,6 +87,17 @@ const mostrarDetalle = (entreno) => {
 // Función para cerrar el popup
 const cerrarPopup = () => {
     entrenoSeleccionado.value = null;
+};
+
+const quitarEntrenamiento = (id) => {
+    entrenos.value = entrenos.value.filter(e => e.entrenamiento_id !== id);
+    cerrarPopup();
+};
+
+// La API retorna els INTERVAL com a objecte ({ minutes: 18 }).
+const minutos = (duracion) => {
+    if (duracion && typeof duracion === 'object') return (duracion.hours || 0) * 60 + (duracion.minutes || 0);
+    return duracion ?? '-';
 };
 
 const cargarEntrenamientos = async () => {

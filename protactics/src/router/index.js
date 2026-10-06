@@ -10,7 +10,7 @@ const router = createRouter({
     { path: '/login', name: 'login', component: Login },
     { path: '/register', name: 'register', component: Register },
     { path: '/pizarra/:deporte', name: 'Pizarra', component: () => import('../views/PizarraView.vue') },
-    { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue') },
+    { path: "/editar", name: 'editar', component: () => import('../views/EditProfile.vue'), meta: { requiresAuth: true } },
     { path: '/about', name: 'about', component: () => import('../views/AboutView.vue') },
 
     // 🔒 Rutas protegidas (requieren autenticación)

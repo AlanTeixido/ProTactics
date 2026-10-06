@@ -17,6 +17,9 @@ const user = ref({
   rol: localStorage.getItem('userRol') || '',
 });
 
+// The profile page depends on the role (there is no /perfil route).
+const perfilPath = () => (user.value.rol === 'club' ? '/perfil-club' : '/perfil-entrenador');
+
 const passwords = ref({
   oldPassword: '',
   newPassword: '',
@@ -70,7 +73,7 @@ const saveProfile = async () => {
     });
 
     successMessage.value = '✅ Perfil actualizado correctamente!';
-    setTimeout(() => router.push('/perfil'), 1500);
+    setTimeout(() => router.push(perfilPath()), 1500);
   } catch (error) {
     errorMessage.value = '❌ No se pudo actualizar el perfil.';
   }
@@ -105,7 +108,7 @@ const changePassword = async () => {
 
     successMessage.value = '✅ Contraseña actualizada!';
     passwords.value = { oldPassword: '', newPassword: '', confirmPassword: '' };
-    setTimeout(() => router.push('/perfil'), 1500);
+    setTimeout(() => router.push(perfilPath()), 1500);
   } catch (error) {
     errorMessage.value = error.response?.data?.error || '❌ Error cambiando la contraseña.';
   }

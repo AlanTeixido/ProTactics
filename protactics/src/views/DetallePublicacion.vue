@@ -12,13 +12,19 @@ const router = useRouter();
 const publicacionData = ref(null);
 const loading = ref(true);
 const liked = ref(false);
+const likes = ref(null);
+const enviandoLike = ref(false);
+// Només els entrenadors poden donar like (igual que la API).
+const puedeDarLike = localStorage.getItem('userRol') === 'entrenador';
+const authHeaders = () => ({ Authorization: `Bearer ${localStorage.getItem('authToken')}` });
 
 const fetchPublicacion = async () => {
   try {
-    const response = await axios.get(`${API_URL}/publicaciones/${route.params.id}`);
+    const response = await axios.get(`${API_URL}/publicaciones/${route.params.id}`, { headers: authHeaders() });
     if (response.data) {
       publicacionData.value = response.data;
       liked.value = response.data.liked || false;
+      likes.value = response.data.likes ?? null;
     } else {
       console.error("❌ Publicación no encontrada.");
     }
@@ -26,6 +32,24 @@ const fetchPublicacion = async () => {
     console.error('❌ Error obteniendo la publicación:', error);
   } finally {
     loading.value = false;
+  }
+};
+
+const toggleLike = async () => {
+  if (enviandoLike.value) return;
+  enviandoLike.value = true;
+  const url = `${API_URL}/publicaciones/${route.params.id}/like`;
+  try {
+    const { data } = liked.value
+      ? await axios.delete(url, { headers: authHeaders() })
+      : await axios.post(url, null, { headers: authHeaders() });
+    liked.value = !liked.value;
+    if (typeof data?.likes === 'number') likes.value = data.likes;
+    else if (likes.value !== null) likes.value += liked.value ? 1 : -1;
+  } catch (error) {
+    console.error('❌ Error actualizando el like:', error);
+  } finally {
+    enviandoLike.value = false;
   }
 };
 
@@ -59,6 +83,13 @@ onMounted(fetchPublicacion);
       <div v-else-if="publicacionData" class="card">
         <h1 class="titulo">{{ publicacionData.titulo }}</h1>
         <p class="author">{{ publicacionData.entrenador || 'Desconocido' }}</p>
+
+        <div v-if="likes !== null" class="likes-row">
+          <button v-if="puedeDarLike" type="button" class="like-btn" :class="{ activo: liked }" :disabled="enviandoLike" @click="toggleLike">
+            {{ liked ? '♥ Te gusta' : '♡ Me gusta' }} · {{ likes }}
+          </button>
+          <span v-else class="likes-count">♥ {{ likes }} me gusta</span>
+        </div>
 
 <!--<img
           :src="publicacionData.imagen_url || '/default.png'"
@@ -156,6 +187,36 @@ onMounted(fetchPublicacion);
 .content {
   font-size: 1rem;
   margin: 15px 0;
+}
+
+.likes-row {
+  display: flex;
+  justify-content: center;
+}
+
+.like-btn {
+  padding: 8px 18px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 999px;
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.like-btn.activo {
+  background: rgba(255, 255, 255, 0.9);
+  color: #be123c;
+}
+
+.like-btn:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.likes-count {
+  font-weight: bold;
 }
 
 .info-block p {
