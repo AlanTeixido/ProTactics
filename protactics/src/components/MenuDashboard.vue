@@ -8,7 +8,7 @@ import { fallbackAvatar, mediaUrl } from '@/utils/media';
 import { resetDemo } from '@/demo/public';
 
 const restablirDemo = () => {
-    if (window.confirm('Vols restablir la demo? Es perdran els canvis fets en aquest navegador.')) {
+    if (window.confirm('¿Restablecer la demo? Se perderán los cambios hechos en este navegador.')) {
         resetDemo();
     }
 };
@@ -136,8 +136,8 @@ const menuItems = computed(() => {
       </div>
 
       <div v-if="DEMO_MODE" class="demo-footer">
-        <span>Demo · dades al navegador</span>
-        <button type="button" class="demo-reset" @click="restablirDemo">Restablir demo</button>
+        <span>Demo · datos en tu navegador</span>
+        <button type="button" class="demo-reset" @click="restablirDemo">Restablecer demo</button>
       </div>
     </div>
   </div>

@@ -38,15 +38,15 @@
       <div v-if="DEMO_MODE" class="demo-access">
         <div class="demo-buttons">
           <button type="button" class="demo-btn" :disabled="enviando" @click="loginDemo('club')">
-            Entrar com a club (demo)
+            Entrar como club (demo)
           </button>
           <button type="button" class="demo-btn" :disabled="enviando" @click="loginDemo('entrenador')">
-            Entrar com a entrenador (demo)
+            Entrar como entrenador (demo)
           </button>
         </div>
         <p class="demo-note">
-          Demo: les dades es guarden al teu navegador.
-          <button type="button" class="demo-reset" @click="restablirDemo">Restablir demo</button>
+          Demo: los datos se guardan en tu navegador.
+          <button type="button" class="demo-reset" @click="restablirDemo">Restablecer demo</button>
         </p>
       </div>
     </div>
@@ -156,7 +156,7 @@ const loginDemo = (rol) => {
 };
 
 const restablirDemo = () => {
-  if (window.confirm('Vols restablir la demo? Es perdran els canvis fets en aquest navegador.')) {
+  if (window.confirm('¿Restablecer la demo? Se perderán los cambios hechos en este navegador.')) {
     resetDemo();
   }
 };

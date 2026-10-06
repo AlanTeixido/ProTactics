@@ -10,9 +10,9 @@
       <div class="nav2" :class="{ 'open': isMenuOpen }">
         <RouterLink v-if="!isLoggedIn" to="/" class="nav-link">INICIO</RouterLink>
         <RouterLink v-if="isLoggedIn" to="/dashboard" class="nav-link">DASHBOARD</RouterLink>
-        <RouterLink v-if="isLoggedIn" to="/perfil" class="nav-link">PERFIL</RouterLink>
+        <RouterLink v-if="isLoggedIn" :to="perfilRoute" class="nav-link">PERFIL</RouterLink>
         <RouterLink v-if="isLoggedIn" to="/deportes" class="nav-link">DEPORTES</RouterLink>
-        <RouterLink v-if="isLoggedIn" to="/pizarra" class="nav-link">PIZARRA</RouterLink>
+        <RouterLink v-if="isLoggedIn" to="/pizarra-libre" class="nav-link">PIZARRA</RouterLink>
         <RouterLink v-if="!isLoggedIn" to="/about" class="nav-link">SOBRE NOSOTROS</RouterLink>
       </div>
     </nav>
@@ -30,12 +30,12 @@
           <transition name="fade">
             <div v-if="isDropdownOpen" class="dropdown-menu">
               <RouterLink to="/deportes" class="dropdown-item">🏋️ Crear Entrenamiento</RouterLink>
-              <RouterLink to="/crear-post" class="dropdown-item">📝 Crear Post</RouterLink>
+              <RouterLink to="/subirPublicaciones" class="dropdown-item">📝 Crear Post</RouterLink>
             </div>
           </transition>
         </div>
 
-        <RouterLink to="/perfil" class="profile-pic-link">
+        <RouterLink :to="perfilRoute" class="profile-pic-link">
           <img class="profile-pic" :src="userPic" alt="Foto de perfil" />
         </RouterLink>
 
@@ -52,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 import { API_URL } from '@/config';
@@ -64,6 +64,7 @@ const isLoggedIn = ref(false);
 const isDropdownOpen = ref(false);
 const isMenuOpen = ref(false);
 const userPic = ref(fallbackAvatar);
+const perfilRoute = computed(() => (isLoggedIn.value && localStorage.getItem('userRol') === 'club' ? '/perfil-club' : '/perfil-entrenador'));
 
 const checkAuthStatus = () => {
   isLoggedIn.value = !!localStorage.getItem('authToken');

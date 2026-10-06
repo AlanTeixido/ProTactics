@@ -46,7 +46,7 @@
             <p>{{ entrenoSeleccionado.descripcion }}</p>
             <div class="entreno-datos">
                 <div>
-                    <span><strong>Categoría:</strong> {{ entrenoSeleccionado.categoria || 'No definida' }}</span>
+                    <span><strong>Categoría:</strong> {{ categoriaLabel(entrenoSeleccionado.categoria) }}</span>
                     <span><strong>Campo:</strong> {{ entrenoSeleccionado.campo }}</span>
                 </div>
                 <div>
@@ -69,6 +69,7 @@
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
 import { API_URL } from '@/config';
+import { categoriaLabel } from '@/utils/categorias';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import { RouterLink } from 'vue-router';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
