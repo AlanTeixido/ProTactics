@@ -89,6 +89,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import { useRouter } from 'vue-router';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
@@ -109,7 +110,7 @@ if (rol !== 'entrenador' || !token) {
 
 const cargarEntrenador = async () => {
   try {
-    const res = await axios.get(`https://protactics-api.onrender.com/entrenadores/me`, {
+    const res = await axios.get(`${API_URL}/entrenadores/me`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     entrenador.value = res.data;
@@ -141,7 +142,7 @@ const guardarCambios = async () => {
   }
 
   try {
-    await axios.put(`https://protactics-api.onrender.com/entrenadores/${entrenadorId}`, payload, {
+    await axios.put(`${API_URL}/entrenadores/${entrenadorId}`, payload, {
       headers: { Authorization: `Bearer ${token}` },
     });
     entrenador.value = { ...entrenadorEdit.value };

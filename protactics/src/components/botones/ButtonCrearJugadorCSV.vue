@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 
 const file = ref(null);
 const statusMessage = ref('');
@@ -47,7 +48,7 @@ const uploadCSV = async () => {
 
   try {
     const response = await axios.post(
-      'https://protactics-api.onrender.com/jugadores/upload-csv', // ✅ Producción
+      `${API_URL}/jugadores/upload-csv`, // ✅ Producción
       formData,
       {
         headers: {

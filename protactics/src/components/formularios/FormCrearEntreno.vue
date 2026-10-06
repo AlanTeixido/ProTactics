@@ -104,6 +104,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -126,7 +127,7 @@ const jugadoresSeleccionados = ref([]);
 
 const obtenerEquipos = async () => {
   const token = localStorage.getItem('authToken');
-  const res = await axios.get('https://protactics-api.onrender.com/equipos/entrenador', {
+  const res = await axios.get(`${API_URL}/equipos/entrenador`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   equipos.value = res.data || [];
@@ -134,7 +135,7 @@ const obtenerEquipos = async () => {
 
 const obtenerJugadoresDelEquipo = async (equipoId) => {
   const token = localStorage.getItem('authToken');
-  const res = await axios.get(`https://protactics-api.onrender.com/jugadores/equipo/${equipoId}`, {
+  const res = await axios.get(`${API_URL}/jugadores/equipo/${equipoId}`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   jugadores.value = res.data || [];
@@ -170,7 +171,7 @@ const crearEntrenamiento = async () => {
   try {
     const token = localStorage.getItem('authToken');
     const response = await axios.post(
-      'https://protactics-api.onrender.com/entrenamientos',
+      `${API_URL}/entrenamientos`,
       {
         titulo: titulo.value,
         descripcion: descripcion.value,

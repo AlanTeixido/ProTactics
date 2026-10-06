@@ -43,6 +43,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import { useRouter } from 'vue-router';
 
 const nombre = ref('');
@@ -70,7 +71,7 @@ const closePopup = () => {
 const carregarEquips = async () => {
   try {
     const token = localStorage.getItem('authToken');
-    const res = await axios.get('https://protactics-api.onrender.com/equipos/mis-equipos', {
+    const res = await axios.get(`${API_URL}/equipos/mis-equipos`, {
       headers: { Authorization: `Bearer ${token}` }
     });
     equipos.value = res.data;
@@ -96,7 +97,7 @@ const crearEntrenador = async () => {
     };
 
     const response = await axios.post(
-      'https://protactics-api.onrender.com/entrenadores/register',
+      `${API_URL}/entrenadores/register`,
       payload,
       {
         headers: {

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonCrearJugador from '@/components/botones/ButtonCrearJugador.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
@@ -36,7 +37,7 @@ const jugadoresFiltrados = computed(() => {
 const cargarJugadores = async () => {
   try {
     const token = localStorage.getItem("authToken");
-    const response = await axios.get(`https://protactics-api.onrender.com/jugadores`, {
+    const response = await axios.get(`${API_URL}/jugadores`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     jugadores.value = response.data || [];
@@ -52,8 +53,8 @@ const cargarEquipos = async () => {
 
     const endpoint =
       rol === 'entrenador'
-        ? 'https://protactics-api.onrender.com/equipos/entrenador'
-        : 'https://protactics-api.onrender.com/equipos';
+        ? `${API_URL}/equipos/entrenador`
+        : `${API_URL}/equipos`;
 
     const response = await axios.get(endpoint, {
       headers: {
@@ -70,7 +71,7 @@ const cargarEquipos = async () => {
 const eliminarJugador = async () => {
   try {
     const token = localStorage.getItem("authToken");
-    await axios.delete(`https://protactics-api.onrender.com/jugadores/${jugadorEliminarId.value}`, {
+    await axios.delete(`${API_URL}/jugadores/${jugadorEliminarId.value}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     jugadores.value = jugadores.value.filter(j => j.jugador_id !== jugadorEliminarId.value);
@@ -94,7 +95,7 @@ const cancelarEdicion = () => {
 const guardarEdicion = async (id) => {
   try {
     const token = localStorage.getItem("authToken");
-    await axios.put(`https://protactics-api.onrender.com/jugadores/${id}`, editData.value, {
+    await axios.put(`${API_URL}/jugadores/${id}`, editData.value, {
       headers: { Authorization: `Bearer ${token}` },
     });
     jugadorEditando.value = null;

@@ -3,9 +3,10 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import axios from 'axios';
+import { API_URL } from './config';
 
-// 🔗 Estableix base URL de l'API
-axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'https://protactics-api.onrender.com';
+// 🔗 Estableix base URL de l'API (VITE_API_URL, veure src/config.js)
+axios.defaults.baseURL = API_URL;
 
 // ✅ Prova de connexió (ara amb ruta correcta: /clubes)
 axios.get('/clubes')

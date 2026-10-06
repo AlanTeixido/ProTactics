@@ -46,6 +46,7 @@
   <script setup>
   import { ref, onMounted } from "vue";
   import axios from "axios";
+  import { API_URL } from '@/config';
   
   const posts = ref([]);
   const loading = ref(true);
@@ -55,14 +56,14 @@
   
   // Cargar posts
   const loadPosts = async () => {
-    let url = "https://protactics-api.onrender.com/posts";
+    let url = `${API_URL}/posts`;
   
     try {
       const response = await axios.get(url);
   
       // Obtener la lista de seguidos por el usuario actual
       const seguidosRes = await axios.get(
-        `https://protactics-api.onrender.com/seguimientos/${usuarioId}/seguidos`
+        `${API_URL}/seguimientos/${usuarioId}/seguidos`
       );
       const seguidosIds = seguidosRes.data.map((user) => user.id);
   
@@ -86,7 +87,7 @@
   
   // Función para manejar el "like"
   const toggleLike = async (post) => {
-    const url = `https://protactics-api.onrender.com/posts/${post.id}/like`;
+    const url = `${API_URL}/posts/${post.id}/like`;
   
     try {
       if (post.likedByUser) {
@@ -116,13 +117,13 @@ const toggleFollow = async (post) => {
     if (post.isFollowing) {
       // Realitzar la crida per deixar de seguir
       await axios.delete(
-        `https://protactics-api.onrender.com/seguimientos/${post.userId}/dejar-seguir`,
+        `${API_URL}/seguimientos/${post.userId}/dejar-seguir`,
         { data: { seguidor_id: usuarioId } }
       );
     } else {
       // Realitzar la crida per seguir
       await axios.post(
-        `https://protactics-api.onrender.com/seguimientos/${post.userId}/seguir`,
+        `${API_URL}/seguimientos/${post.userId}/seguir`,
         { seguidor_id: usuarioId }
       );
     }

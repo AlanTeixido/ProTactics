@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
@@ -11,7 +12,7 @@ const selectedFilter = ref('');
 
 const fetchPublicaciones = async () => {
   try {
-    const response = await axios.get('https://protactics-api.onrender.com/publicaciones');
+    const response = await axios.get(`${API_URL}/publicaciones`);
     publicaciones.value = response.data;
   } catch (error) {
     console.error('Error cargando publicaciones', error);

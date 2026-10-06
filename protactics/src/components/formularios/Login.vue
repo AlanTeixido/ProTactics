@@ -54,6 +54,7 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import { useRouter } from 'vue-router';
 
 // States
@@ -90,7 +91,7 @@ const closePopup = () => {
 
 const login = async () => {
   try {
-    const response = await axios.post('https://protactics-api.onrender.com/auth/login', {
+    const response = await axios.post(`${API_URL}/auth/login`, {
       correo: email.value,
       password: password.value
     });

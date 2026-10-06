@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import { useRouter } from 'vue-router';
 
 const nombre = ref('');
@@ -36,7 +37,7 @@ const crearJugador = async () => {
     }
 
     const response = await axios.post(
-      'https://protactics-api.onrender.com/jugadores/register',
+      `${API_URL}/jugadores/register`,
       {
         nombre: nombre.value,
         apellido: apellido.value,
@@ -70,8 +71,8 @@ const obtenerEquipos = async () => {
 
     const endpoint =
       rol === 'entrenador'
-        ? 'https://protactics-api.onrender.com/equipos/entrenador'
-        : 'https://protactics-api.onrender.com/equipos';
+        ? `${API_URL}/equipos/entrenador`
+        : `${API_URL}/equipos`;
 
     const response = await axios.get(endpoint, {
       headers: {

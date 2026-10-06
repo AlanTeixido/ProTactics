@@ -67,6 +67,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import { RouterLink } from 'vue-router';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
@@ -89,7 +90,7 @@ const cerrarPopup = () => {
 const cargarEntrenamientos = async () => {
     try {
         const token = localStorage.getItem('authToken');
-        const response = await axios.get('https://protactics-api.onrender.com/entrenamientos', {
+        const response = await axios.get(`${API_URL}/entrenamientos`, {
             headers: { Authorization: `Bearer ${token}` },
         });
         entrenos.value = response.data || [];

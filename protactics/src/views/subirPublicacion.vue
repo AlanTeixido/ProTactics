@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
@@ -38,10 +39,10 @@ const fetchEntrenamientos = async () => {
 
   try {
     const [resEntrenos, resPubs] = await Promise.all([
-      axios.get('https://protactics-api.onrender.com/entrenamientos', {
+      axios.get(`${API_URL}/entrenamientos`, {
         headers: { Authorization: `Bearer ${token}` }
       }),
-      axios.get('https://protactics-api.onrender.com/publicaciones', {
+      axios.get(`${API_URL}/publicaciones`, {
         headers: { Authorization: `Bearer ${token}` }
       })
     ]);
@@ -88,7 +89,7 @@ const publicarEntrenamiento = async (entrenamiento) => {
 
   try {
     const res = await axios.post(
-      'https://protactics-api.onrender.com/publicaciones/desde-entrenamiento',
+      `${API_URL}/publicaciones/desde-entrenamiento`,
       publicacionData,
       {
         headers: { Authorization: `Bearer ${token}` }

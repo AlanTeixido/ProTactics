@@ -41,6 +41,7 @@
   <script setup>
   import { ref } from 'vue';
   import axios from 'axios';
+  import { API_URL } from '@/config';
   import { useRouter } from 'vue-router';
   
   const nombre = ref('');
@@ -82,7 +83,7 @@
       }
   
       const response = await axios.post(
-        'https://protactics-api.onrender.com/equipos',
+        `${API_URL}/equipos`,
         {
           nombre: nombre.value,
           categoria: categoria.value

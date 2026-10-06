@@ -72,6 +72,7 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonCrearEquipo from '@/components/botones/ButtonCrearEquipo.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
@@ -103,7 +104,7 @@ const equipoEliminarId = ref(null);
 const cargarEquipos = async () => {
   try {
     const token = localStorage.getItem("authToken");
-    const response = await axios.get(`https://protactics-api.onrender.com/equipos`, {
+    const response = await axios.get(`${API_URL}/equipos`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     equipos.value = response.data || [];
@@ -115,7 +116,7 @@ const cargarEquipos = async () => {
 const eliminarEquipo = async () => {
   try {
     const token = localStorage.getItem("authToken");
-    await axios.delete(`https://protactics-api.onrender.com/equipos/${equipoEliminarId.value}`, {
+    await axios.delete(`${API_URL}/equipos/${equipoEliminarId.value}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     equipos.value = equipos.value.filter(e => e.equipo_id !== equipoEliminarId.value);
@@ -138,7 +139,7 @@ const cancelarEdicion = () => {
 const guardarEdicion = async (id) => {
   try {
     const token = localStorage.getItem("authToken");
-    await axios.put(`https://protactics-api.onrender.com/equipos/${id}`, editData.value, {
+    await axios.put(`${API_URL}/equipos/${id}`, editData.value, {
       headers: { Authorization: `Bearer ${token}` },
     });
     equipoEditando.value = null;

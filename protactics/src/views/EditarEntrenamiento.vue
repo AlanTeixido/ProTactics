@@ -117,6 +117,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
+import { API_URL } from '@/config';
 import { useRoute, useRouter } from "vue-router";
 import Loader from "../components/Loader.vue";
 
@@ -140,7 +141,7 @@ const cargarEntrenamiento = async () => {
 
     // 🛠️ PETICIÓ GET AMB TOKEN
     const response = await axios.get(
-      `https://protactics-api.onrender.com/entrenamientos/user/${localStorage.getItem("userId")}`,
+      `${API_URL}/entrenamientos/user/${localStorage.getItem("userId")}`,
       {
         headers: {
           Authorization: `Bearer ${authToken}`, // 🔥 Afegeix el token aquí
@@ -169,7 +170,7 @@ const guardarCambios = async () => {
       ...entrenamiento.value,
       detalles: detalles.value,
     };
-    await axios.put(`https://protactics-api.onrender.com/entrenamientos/${entrenamientoId}`, data);
+    await axios.put(`${API_URL}/entrenamientos/${entrenamientoId}`, data);
     alert("✅ Entrenamiento actualizado correctamente!");
     router.push("/mis-entrenamientos");
   } catch (error) {

@@ -55,6 +55,7 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import { useRouter } from 'vue-router';
 
 const nombre = ref('');
@@ -81,7 +82,7 @@ const register = async () => {
   }
 
   try {
-    await axios.post('https://protactics-api.onrender.com/auth/register/club', {
+    await axios.post(`${API_URL}/auth/register/club`, {
       nombre: nombre.value,
       correo: correo.value,
       password: password.value

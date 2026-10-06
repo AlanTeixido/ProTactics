@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { API_URL } from '@/config';
 
 const router = useRouter();
 const errorMessage = ref('');
@@ -28,8 +29,8 @@ const loadUserData = async () => {
     const token = localStorage.getItem('authToken');
     const endpoint =
       user.value.rol === 'entrenador'
-        ? `https://protactics-api.onrender.com/entrenadores/${user.value.id}`
-        : `https://protactics-api.onrender.com/clubs/${user.value.id}`;
+        ? `${API_URL}/entrenadores/${user.value.id}`
+        : `${API_URL}/clubes/${user.value.id}`;
 
     const { data } = await axios.get(endpoint, {
       headers: { Authorization: `Bearer ${token}` },
@@ -54,8 +55,8 @@ const saveProfile = async () => {
     const token = localStorage.getItem('authToken');
     const endpoint =
       user.value.rol === 'entrenador'
-        ? `https://protactics-api.onrender.com/entrenadores/${user.value.id}`
-        : `https://protactics-api.onrender.com/clubs/${user.value.id}`;
+        ? `${API_URL}/entrenadores/${user.value.id}`
+        : `${API_URL}/clubes/${user.value.id}`;
 
     const payload = {
       nombre: user.value.nombre,
@@ -90,8 +91,8 @@ const changePassword = async () => {
     const token = localStorage.getItem('authToken');
     const endpoint =
       user.value.rol === 'entrenador'
-        ? `https://protactics-api.onrender.com/entrenadores/${user.value.id}/password`
-        : `https://protactics-api.onrender.com/clubs/${user.value.id}/password`;
+        ? `${API_URL}/entrenadores/${user.value.id}/password`
+        : `${API_URL}/clubes/${user.value.id}/password`;
 
     await axios.put(
       endpoint,

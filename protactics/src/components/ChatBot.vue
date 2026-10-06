@@ -50,6 +50,7 @@
 
 <script>
 import axios from "axios";
+import { API_URL } from '@/config';
 
 export default {
   data() {
@@ -85,7 +86,7 @@ export default {
     },
     async fetchQuestions() {
       try {
-        const res = await axios.get("http://localhost:3000/api/chatbot/preguntas");
+        const res = await axios.get(`${API_URL}/api/chatbot/preguntas`);
         this.questions = res.data;
       } catch (err) {
         console.error("Error al obtener preguntas:", err);

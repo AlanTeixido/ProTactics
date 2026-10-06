@@ -79,6 +79,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 import { useRouter } from 'vue-router';
@@ -99,7 +100,7 @@ if (rol !== 'club' || !clubId) {
 
 const cargarClub = async () => {
   try {
-    const res = await axios.get(`https://protactics-api.onrender.com/clubes/${clubId}`, {
+    const res = await axios.get(`${API_URL}/clubes/${clubId}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     club.value = res.data;
@@ -124,7 +125,7 @@ const guardarCambios = async () => {
   }
 
   try {
-    await axios.put(`https://protactics-api.onrender.com/clubes/${clubId}`, {
+    await axios.put(`${API_URL}/clubes/${clubId}`, {
       nombre: clubEdit.value.nombre,
       correo: clubEdit.value.correo,
       ubicacion: clubEdit.value.ubicacion,

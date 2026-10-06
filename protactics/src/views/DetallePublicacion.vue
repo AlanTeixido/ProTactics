@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import axios from 'axios';
+import { API_URL } from '@/config';
 import MenuDashboard from '@/components/MenuDashboard.vue';
 import ButtonAtras from '@/components/botones/ButtonAtras.vue';
 
@@ -14,7 +15,7 @@ const liked = ref(false);
 
 const fetchPublicacion = async () => {
   try {
-    const response = await axios.get(`https://protactics-api.onrender.com/publicaciones/${route.params.id}`);
+    const response = await axios.get(`${API_URL}/publicaciones/${route.params.id}`);
     if (response.data) {
       publicacionData.value = response.data;
       liked.value = response.data.liked || false;

@@ -2,6 +2,7 @@
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
+import { API_URL } from '@/config';
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -22,9 +23,9 @@ const fetchProfilePic = async () => {
     const userId = localStorage.getItem('userId');
     if (!userId) return;
     try {
-        const response = await axios.get(`https://protactics-api.onrender.com/usuarios/${userId}`);
+        const response = await axios.get(`${API_URL}/usuarios/${userId}`);
         if (response.data.foto_url) {
-            userPic.value = `https://protactics-api.onrender.com${response.data.foto_url}`;
+            userPic.value = `${API_URL}${response.data.foto_url}`;
             localStorage.setItem('fotoUrl', userPic.value);
         }
     } catch (error) {
